@@ -1,0 +1,45 @@
+<div class="ui-g ui-fluid">
+    <div class="ui-g-12 ui-md-6 ui-md-offset-3 card card-w-title">
+        <h1>User Login</h1>
+        <div class="form-group ui-g-12">
+            <form name="form" (ngSubmit)="loginForm.form.valid && login()" #loginForm="ngForm" novalidate>
+                <div class="ui-g-12">
+                    <span class="md-inputfield">
+                        <input type="text" pInputText name="username" [(ngModel)]="inputModel.username" #username="ngModel" required>
+                        <label for="username">User Name</label>
+                        <div *ngIf="loginForm.submitted && !username.valid" class="ui-message ui-messages-error ui-corner-all">Username is required</div>
+                    </span>
+                </div>
+                <div class="ui-g-12"></div>
+                <div class="ui-g-12">
+                    <span class="md-inputfield">
+                        <input type="password" pPassword [feedback]="false" name="password" [(ngModel)]="inputModel.password" #password="ngModel"
+                            required>
+                        <label>Password</label>
+                        <div *ngIf="loginForm.submitted && !password.valid" class="ui-message ui-messages-error ui-corner-all">Password is required</div>
+                    </span>
+                </div>
+                
+                <div class="ui-g-12"></div>
+                <div *ngIf="appSettings.authShowRememberMe" class="ui-g-12">
+                        <p-checkbox name="rememberMe" binary="true" label="Remember Me?" (onChange)="rememberChanged($event)" [(ngModel)]="rememberMe"></p-checkbox>
+                </div>
+
+                <div class="ui-g-12"></div>
+                <div *ngIf="appSettings.authTermsAndConditions" class="ui-g-12">
+                    <span>{{appSettings.authTermsAndConditions}}</span>
+                </div>
+
+                <div class="ui-g-12"></div>
+                <div class="ui-g-12">
+                    <div class="ui-g-6 ui-sm-12">
+                        <button pButton class="ui-button-info" type="button" *ngIf="appSettings.authShowRegister" label="Register"></button>
+                    </div>
+                    <div class="ui-g-6 ui-sm-12">
+                        <button pButton class="ui-button-success" type="submit" [disabled]="!loginForm.form.valid" label="Logon"></button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
