@@ -23,7 +23,7 @@ export class TokenInterceptor implements HttpInterceptor {
     });
     return next.handle(request).do(
       event => {
-        this.logger.info(`Returned Data ${request.body}`, 'HttpInterceptor');
+        this.logger.info(`Returned Data ${JSON.stringify(request.body)}`, 'HttpInterceptor');
       },
       error => {
       if (error instanceof HttpErrorResponse && error.status === 401) {
