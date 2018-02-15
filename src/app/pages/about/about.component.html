@@ -1,0 +1,16 @@
+<div class="ui-g ui-fluid">
+    <div class="ui-g-12 ui-md-6 ui-md-offset-3 card card-w-title">
+        <h1>About</h1>
+        <h2>Application Modules</h2>
+        <div class="ui-g-12" *ngFor="let version of appModules">
+            <div class="ui-g-6">{{version.module}}</div>
+            <div class="ui-g-6">{{version.version}}</div>
+        </div>
+        <hr/>
+        <h2>ngScaffolding Modules</h2>
+        <div class="ui-g-12" *ngFor="let version of modules">
+            <div class="ui-g-6">{{version.module}}</div>
+            <div class="ui-g-6">{{version.version}}</div>
+        </div>
+    </div>
+</div>

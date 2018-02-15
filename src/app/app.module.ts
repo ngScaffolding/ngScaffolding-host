@@ -1,5 +1,5 @@
 import { NgModule, ErrorHandler } from '@angular/core';
-import { VERSION } from './version';
+import { VERSION } from '../version';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserModule, Title } from '@angular/platform-browser';
@@ -46,6 +46,7 @@ import { LoginPageComponent } from './pages/login/loginPage.component';
 import { LogoffPageComponent } from './pages/logoff/logoffPage.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
+import { AboutComponent } from './pages/about/about.component';
 
 // Services
 import { NotificationReceiverService } from './services/notificationReceiver/notificationReceiver.service';
@@ -72,6 +73,7 @@ import { TokenInterceptor } from './interceptors/token.interceptor';
     InlineProfileComponent,
 
     // Pages
+    AboutComponent,
     LandingPageComponent,
     LoginPageComponent,
     LogoffPageComponent,
