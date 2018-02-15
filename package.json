@@ -11,7 +11,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "scss": "node-sass --source-map true custom/theme/theme.scss -o custom/theme"
+    "scss": "node-sass --source-map true custom/theme/theme.scss -o custom/theme",
+    "version": "node version.js"
   },
   "private": true,
   "dependencies": {
@@ -63,6 +64,8 @@
     "protractor": "~5.1.0",
     "ts-node": "~2.0.0",
     "tslint": "~4.5.0",
-    "typescript": "~2.4.0"
+    "typescript": "~2.4.0",
+    "fs-extra": "^5.0.0",
+    "git-describe": "^4.0.2"
   }
 }

@@ -1,4 +1,5 @@
 import { NgModule, ErrorHandler } from '@angular/core';
+import { VERSION } from './version';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserModule, Title } from '@angular/platform-browser';
@@ -25,7 +26,8 @@ import {
   ReferenceValuesService,
   SpinnerService,
   RolesService,
-  UserPreferencesService
+  UserPreferencesService,
+  VersionsService
 } from '@ngscaffolding/core';
 
 import { CUSTOM_IMPORTS } from '../../custom/custom.app';
@@ -98,8 +100,12 @@ import { TokenInterceptor } from './interceptors/token.interceptor';
     ReferenceValuesService,
     RolesService,
     SpinnerService,
-    UserPreferencesService
+    UserPreferencesService, VersionsService
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule {
+  constructor(versions: VersionsService) {
+    versions.addVersion('@ngscaffolding/host', VERSION.version);
+  }
+}
