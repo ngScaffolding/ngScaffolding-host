@@ -1,40 +1,30 @@
 <!doctype html>
 <html>
-
 <head>
-    <meta charset="utf-8">
-    <title>Loading...</title>
-    <base href="/">
+  <meta charset="utf-8">
+  <title>Loading...</title>
+  <base href="/">
 
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <link rel="icon" type="image/x-icon" href="custom/images/favicon.png">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <link rel="icon" type="image/x-icon" href="assets/layout/images/favicon.png">
 
-    <!-- Required for Azure Serving Fonts -->
-    <mimeMap fileExtension="woff" mimeType="application/font-woff"></mimeMap>
-    <mimeMap fileExtension="woff2" mimeType="application/font-woff"></mimeMap>
-
-    <!-- Layout CSS -->
-    <!-- <link id="theme-css" rel="stylesheet" type="text/css" href="custom/theme/theme.css"> -->
-    <!-- <link id="theme-css" rel="stylesheet" type="text/css" href="assets/theme/theme-indigo.css"> -->
-    <!-- <link id="layout-css" rel="stylesheet" type="text/css" href="assets/layout/css/layout-indigo.css"> -->
+  <link id="theme-css" rel="stylesheet" type="text/css" href="assets/theme/theme-indigo.css">
+  <link id="layout-css" rel="stylesheet" type="text/css" href="assets/layout/css/layout-indigo.css">
 </head>
-
 <body>
     <app-root>
         <div class="splash-screen">
-            <div class="splash-container">
-                <div class="logo"></div>
-                <div class="load-bar">
-                    <div class="bar"></div>
-                    <div class="bar"></div>
-                    <div class="bar"></div>
-                </div>
+            <div class="splash-loader-container">
+				<!-- Custom Logo -->				
+				<div class="logo"></div>
+                <svg class="splash-loader" width="65px" height="65px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+                   <circle class="splash-path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle>
+                </svg>
             </div>
         </div>
     </app-root>
 </body>
-
 </html>

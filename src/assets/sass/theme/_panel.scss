@@ -68,6 +68,10 @@ body {
                 }
             }
             
+            .ui-fieldset-legend-text {
+                color: $primaryColor;
+            }
+            
             &.ui-state-focus {
                 background-color: transparent;
             }
@@ -84,8 +88,12 @@ body {
             
             > a {
                 padding: $headerPadding;
-                padding-left: 2.5em;
                 color: #ffffff;
+                                
+                .ui-accordion-toggle-icon,
+                .ui-accordion-header-text {
+                    vertical-align: middle;
+                }
             }
             
             &:not(.ui-state-active):not(.ui-state-disabled):hover {
@@ -100,16 +108,6 @@ body {
                 > a {
                     color: $accentTextColor;
                 }
-            }
-            
-            .fa-caret-right {
-                margin-top: -.5em;
-                font-size: 1.5em;
-            }
-            
-            .fa-caret-down {
-                margin-top: -.5em;
-                font-size: 1.5em;
             }
         }
         

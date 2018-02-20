@@ -1,18 +1,13 @@
-import {Component,Input,OnInit,EventEmitter,ViewChild,trigger, state, transition, style, animate, Inject, forwardRef} from '@angular/core';
-import {Location} from '@angular/common';
-import {Router} from '@angular/router';
-import {MenuItem} from 'primeng/primeng';
+import {Component, trigger, state, transition, style, animate} from '@angular/core';
 import {AppComponent} from './app.component';
 
-import {UserAuthorisationService} from '@ngscaffolding/core';
-
 @Component({
-    selector: 'inline-profile',
+    selector: 'app-inline-profile',
     template: `
         <div class="profile" [ngClass]="{'profile-expanded':active}">
-            <div class="profile-image"></div>
             <a href="#" (click)="onClick($event)">
-                <span class="profile-name">{{ userAuthService.currentUser.name }}</span>
+                <img class="profile-image" src="assets/layout/images/avatar.png" />
+                <span class="profile-name">Jane Williams</span>
                 <i class="material-icons">keyboard_arrow_down</i>
             </a>
         </div>
@@ -57,15 +52,17 @@ import {UserAuthorisationService} from '@ngscaffolding/core';
         ])
     ]
 })
-export class InlineProfileComponent {
+export class AppInlineProfileComponent {
 
     active: boolean;
 
-    constructor(public userAuthService: UserAuthorisationService) {
-   }
+    constructor(public app: AppComponent) {}
 
     onClick(event) {
         this.active = !this.active;
+        setTimeout(() => {
+          this.app.layoutMenuScrollerViewChild.moveBar();
+        }, 450);
         event.preventDefault();
     }
 }

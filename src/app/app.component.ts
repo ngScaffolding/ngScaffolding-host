@@ -1,38 +1,38 @@
+import { Component, AfterViewInit, ElementRef, Renderer, ViewChild, OnDestroy, OnInit, NgZone} from '@angular/core';
+import { ScrollPanel } from 'primeng/primeng';
+
+// ngScaffolding
 import { Router, NavigationEnd, NavigationError, NavigationStart } from '@angular/router';
-import { Component, AfterViewInit, ElementRef, Renderer, ViewChild } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import 'rxjs/add/operator/filter';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/mergeMap';
-
-import { NotificationReceiverService } from './services/notificationReceiver/notificationReceiver.service';
-
 import { LoggingService, AppSettingsService, SpinnerService, UserAuthorisationService } from '@ngscaffolding/core';
 import { BroadcastService, BroadcastTypes, MenuService } from '@ngscaffolding/core';
-import { setTimeout } from 'timers';
+import { NotificationReceiverService } from './services/notificationReceiver/notificationReceiver.service';
+// ngScaffolding
 
 enum MenuOrientation {
     STATIC,
     OVERLAY,
+    SLIM,
     HORIZONTAL
-};
-
-declare var jQuery: any;
+}
 
 @Component({
-    selector: 'app-root',
-    templateUrl: './app.component.html',
-    styleUrls: ['./app.component.scss']
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements AfterViewInit {
+export class AppComponent implements AfterViewInit, OnDestroy, OnInit {
 
-    // spinner Details
-    spinning: boolean;
-    spinMessage: string;
+  // ngScaffolding
+  spinning: boolean;
+  spinMessage: string;
+  // ngScaffolding
 
-    layoutCompact = false;
 
-    layoutMode: MenuOrientation = MenuOrientation.HORIZONTAL;
+    layoutCompact = true;
+
+    layoutMode: MenuOrientation = MenuOrientation.STATIC;
 
     darkMenu = false;
 
@@ -48,6 +48,10 @@ export class AppComponent implements AfterViewInit {
 
     staticMenuMobileActive: boolean;
 
+    rightPanelActive: boolean;
+
+    rightPanelClick: boolean;
+
     layoutContainer: HTMLDivElement;
 
     layoutMenuScroller: HTMLDivElement;
@@ -58,114 +62,234 @@ export class AppComponent implements AfterViewInit {
 
     activeTopbarItem: any;
 
-    documentClickListener: Function;
-
     resetMenu: boolean;
+
+    menuHoverActive: boolean;
 
     @ViewChild('layoutContainer') layourContainerViewChild: ElementRef;
 
-    @ViewChild('layoutMenuScroller') layoutMenuScrollerViewChild: ElementRef;
+    @ViewChild('scrollPanel') layoutMenuScrollerViewChild: ScrollPanel;
 
-    constructor(
-        private router: Router,
-        public renderer: Renderer,
-        private userAuthService: UserAuthorisationService,
-        public logger: LoggingService,
-        public titleService: Title,
-        public appSettingsService: AppSettingsService,
-        private notificationReceiverService: NotificationReceiverService,
-        private spinnerService: SpinnerService,
-        private menuService: MenuService,
-        private broadcastService: BroadcastService) {
+    rippleInitListener: any;
 
-        this.broadcastService.on('logoff').subscribe((data) => {
-            // Redirect to logoff screen
-            this.logger.info('App Component Detected Logoff');
-         });
+    rippleMouseDownListener: any;
 
-         this.menuService.routeSubject.subscribe(routes => {
-                if (routes) {
-                    routes.forEach(route => {
-                    router.config.push(route);
-                });
+    constructor(private router: Router,
+      public renderer: Renderer, public zone: NgZone,       private userAuthService: UserAuthorisationService,
+      public logger: LoggingService,
+      public titleService: Title,
+      public appSettingsService: AppSettingsService,
+      private notificationReceiverService: NotificationReceiverService,
+      private spinnerService: SpinnerService,
+      private menuService: MenuService,
+      private broadcastService: BroadcastService) {
+      this.broadcastService.on('logoff').subscribe((data) => {
+        // Redirect to logoff screen
+        this.logger.info('App Component Detected Logoff');
+     });
+
+     this.menuService.routeSubject.subscribe(routes => {
+            if (routes) {
+                routes.forEach(route => {
+                router.config.push(route);
+            });
+        }
+     });
+
+     this.userAuthService.authenticatedSubject.subscribe(isAuthenticated => {
+        if (isAuthenticated) {
+            this.router.navigateByUrl('');
+        }else {
+            this.router.navigateByUrl('login');
+        }
+    });
+    }
+
+
+    ngOnInit() {
+        this.zone.runOutsideAngular(() => {this.bindRipple(); });
+    }
+
+    bindRipple() {
+        this.rippleInitListener = this.init.bind(this);
+        document.addEventListener('DOMContentLoaded', this.rippleInitListener);
+    }
+
+    init() {
+        this.rippleMouseDownListener = this.rippleMouseDown.bind(this);
+        document.addEventListener('mousedown', this.rippleMouseDownListener, false);
+    }
+
+    rippleMouseDown(e) {
+        for (let target = e.target; target && target !== this; target = target['parentNode']) {
+            if (!this.isVisible(target)) {
+              continue;
             }
-         });
 
-         this.userAuthService.authenticatedSubject.subscribe(isAuthenticated => {
-            if (isAuthenticated) {
-                this.router.navigateByUrl('');
-            }else {
-                this.router.navigateByUrl('login');
+            // Element.matches() -> https://developer.mozilla.org/en-US/docs/Web/API/Element/matches
+            if (this.selectorMatches(target, '.ripplelink, .ui-button')) {
+                const element = target;
+                this.rippleEffect(element, e);
+                break;
             }
-        });
+        }
+    }
+
+    selectorMatches(el, selector) {
+        const p = Element.prototype;
+        const f = p['matches'] || p['webkitMatchesSelector'] || p['mozMatchesSelector'] || p['msMatchesSelector'] || function (s) {
+            return [].indexOf.call(document.querySelectorAll(s), this) !== -1;
+        };
+        return f.call(el, selector);
+    }
+
+    isVisible(el) {
+        return !!(el.offsetWidth || el.offsetHeight);
+    }
+
+    rippleEffect(element, e) {
+        if (element.querySelector('.ink') === null) {
+            const inkEl = document.createElement('span');
+            this.addClass(inkEl, 'ink');
+
+            if (this.hasClass(element, 'ripplelink')) {
+                element.querySelector('span').insertAdjacentHTML('afterend', '<span class=\'ink\'></span>');
+            } else {
+                element.appendChild(inkEl);
+            }
+        }
+
+        const ink = element.querySelector('.ink');
+        this.removeClass(ink, 'ripple-animate');
+
+        if (!ink.offsetHeight && !ink.offsetWidth) {
+            const d = Math.max(element.offsetWidth, element.offsetHeight);
+            ink.style.height = d + 'px';
+            ink.style.width = d + 'px';
+        }
+
+        const x = e.pageX - this.getOffset(element).left - (ink.offsetWidth / 2);
+        const y = e.pageY - this.getOffset(element).top - (ink.offsetHeight / 2);
+
+        ink.style.top = y + 'px';
+        ink.style.left = x + 'px';
+        ink.style.pointerEvents = 'none';
+        this.addClass(ink, 'ripple-animate');
+    }
+    hasClass(element, className) {
+        if (element.classList) {
+            return element.classList.contains(className);
+        } else {
+            return new RegExp('(^| )' + className + '( |$)', 'gi').test(element.className);
+        }
+    }
+
+    addClass(element, className) {
+        if (element.classList) {
+            element.classList.add(className);
+        } else {
+            element.className += ' ' + className;
+        }
+    }
+
+    removeClass(element, className) {
+        if (element.classList) {
+            element.classList.remove(className);
+        } else {
+            element.className = element.className.replace(new RegExp('(^|\\b)' + className.split(' ').join('|') + '(\\b|$)', 'gi'), ' ');
+        }
+    }
+
+    getOffset(el) {
+        const rect = el.getBoundingClientRect();
+
+        return {
+          top: rect.top + (window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0),
+          left: rect.left + (window.pageXOffset || document.documentElement.scrollLeft || document.body.scrollLeft || 0),
+        };
+    }
+
+    unbindRipple() {
+        if (this.rippleInitListener) {
+            document.removeEventListener('DOMContentLoaded', this.rippleInitListener);
+        }
+        if (this.rippleMouseDownListener) {
+            document.removeEventListener('mousedown', this.rippleMouseDownListener);
+        }
     }
 
     ngAfterViewInit() {
-        this.logger.info('Loaded Main View');
+        this.layoutContainer = <HTMLDivElement> this.layourContainerViewChild.nativeElement;
+        setTimeout(() => {this.layoutMenuScrollerViewChild.moveBar(); }, 100);
 
+        // ngScaffolding
+        this.logger.info('Loaded Main View');
         // Set the window title
         this.titleService.setTitle(this.appSettingsService.title);
 
-        this.layoutContainer = <HTMLDivElement>this.layourContainerViewChild.nativeElement;
-        this.layoutMenuScroller = <HTMLDivElement>this.layoutMenuScrollerViewChild.nativeElement;
+        // Router Events capture here
+                this.router.events
+                .filter((event) => event instanceof NavigationEnd)
+                .subscribe((event) => {
+                    this.spinnerService.hideSpinner();
+                });
 
-        // hides the horizontal submenus or top menu if outside is clicked
-        this.documentClickListener = this.renderer.listenGlobal('body', 'click', (event) => {
-            if (!this.topbarItemClick) {
-                this.activeTopbarItem = null;
-                this.topbarMenuActive = false;
-            }
+                // Spinner Notification Here
+               this.broadcastService.on(BroadcastTypes.SHOW_SPINNER).subscribe(message => {
+                    this.spinning = true;
+                    if (message) {
+                        this.spinMessage = message.toString()
+                    }else {
+                        this.spinMessage = '';
+                    }
+                  });
 
-            if (!this.menuClick && this.isHorizontal()) {
+                  this.broadcastService.on(BroadcastTypes.HIDE_SPINNER).subscribe(message => {
+                    this.spinning = false;
+                    this.spinMessage = null;
+                  });
+                  // End Spinner
+        // ngScaffolding
+    }
+
+    onLayoutClick() {
+        if (!this.topbarItemClick) {
+            this.activeTopbarItem = null;
+            this.topbarMenuActive = false;
+        }
+
+        if (!this.menuClick) {
+            if (this.isHorizontal() || this.isSlim()) {
                 this.resetMenu = true;
             }
 
-            this.topbarItemClick = false;
-            this.menuClick = false;
-        });
-
-        setTimeout(() => {
-            jQuery(this.layoutMenuScroller).nanoScroller({ flash: true });
-        }, 10);
-
-        
-
-        // Router Events capture here
-        this.router.events
-        .filter((event) => event instanceof NavigationEnd)
-        .subscribe((event) => {
-            this.spinnerService.hideSpinner();
-        });
-
-        // Spinner Notification Here
-       this.broadcastService.on(BroadcastTypes.SHOW_SPINNER).subscribe(message => {
-            this.spinning = true;
-            if (message) {
-                this.spinMessage = message.toString()
-            }else {
-                this.spinMessage = '';
+            if (this.overlayMenuActive || this.staticMenuMobileActive) {
+                this.hideOverlayMenu();
             }
-          });
 
-          this.broadcastService.on(BroadcastTypes.HIDE_SPINNER).subscribe(message => {
-            this.spinning = false;
-            this.spinMessage = null;
-          });
-          // End Spinner
+            this.menuHoverActive = false;
+        }
+
+        if (!this.rightPanelClick) {
+            this.rightPanelActive = false;
+        }
+
+        this.topbarItemClick = false;
+        this.menuClick = false;
+        this.rightPanelClick = false;
     }
 
     onMenuButtonClick(event) {
+        this.menuClick = true;
         this.rotateMenuButton = !this.rotateMenuButton;
         this.topbarMenuActive = false;
 
         if (this.layoutMode === MenuOrientation.OVERLAY) {
             this.overlayMenuActive = !this.overlayMenuActive;
-        }
-        else {
-            if (this.isDesktop())
-                this.staticMenuDesktopInactive = !this.staticMenuDesktopInactive;
-            else
-                this.staticMenuMobileActive = !this.staticMenuMobileActive;
+        } else {
+            if (this.isDesktop()) {
+                this.staticMenuDesktopInactive = !this.staticMenuDesktopInactive; } else {
+                this.staticMenuMobileActive = !this.staticMenuMobileActive; }
         }
 
         event.preventDefault();
@@ -174,23 +298,13 @@ export class AppComponent implements AfterViewInit {
     onMenuClick($event) {
         this.menuClick = true;
         this.resetMenu = false;
-
-        if (!this.isHorizontal()) {
-            setTimeout(() => {
-                jQuery(this.layoutMenuScroller).nanoScroller();
-            }, 500);
-        }
     }
 
     onTopbarMenuButtonClick(event) {
         this.topbarItemClick = true;
         this.topbarMenuActive = !this.topbarMenuActive;
 
-        if (this.overlayMenuActive || this.staticMenuMobileActive) {
-            this.rotateMenuButton = false;
-            this.overlayMenuActive = false;
-            this.staticMenuMobileActive = false;
-        }
+        this.hideOverlayMenu();
 
         event.preventDefault();
     }
@@ -198,12 +312,27 @@ export class AppComponent implements AfterViewInit {
     onTopbarItemClick(event, item) {
         this.topbarItemClick = true;
 
-        if (this.activeTopbarItem === item)
-            this.activeTopbarItem = null;
-        else
-            this.activeTopbarItem = item;
+        if (this.activeTopbarItem === item) {
+            this.activeTopbarItem = null; } else {
+            this.activeTopbarItem = item; }
 
         event.preventDefault();
+    }
+
+    onRightPanelButtonClick(event) {
+        this.rightPanelClick = true;
+        this.rightPanelActive = !this.rightPanelActive;
+        event.preventDefault();
+    }
+
+    onRightPanelClick() {
+        this.rightPanelClick = true;
+    }
+
+    hideOverlayMenu() {
+        this.rotateMenuButton = false;
+        this.overlayMenuActive = false;
+        this.staticMenuMobileActive = false;
     }
 
     isTablet() {
@@ -227,6 +356,10 @@ export class AppComponent implements AfterViewInit {
         return this.layoutMode === MenuOrientation.HORIZONTAL;
     }
 
+    isSlim() {
+        return this.layoutMode === MenuOrientation.SLIM;
+    }
+
     changeToStaticMenu() {
         this.layoutMode = MenuOrientation.STATIC;
     }
@@ -239,11 +372,12 @@ export class AppComponent implements AfterViewInit {
         this.layoutMode = MenuOrientation.HORIZONTAL;
     }
 
-    ngOnDestroy() {
-        if (this.documentClickListener) {
-            this.documentClickListener();
-        }
-
-        jQuery(this.layoutMenuScroller).nanoScroller({ flash: true });
+    changeToSlimMenu() {
+        this.layoutMode = MenuOrientation.SLIM;
     }
+
+    ngOnDestroy() {
+        this.unbindRipple();
+    }
+
 }

@@ -52,7 +52,6 @@ $c-lineHeight: 18px;
 // Layouts Here
 @import '../../src/assets/sass/layout/_utils';
 @import '../../src/assets/sass/layout/_splash.scss';
-@import '../../src/assets/sass/layout/_dashboard.scss';
 @import '../../src/assets/sass/layout/_login.scss';
 @import '../../src/assets/sass/layout/_exception.scss';
 @import '../../src/assets/sass/layout/_landing.scss';
@@ -64,7 +63,7 @@ $c-lineHeight: 18px;
 
 
 
-@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) { 
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
     .landing-wrapper {
         .header {
             .header-top {
