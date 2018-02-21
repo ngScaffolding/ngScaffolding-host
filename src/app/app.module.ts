@@ -30,9 +30,9 @@ import { APP_COMPONENTS } from './app.component.list';
 import { MessageService } from 'primeng/components/common/messageservice';
 import { AppSettingsService,  UserAuthorisationService,  BroadcastService,  CacheService,
   CoreErrorHandlerService,  LoggingService,  NotificationService,  MenuService,  ReferenceValuesService,
-  SpinnerService,  RolesService,  UserPreferencesService,  VersionsService} from '@ngscaffolding/core';
+  SpinnerService,  RolesService,  UserPreferencesService,  VersionsService} from '../modules/core/coreModule';
 
-  import { DatagridModule } from '@ngscaffolding/datagrid';
+  import { DatagridModule } from '../modules/datagrid/datagridModule';
 
   import { CUSTOM_IMPORTS } from '../../custom/custom.app';
 

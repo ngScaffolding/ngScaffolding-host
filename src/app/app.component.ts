@@ -5,8 +5,8 @@ import { ScrollPanel } from 'primeng/primeng';
 import { Router, NavigationEnd, NavigationError, NavigationStart } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import 'rxjs/add/operator/filter';
-import { LoggingService, AppSettingsService, SpinnerService, UserAuthorisationService } from '@ngscaffolding/core';
-import { BroadcastService, BroadcastTypes, MenuService } from '@ngscaffolding/core';
+import { LoggingService, AppSettingsService, SpinnerService, UserAuthorisationService } from '../modules/core/coreModule';
+import { BroadcastService, BroadcastTypes, MenuService } from '../modules/core/coreModule';
 import { NotificationReceiverService } from './services/notificationReceiver/notificationReceiver.service';
 // ngScaffolding
 

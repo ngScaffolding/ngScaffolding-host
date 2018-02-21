@@ -1,6 +1,6 @@
 import { Injectable, Injector } from '@angular/core';
 import { HttpRequest, HttpHandler, HttpErrorResponse, HttpEvent, HttpInterceptor, HttpResponse } from '@angular/common/http';
-import { UserAuthorisationService, LoggingService } from '@ngscaffolding/core';
+import { UserAuthorisationService, LoggingService } from '../../modules/core/coreModule';
 import { Observable } from 'rxjs/Observable';
 import { finalize, tap } from 'rxjs/operators';
 

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { LoggingService, AppSettingsService } from '@ngscaffolding/core';
+import { LoggingService, AppSettingsService } from '../../../modules/core/coreModule';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 // import {MessageService} from 'primeng/components/common/messageservice';

@@ -2,8 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import {
   LoggingService,
   AppSettingsService,
-  NotificationService, SpinnerService, UserAuthorisationService
-} from '@ngscaffolding/core';
+  NotificationService,
+  SpinnerService,
+  UserAuthorisationService
+} from '../../../modules/core/coreModule';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 // import {MessageService} from 'primeng/components/common/messageservice';
@@ -60,7 +62,10 @@ export class LoginPageComponent implements OnInit {
       this.cookieService.delete(this.userNameCookie);
     }
 
-    this.userAuthService.logon(this.inputModel.username, this.inputModel.password);
+    this.userAuthService.logon(
+      this.inputModel.username,
+      this.inputModel.password
+    );
   }
 
   rememberChanged(isChecked: boolean) {

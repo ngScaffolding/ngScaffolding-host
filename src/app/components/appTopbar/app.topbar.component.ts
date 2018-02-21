@@ -1,6 +1,6 @@
 import { Component, Inject, forwardRef } from '@angular/core';
 import { AppComponent } from '../../app.component';
-import { AppSettingsService, ReferenceValuesService, UserAuthorisationService } from '@ngscaffolding/core';
+import { AppSettingsService, ReferenceValuesService, UserAuthorisationService } from '../../../modules/core/coreModule';
 
 @Component({
   selector: 'app-topbar',

@@ -1,4 +1,4 @@
-import { DemoAppModule } from '@ngscaffolding/demoapp';
+import { DemoAppModule } from '../src/modules/demoapp/demoappModule';
 
 export const CUSTOM_IMPORTS: any[] = [
     DemoAppModule.forRoot()

@@ -1,0 +1,17 @@
+<div class="ui-g" style="float: right;">
+    <button pButton class="ui-button-success toolbarButton" *ngIf="!hideFilters" type="button" icon="ui-icon-filter" tooltipPosition="bottom"
+        pTooltip="Show/Hide Filters" label="Filters">
+    </button>
+    <button pButton class="ui-button-info toolbarButton" *ngIf="!hideRefresh" type="button" icon="ui-icon-refresh" tooltipPosition="bottom"
+        pTooltip="Refresh Data" label="Refresh"></button>
+    <button pButton class="ui-button-warning toolbarButton" *ngIf="!hideColumns" type="button" icon="ui-icon-view-compact" tooltipPosition="bottom"
+        pTooltip="Configure Columns" label="Columns"></button>
+    <button pButton class="ui-button-success toolbarButton" *ngIf="!hideExport" type="button" icon="ui-icon-cloud-download" tooltipPosition="bottom"
+        pTooltip="Export/Print Data" label="Export"></button>
+    <button pButton class="ui-button-info toolbarButton" *ngIf="!hideSaveView" type="button" icon="ui-icon-save" tooltipPosition="bottom"
+        pTooltip="Save View Configuration" label="Save View"></button>
+    <button pButton class="ui-button-warning toolbarButton" *ngIf="!hideResetView" type="button" icon="ui-icon-restore" tooltipPosition="bottom"
+        pTooltip="Reset View Configuration" label="Reset View"></button>
+    <button pButton class="ui-button-success toolbarButton" *ngIf="!hideShareView" type="button" icon="ui-icon-share" tooltipPosition="bottom"
+        pTooltip="Share View" label="Share View"></button>
+</div>

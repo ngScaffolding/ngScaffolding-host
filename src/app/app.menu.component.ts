@@ -5,7 +5,7 @@ import {AppComponent} from './app.component';
 
 // ngScaffolding
 import { Inject, forwardRef } from '@angular/core';
-import { MenuService } from '@ngscaffolding/core';
+import { MenuService } from '../modules/core/coreModule';
 // ngScaffolding
 
 @Component({

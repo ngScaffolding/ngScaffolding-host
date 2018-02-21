@@ -6,9 +6,6 @@
     "module": "es2015",
     "types": []
   },
-  "include":[
-    "../../core/src/index.ts"
-  ],
   "exclude": [
     "test.ts",
     "**/*.spec.ts"
