@@ -44,6 +44,7 @@ import { LogoffPageComponent } from './pages/logoff/logoffPage.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
 import { AboutComponent } from './pages/about/about.component';
+import { UserSettingsComponent } from './pages/userSettings/userSettings.component';
 
 // Services
 import { NotificationReceiverService } from './services/notificationReceiver/notificationReceiver.service';
@@ -94,7 +95,8 @@ export function jwtOptionsFactory(appSettings: AppSettingsService) {
         PageNotFoundComponent,
         APP_COMPONENTS,
         RegisterComponent,
-        ForgotPasswordComponent
+        ForgotPasswordComponent,
+        UserSettingsComponent
     ],
     providers: [
         {provide: LocationStrategy, useClass: HashLocationStrategy},

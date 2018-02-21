@@ -8,11 +8,14 @@ import { LogoffPageComponent } from './pages/logoff/logoffPage.component';
 import { PageNotFoundComponent } from './pages/pageNotFound/pageNotFound.component';
 import { AboutComponent } from './pages/about/about.component';
 
+import { UserSettingsComponent } from './pages/userSettings/userSettings.component';
+
 export const routes: Routes = [
   { path: '', component: LandingPageComponent },
   { path: 'login', component: LoginPageComponent },
   { path: 'logoff', component: LogoffPageComponent },
   { path: 'about', component: AboutComponent },
+  { path: 'usersettings', component: UserSettingsComponent },
   { path: '**', component: PageNotFoundComponent }
 ];
 
