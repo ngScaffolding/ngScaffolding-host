@@ -8,6 +8,7 @@ import { LoggingService } from '../logging/logging.service';
 import { CoreMenuItem } from '../../models/coreMenuItem.model';
 import { MenuItem } from 'primeng/primeng';
 import { AppSettingsService } from '../appSettings/appSettings.service';
+import { UserAuthorisationService } from '../userAuthorisation/userAuthorisation.service';
 
 @Injectable()
 export class MenuService {
@@ -22,13 +23,17 @@ export class MenuService {
   constructor(
     private http: HttpClient,
     private appSettings: AppSettingsService,
+    private authService: UserAuthorisationService,
     private log: LoggingService,
     public rolesService: RolesService
   ) {
     // Wait for settings, then load from server
-    appSettings.settingsSubject.subscribe(settings => {
-      if (settings && settings.apiHome) {
+    authService.authenticatedSubject.subscribe(authorised =>{
+      if(authorised){
         this.downloadMenuItems();
+      }else{
+        this.menuItems = [];
+        this.menuSubject.next(this.menuItems);
       }
     });
   }
