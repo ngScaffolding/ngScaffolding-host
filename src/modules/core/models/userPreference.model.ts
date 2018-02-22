@@ -1,8 +1,14 @@
 import { BaseEntity } from './baseEntity.model';
 
-export class UserPreference extends BaseEntity {
-    public userPreferenceId: string;
-    public userName: string;
-    public preferenceId: string;
-    public value: string;
+export class UserPreferenceDefinition extends BaseEntity {
+  public inputDetails: string;
+  public name: string;
+  public value: string;
+}
+
+export class UserPreferenceValue extends BaseEntity {
+  public name: string;
+  public userName: string;
+  public userPreferenceId: number;
+  public value: string;
 }

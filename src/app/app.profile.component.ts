@@ -32,6 +32,12 @@ import {AppComponent} from './app.component';
                 </a>
             </li>
             <li role="menuitem">
+                <a href="#" routerLink="about" class="ripplelink" [attr.tabindex]="!active ? '-1' : null">
+                    <i class="material-icons">description</i>
+                    <span>About</span>
+                </a>
+            </li>
+            <li role="menuitem">
                 <a href="#" routerLink="logoff" class="ripplelink" [attr.tabindex]="!active ? '-1' : null">
                     <i class="material-icons">power_settings_new</i>
                     <span>Logout</span>

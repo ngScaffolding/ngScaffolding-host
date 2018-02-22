@@ -8,7 +8,7 @@ import { UserAuthorisationService } from '../userAuthorisation/userAuthorisation
 import { AppSettingsService } from '../appSettings/appSettings.service';
 
 // Models
-import { UserPreference } from '../../models/userPreference.model';
+import { UserPreferenceDefinition, UserPreferenceValue } from '../../models/userPreference.model';
 
 
 @Injectable()
@@ -17,9 +17,9 @@ export class UserPreferencesService {
     private readonly prefix = 'preference_';
     private readonly apiRoot: string;
 
-    private preferences: Map<string, UserPreference>;
+    private preferences: Map<string, UserPreferenceDefinition>;
 
-    private prefsSubject: BehaviorSubject<Map<string, UserPreference>>;
+    private prefsSubject: BehaviorSubject<Map<string, UserPreferenceDefinition>>;
 
 
     constructor(private http: HttpClient,
@@ -27,13 +27,13 @@ export class UserPreferencesService {
         private appSettings: AppSettingsService,
         private cache: CacheService) {
 
-        this.prefsSubject = new BehaviorSubject<Map<string, UserPreference>>(null);
+        this.prefsSubject = new BehaviorSubject<Map<string, UserPreferenceDefinition>>(null);
         this.apiRoot = `${this.appSettings.apiHome}/userPreference`;
     }
 
     public getValue(key: string): Observable<any> {
         // Look for an existing one
-        let currentPref = <UserPreference>this.cache.getValue(`${this.prefix}${key}`);
+        const currentPref = <UserPreferenceDefinition>this.cache.getValue(`${this.prefix}${key}`);
 
         if (currentPref) {
             // Already got one. Send it now.
@@ -44,7 +44,7 @@ export class UserPreferencesService {
         } else {
             return new Observable<any>(observer => {
                 // Load value from Server
-                this.http.get<UserPreference>(`${this.apiRoot}/${key}`)
+                this.http.get<UserPreferenceDefinition>(`${this.apiRoot}/${key}`)
                     .subscribe(pref => {
                         this.cache.setValue(`${this.prefix}${key}`, pref.value);
 
@@ -60,12 +60,12 @@ export class UserPreferencesService {
 
 
     public setValue(key: string, value: any) {
-        let currentPref = <UserPreference>this.cache.getValue(`${this.prefix}${key}`);
+        let currentPref = <UserPreferenceValue>this.cache.getValue(`${this.prefix}${key}`);
 
         if (!currentPref) {
-            currentPref = new UserPreference();
+            currentPref = new UserPreferenceValue();
             currentPref.userName = this.auth.currentUser.userId;
-            currentPref.preferenceId = key;
+            currentPref.userPreferenceId = key;
         }
 
         currentPref.value = value;
@@ -75,7 +75,7 @@ export class UserPreferencesService {
         this.storeValue(key, currentPref);
     }
 
-    private storeValue(key: string, pref: UserPreference): void {
+    private storeValue(key: string, pref: UserPreferenceDefinition): void {
         // Save to Cache for later
         this.cache.setValue(`${this.prefix}${key}`, pref);
 
