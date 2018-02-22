@@ -91,14 +91,14 @@ export class InputDetailTextBox extends InputDetail {
   mask?: string; // 999-999
 }
 
-export class InputDetailDataSource extends InputDetail {
-  datasource?: string; // Used for select items
-  datasourceSeedName?: string; // set to name, when changed use this value in search
+export class InputDetailReferenceValues extends InputDetail {
+  referenceValueName?: string; // Used for select items
+  referenceValueSeedName?: string; // set to name, when changed use this value in search
   datasourceItems?: Array<ReferenceValueItem>; // Results of the datasource stored here for binding
-  datasourceSeedDependency?: string; // Name of control to use as seed for this DataSource... Used linked Dropdowns
+  referenceValueSeedDependency?: string; // Name of control to use as seed for this DataSource... Used linked Dropdowns
 }
 
-export class InputDetailDropdown extends InputDetailDataSource {
+export class InputDetailDropdown extends InputDetailReferenceValues {
   selectFilter?: boolean; // Show Filter on Select Dropdown
   selectFilterBy?: string; // Fields to filter by on Select DropDown
   selectFilterPlaceholder?: string; // Placeholder for Filter input

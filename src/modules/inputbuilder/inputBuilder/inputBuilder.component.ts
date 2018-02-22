@@ -19,7 +19,7 @@ import {
   ReferenceValuesService,
   ReferenceValueItem
 } from '../../core/coreModule';
-import { InputDetailDataSource } from '../models/inputDetail.model';
+import { InputDetailReferenceValues } from '../models/inputDetail.model';
 
 @Component({
   selector: 'input-builder',
@@ -97,7 +97,7 @@ export class InputBuilderComponent implements OnInit, OnChanges {
         // If Datasource, get the values
         if (
           inputDetail.hasOwnProperty('datasource') &&
-          (<InputDetailDataSource>inputDetail).datasource
+          (<InputDetailReferenceValues>inputDetail).referenceValueName
         ) {
           this.loadDataSource(inputDetail);
         }
@@ -145,8 +145,8 @@ export class InputBuilderComponent implements OnInit, OnChanges {
     this.inputDefinition.inputDetails.forEach(input => {
       if (
         input.hasOwnProperty('datasourceSeedDependency') &&
-        (<InputDetailDataSource>input).datasourceSeedDependency &&
-        (<InputDetailDataSource>input).datasourceSeedDependency ===
+        (<InputDetailReferenceValues>input).referenceValueSeedDependency &&
+        (<InputDetailReferenceValues>input).referenceValueSeedDependency ===
           inputDetail.name
       ) {
         this.loadDataSource(input, strValue);
@@ -156,9 +156,9 @@ export class InputBuilderComponent implements OnInit, OnChanges {
 
   private loadDataSource(inputDetail: InputDetail, seed: string = '') {
     this.refValuesService
-      .getReferenceValue((<InputDetailDataSource>inputDetail).datasource, seed)
+      .getReferenceValue((<InputDetailReferenceValues>inputDetail).referenceValueName, seed)
       .subscribe(refValue => {
-        (<InputDetailDataSource>inputDetail).datasourceItems =
+        (<InputDetailReferenceValues>inputDetail).datasourceItems =
           refValue.referenceValueItems;
       });
   }

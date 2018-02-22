@@ -40,14 +40,14 @@ export class InputBuilderSimpleComponent {
         label: 'Simple Continents',
         name: 'simpleSelectContinents',
         type: InputTypes.select,
-        datasource: 'Continents',
+        referenceValueName: 'Continents',
         help: 'Basic Select Only'
       },
        <InputDetailDropdown> {
         label: 'Simple Countries',
         name: 'simpleSelectCountries',
         type: InputTypes.select,
-        datasource: 'Countries',
+        referenceValueName: 'Countries',
         validateRequired: 'Select Me Please',
         selectFilter: true
       },
@@ -55,7 +55,7 @@ export class InputBuilderSimpleComponent {
         label: 'linked Continents',
         name: 'linkedSelectContinents',
         type: InputTypes.select,
-        datasource: 'Continents',
+        referenceValueName: 'Continents',
         validateRequired: 'Select Me Please',
         help: 'Basic Select Only'
       },
@@ -63,8 +63,8 @@ export class InputBuilderSimpleComponent {
         label: 'linked Countries',
         name: 'linkedSelectCountries',
         type: InputTypes.select,
-        datasource: 'CountriesForContinent',
-        datasourceSeedDependency: 'linkedSelectContinents',
+        referenceValueName: 'CountriesForContinent',
+        referenceValueSeedDependency: 'linkedSelectContinents',
         validateRequired: 'Select Me Please',
         selectFilter: true
       },
