@@ -19,7 +19,7 @@ export class InputBuilderDefinition {
   cancelButtonIcon?: string;
 
   // Array of input details to build in output
-  inputDetails: InputDetail[];
+  inputDetails?: InputDetail[];
 
   // Custom Button
   customButtonText?: string;

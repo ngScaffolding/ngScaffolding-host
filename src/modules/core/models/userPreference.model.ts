@@ -7,7 +7,7 @@ export class UserPreferenceDefinition extends BaseEntity {
 }
 
 export class UserPreferenceValue extends BaseEntity {
-  public userName: string;
+  public userId: string;
   public userPreferenceId: number;
   public value: string;
 }

@@ -32,8 +32,9 @@ import { AppSettingsService,  UserAuthorisationService,  BroadcastService,  Cach
   CoreErrorHandlerService,  LoggingService,  NotificationService,  MenuService,  ReferenceValuesService,
   SpinnerService,  RolesService,  UserPreferencesService,  VersionsService} from '../modules/core/coreModule';
 
+  // Externalise These Modules
   import { DatagridModule } from '../modules/datagrid/datagridModule';
-
+  import { InputBuilderModule } from '../modules/inputbuilder/inputbuilderModule';
   import { CUSTOM_IMPORTS } from '../../custom/custom.app';
 
 // Pages
@@ -69,7 +70,10 @@ export function jwtOptionsFactory(appSettings: AppSettingsService) {
         BrowserAnimationsModule,
         PRIME_COMPONENTS,
         CUSTOM_IMPORTS,
+        // To be External
         DatagridModule,
+        InputBuilderModule,
+
         JwtModule.forRoot({
           jwtOptionsProvider: {
           provide: JWT_OPTIONS,
