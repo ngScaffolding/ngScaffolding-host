@@ -38,6 +38,7 @@ import { AppSettingsService,  UserAuthorisationService,  BroadcastService,  Cach
   import { CUSTOM_IMPORTS } from '../../custom/custom.app';
 
 // Pages
+import { NgScaffoldingComponent } from './app.ngscaffolding.component';
 import { LandingPageComponent } from './components/landingPage/landingPage.component';
 import { PageNotFoundComponent } from './pages/pageNotFound/pageNotFound.component';
 import { LoginPageComponent } from './pages/login/loginPage.component';
@@ -92,6 +93,7 @@ export function jwtOptionsFactory(appSettings: AppSettingsService) {
         AppInlineProfileComponent,
 
         // Pages
+        NgScaffoldingComponent,
         AboutComponent,
         LandingPageComponent,
         LoginPageComponent,

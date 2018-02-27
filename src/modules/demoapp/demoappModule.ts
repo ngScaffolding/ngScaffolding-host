@@ -20,9 +20,6 @@ import { InputBuilderSimpleComponent } from './pages/inputBuilderSimple/inputBui
 import { DatagridSampleComponent } from './pages/dataGridSample/dataGridSample.component';
 
 export * from './pages/inputBuilderSimple/inputBuilderSimple.component';
-// export * from './sample.directive';
-// export * from './sample.pipe';
-// export * from './sample.service';
 
 const appRoutes: Routes = [
   { path: 'inputbuildersimple', component: InputBuilderSimpleComponent },
@@ -40,23 +37,17 @@ const appRoutes: Routes = [
   declarations: [
     InputBuilderSimpleComponent,
     DatagridSampleComponent
-    // SampleComponent,
-    // SampleDirective,
-    // SamplePipe
   ],
   exports: [
     InputBuilderSimpleComponent,
     DatagridSampleComponent,
     RouterModule
-    // SampleDirective,
-    // SamplePipe
   ]
 })
 export class DemoAppModule {
   static forRoot(): ModuleWithProviders {
     return {
       ngModule: DemoAppModule
-      // providers: [SampleService]
     };
   }
 
@@ -69,7 +60,7 @@ export class DemoAppModule {
 
     versions.addVersion('@ngscaffolding/demoapp', VERSION.version, true);
 
-    let settings: AppSettings = new AppSettings();
+    const settings: AppSettings = new AppSettings();
     settings.title = 'ngScaffolding Demo';
     settings.apiHome = 'http://localhost:50000';
     settings.apiAuth = 'http://localhost:50020';

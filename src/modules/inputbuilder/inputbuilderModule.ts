@@ -28,11 +28,6 @@ import {
   MultiSelectModule, ToggleButtonModule, TooltipModule
 } from 'primeng/primeng';
 
-// import { SampleComponent } from './sample.component';
-// import { SampleDirective } from './sample.directive';
-// import { SamplePipe } from './sample.pipe';
-// import { SampleService } from './sample.service';
-
 export * from './inputBuilder/inputBuilder.component';
 export * from './models/inputDetail.model';
 export * from './models/inputBuilderDefinition.model';
@@ -64,15 +59,9 @@ export * from './models/inputBuilderDefinition.model';
   ],
   declarations: [
     InputBuilderComponent
-    // SampleComponent,
-    // SampleDirective,
-    // SamplePipe
   ],
   exports: [
     InputBuilderComponent
-    // SampleComponent,
-    // SampleDirective,
-    // SamplePipe
   ]
 })
 export class InputBuilderModule {

@@ -2,13 +2,13 @@ import { Component, AfterViewInit, ElementRef, Renderer, ViewChild, OnDestroy, O
 import { ScrollPanel } from 'primeng/primeng';
 
 // ngScaffolding
-import { Router, NavigationEnd, NavigationError, NavigationStart } from '@angular/router';
+import { Router } from '@angular/router';
+import { NgScaffoldingComponent } from './app.ngscaffolding.component';
 import { Title } from '@angular/platform-browser';
 import 'rxjs/add/operator/filter';
 import { LoggingService, AppSettingsService, SpinnerService, UserAuthorisationService } from '../modules/core/coreModule';
 import { BroadcastService, BroadcastTypes, MenuService } from '../modules/core/coreModule';
 import { NotificationReceiverService } from './services/notificationReceiver/notificationReceiver.service';
-// ngScaffolding
 
 enum MenuOrientation {
     STATIC,
@@ -22,362 +22,359 @@ enum MenuOrientation {
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements AfterViewInit, OnDestroy, OnInit {
+export class AppComponent extends NgScaffoldingComponent
+  implements AfterViewInit, OnDestroy, OnInit {
+  layoutCompact = true;
 
-  // ngScaffolding
-  spinning: boolean;
-  spinMessage: string;
-  // ngScaffolding
+  layoutMode: MenuOrientation = MenuOrientation.STATIC;
 
+  darkMenu = false;
 
-    layoutCompact = true;
+  profileMode = 'inline';
 
-    layoutMode: MenuOrientation = MenuOrientation.STATIC;
+  rotateMenuButton: boolean;
 
-    darkMenu = false;
+  topbarMenuActive: boolean;
 
-    profileMode = 'inline';
+  overlayMenuActive: boolean;
 
-    rotateMenuButton: boolean;
+  staticMenuDesktopInactive: boolean;
 
-    topbarMenuActive: boolean;
+  staticMenuMobileActive: boolean;
 
-    overlayMenuActive: boolean;
+  rightPanelActive: boolean;
 
-    staticMenuDesktopInactive: boolean;
+  rightPanelClick: boolean;
 
-    staticMenuMobileActive: boolean;
+  layoutContainer: HTMLDivElement;
 
-    rightPanelActive: boolean;
+  layoutMenuScroller: HTMLDivElement;
 
-    rightPanelClick: boolean;
+  menuClick: boolean;
 
-    layoutContainer: HTMLDivElement;
+  topbarItemClick: boolean;
 
-    layoutMenuScroller: HTMLDivElement;
+  activeTopbarItem: any;
 
-    menuClick: boolean;
+  resetMenu: boolean;
 
-    topbarItemClick: boolean;
+  menuHoverActive: boolean;
 
-    activeTopbarItem: any;
+  @ViewChild('layoutContainer') layourContainerViewChild: ElementRef;
 
-    resetMenu: boolean;
+  @ViewChild('scrollPanel') layoutMenuScrollerViewChild: ScrollPanel;
 
-    menuHoverActive: boolean;
+  rippleInitListener: any;
 
-    @ViewChild('layoutContainer') layourContainerViewChild: ElementRef;
+  rippleMouseDownListener: any;
 
-    @ViewChild('scrollPanel') layoutMenuScrollerViewChild: ScrollPanel;
+  constructor(
+    public router: Router,
+    public renderer: Renderer,
+    public zone: NgZone,
+    public logger: LoggingService,
+    public userAuthService: UserAuthorisationService,
+    public titleService: Title,
+    public appSettingsService: AppSettingsService,
+    public notificationReceiverService: NotificationReceiverService,
+    public spinnerService: SpinnerService,
+    public menuService: MenuService,
+    public broadcastService: BroadcastService
+  ) {
+    super(
+      router,
+      logger,
+      userAuthService,
+      titleService,
+      appSettingsService,
+      notificationReceiverService,
+      spinnerService,
+      menuService,
+      broadcastService
+    );
+  }
 
-    rippleInitListener: any;
-
-    rippleMouseDownListener: any;
-
-    constructor(private router: Router,
-      public renderer: Renderer, public zone: NgZone,       private userAuthService: UserAuthorisationService,
-      public logger: LoggingService,
-      public titleService: Title,
-      public appSettingsService: AppSettingsService,
-      private notificationReceiverService: NotificationReceiverService,
-      private spinnerService: SpinnerService,
-      private menuService: MenuService,
-      private broadcastService: BroadcastService) {
-      this.broadcastService.on('logoff').subscribe((data) => {
-        // Redirect to logoff screen
-        this.logger.info('App Component Detected Logoff');
-     });
-
-     this.menuService.routeSubject.subscribe(routes => {
-            if (routes) {
-                routes.forEach(route => {
-                router.config.push(route);
-            });
-        }
-     });
-
-     this.userAuthService.authenticatedSubject.subscribe(isAuthenticated => {
-        if (isAuthenticated) {
-            this.router.navigateByUrl('');
-        }else {
-            this.router.navigateByUrl('login');
-        }
+  ngOnInit() {
+    this.zone.runOutsideAngular(() => {
+      this.bindRipple();
     });
+  }
+
+  bindRipple() {
+    this.rippleInitListener = this.init.bind(this);
+    document.addEventListener('DOMContentLoaded', this.rippleInitListener);
+  }
+
+  init() {
+    this.rippleMouseDownListener = this.rippleMouseDown.bind(this);
+    document.addEventListener('mousedown', this.rippleMouseDownListener, false);
+  }
+
+  rippleMouseDown(e) {
+    for (
+      let target = e.target;
+      target && target !== this;
+      target = target['parentNode']
+    ) {
+      if (!this.isVisible(target)) {
+        continue;
+      }
+
+      // Element.matches() -> https://developer.mozilla.org/en-US/docs/Web/API/Element/matches
+      if (this.selectorMatches(target, '.ripplelink, .ui-button')) {
+        const element = target;
+        this.rippleEffect(element, e);
+        break;
+      }
+    }
+  }
+
+  selectorMatches(el, selector) {
+    const p = Element.prototype;
+    const f =
+      p['matches'] ||
+      p['webkitMatchesSelector'] ||
+      p['mozMatchesSelector'] ||
+      p['msMatchesSelector'] ||
+      function(s) {
+        return [].indexOf.call(document.querySelectorAll(s), this) !== -1;
+      };
+    return f.call(el, selector);
+  }
+
+  isVisible(el) {
+    return !!(el.offsetWidth || el.offsetHeight);
+  }
+
+  rippleEffect(element, e) {
+    if (element.querySelector('.ink') === null) {
+      const inkEl = document.createElement('span');
+      this.addClass(inkEl, 'ink');
+
+      if (this.hasClass(element, 'ripplelink')) {
+        element
+          .querySelector('span')
+          .insertAdjacentHTML('afterend', "<span class='ink'></span>");
+      } else {
+        element.appendChild(inkEl);
+      }
     }
 
+    const ink = element.querySelector('.ink');
+    this.removeClass(ink, 'ripple-animate');
 
-    ngOnInit() {
-        this.zone.runOutsideAngular(() => {this.bindRipple(); });
+    if (!ink.offsetHeight && !ink.offsetWidth) {
+      const d = Math.max(element.offsetWidth, element.offsetHeight);
+      ink.style.height = d + 'px';
+      ink.style.width = d + 'px';
     }
 
-    bindRipple() {
-        this.rippleInitListener = this.init.bind(this);
-        document.addEventListener('DOMContentLoaded', this.rippleInitListener);
+    const x = e.pageX - this.getOffset(element).left - ink.offsetWidth / 2;
+    const y = e.pageY - this.getOffset(element).top - ink.offsetHeight / 2;
+
+    ink.style.top = y + 'px';
+    ink.style.left = x + 'px';
+    ink.style.pointerEvents = 'none';
+    this.addClass(ink, 'ripple-animate');
+  }
+  hasClass(element, className) {
+    if (element.classList) {
+      return element.classList.contains(className);
+    } else {
+      return new RegExp('(^| )' + className + '( |$)', 'gi').test(
+        element.className
+      );
+    }
+  }
+
+  addClass(element, className) {
+    if (element.classList) {
+      element.classList.add(className);
+    } else {
+      element.className += ' ' + className;
+    }
+  }
+
+  removeClass(element, className) {
+    if (element.classList) {
+      element.classList.remove(className);
+    } else {
+      element.className = element.className.replace(
+        new RegExp(
+          '(^|\\b)' + className.split(' ').join('|') + '(\\b|$)',
+          'gi'
+        ),
+        ' '
+      );
+    }
+  }
+
+  getOffset(el) {
+    const rect = el.getBoundingClientRect();
+
+    return {
+      top:
+        rect.top +
+        (window.pageYOffset ||
+          document.documentElement.scrollTop ||
+          document.body.scrollTop ||
+          0),
+      left:
+        rect.left +
+        (window.pageXOffset ||
+          document.documentElement.scrollLeft ||
+          document.body.scrollLeft ||
+          0)
+    };
+  }
+
+  unbindRipple() {
+    if (this.rippleInitListener) {
+      document.removeEventListener('DOMContentLoaded', this.rippleInitListener);
+    }
+    if (this.rippleMouseDownListener) {
+      document.removeEventListener('mousedown', this.rippleMouseDownListener);
+    }
+  }
+
+  ngAfterViewInit() {
+    super.ngAfterViewInit();
+    this.layoutContainer = <HTMLDivElement>this.layourContainerViewChild
+      .nativeElement;
+    setTimeout(() => {
+      this.layoutMenuScrollerViewChild.moveBar();
+    }, 100);
+  }
+
+  onLayoutClick() {
+    if (!this.topbarItemClick) {
+      this.activeTopbarItem = null;
+      this.topbarMenuActive = false;
     }
 
-    init() {
-        this.rippleMouseDownListener = this.rippleMouseDown.bind(this);
-        document.addEventListener('mousedown', this.rippleMouseDownListener, false);
-    }
+    if (!this.menuClick) {
+      if (this.isHorizontal() || this.isSlim()) {
+        this.resetMenu = true;
+      }
 
-    rippleMouseDown(e) {
-        for (let target = e.target; target && target !== this; target = target['parentNode']) {
-            if (!this.isVisible(target)) {
-              continue;
-            }
-
-            // Element.matches() -> https://developer.mozilla.org/en-US/docs/Web/API/Element/matches
-            if (this.selectorMatches(target, '.ripplelink, .ui-button')) {
-                const element = target;
-                this.rippleEffect(element, e);
-                break;
-            }
-        }
-    }
-
-    selectorMatches(el, selector) {
-        const p = Element.prototype;
-        const f = p['matches'] || p['webkitMatchesSelector'] || p['mozMatchesSelector'] || p['msMatchesSelector'] || function (s) {
-            return [].indexOf.call(document.querySelectorAll(s), this) !== -1;
-        };
-        return f.call(el, selector);
-    }
-
-    isVisible(el) {
-        return !!(el.offsetWidth || el.offsetHeight);
-    }
-
-    rippleEffect(element, e) {
-        if (element.querySelector('.ink') === null) {
-            const inkEl = document.createElement('span');
-            this.addClass(inkEl, 'ink');
-
-            if (this.hasClass(element, 'ripplelink')) {
-                element.querySelector('span').insertAdjacentHTML('afterend', '<span class=\'ink\'></span>');
-            } else {
-                element.appendChild(inkEl);
-            }
-        }
-
-        const ink = element.querySelector('.ink');
-        this.removeClass(ink, 'ripple-animate');
-
-        if (!ink.offsetHeight && !ink.offsetWidth) {
-            const d = Math.max(element.offsetWidth, element.offsetHeight);
-            ink.style.height = d + 'px';
-            ink.style.width = d + 'px';
-        }
-
-        const x = e.pageX - this.getOffset(element).left - (ink.offsetWidth / 2);
-        const y = e.pageY - this.getOffset(element).top - (ink.offsetHeight / 2);
-
-        ink.style.top = y + 'px';
-        ink.style.left = x + 'px';
-        ink.style.pointerEvents = 'none';
-        this.addClass(ink, 'ripple-animate');
-    }
-    hasClass(element, className) {
-        if (element.classList) {
-            return element.classList.contains(className);
-        } else {
-            return new RegExp('(^| )' + className + '( |$)', 'gi').test(element.className);
-        }
-    }
-
-    addClass(element, className) {
-        if (element.classList) {
-            element.classList.add(className);
-        } else {
-            element.className += ' ' + className;
-        }
-    }
-
-    removeClass(element, className) {
-        if (element.classList) {
-            element.classList.remove(className);
-        } else {
-            element.className = element.className.replace(new RegExp('(^|\\b)' + className.split(' ').join('|') + '(\\b|$)', 'gi'), ' ');
-        }
-    }
-
-    getOffset(el) {
-        const rect = el.getBoundingClientRect();
-
-        return {
-          top: rect.top + (window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0),
-          left: rect.left + (window.pageXOffset || document.documentElement.scrollLeft || document.body.scrollLeft || 0),
-        };
-    }
-
-    unbindRipple() {
-        if (this.rippleInitListener) {
-            document.removeEventListener('DOMContentLoaded', this.rippleInitListener);
-        }
-        if (this.rippleMouseDownListener) {
-            document.removeEventListener('mousedown', this.rippleMouseDownListener);
-        }
-    }
-
-    ngAfterViewInit() {
-        this.layoutContainer = <HTMLDivElement> this.layourContainerViewChild.nativeElement;
-        setTimeout(() => {this.layoutMenuScrollerViewChild.moveBar(); }, 100);
-
-        // ngScaffolding
-        this.logger.info('Loaded Main View');
-        // Set the window title
-        this.titleService.setTitle(this.appSettingsService.title);
-
-        // Router Events capture here
-                this.router.events
-                .filter((event) => event instanceof NavigationEnd)
-                .subscribe((event) => {
-                    this.spinnerService.hideSpinner();
-                });
-
-                // Spinner Notification Here
-               this.broadcastService.on(BroadcastTypes.SHOW_SPINNER).subscribe(message => {
-                    this.spinning = true;
-                    if (message) {
-                        this.spinMessage = message.toString()
-                    }else {
-                        this.spinMessage = '';
-                    }
-                  });
-
-                  this.broadcastService.on(BroadcastTypes.HIDE_SPINNER).subscribe(message => {
-                    this.spinning = false;
-                    this.spinMessage = null;
-                  });
-                  // End Spinner
-        // ngScaffolding
-    }
-
-    onLayoutClick() {
-        if (!this.topbarItemClick) {
-            this.activeTopbarItem = null;
-            this.topbarMenuActive = false;
-        }
-
-        if (!this.menuClick) {
-            if (this.isHorizontal() || this.isSlim()) {
-                this.resetMenu = true;
-            }
-
-            if (this.overlayMenuActive || this.staticMenuMobileActive) {
-                this.hideOverlayMenu();
-            }
-
-            this.menuHoverActive = false;
-        }
-
-        if (!this.rightPanelClick) {
-            this.rightPanelActive = false;
-        }
-
-        this.topbarItemClick = false;
-        this.menuClick = false;
-        this.rightPanelClick = false;
-    }
-
-    onMenuButtonClick(event) {
-        this.menuClick = true;
-        this.rotateMenuButton = !this.rotateMenuButton;
-        this.topbarMenuActive = false;
-
-        if (this.layoutMode === MenuOrientation.OVERLAY) {
-            this.overlayMenuActive = !this.overlayMenuActive;
-        } else {
-            if (this.isDesktop()) {
-                this.staticMenuDesktopInactive = !this.staticMenuDesktopInactive; } else {
-                this.staticMenuMobileActive = !this.staticMenuMobileActive; }
-        }
-
-        event.preventDefault();
-    }
-
-    onMenuClick($event) {
-        this.menuClick = true;
-        this.resetMenu = false;
-    }
-
-    onTopbarMenuButtonClick(event) {
-        this.topbarItemClick = true;
-        this.topbarMenuActive = !this.topbarMenuActive;
-
+      if (this.overlayMenuActive || this.staticMenuMobileActive) {
         this.hideOverlayMenu();
+      }
 
-        event.preventDefault();
+      this.menuHoverActive = false;
     }
 
-    onTopbarItemClick(event, item) {
-        this.topbarItemClick = true;
-
-        if (this.activeTopbarItem === item) {
-            this.activeTopbarItem = null; } else {
-            this.activeTopbarItem = item; }
-
-        event.preventDefault();
+    if (!this.rightPanelClick) {
+      this.rightPanelActive = false;
     }
 
-    onRightPanelButtonClick(event) {
-        this.rightPanelClick = true;
-        this.rightPanelActive = !this.rightPanelActive;
-        event.preventDefault();
+    this.topbarItemClick = false;
+    this.menuClick = false;
+    this.rightPanelClick = false;
+  }
+
+  onMenuButtonClick(event) {
+    this.menuClick = true;
+    this.rotateMenuButton = !this.rotateMenuButton;
+    this.topbarMenuActive = false;
+
+    if (this.layoutMode === MenuOrientation.OVERLAY) {
+      this.overlayMenuActive = !this.overlayMenuActive;
+    } else {
+      if (this.isDesktop()) {
+        this.staticMenuDesktopInactive = !this.staticMenuDesktopInactive;
+      } else {
+        this.staticMenuMobileActive = !this.staticMenuMobileActive;
+      }
     }
 
-    onRightPanelClick() {
-        this.rightPanelClick = true;
+    event.preventDefault();
+  }
+
+  onMenuClick($event) {
+    this.menuClick = true;
+    this.resetMenu = false;
+  }
+
+  onTopbarMenuButtonClick(event) {
+    this.topbarItemClick = true;
+    this.topbarMenuActive = !this.topbarMenuActive;
+
+    this.hideOverlayMenu();
+
+    event.preventDefault();
+  }
+
+  onTopbarItemClick(event, item) {
+    this.topbarItemClick = true;
+
+    if (this.activeTopbarItem === item) {
+      this.activeTopbarItem = null;
+    } else {
+      this.activeTopbarItem = item;
     }
 
-    hideOverlayMenu() {
-        this.rotateMenuButton = false;
-        this.overlayMenuActive = false;
-        this.staticMenuMobileActive = false;
-    }
+    event.preventDefault();
+  }
 
-    isTablet() {
-        const width = window.innerWidth;
-        return width <= 1024 && width > 640;
-    }
+  onRightPanelButtonClick(event) {
+    this.rightPanelClick = true;
+    this.rightPanelActive = !this.rightPanelActive;
+    event.preventDefault();
+  }
 
-    isDesktop() {
-        return window.innerWidth > 1024;
-    }
+  onRightPanelClick() {
+    this.rightPanelClick = true;
+  }
 
-    isMobile() {
-        return window.innerWidth <= 640;
-    }
+  hideOverlayMenu() {
+    this.rotateMenuButton = false;
+    this.overlayMenuActive = false;
+    this.staticMenuMobileActive = false;
+  }
 
-    isOverlay() {
-        return this.layoutMode === MenuOrientation.OVERLAY;
-    }
+  isTablet() {
+    const width = window.innerWidth;
+    return width <= 1024 && width > 640;
+  }
 
-    isHorizontal() {
-        return this.layoutMode === MenuOrientation.HORIZONTAL;
-    }
+  isDesktop() {
+    return window.innerWidth > 1024;
+  }
 
-    isSlim() {
-        return this.layoutMode === MenuOrientation.SLIM;
-    }
+  isMobile() {
+    return window.innerWidth <= 640;
+  }
 
-    changeToStaticMenu() {
-        this.layoutMode = MenuOrientation.STATIC;
-    }
+  isOverlay() {
+    return this.layoutMode === MenuOrientation.OVERLAY;
+  }
 
-    changeToOverlayMenu() {
-        this.layoutMode = MenuOrientation.OVERLAY;
-    }
+  isHorizontal() {
+    return this.layoutMode === MenuOrientation.HORIZONTAL;
+  }
 
-    changeToHorizontalMenu() {
-        this.layoutMode = MenuOrientation.HORIZONTAL;
-    }
+  isSlim() {
+    return this.layoutMode === MenuOrientation.SLIM;
+  }
 
-    changeToSlimMenu() {
-        this.layoutMode = MenuOrientation.SLIM;
-    }
+  changeToStaticMenu() {
+    this.layoutMode = MenuOrientation.STATIC;
+  }
 
-    ngOnDestroy() {
-        this.unbindRipple();
-    }
+  changeToOverlayMenu() {
+    this.layoutMode = MenuOrientation.OVERLAY;
+  }
 
+  changeToHorizontalMenu() {
+    this.layoutMode = MenuOrientation.HORIZONTAL;
+  }
+
+  changeToSlimMenu() {
+    this.layoutMode = MenuOrientation.SLIM;
+  }
+
+  ngOnDestroy() {
+    this.unbindRipple();
+  }
 }

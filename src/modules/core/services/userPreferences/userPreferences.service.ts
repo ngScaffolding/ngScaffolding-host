@@ -22,9 +22,7 @@ export class UserPreferencesService {
   private preferenceValues: Map<string, UserPreferenceValue>;
   private preferenceDefinitions: Map<string, UserPreferenceDefinition>;
 
-  public preferenceDefinitionsSubject: BehaviorSubject<
-    Map<string, UserPreferenceDefinition>
-  >;
+  public preferenceDefinitionsSubject: BehaviorSubject<Map<string, UserPreferenceDefinition>>;
   public preferenceValuesSubject: BehaviorSubject<Map<string, UserPreferenceValue>>;
 
   constructor(
@@ -32,51 +30,42 @@ export class UserPreferencesService {
     private auth: UserAuthorisationService,
     private appSettings: AppSettingsService
   ) {
+      this.preferenceValues = new Map<string, UserPreferenceValue>();
+      this.preferenceDefinitions = new Map<string, UserPreferenceDefinition>();
 
-    this.preferenceValues = new Map<string, UserPreferenceValue>();
-    this.preferenceDefinitions = new Map<string, UserPreferenceDefinition>();
+      this.preferenceDefinitionsSubject = new BehaviorSubject<Map<string, UserPreferenceDefinition>>(null);
+      this.preferenceValuesSubject = new BehaviorSubject<Map<string, UserPreferenceValue>>(null);
 
-    this.preferenceDefinitionsSubject = new BehaviorSubject<
-      Map<string, UserPreferenceDefinition>
-    >(null);
-    this.preferenceValuesSubject = new BehaviorSubject<
-      Map<string, UserPreferenceValue>
-    >(null);
+      this.apiRootValues = `${this.appSettings.apiHome}/userPreferencevalues`;
+      this.apiRootDefinitions = `${this.appSettings.apiHome}/UserPreferenceDefinitions`;
 
-    this.apiRootValues = `${this.appSettings.apiHome}/userPreferencevalues`;
-    this.apiRootDefinitions = `${this.appSettings.apiHome}/UserPreferenceDefinitions`;
+      // Load Pref Defs from server
+      this.getDefinitions();
 
-    // Load Pref Defs from server
-    this.getDefinitions();
+      // Load User Prefs from Localstorage
+      this.loadFromLocal();
 
-    // Load User Prefs from Localstorage
-    this.loadFromLocal();
-  }
+      this.getValues();
+    }
 
-  public getValue(key: string): Observable<any> {
-    // Look for an existing one
-    const currentPref = this.preferenceValues.get(key);
+  public getValues(): Observable<any> {
 
-    if (currentPref) {
-      // Already got one. Send it now.
       return new Observable<any>(observer => {
-        observer.next(currentPref.value);
-        observer.complete();
-      });
-    } else {
-      return new Observable<any>(observer => {
-        // Load value from Server
+        // Load values from Server
         this.http
-          .get<UserPreferenceValue>(`${this.apiRootValues}/${key}`)
-          .subscribe(pref => {
-            this.storeValue(key, pref);
+          .get<Array<UserPreferenceValue>>(`${this.apiRootValues}`)
+          .subscribe(prefValues => {
+            if (prefValues) {
+              prefValues.forEach(prefValue => {
+                this.setValue(prefValue.name, prefValue.value);
+              });
+              observer.next(this.preferenceValues);
+            }
 
             // Tell the world the value
-            observer.next(pref.value);
             observer.complete();
           });
       });
-    }
   }
 
   public setValue(key: string, value: any) {
@@ -113,7 +102,7 @@ export class UserPreferencesService {
   private loadFromLocal() {
     const stored = localStorage.getItem(this.storageKey);
     if (stored) {
-      let map: Map<string, UserPreferenceValue> = JSON.parse(stored);
+      const map: Map<string, UserPreferenceValue> = JSON.parse(stored);
       if (map) {
         map.forEach((value, key) => {
           this.setValue(key, value);
