@@ -12,15 +12,25 @@ import {
 import { Router, NavigationEnd, NavigationError, NavigationStart } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import 'rxjs/add/operator/filter';
-import { LoggingService, AppSettingsService, SpinnerService, UserAuthorisationService } from '../modules/core/coreModule';
+import { LoggingService, AppSettingsService, SpinnerService, UserPreferenceValue } from '../modules/core/coreModule';
+import { UserAuthorisationService, UserPreferencesService } from '../modules/core/coreModule';
 import { BroadcastService, BroadcastTypes, MenuService } from '../modules/core/coreModule';
 import { NotificationReceiverService } from './services/notificationReceiver/notificationReceiver.service';
+
+enum MenuOrientation {
+  STATIC,
+  OVERLAY,
+  SLIM,
+  HORIZONTAL
+}
 
 @Component({ selector: 'app-ng-root', template: '<h3>Loading</h3>' })
 export class NgScaffoldingComponent implements AfterViewInit {
 
   public spinning: boolean;
   public spinMessage: string;
+
+  layoutMode: number;
 
   constructor(
     public router: Router,
@@ -31,7 +41,8 @@ export class NgScaffoldingComponent implements AfterViewInit {
     public notificationReceiverService: NotificationReceiverService,
     public spinnerService: SpinnerService,
     public menuService: MenuService,
-    public broadcastService: BroadcastService
+    public broadcastService: BroadcastService,
+    public userPreferencesService: UserPreferencesService
   ) {}
 
   ngAfterViewInit() {
@@ -46,6 +57,15 @@ export class NgScaffoldingComponent implements AfterViewInit {
       .subscribe(event => {
         this.spinnerService.hideSpinner();
       });
+
+      this.userPreferencesService.preferenceValuesSubject.subscribe(
+        prefValues => {
+          const menu = prefValues.get('MenuOrientation');
+          if (menu) {
+            this.layoutMode = Number(menu.value);
+          }
+        }
+      );
 
     // Spinner Notification Here
     this.broadcastService.on(BroadcastTypes.SHOW_SPINNER).subscribe(message => {

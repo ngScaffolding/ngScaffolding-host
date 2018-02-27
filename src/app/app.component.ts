@@ -6,7 +6,8 @@ import { Router } from '@angular/router';
 import { NgScaffoldingComponent } from './app.ngscaffolding.component';
 import { Title } from '@angular/platform-browser';
 import 'rxjs/add/operator/filter';
-import { LoggingService, AppSettingsService, SpinnerService, UserAuthorisationService } from '../modules/core/coreModule';
+import { LoggingService, AppSettingsService, SpinnerService } from '../modules/core/coreModule';
+import { UserAuthorisationService, UserPreferencesService } from '../modules/core/coreModule';
 import { BroadcastService, BroadcastTypes, MenuService } from '../modules/core/coreModule';
 import { NotificationReceiverService } from './services/notificationReceiver/notificationReceiver.service';
 
@@ -79,7 +80,8 @@ export class AppComponent extends NgScaffoldingComponent
     public notificationReceiverService: NotificationReceiverService,
     public spinnerService: SpinnerService,
     public menuService: MenuService,
-    public broadcastService: BroadcastService
+    public broadcastService: BroadcastService,
+    public userPreferencesService: UserPreferencesService
   ) {
     super(
       router,
@@ -90,7 +92,8 @@ export class AppComponent extends NgScaffoldingComponent
       notificationReceiverService,
       spinnerService,
       menuService,
-      broadcastService
+      broadcastService,
+      userPreferencesService
     );
   }
 

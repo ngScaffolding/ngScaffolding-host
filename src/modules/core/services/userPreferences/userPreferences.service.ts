@@ -16,8 +16,8 @@ import {
 export class UserPreferencesService {
   private readonly prefix = 'preference_';
   private readonly storageKey = 'UserPreferences';
-  private readonly apiRootValues: string;
-  private readonly apiRootDefinitions: string;
+  private apiRootValues: string;
+  private apiRootDefinitions: string;
 
   private preferenceValues: Map<string, UserPreferenceValue>;
   private preferenceDefinitions: Map<string, UserPreferenceDefinition>;
@@ -36,16 +36,35 @@ export class UserPreferencesService {
       this.preferenceDefinitionsSubject = new BehaviorSubject<Map<string, UserPreferenceDefinition>>(null);
       this.preferenceValuesSubject = new BehaviorSubject<Map<string, UserPreferenceValue>>(null);
 
-      this.apiRootValues = `${this.appSettings.apiHome}/userPreferencevalues`;
-      this.apiRootDefinitions = `${this.appSettings.apiHome}/UserPreferenceDefinitions`;
+       appSettings.settingsSubject.subscribe(settings => {
+      //   this.apiRootValues = `${settings.apiHome}/userPreferencevalues`;
+      //   this.apiRootDefinitions = `${settings.apiHome}/UserPreferenceDefinitions`;
+      });
+
+      auth.authenticatedSubject.subscribe(isAuthorised => {
+        if (isAuthorised) {
+          // Load User Prefs from Localstorage
+          this.loadFromLocal();
+
+          this.getValues();
+        } else {
+          // Clear Here as we logoff
+          this.clearValues();
+        }
+      });
 
       // Load Pref Defs from server
       this.getDefinitions();
+    }
 
-      // Load User Prefs from Localstorage
-      this.loadFromLocal();
+    private clearValues() {
+      this.preferenceValues.clear();
 
-      this.getValues();
+      // Save to LocalStorage
+      localStorage.removeItem(this.storageKey);
+
+      // Tell the world about the updates
+      this.preferenceValuesSubject.next(this.preferenceValues);
     }
 
   public getValues(): Observable<any> {
@@ -87,7 +106,7 @@ export class UserPreferencesService {
   private getDefinitions() {
     this.preferenceDefinitions.clear();
     this.http
-      .get<Array<UserPreferenceDefinition>>(`${this.apiRootValues}`)
+      .get<Array<UserPreferenceDefinition>>(`${this.apiRootDefinitions}`)
       .subscribe(prefDefinitions => {
         if (prefDefinitions && prefDefinitions.length > 0) {
           prefDefinitions.forEach(definition => {
