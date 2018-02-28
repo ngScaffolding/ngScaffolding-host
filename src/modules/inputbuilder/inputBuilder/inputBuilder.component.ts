@@ -79,7 +79,7 @@ export class InputBuilderComponent implements OnInit, OnChanges {
         this.inputDefinition.horizontalColumnCount > 0 &&
         this.inputDefinition.horizontalColumnCount < 5
       ) {
-        let colSize = 12 / this.inputDefinition.horizontalColumnCount;
+        const colSize = 12 / this.inputDefinition.horizontalColumnCount;
         this.controlStyle = `ui-g-${colSize}`;
       }
     } else {
