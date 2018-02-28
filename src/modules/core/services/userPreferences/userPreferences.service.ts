@@ -22,68 +22,74 @@ export class UserPreferencesService {
   private preferenceValues: Map<string, UserPreferenceValue>;
   private preferenceDefinitions: Map<string, UserPreferenceDefinition>;
 
-  public preferenceDefinitionsSubject: BehaviorSubject<Map<string, UserPreferenceDefinition>>;
-  public preferenceValuesSubject: BehaviorSubject<Map<string, UserPreferenceValue>>;
+  public preferenceDefinitionsSubject: BehaviorSubject<
+    Map<string, UserPreferenceDefinition>
+  >;
+  public preferenceValuesSubject: BehaviorSubject<
+    Map<string, UserPreferenceValue>
+  >;
 
   constructor(
     private http: HttpClient,
     private auth: UserAuthorisationService,
     private appSettings: AppSettingsService
   ) {
-      this.preferenceValues = new Map<string, UserPreferenceValue>();
-      this.preferenceDefinitions = new Map<string, UserPreferenceDefinition>();
+    this.preferenceValues = new Map<string, UserPreferenceValue>();
+    this.preferenceDefinitions = new Map<string, UserPreferenceDefinition>();
 
-      this.preferenceDefinitionsSubject = new BehaviorSubject<Map<string, UserPreferenceDefinition>>(null);
-      this.preferenceValuesSubject = new BehaviorSubject<Map<string, UserPreferenceValue>>(null);
+    this.preferenceDefinitionsSubject = new BehaviorSubject<
+      Map<string, UserPreferenceDefinition>
+    >(null);
+    this.preferenceValuesSubject = new BehaviorSubject<
+      Map<string, UserPreferenceValue>
+    >(null);
 
-       appSettings.settingsSubject.subscribe(settings => {
-        this.apiRootValues = `${settings.apiHome}/userPreferencevalues`;
-        this.apiRootDefinitions = `${settings.apiHome}/UserPreferenceDefinitions`;
-      });
+    appSettings.settingsSubject.subscribe(settings => {
+      this.apiRootValues = `${settings.apiHome}/api/userPreferencevalues`;
+      this.apiRootDefinitions = `${
+        settings.apiHome
+      }/api/UserPreferenceDefinitions`;
+    });
 
-      auth.authenticatedSubject.subscribe(isAuthorised => {
-        if (isAuthorised) {
-          // Load User Prefs from Localstorage
-          this.loadFromLocal();
+    auth.authenticatedSubject.subscribe(isAuthorised => {
+      if (isAuthorised) {
+        // Load User Prefs from Localstorage
+        this.loadFromLocal();
 
-          this.getValues();
-        } else {
-          // Clear Here as we logoff
-          this.clearValues();
-        }
-      });
+        this.getValues();
+      } else {
+        // Clear Here as we logoff
+        this.clearValues();
+      }
+    });
 
-      // Load Pref Defs from server
-      this.getDefinitions();
-    }
+    // Load Pref Defs from server
+    this.getDefinitions();
+  }
 
-    private clearValues() {
-      this.preferenceValues.clear();
+  private clearValues() {
+    this.preferenceValues.clear();
 
-      // Save to LocalStorage
-      localStorage.removeItem(this.storageKey);
+    // Save to LocalStorage
+    localStorage.removeItem(this.storageKey);
 
-      // Tell the world about the updates
-      this.preferenceValuesSubject.next(this.preferenceValues);
-    }
+    // Tell the world about the updates
+    this.preferenceValuesSubject.next(this.preferenceValues);
+  }
 
-  public getValues(): Observable<any> {
-
-      return new Observable<any>(observer => {
-        // Load values from Server
-        this.http
-          .get<Array<UserPreferenceValue>>(`${this.apiRootValues}`)
-          .subscribe(prefValues => {
-            if (prefValues) {
-              prefValues.forEach(prefValue => {
-                this.setValue(prefValue.name, prefValue.value);
-              });
-              observer.next(this.preferenceValues);
-            }
-
-            // Tell the world the value
-            observer.complete();
+  public getValues() {
+    // Load values from Server
+    this.http
+      .get<Array<UserPreferenceValue>>(`${this.apiRootValues}`)
+      .subscribe(prefValues => {
+        if (prefValues) {
+          prefValues.forEach(prefValue => {
+            this.setValue(prefValue.name, prefValue.value);
           });
+
+          // Tell the world the values
+          this.preferenceValuesSubject.next(this.preferenceValues);
+        }
       });
   }
 
