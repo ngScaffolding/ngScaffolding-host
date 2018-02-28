@@ -37,8 +37,8 @@ export class UserPreferencesService {
       this.preferenceValuesSubject = new BehaviorSubject<Map<string, UserPreferenceValue>>(null);
 
        appSettings.settingsSubject.subscribe(settings => {
-      //   this.apiRootValues = `${settings.apiHome}/userPreferencevalues`;
-      //   this.apiRootDefinitions = `${settings.apiHome}/UserPreferenceDefinitions`;
+        this.apiRootValues = `${settings.apiHome}/userPreferencevalues`;
+        this.apiRootDefinitions = `${settings.apiHome}/UserPreferenceDefinitions`;
       });
 
       auth.authenticatedSubject.subscribe(isAuthorised => {

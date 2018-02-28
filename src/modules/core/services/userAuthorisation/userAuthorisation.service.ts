@@ -43,7 +43,6 @@ export class UserAuthorisationService {
             // If all Good
             this.setToken(savedToken);
             this.getUserDetails();
-            appSettingsService.settingsSubject.unsubscribe();
           } else {
             this.logoff();
           }
