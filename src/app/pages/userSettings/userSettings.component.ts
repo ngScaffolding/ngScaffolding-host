@@ -12,25 +12,29 @@ import { InputBuilderDefinition } from '../../../modules/inputbuilder/inputbuild
   styleUrls: ['./userSettings.component.scss']
 })
 export class UserSettingsComponent implements OnInit, OnDestroy {
+
   private prefDetailsSub: Subscription;
   private prefValuesSub: Subscription;
+
   constructor(private userPrefs: UserPreferencesService) {}
 
-  inputBuilderDefinition: InputBuilderDefinition = {};
+  inputBuilderDefinition = new InputBuilderDefinition();
   userPrefsModel: Array<any> = [];
 
   ngOnInit() {
     // Load Preference Definitions Here
     this.prefDetailsSub = this.userPrefs.preferenceDefinitionsSubject.subscribe(
       defs => {
+        if (defs){
         // Build our Input Definition from this input
         this.inputBuilderDefinition.inputDetails = [];
         defs.forEach((value, key) => {
-          const inputDef = JSON.parse(value['1'].inputDetails);
+          const inputDef = JSON.parse(value.inputDetails);
           if (inputDef) {
             this.inputBuilderDefinition.inputDetails.push(inputDef);
           }
         });
+      }
       }
     );
 

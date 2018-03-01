@@ -5,7 +5,7 @@ import {
   EventEmitter,
   OnInit,
   OnChanges,
-  SimpleChange
+  SimpleChange, IterableDiffers, DoCheck
 } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { InputDetail, InputTypes } from '../models/inputDetail.model';
@@ -26,7 +26,7 @@ import { InputDetailReferenceValues } from '../models/inputDetail.model';
   templateUrl: 'inputBuilder.component.html',
   styleUrls: ['inputBuilder.component.scss']
 })
-export class InputBuilderComponent implements OnInit, OnChanges {
+export class InputBuilderComponent implements OnInit, OnChanges, DoCheck {
   @Input() inputDefinition: InputBuilderDefinition;
   @Input() inputModel: any;
 
@@ -39,11 +39,22 @@ export class InputBuilderComponent implements OnInit, OnChanges {
   form: FormGroup;
   controlStyle = 'ui-g-12';
   inputContainerClass = 'ui-g-12'; // This changes to allow the help Icon
+  differ: any;
 
   constructor(
+    differs: IterableDiffers,
     public appSettings: AppSettingsService,
     public refValuesService: ReferenceValuesService
-  ) {}
+  ) {
+    this.differ = differs.find([]).create(null);
+  }
+
+  ngDoCheck() {
+    const change = this.differ.diff(this.inputDefinition.inputDetails);
+    if(change){
+      let x=0;
+    }
+  }
 
   onSubmit(form: any) {
     this.okClicked.emit();
@@ -59,7 +70,9 @@ export class InputBuilderComponent implements OnInit, OnChanges {
     }
   }
 
-  ngOnChanges(changes: { [propKey: string]: SimpleChange }) {}
+  ngOnChanges(changes: { [propKey: string]: SimpleChange }) {
+
+  }
 
   ngOnInit(): void {
     // setup the form
@@ -156,7 +169,10 @@ export class InputBuilderComponent implements OnInit, OnChanges {
 
   private loadDataSource(inputDetail: InputDetail, seed: string = '') {
     this.refValuesService
-      .getReferenceValue((<InputDetailReferenceValues>inputDetail).referenceValueName, seed)
+      .getReferenceValue(
+        (<InputDetailReferenceValues>inputDetail).referenceValueName,
+        seed
+      )
       .subscribe(refValue => {
         (<InputDetailReferenceValues>inputDetail).datasourceItems =
           refValue.referenceValueItems;
