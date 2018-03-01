@@ -100,11 +100,11 @@ export class UserPreferencesService {
       currentPref = new UserPreferenceValue();
       currentPref.userId = this.auth.currentUser.userId;
       currentPref.name = key;
+
+      this.preferenceValues.set(key, currentPref);
     }
 
     currentPref.value = value;
-
-    this.http.post(this.apiRootValues, currentPref);
 
     this.storeValue(key, currentPref);
   }
@@ -128,7 +128,7 @@ export class UserPreferencesService {
     const stored = localStorage.getItem(this.storageKey);
     if (stored) {
       const map: Map<string, UserPreferenceValue> = JSON.parse(stored);
-      if (map) {
+      if (map && map.size > 0) {
         map.forEach((value, key) => {
           this.setValue(key, value);
         });
