@@ -68,9 +68,11 @@ export class NgScaffoldingComponent implements AfterViewInit {
 
       this.userPreferencesService.preferenceValuesSubject.subscribe(
         prefValues => {
-          const menu = prefValues.get('MenuOrientation');
-          if (menu) {
-            this.layoutMode = Number(menu.value);
+          if (prefValues) {
+            const menu = prefValues.find(p => p.name === 'MenuOrientation');
+            if (menu) {
+              this.layoutMode = Number(menu.value);
+            }
           }
         }
       );

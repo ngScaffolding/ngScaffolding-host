@@ -16,34 +16,21 @@ import {
 export class UserPreferencesService {
   private readonly prefix = 'preference_';
   private readonly storageKey = 'UserPreferences';
+
   private apiRootValues: string;
   private apiRootDefinitions: string;
 
-  private preferenceValues: Map<string, UserPreferenceValue>;
-  private preferenceDefinitions: Map<string, UserPreferenceDefinition>;
+  private preferenceValues = new Array<UserPreferenceValue>();
+  private preferenceDefinitions = new Array<UserPreferenceDefinition>();
 
-  public preferenceDefinitionsSubject: BehaviorSubject<
-    Map<string, UserPreferenceDefinition>
-  >;
-  public preferenceValuesSubject: BehaviorSubject<
-    Map<string, UserPreferenceValue>
-  >;
+  public preferenceDefinitionsSubject = new BehaviorSubject<Array<UserPreferenceDefinition>>(null);
+  public preferenceValuesSubject = new BehaviorSubject<Array<UserPreferenceValue>>(null);
 
   constructor(
     private http: HttpClient,
     private auth: UserAuthorisationService,
     private appSettings: AppSettingsService
   ) {
-    this.preferenceValues = new Map<string, UserPreferenceValue>();
-    this.preferenceDefinitions = new Map<string, UserPreferenceDefinition>();
-
-    this.preferenceDefinitionsSubject = new BehaviorSubject<
-      Map<string, UserPreferenceDefinition>
-    >(null);
-    this.preferenceValuesSubject = new BehaviorSubject<
-      Map<string, UserPreferenceValue>
-    >(null);
-
     appSettings.settingsSubject.subscribe(settings => {
       this.apiRootValues = `${settings.apiHome}/api/userPreferencevalues`;
       this.apiRootDefinitions = `${
@@ -68,7 +55,7 @@ export class UserPreferencesService {
   }
 
   private clearValues() {
-    this.preferenceValues.clear();
+    this.preferenceValues = new Array<UserPreferenceValue>();
 
     // Save to LocalStorage
     localStorage.removeItem(this.storageKey);
@@ -94,29 +81,30 @@ export class UserPreferencesService {
   }
 
   public setValue(key: string, value: any) {
-    let currentPref = this.preferenceValues.get(key);
+    let currentPref = this.preferenceValues.find(p => p.name === key);
 
     if (!currentPref) {
       currentPref = new UserPreferenceValue();
       currentPref.userId = this.auth.currentUser.userId;
       currentPref.name = key;
+      currentPref.value = value;
 
-      this.preferenceValues.set(key, currentPref);
+      this.preferenceValues.push(currentPref);
+    } else {
+      currentPref.value = value;
     }
-
-    currentPref.value = value;
 
     this.storeValue(key, currentPref);
   }
 
   private getDefinitions() {
-    this.preferenceDefinitions.clear();
+    this.preferenceDefinitions = new Array<UserPreferenceDefinition>();
     this.http
       .get<Array<UserPreferenceDefinition>>(`${this.apiRootDefinitions}`)
       .subscribe(prefDefinitions => {
         if (prefDefinitions && prefDefinitions.length > 0) {
           prefDefinitions.forEach(definition => {
-            this.preferenceDefinitions.set(definition.name, definition);
+            this.preferenceDefinitions.push(definition);
           });
         }
         // Tell the world the value
@@ -127,10 +115,10 @@ export class UserPreferencesService {
   private loadFromLocal() {
     const stored = localStorage.getItem(this.storageKey);
     if (stored) {
-      const map: Map<string, UserPreferenceValue> = JSON.parse(stored);
-      if (map && map.size > 0) {
-        map.forEach((value, key) => {
-          this.setValue(key, value);
+      const map: Array<UserPreferenceValue> = JSON.parse(stored);
+      if (map && map.length > 0) {
+        map.forEach((value) => {
+          this.setValue(value.name, value.value);
         });
       }
     }
@@ -138,10 +126,9 @@ export class UserPreferencesService {
 
   private storeValue(key: string, pref: UserPreferenceValue): void {
     // Save to LocalStorage
-    localStorage.setItem(
-      this.storageKey,
-      JSON.stringify(this.preferenceValues)
-    );
+    const serial = JSON.stringify(this.preferenceValues);
+
+    localStorage.setItem(this.storageKey, serial);
 
     // Tell the world about the updates
     this.preferenceValuesSubject.next(this.preferenceValues);
