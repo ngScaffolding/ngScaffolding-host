@@ -1,6 +1,9 @@
 <div class="ui-g ui-fluid">
   <div class="ui-g-12 card card-w-title">
     <h1>User Preferences</h1>
-    <input-builder [inputDefinition]="inputBuilderDefinition"></input-builder>
+    <input-builder [inputDefinition]="inputBuilderDefinition"
+    [inputModel]="userPrefsModel"
+    (modelUpdated)="notifyChanged($event)"></input-builder>
+
   </div>
 </div>
