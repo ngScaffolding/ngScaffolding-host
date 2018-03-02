@@ -45,7 +45,7 @@ import {AppComponent} from './app.component';
                                 </a>
                             </li>
                             <li role="menuitem">
-                                <a href="#">
+                                <a routerLink="usersettings">
                                     <i class="material-icons">settings_applications</i>
                                     <span>Settings</span>
                                 </a>
