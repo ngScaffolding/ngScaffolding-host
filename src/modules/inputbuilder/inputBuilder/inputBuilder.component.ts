@@ -5,7 +5,7 @@ import {
   EventEmitter,
   OnInit,
   OnChanges,
-  SimpleChange, IterableDiffers, DoCheck
+  SimpleChange
 } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { InputDetail, InputTypes } from '../models/inputDetail.model';
@@ -26,7 +26,7 @@ import { InputDetailReferenceValues } from '../models/inputDetail.model';
   templateUrl: 'inputBuilder.component.html',
   styleUrls: ['inputBuilder.component.scss']
 })
-export class InputBuilderComponent implements OnInit, OnChanges, DoCheck {
+export class InputBuilderComponent implements OnInit, OnChanges {
   @Input() inputDefinition: InputBuilderDefinition;
   @Input() inputModel: any;
 
@@ -42,19 +42,19 @@ export class InputBuilderComponent implements OnInit, OnChanges, DoCheck {
   differ: any;
 
   constructor(
-    differs: IterableDiffers,
+    // differs: IterableDiffers,
     public appSettings: AppSettingsService,
     public refValuesService: ReferenceValuesService
   ) {
-    this.differ = differs.find([]).create(null);
+    // this.differ = differs.find([]).create(null);
   }
 
-  ngDoCheck() {
-    const change = this.differ.diff(this.inputDefinition.inputDetails);
-    if(change){
-      let x=0;
-    }
-  }
+  // ngDoCheck() {
+  //   const change = this.differ.diff(this.inputDefinition.inputDetails);
+  //   if(change){
+  //     let x=0;
+  //   }
+  // }
 
   onSubmit(form: any) {
     this.okClicked.emit();
@@ -71,7 +71,7 @@ export class InputBuilderComponent implements OnInit, OnChanges, DoCheck {
   }
 
   ngOnChanges(changes: { [propKey: string]: SimpleChange }) {
-
+    this.buildForm();
   }
 
   ngOnInit(): void {
