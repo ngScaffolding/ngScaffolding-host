@@ -7,7 +7,7 @@ import {
   OnChanges,
   SimpleChange
 } from '@angular/core';
-import { Observable } from 'rxjs/Rx';-
+import { Observable } from 'rxjs/Rx';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { InputDetail, InputTypes } from '../models/inputDetail.model';
 import {
@@ -18,7 +18,8 @@ import {
 import {
   AppSettingsService,
   ReferenceValuesService,
-  ReferenceValueItem
+  ReferenceValueItem,
+  ReferenceValue
 } from '../../core/coreModule';
 import { InputDetailReferenceValues } from '../models/inputDetail.model';
 
@@ -96,33 +97,9 @@ export class InputBuilderComponent implements OnInit, OnChanges {
 
         // Get value from model and apply to new FormControl
         let inputValue: any = null;
-
-        // If Datasource, get the values
-        if (inputDetail.hasOwnProperty('referenceValueName') &&
-          (<InputDetailReferenceValues>inputDetail).referenceValueName) {
-          this.loadDataSource(inputDetail).subscribe(_ => {
-
-            if (this.clonedInputModel[inputDetail.name]) {
-              inputValue = (<InputDetailReferenceValues>inputDetail)
-            .datasourceItems.find(ds => ds.value.toString() === this.clonedInputModel[inputDetail.name]);
-            }
-
-          });
-        }else{
-
-        }
-
         if (this.clonedInputModel[inputDetail.name]) {
           // If we have a passed value in the model, set the control value to this
-          if (inputDetail.hasOwnProperty('referenceValueName')) {
-            // Datasource type here. Need to set the value to the actual model in the datasource
-            inputValue = (<InputDetailReferenceValues>inputDetail)
-            .datasourceItems.find(ds => ds.value.toString() === this.clonedInputModel[inputDetail.name]);
-            var x =0;
-          }else {
-            // Standard sting value here
             inputValue = this.clonedInputModel[inputDetail.name];
-          }
         } else if (inputDetail.value) {
           // If we have a value passed in the Input definition set the control value to this.
           inputValue = inputDetail.value;
@@ -132,7 +109,26 @@ export class InputBuilderComponent implements OnInit, OnChanges {
           this.clonedInputModel[inputDetail.name] = null;
         }
 
-        let formControl = new FormControl(
+        // If Datasource, get the values
+        if (inputDetail.hasOwnProperty('referenceValueName') &&
+          (<InputDetailReferenceValues>inputDetail).referenceValueName) {
+          this.loadDataSource(inputDetail).subscribe(_ => {
+
+            // Now we have the values, find the ReferenceValue that matches the inputValue from above
+            if (this.clonedInputModel[inputDetail.name] && (<InputDetailReferenceValues>inputDetail).datasourceItems) {
+
+              const foundInputValue = (<InputDetailReferenceValues>inputDetail)
+                .datasourceItems.find(ds => ds.value === inputValue);
+
+            if (foundInputValue) {
+              inputValue = foundInputValue;
+            }
+            }
+
+          });
+        }
+
+        const formControl = new FormControl(
           inputValue,
           this.mapValidators(inputDetail)
         ); // Validators passed here too

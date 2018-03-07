@@ -18,7 +18,8 @@ export class UserSettingsComponent implements OnInit, OnDestroy {
   private baseInputDefinition: InputBuilderDefinition = {
     inputDetails: [],
     orientation: OrientationValues.Vertical,
-    okButtonText: 'Save'
+    okButtonText: null,
+    cancelButtonText: null
   };
 
   constructor(private userPrefs: UserPreferencesService) {}

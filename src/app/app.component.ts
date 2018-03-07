@@ -25,7 +25,7 @@ enum MenuOrientation {
 })
 export class AppComponent extends NgScaffoldingComponent
   implements AfterViewInit, OnDestroy, OnInit {
-  layoutCompact = true;
+  layoutCompact = false;
 
   layoutMode: MenuOrientation = MenuOrientation.STATIC;
 

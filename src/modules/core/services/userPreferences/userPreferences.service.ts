@@ -81,17 +81,10 @@ export class UserPreferencesService {
   }
 
   public setValue(key: string, value: any) {
-    this.http
-    .get<Array<UserPreferenceDefinition>>(`${this.apiRootDefinitions}`)
-    .subscribe(prefDefinitions => {
-      if (prefDefinitions && prefDefinitions.length > 0) {
-        prefDefinitions.forEach(definition => {
-          this.preferenceDefinitions.push(definition);
-        });
-      }
-      // Tell the world the value
-      this.preferenceDefinitionsSubject.next(this.preferenceDefinitions);
-    });
+    this.http.post(`${this.apiRootDefinitions}`, {name: key, value: value});
+
+    // Save and tell the world
+    this.newValue(key, value);
   }
 
   private newValue(key: string, value: any) {

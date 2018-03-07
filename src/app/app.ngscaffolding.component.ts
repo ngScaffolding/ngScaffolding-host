@@ -31,6 +31,9 @@ export class NgScaffoldingComponent implements AfterViewInit {
   public spinMessage: string;
 
   layoutMode: number;
+  layoutCompact: boolean;
+  darkMenu: boolean;
+  profileMode: string;
 
   constructor(
     public router: Router,
@@ -53,7 +56,7 @@ export class NgScaffoldingComponent implements AfterViewInit {
 
     // Check for logoff
     this.userAuthService.authenticatedSubject.subscribe(authenticated => {
-      if(!authenticated){
+      if (!authenticated) {
         this.logger.info('Logged off Redirecting to Logon');
         this.router.navigate(['/login']);
       }
@@ -69,13 +72,31 @@ export class NgScaffoldingComponent implements AfterViewInit {
       this.userPreferencesService.preferenceValuesSubject.subscribe(
         prefValues => {
           if (prefValues) {
-            const menu = prefValues.find(p => p.name === 'MenuOrientation');
-            if (menu) {
-              this.layoutMode = Number(menu.value);
+
+            if (prefValues.find(p => p.name === 'MenuOrientation')) {
+              this.layoutMode = Number(prefValues.find(p => p.name === 'MenuOrientation').value);
             }
+
+            if (prefValues.find(p => p.name === 'CompactMode')) {
+              this.layoutCompact = Boolean(prefValues.find(p => p.name === 'CompactMode').value);
+            }
+
+            if (prefValues.find(p => p.name === 'DarkMenu')) {
+              this.darkMenu = Boolean(prefValues.find(p => p.name === 'DarkMenu').value);
+            }
+
+            if (prefValues.find(p => p.name === 'ProfileMode')) {
+              this.profileMode = prefValues.find(p => p.name === 'ProfileMode').value;
+            }
+
+            if (prefValues.find(p => p.name === 'Theme')) {
+              this.changeTheme(prefValues.find(p => p.name === 'Theme').value);
+            }
+
           }
         }
       );
+
 
     // Spinner Notification Here
     this.broadcastService.on(BroadcastTypes.SHOW_SPINNER).subscribe(message => {
@@ -93,4 +114,12 @@ export class NgScaffoldingComponent implements AfterViewInit {
     });
     // End Spinner
   }
+
+  changeTheme(theme) {
+    const themeLink: HTMLLinkElement = <HTMLLinkElement> document.getElementById('theme-css');
+    const layoutLink: HTMLLinkElement = <HTMLLinkElement> document.getElementById('layout-css');
+
+    themeLink.href = 'assets/theme/theme-' + theme + '.css';
+    layoutLink.href = 'assets/layout/css/layout-' + theme + '.css';
+}
 }
