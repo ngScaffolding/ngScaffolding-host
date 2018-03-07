@@ -50,15 +50,20 @@ export class UserSettingsComponent implements OnInit, OnDestroy {
     // Load User Values Here
     this.prefValuesSub = this.userPrefs.preferenceValuesSubject.subscribe(
       values => {
-        values.forEach((value, key) => {
-          this.userPrefsModel[value.name] = value.value;
-        });
+        if (values) {
+          values.forEach((value, key) => {
+            this.userPrefsModel[value.name] = value.value;
+          });
+        }
       }
     );
   }
 
-  notifyChanged(val: any) {
-    var x = 0;
+  notifyChanged(changedValue: any) {
+    const propName = Object.keys(changedValue)[0];
+    const newValue = changedValue[propName].value;
+
+    this.userPrefs.setValue(propName, newValue);
   }
 
   ngOnDestroy() {

@@ -109,7 +109,7 @@ export class InputBuilderComponent implements OnInit, OnChanges {
 
         // If Datasource, get the values
         if (
-          inputDetail.hasOwnProperty('datasource') &&
+          inputDetail.hasOwnProperty('referenceValueName') &&
           (<InputDetailReferenceValues>inputDetail).referenceValueName
         ) {
           this.loadDataSource(inputDetail);

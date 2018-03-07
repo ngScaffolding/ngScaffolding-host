@@ -71,7 +71,7 @@ export class UserPreferencesService {
       .subscribe(prefValues => {
         if (prefValues) {
           prefValues.forEach(prefValue => {
-            this.setValue(prefValue.name, prefValue.value);
+            this.newValue(prefValue.name, prefValue.value);
           });
 
           // Tell the world the values
@@ -81,6 +81,20 @@ export class UserPreferencesService {
   }
 
   public setValue(key: string, value: any) {
+    this.http
+    .get<Array<UserPreferenceDefinition>>(`${this.apiRootDefinitions}`)
+    .subscribe(prefDefinitions => {
+      if (prefDefinitions && prefDefinitions.length > 0) {
+        prefDefinitions.forEach(definition => {
+          this.preferenceDefinitions.push(definition);
+        });
+      }
+      // Tell the world the value
+      this.preferenceDefinitionsSubject.next(this.preferenceDefinitions);
+    });
+  }
+
+  private newValue(key: string, value: any) {
     let currentPref = this.preferenceValues.find(p => p.name === key);
 
     if (!currentPref) {
@@ -118,7 +132,7 @@ export class UserPreferencesService {
       const map: Array<UserPreferenceValue> = JSON.parse(stored);
       if (map && map.length > 0) {
         map.forEach((value) => {
-          this.setValue(value.name, value.value);
+          this.newValue(value.name, value.value);
         });
       }
     }
