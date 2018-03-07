@@ -7,6 +7,7 @@ import {
   OnChanges,
   SimpleChange
 } from '@angular/core';
+import { Observable } from 'rxjs/Rx';-
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { InputDetail, InputTypes } from '../models/inputDetail.model';
 import {
@@ -39,22 +40,11 @@ export class InputBuilderComponent implements OnInit, OnChanges {
   form: FormGroup;
   controlStyle = 'ui-g-12';
   inputContainerClass = 'ui-g-12'; // This changes to allow the help Icon
-  differ: any;
 
   constructor(
-    // differs: IterableDiffers,
     public appSettings: AppSettingsService,
     public refValuesService: ReferenceValuesService
-  ) {
-    // this.differ = differs.find([]).create(null);
-  }
-
-  // ngDoCheck() {
-  //   const change = this.differ.diff(this.inputDefinition.inputDetails);
-  //   if(change){
-  //     let x=0;
-  //   }
-  // }
+  ) {}
 
   onSubmit(form: any) {
     this.okClicked.emit();
@@ -108,16 +98,31 @@ export class InputBuilderComponent implements OnInit, OnChanges {
         let inputValue: any = null;
 
         // If Datasource, get the values
-        if (
-          inputDetail.hasOwnProperty('referenceValueName') &&
-          (<InputDetailReferenceValues>inputDetail).referenceValueName
-        ) {
-          this.loadDataSource(inputDetail);
+        if (inputDetail.hasOwnProperty('referenceValueName') &&
+          (<InputDetailReferenceValues>inputDetail).referenceValueName) {
+          this.loadDataSource(inputDetail).subscribe(_ => {
+
+            if (this.clonedInputModel[inputDetail.name]) {
+              inputValue = (<InputDetailReferenceValues>inputDetail)
+            .datasourceItems.find(ds => ds.value.toString() === this.clonedInputModel[inputDetail.name]);
+            }
+
+          });
+        }else{
+
         }
 
         if (this.clonedInputModel[inputDetail.name]) {
           // If we have a passed value in the model, set the control value to this
-          inputValue = this.clonedInputModel[inputDetail.name];
+          if (inputDetail.hasOwnProperty('referenceValueName')) {
+            // Datasource type here. Need to set the value to the actual model in the datasource
+            inputValue = (<InputDetailReferenceValues>inputDetail)
+            .datasourceItems.find(ds => ds.value.toString() === this.clonedInputModel[inputDetail.name]);
+            var x =0;
+          }else {
+            // Standard sting value here
+            inputValue = this.clonedInputModel[inputDetail.name];
+          }
         } else if (inputDetail.value) {
           // If we have a value passed in the Input definition set the control value to this.
           inputValue = inputDetail.value;
@@ -167,16 +172,18 @@ export class InputBuilderComponent implements OnInit, OnChanges {
     });
   }
 
-  private loadDataSource(inputDetail: InputDetail, seed: string = '') {
-    this.refValuesService
+  private loadDataSource(inputDetail: InputDetail, seed: string = ''): Observable<ReferenceValue> {
+    const obs = this.refValuesService
       .getReferenceValue(
         (<InputDetailReferenceValues>inputDetail).referenceValueName,
         seed
-      )
-      .subscribe(refValue => {
+      );
+
+      obs.subscribe(refValue => {
         (<InputDetailReferenceValues>inputDetail).datasourceItems =
           refValue.referenceValueItems;
       });
+      return obs;
   }
 
   private formChanges(changes: any) {

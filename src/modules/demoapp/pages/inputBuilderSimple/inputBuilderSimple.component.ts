@@ -120,7 +120,7 @@ export class InputBuilderSimpleComponent {
     ]
   };
 
-  inputModel1 = { hello: 'Sample', date: '', datetime: '', time: '' };
+  inputModel1 = { hello: 'Sample', date: '', datetime: '', time: '', simpleSelectContinents: 'Europe' };
 
   inputModel1Changed(model: any) {
     this.inputModel1 = model;
