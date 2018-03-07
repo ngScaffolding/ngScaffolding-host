@@ -157,7 +157,7 @@ export class InputBuilderComponent implements OnInit, OnChanges {
     // Do We need to notify another input of this change?
     this.inputDefinition.inputDetails.forEach(input => {
       if (
-        input.hasOwnProperty('datasourceSeedDependency') &&
+        input.hasOwnProperty('referenceValueSeedDependency') &&
         (<InputDetailReferenceValues>input).referenceValueSeedDependency &&
         (<InputDetailReferenceValues>input).referenceValueSeedDependency ===
           inputDetail.name
