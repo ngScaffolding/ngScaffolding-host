@@ -81,7 +81,7 @@ export class UserPreferencesService {
   }
 
   public setValue(key: string, value: any) {
-    this.http.post(`${this.apiRootDefinitions}`, {name: key, value: value});
+    this.http.post(`${this.apiRootValues}`, {name: key, value: value});
 
     // Save and tell the world
     this.newValue(key, value);

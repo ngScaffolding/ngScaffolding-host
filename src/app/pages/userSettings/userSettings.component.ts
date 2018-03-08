@@ -17,7 +17,8 @@ export class UserSettingsComponent implements OnInit, OnDestroy {
 
   private baseInputDefinition: InputBuilderDefinition = {
     inputDetails: [],
-    orientation: OrientationValues.Vertical,
+    horizontalColumnCount: 2,
+    orientation: OrientationValues.Horizontal,
     okButtonText: null,
     cancelButtonText: null
   };
@@ -60,11 +61,11 @@ export class UserSettingsComponent implements OnInit, OnDestroy {
     );
   }
 
-  notifyChanged(changedValue: any) {
-    const propName = Object.keys(changedValue)[0];
-    const newValue = changedValue[propName].value;
+  valueChanged(changedValue: [string, any]) {
+    this.userPrefs.setValue(changedValue[0], changedValue[1]);
+  }
 
-    this.userPrefs.setValue(propName, newValue);
+  notifyChanged(changedValue: any) {
   }
 
   ngOnDestroy() {

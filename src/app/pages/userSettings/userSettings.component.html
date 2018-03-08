@@ -3,6 +3,7 @@
     <h1>User Preferences</h1>
     <input-builder [inputDefinition]="inputBuilderDefinition"
     [inputModel]="userPrefsModel"
+    (valueUpdated)="valueChanged($event)"
     (modelUpdated)="notifyChanged($event)"></input-builder>
 
   </div>

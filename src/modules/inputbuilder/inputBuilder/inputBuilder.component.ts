@@ -33,6 +33,8 @@ export class InputBuilderComponent implements OnInit, OnChanges {
   @Input() inputModel: any;
 
   @Output() modelUpdated = new EventEmitter<any>();
+  @Output() valueUpdated = new EventEmitter<[string, any]>();
+
   @Output() okClicked = new EventEmitter<any>();
   @Output() cancelClicked = new EventEmitter<any>();
 
@@ -153,6 +155,9 @@ export class InputBuilderComponent implements OnInit, OnChanges {
 
     if (value.hasOwnProperty('value')) {
       strValue = value.value;
+      this.valueUpdated.emit([inputDetail.name, strValue]);
+    } else {
+      this.valueUpdated.emit([inputDetail.name, value]);
     }
 
     // Do We need to notify another input of this change?
@@ -183,6 +188,23 @@ export class InputBuilderComponent implements OnInit, OnChanges {
   }
 
   private formChanges(changes: any) {
+    // Find out What has Changed
+    // Object.keys(changes).forEach(key => {
+    //   let extractedValue: any;
+    //   const property = changes[key];
+    //   if (property && property.hasOwnProperty('value')) {
+    //     extractedValue = property.value;
+    //   } else {
+    //     extractedValue = property;
+    //   }
+
+    //   if(this.clonedInputModel[key] !== extractedValue) {
+    //     // Value has Changed, tell the world
+    //     this.valueUpdated.emit(property);
+    //   }
+    // });
+
+
     this.clonedInputModel = changes;
     // Tell subscribers we have changes
     this.modelUpdated.emit(changes);
