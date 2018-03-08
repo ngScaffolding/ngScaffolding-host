@@ -26,10 +26,10 @@
             <!-- Simple Select -->
             <span *ngSwitchCase="'select'">
                 <label class="small-label" [for]="input.name">{{input.label}}</label>
-                    <p-dropdown [id]="input.name" [options]="input.datasourceItems" 
+                    <p-dropdown [id]="input.name" [options]="input.datasourceItems"
                     [autoWidth]="false"
                     [filter]="input.selectFilter"
-                                        
+
                     dataKey="value"
                     optionLabel="display"
                     [formControlName]="input.name"></p-dropdown>
@@ -75,10 +75,10 @@
 
 
         <!-- Help text here -->
-         <span *ngIf="input.help" class="ui-g-1"> 
+         <span *ngIf="input.help" class="ui-g-1">
             <i class="fa fa-info-circle help-icon" pTooltip="{{input.help}}" tooltipPosition="bottom"></i>
          </span>
-       
+
         <div class="ui-message ui-messages-error ui-corner-all" *ngIf="form.get(input.name).invalid && (form.get(input.name).dirty || form.get(input.name).touched)">
             <div *ngIf="form.get(input.name).errors.required">
                 {{input.validateRequired}}
@@ -104,21 +104,21 @@
         <div *ngIf="inputDefinition.customButtonText" class="ui-g-4">
                 <button pButton type="button"
                     (click)="onCustom()"
-                    class="ui-button-info" 
-                    icon="{{inputDefinition.customButtonIcon}}" 
+                    class="ui-button-info"
+                    icon="{{inputDefinition.customButtonIcon}}"
                     iconPos="left" label="{{inputDefinition.customButtonText}}"></button>
             </div>
-        <div class="ui-g-4">
+        <div *ngIf="inputDefinition.cancelButtonText" class="ui-g-4">
             <button pButton type="button"
                 (click)="onCancel()"
-                class="ui-button-danger" 
-                icon="{{inputDefinition.cancelButtonIcon}}" 
+                class="ui-button-danger"
+                icon="{{inputDefinition.cancelButtonIcon}}"
                 iconPos="left" label="{{inputDefinition.cancelButtonText}}"></button>
         </div>
-        <div class="ui-g-4">
-            <button pButton type="submit" 
-                class="ui-button-success"    
-                icon="{{inputDefinition.okButtonIcon}}" 
+        <div *ngIf="inputDefinition.okButtonText" class="ui-g-4">
+            <button pButton type="submit"
+                class="ui-button-success"
+                icon="{{inputDefinition.okButtonIcon}}"
                 iconPos="left" label="{{inputDefinition.okButtonText}}"></button>
         </div>
     </div>
