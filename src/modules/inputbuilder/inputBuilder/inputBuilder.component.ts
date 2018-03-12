@@ -111,24 +111,6 @@ export class InputBuilderComponent implements OnInit, OnChanges {
           this.clonedInputModel[inputDetail.name] = null;
         }
 
-        // If Datasource, get the values
-        if (inputDetail.hasOwnProperty('referenceValueName') &&
-          (<InputDetailReferenceValues>inputDetail).referenceValueName) {
-          this.loadDataSource(inputDetail).subscribe(_ => {
-
-            // Now we have the values, find the ReferenceValue that matches the inputValue from above
-            if (this.clonedInputModel[inputDetail.name] && (<InputDetailReferenceValues>inputDetail).datasourceItems) {
-
-              const foundInputValue = (<InputDetailReferenceValues>inputDetail)
-                .datasourceItems.find(ds => ds.value === inputValue);
-
-            if (foundInputValue) {
-              inputValue = foundInputValue;
-            }
-            }
-
-          });
-        }
 
         const formControl = new FormControl(
           inputValue,
@@ -140,6 +122,26 @@ export class InputBuilderComponent implements OnInit, OnChanges {
         });
 
         formGroup[inputDetail.name] = formControl;
+
+        // If Datasource, get the values
+        if (inputDetail.hasOwnProperty('referenceValueName') &&
+          (<InputDetailReferenceValues>inputDetail).referenceValueName) {
+          this.loadDataSource(inputDetail).subscribe(_ => {
+
+            // Now we have the values, find the ReferenceValue that matches the inputValue from above
+            if (this.clonedInputModel[inputDetail.name] && (<InputDetailReferenceValues>inputDetail).datasourceItems) {
+
+              const foundInputValue = (<InputDetailReferenceValues>inputDetail)
+                .datasourceItems.find(ds => ds.value === inputValue);
+
+              if (foundInputValue) {
+                formControl.setValue(foundInputValue, { onlySelf: true, emitEvent: true });
+              }
+            }
+
+          });
+        }
+
       });
     }
 
