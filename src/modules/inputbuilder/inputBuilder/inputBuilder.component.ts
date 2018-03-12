@@ -101,7 +101,7 @@ export class InputBuilderComponent implements OnInit, OnChanges {
         let inputValue: any = null;
         if (this.clonedInputModel[inputDetail.name]) {
           // If we have a passed value in the model, set the control value to this
-            inputValue = this.clonedInputModel[inputDetail.name];
+            inputValue = this.parseValue(inputDetail, this.clonedInputModel[inputDetail.name]);
         } else if (inputDetail.value) {
           // If we have a value passed in the Input definition set the control value to this.
           inputValue = inputDetail.value;
@@ -150,6 +150,19 @@ export class InputBuilderComponent implements OnInit, OnChanges {
     this.form.valueChanges.subscribe(changes => {
       this.formChanges(changes);
     });
+  }
+
+  private parseValue(inputDetail: InputDetail, value: string): any {
+    switch (inputDetail.type) {
+      case InputTypes.checkbox:
+      case InputTypes.switch:
+      {
+        return value === 'true';
+      }
+    }
+
+    // Default just pass back original
+    return value;
   }
 
   private fieldChanged(inputDetail: InputDetail, value: any) {
