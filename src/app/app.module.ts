@@ -29,7 +29,8 @@ import { PRIME_COMPONENTS } from './app.prime.components';
 import { APP_COMPONENTS } from './app.component.list';
 import { MessageService } from 'primeng/components/common/messageservice';
 import { AppSettingsService,  UserAuthorisationService,  BroadcastService,  CacheService,
-  CoreErrorHandlerService,  LoggingService,  NotificationService,  MenuService,  ReferenceValuesService,
+  CoreErrorHandlerService,  LoggingService,  NotificationService,  MenuService,
+  DataSourceService ,ReferenceValuesService,
   SpinnerService,  RolesService,  UserPreferencesService,  VersionsService} from '../modules/core/coreModule';
 
   // Externalise These Modules
@@ -124,6 +125,7 @@ export function jwtOptionsFactory(appSettings: AppSettingsService) {
         MenuService,
         MessageService,
         ReferenceValuesService,
+        DataSourceService,
         RolesService,
         SpinnerService,
         UserPreferencesService, VersionsService

@@ -12,3 +12,4 @@ export * from './rolesService/roles.service';
 export * from './userPreferences/userPreferences.service';
 export * from './spinnerService/spinner.service';
 export * from './versions/versions.service';
+export * from './dataSource/dataSource.service';

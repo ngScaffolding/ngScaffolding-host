@@ -10,6 +10,7 @@ import { CacheService } from './services/cache/cache.service';
 import { CoreErrorHandlerService } from './services/coreErrorHandler/coreErrorHandler.service';
 import { LoggingService } from './services/logging/logging.service';
 import { MenuService } from './services/menu/menu.service';
+import { DataSourceService } from './services/dataSource/dataSource.service';
 import { NotificationService } from './services/notification/notification.service';
 import { ReferenceValuesService } from './services/referenceValues/refrenceValues.service';
 import { UserPreferencesService } from './services/userPreferences/userPreferences.service';
@@ -42,6 +43,7 @@ export class CoreModule {
       ngModule: CoreModule,
       providers: [
         AppSettingsService,
+        DataSourceService,
         UserAuthorisationService,
         BroadcastService,
         CacheService,

@@ -66,8 +66,6 @@ export class LoginPageComponent implements OnInit {
       this.inputModel.username,
       this.inputModel.password
     );
-
-    this.router.navigate(['/']);
   }
 
   rememberChanged(isChecked: boolean) {

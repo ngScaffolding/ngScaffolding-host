@@ -14,7 +14,7 @@ export class CoreMenuItem implements MenuItem {
     queryParams?: {
         [k: string]: any;
     };
-    items?: MenuItem[] | MenuItem[][] ;
+    items?: CoreMenuItem[] | CoreMenuItem[][] ;
     expanded?: boolean;
     disabled?: boolean;
     visible?: boolean;
@@ -26,6 +26,7 @@ export class CoreMenuItem implements MenuItem {
     style?: any;
     styleClass?: string;
     title?: string;
+    jsonSerialized?: string;
 
     constructor(){
 

@@ -94,10 +94,11 @@ export class MenuService {
       calcRouterLink = newMenuItem.routerLink;
     }
 
-    let createdMenuItem: CoreMenuItem = {
+    const createdMenuItem: CoreMenuItem = {
       name: newMenuItem.name,
       label: newMenuItem.label,
-      routerLink: calcRouterLink
+      routerLink: calcRouterLink,
+      jsonSerialized: newMenuItem.jsonSerialized
     };
 
     targetMenu.push(createdMenuItem);

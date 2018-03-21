@@ -13,7 +13,7 @@ import { GridOptions } from 'ag-grid/main';
 
 import {
   AppSettingsService,
-  ReferenceValuesService,
+  DataSourceService,
   MenuService,
   CoreMenuItem,
   LoggingService
@@ -21,6 +21,7 @@ import {
 
 import { GridViewDetail } from '../../models/gridViewDetail.model';
 import { FiltersHolderComponent } from '../filtersHolder/filtersHolder.component';
+import { MenuItem } from 'primeng/primeng';
 
 @Component({
   selector: 'data-grid',
@@ -48,25 +49,11 @@ export class DataGridComponent implements OnInit, OnDestroy {
     private logger: LoggingService,
     private route: ActivatedRoute,
     private appSettingsService: AppSettingsService,
-    private referenceValuesService: ReferenceValuesService,
+    private dataSourceService: DataSourceService,
     private menuService: MenuService
   ) {
     this.gridOptions = <GridOptions>{};
 
-    // this.columnDefs = [
-    //   { headerName: 'Make', field: 'make' },
-    //   {
-    //     headerName: 'Model',
-    //     field: 'model'
-    //   },
-    //   { headerName: 'Price', field: 'price' }
-    // ];
-
-    // this.rowData = [
-    //   { make: 'Toyota', model: 'Celica', price: 35000 },
-    //   { make: 'Ford', model: 'Mondeo', price: 32000 },
-    //   { make: 'Porsche', model: 'Boxter', price: 72000 }
-    // ];
   }
 
   onGridReady(params) {
@@ -85,33 +72,49 @@ export class DataGridComponent implements OnInit, OnDestroy {
   // Load First Data and if any criteria Changes
   private loadInitialData() {}
 
-  private loadMenuItem(menuName: string) {
-    this.menuItem = null;
+  private findMenuItem(name: string, menuItems: CoreMenuItem[]) {
+    if (menuItems) {
+      menuItems.forEach(menuItem => {
+         this.findMenuItem(name, menuItem.items as CoreMenuItem[]);
+         if (menuItem.name && menuItem.name.toLowerCase() === name.toLowerCase()) {
+            this.menuItem = menuItem;
+        }
+      });
+    }
+  }
 
-    this.menuItems.forEach(loopMenuItem => {
-      if (loopMenuItem.name === menuName) {
-        this.menuItem = loopMenuItem;
+  private loadMenuItem() {
+    if (this.menuName && this.menuItems && this.menuItems.length > 0) {
+
+      this.findMenuItem(this.menuName, this.menuItems);
+
+      if (this.menuItem && this.menuItem.jsonSerialized) {
+          this.logger.info(`dataGrid Loading menu ${this.menuName}`);
+
+          this.gridViewDetail = JSON.parse(this.menuItem.jsonSerialized) as GridViewDetail;
       }
-    });
-
-    if(this.menuItem)
-    {
-      this.logger.info(`dataGrid Loaded menu ${menuName}`);
     }
   }
 
   ngOnInit(): void {
-    this.menuSubscription = this.menuService.menuSubject.subscribe(menuItems => {
-      this.menuItems = menuItems;
-    }
+    this.menuSubscription = this.menuService.menuSubject.subscribe(
+      menuItems => {
+        this.menuItems = menuItems;
+
+        if (this.menuItems && this.menuItems.length > 0 && !this.menuItem) {
+          this.loadMenuItem();
+        }
+      }
     );
     this.paramSubscription = this.route.params.subscribe(params => {
       this.menuName = params['id'];
-      if (this.menuName) {
-        this.loadMenuItem(this.menuName);
+
+      if (this.menuName && !this.menuItem) {
+        this.loadMenuItem();
       }
     });
   }
+
   ngOnDestroy() {
     if (this.paramSubscription) {
       this.paramSubscription.unsubscribe();
