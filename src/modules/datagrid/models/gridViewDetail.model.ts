@@ -3,32 +3,32 @@ import { InputBuilderDefinition } from '../../inputbuilder/inputbuilderModule';
 import { ActionModel } from './action.model';
 
 export class GridViewDetail {
-  title: string;
-  waitForInput?: boolean;
+  Title: string;
+  WaitForInput?: boolean;
 
-  pageSize?: number;
-  infiniteScroll?: boolean;
+  PageSize?: number;
+  InfiniteScroll?: boolean;
 
-  detailUrl?: string;
-  detailTarget?: string;
+  DetailUrl?: string;
+  DetailTarget?: string;
 
-  serverPagination?: boolean;
-  serverSorting?: boolean;
-  serverGrouping?: boolean;
+  ServerPagination?: boolean;
+  ServerSorting?: boolean;
+  ServerGrouping?: boolean;
 
-  defaultSort?: string;
+  DefaultSort?: string;
 
-  columns: Array<ColumnModel>;
-  configuredColumns?: Array<ColumnModel>;
+  Columns: Array<ColumnModel>;
+  ConfiguredColumns?: Array<ColumnModel>;
 
-  filtersLocation?: string;
+  FiltersLocation?: string;
 
-  filters?: InputBuilderDefinition;
+  Filters?: InputBuilderDefinition;
 
-  selectCommand: string;
-  deleteCommand?: string;
-  updateCommand?: string;
-  insertCommand?: string;
+  SelectCommand: string;
+  DeleteCommand?: string;
+  UpdateCommand?: string;
+  InsertCommand?: string;
 
-  actions?: Array<ActionModel>;
+  Actions?: Array<ActionModel>;
 }

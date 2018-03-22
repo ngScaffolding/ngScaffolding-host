@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 
 import { ActivatedRoute } from '@angular/router';
-import { GridOptions } from 'ag-grid/main';
+import { GridOptions, ColDef, ColDefUtil } from 'ag-grid/main';
 
 import {
   AppSettingsService,
@@ -57,7 +57,7 @@ export class DataGridComponent implements OnInit, OnDestroy {
   }
 
   onGridReady(params) {
-    params.api.sizeColumnsToFit();
+   // params.api.sizeColumnsToFit();
   }
 
   onFiltersUpdated(filters) {
@@ -92,6 +92,29 @@ export class DataGridComponent implements OnInit, OnDestroy {
           this.logger.info(`dataGrid Loading menu ${this.menuName}`);
 
           this.gridViewDetail = JSON.parse(this.menuItem.jsonSerialized) as GridViewDetail;
+
+          if(this.gridViewDetail){
+            this.columnDefs = [];
+            this.gridViewDetail.Columns.forEach(column => {
+              const colDef: ColDef = {
+                field: column.field,
+                cellClass: column.cellClass,
+                filter: column.filter,
+                tooltipField: column.tooltipField,
+                headerName: column.headerName,
+                headerTooltip: column.headerTooltip,
+                pinned: column.pinned,
+                suppressMenu: column.suppressMenu,
+                suppressFilter: column.suppressFilter,
+                suppressSorting: column.suppressSorting,
+
+                type: column.type,
+                hide: column.hide
+              };
+
+              this.columnDefs.push(colDef);
+            });
+          }
       }
     }
   }
