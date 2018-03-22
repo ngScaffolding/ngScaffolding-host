@@ -1,27 +1,27 @@
 export class ColumnModel {
-  field?: string;
+  Field?: string;
 
-  cellClass?: string;
-  filter?: string;
-  tooltipField?: string;
-  headerName?: string;
-  headerTooltip?: string;
-  pinned?: string; // left or right
-  suppressMenu?: boolean;
-  suppressFilter?: boolean;
-  suppressSorting?: boolean;
+  CellClass?: string;
+  Filter?: string;
+  TooltipField?: string;
+  HeaderName?: string;
+  HeaderTooltip?: string;
+  Pinned?: string; // left or right
+  SuppressMenu?: boolean;
+  SuppressFilter?: boolean;
+  SuppressSorting?: boolean;
   // int minWidth
   // int maxWidth
-  type?: string;
-  hide?: boolean;
-  width?: string;
+  Type?: string;
+  Hide?: boolean;
+  Width?: string;
 
-  cellFormatter?: string;
-  cellClassRules?: string;
+  CellFormatter?: string;
+  CellClassRules?: string;
 
   // Link & Action Buttons
-  destinationUrl?: string;
-  target?: string;
-  buttonTitle?: string;
-  buttonIcon?: string;
+  DestinationUrl?: string;
+  Target?: string;
+  ButtonTitle?: string;
+  ButtonIcon?: string;
 }

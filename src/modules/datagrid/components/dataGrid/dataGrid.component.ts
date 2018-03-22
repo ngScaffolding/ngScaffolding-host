@@ -37,7 +37,11 @@ export class DataGridComponent implements OnInit, OnDestroy {
   filterValues: any;
   gridOptions: GridOptions;
   columnDefs: any[];
-  rowData: any[];
+  rowData: any[] = [{
+    Id: 1,
+    ContinentName: 'Harry',
+    Name: 'Windsor'
+  }];
 
   private menuName: string;
   private menuItems: CoreMenuItem[];
@@ -66,7 +70,7 @@ export class DataGridComponent implements OnInit, OnDestroy {
   }
 
   selectAllRows() {
-    this.gridOptions.api.selectAll();
+    // this.gridOptions.api.selectAll();
   }
 
   // Load First Data and if any criteria Changes
@@ -93,23 +97,23 @@ export class DataGridComponent implements OnInit, OnDestroy {
 
           this.gridViewDetail = JSON.parse(this.menuItem.jsonSerialized) as GridViewDetail;
 
-          if(this.gridViewDetail){
+          if (this.gridViewDetail) {
             this.columnDefs = [];
             this.gridViewDetail.Columns.forEach(column => {
-              const colDef: ColDef = {
-                field: column.field,
-                cellClass: column.cellClass,
-                filter: column.filter,
-                tooltipField: column.tooltipField,
-                headerName: column.headerName,
-                headerTooltip: column.headerTooltip,
-                pinned: column.pinned,
-                suppressMenu: column.suppressMenu,
-                suppressFilter: column.suppressFilter,
-                suppressSorting: column.suppressSorting,
+              let colDef: ColDef = {
+                field: column.Field,
+                cellClass: column.CellClass,
+                filter: column.Filter,
+                tooltipField: column.TooltipField,
+                headerName: column.HeaderName,
+                headerTooltip: column.HeaderTooltip,
+                pinned: column.Pinned,
+                suppressMenu: column.SuppressMenu,
+                suppressFilter: column.SuppressFilter,
+                suppressSorting: column.SuppressSorting,
 
-                type: column.type,
-                hide: column.hide
+                type: column.Type,
+                hide: column.Hide
               };
 
               this.columnDefs.push(colDef);
