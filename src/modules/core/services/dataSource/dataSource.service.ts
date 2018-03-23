@@ -8,6 +8,7 @@ import { LoggingService } from '../logging/logging.service';
 import { CacheService } from '../cache/cache.service';
 
 import { DataSourceRequest } from './dataSource.request.model';
+import { DataSetResults } from '../../models/datasetResults.model';
 
 @Injectable()
 export class DataSourceService {
@@ -20,10 +21,10 @@ export class DataSourceService {
     private logger: LoggingService
   ) {}
 
-  getData(dataRequest: DataSourceRequest): Observable<any> {
-    return new Observable<Array<any>>(observer => {
+  getData(dataRequest: DataSourceRequest): Observable<DataSetResults> {
+    return new Observable<DataSetResults>(observer => {
       this.http
-        .post<Array<ReferenceValue>>(
+        .post<DataSetResults>(
           `${this.appSettingsService.apiHome}/api/datasource`,
           null
         )

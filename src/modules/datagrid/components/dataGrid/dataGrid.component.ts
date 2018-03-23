@@ -21,6 +21,7 @@ import {
 
 import { GridViewDetail } from '../../models/gridViewDetail.model';
 import { FiltersHolderComponent } from '../filtersHolder/filtersHolder.component';
+import { DataSetResults } from '../../../core/models/datasetResults.model';
 import { MenuItem } from 'primeng/primeng';
 
 @Component({
@@ -37,11 +38,8 @@ export class DataGridComponent implements OnInit, OnDestroy {
   filterValues: any;
   gridOptions: GridOptions;
   columnDefs: any[];
-  rowData: any[] = [{
-    Id: 1,
-    ContinentName: 'Harry',
-    Name: 'Windsor'
-  }];
+  rowData: any[];
+  rowCount: number;
 
   private menuName: string;
   private menuItems: CoreMenuItem[];
@@ -74,7 +72,19 @@ export class DataGridComponent implements OnInit, OnDestroy {
   }
 
   // Load First Data and if any criteria Changes
-  private loadInitialData() {}
+  private loadInitialData() {
+    this.rowData = [];
+
+    this.dataSourceService.getData({
+      menuId: this.menuName
+    })
+    .subscribe(data => {
+      this.rowData = JSON.parse(data.jsonData);
+      if (data.rowCount) {
+        this.rowCount = data.rowCount;
+      }
+    }, error => {});
+  }
 
   private findMenuItem(name: string, menuItems: CoreMenuItem[]) {
     if (menuItems) {
@@ -100,7 +110,7 @@ export class DataGridComponent implements OnInit, OnDestroy {
           if (this.gridViewDetail) {
             this.columnDefs = [];
             this.gridViewDetail.Columns.forEach(column => {
-              let colDef: ColDef = {
+              const colDef: ColDef = {
                 field: column.Field,
                 cellClass: column.CellClass,
                 filter: column.Filter,
