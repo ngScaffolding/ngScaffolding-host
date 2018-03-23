@@ -25,10 +25,10 @@ export class GridViewDetail {
 
   Filters?: InputBuilderDefinition;
 
-  SelectCommand: string;
-  DeleteCommand?: string;
-  UpdateCommand?: string;
-  InsertCommand?: string;
+  SelectDataSourceId?: number;
+  DeleteDataSourceId?: number;
+  UpdateDataSourceId?: number;
+  InsertDataSourceId?: number;
 
   Actions?: Array<ActionModel>;
 }

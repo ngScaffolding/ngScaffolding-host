@@ -26,7 +26,7 @@ export class DataSourceService {
       this.http
         .post<DataSetResults>(
           `${this.appSettingsService.apiHome}/api/datasource`,
-          null
+          dataRequest
         )
         .subscribe(values => {
           observer.next(values);
