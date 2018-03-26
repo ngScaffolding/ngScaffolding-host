@@ -1,6 +1,5 @@
 export class DataSourceRequest {
-    name?: string;
-    menuId?: string;
+    id?: number;
     seed?: string;
     rowData?: string;
     inputData?: string;

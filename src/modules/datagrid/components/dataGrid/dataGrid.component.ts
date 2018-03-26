@@ -16,7 +16,8 @@ import {
   DataSourceService,
   MenuService,
   CoreMenuItem,
-  LoggingService
+  LoggingService,
+  NotificationService
 } from '../../../core/coreModule';
 
 import { GridViewDetail } from '../../models/gridViewDetail.model';
@@ -50,6 +51,7 @@ export class DataGridComponent implements OnInit, OnDestroy {
   constructor(
     private logger: LoggingService,
     private route: ActivatedRoute,
+    private notification: NotificationService,
     private appSettingsService: AppSettingsService,
     private dataSourceService: DataSourceService,
     private menuService: MenuService
@@ -76,14 +78,19 @@ export class DataGridComponent implements OnInit, OnDestroy {
     this.rowData = [];
 
     this.dataSourceService.getData({
-      menuId: this.menuName
-    })
+      id: this.gridViewDetail.SelectDataSourceId
+    }, true)
     .subscribe(data => {
       this.rowData = JSON.parse(data.jsonData);
       if (data.rowCount) {
         this.rowCount = data.rowCount;
       }
-    }, error => {});
+    }, error => {
+      // Failed Select
+      this.logger.error(error);
+
+      this.notification.showMessage({detail: 'Unable to get data', severity: 'error'});
+    });
   }
 
   private findMenuItem(name: string, menuItems: CoreMenuItem[]) {
@@ -129,6 +136,8 @@ export class DataGridComponent implements OnInit, OnDestroy {
               this.columnDefs.push(colDef);
             });
           }
+
+          this.loadInitialData();
       }
     }
   }

@@ -20,7 +20,7 @@ export class DatagridSampleComponent {
   gridViewDetail: GridViewDetail = {
     Title: 'Test Grid',
     Columns: [{ Field: 'TestField' }],
-    SelectCommand: 'TestGrid.Select'
+    SelectDataSourceId: 1
   };
   constructor() {}
 }

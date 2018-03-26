@@ -21,7 +21,7 @@ export class DataSourceService {
     private logger: LoggingService
   ) {}
 
-  getData(dataRequest: DataSourceRequest): Observable<DataSetResults> {
+  getData(dataRequest: DataSourceRequest, throwOnError: boolean = false): Observable<DataSetResults> {
     return new Observable<DataSetResults>(observer => {
       this.http
         .post<DataSetResults>(
@@ -29,7 +29,20 @@ export class DataSourceService {
           dataRequest
         )
         .subscribe(values => {
-          observer.next(values);
+
+          // If Throw on error passed, loop through results for any failed runs
+          if (throwOnError) {
+            values.results.forEach(result => {
+              if (!result.success) {
+                observer.error(result.message);
+              }
+            });
+            observer.next(values);
+          } else {
+            observer.next(values);
+          }
+
+          // Finally
           observer.complete();
         });
     });
