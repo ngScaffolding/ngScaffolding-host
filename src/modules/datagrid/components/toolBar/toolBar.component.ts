@@ -15,6 +15,8 @@ export class ToolBarComponent implements OnInit {
   @Input() hideResetView: boolean;
   @Input() hideShareView: boolean;
 
+  @Input() hideLabels: boolean;
+
   @Output() filtersClicked = new EventEmitter<any>();
   @Output() refreshClicked = new EventEmitter<any>();
   @Output() columnsClicked = new EventEmitter<any>();
@@ -24,6 +26,14 @@ export class ToolBarComponent implements OnInit {
   @Output() shareViewClicked = new EventEmitter<any>();
 
   constructor() {}
+
+  showLabel(label: string) {
+    if (!this.hideLabels) {
+      return label;
+    } else {
+      return null;
+    }
+  }
 
   ngOnInit() {}
 }

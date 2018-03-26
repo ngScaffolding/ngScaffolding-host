@@ -41,6 +41,7 @@ export class DataGridComponent implements OnInit, OnDestroy {
   columnDefs: any[];
   rowData: any[];
   rowCount: number;
+  hideLabels = true;
 
   private menuName: string;
   private menuItems: CoreMenuItem[];
