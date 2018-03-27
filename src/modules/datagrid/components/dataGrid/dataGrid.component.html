@@ -5,7 +5,9 @@
             <h1>{{gridViewDetail.Title}}</h1>
         </div>
         <div class="ui-g-8">
-            <grid-toolbar [hideLabels]='hideLabels'></grid-toolbar>
+            <grid-toolbar
+            (refreshClicked)="loadInitialData()"
+            [hideLabels]='hideLabels'></grid-toolbar>
         </div>
     </div>
 

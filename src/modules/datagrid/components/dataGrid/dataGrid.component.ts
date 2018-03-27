@@ -59,7 +59,9 @@ export class DataGridComponent implements OnInit, OnDestroy {
     private dataSourceService: DataSourceService,
     private menuService: MenuService
   ) {
-    this.gridOptions = <GridOptions>{};
+    this.gridOptions = <GridOptions>{
+      rowSelection: 'single'
+    };
 
   }
 
@@ -81,7 +83,8 @@ export class DataGridComponent implements OnInit, OnDestroy {
     this.rowData = [];
 
     this.dataSourceService.getData({
-      id: this.gridViewDetail.SelectDataSourceId
+      id: this.gridViewDetail.SelectDataSourceId,
+      filterValues: JSON.stringify(this.filterValues)
     }, true)
     .subscribe(data => {
       this.rowData = JSON.parse(data.jsonData);
