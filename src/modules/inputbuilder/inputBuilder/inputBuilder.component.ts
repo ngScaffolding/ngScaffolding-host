@@ -221,8 +221,17 @@ export class InputBuilderComponent implements OnInit, OnChanges {
 
 
     this.clonedInputModel = changes;
+
+    // Flatten out Objects to value
+    const localFlat = Object.assign({}, changes);
+    for (const property in localFlat) {
+      if (localFlat[property] && localFlat[property].hasOwnProperty('value')) {
+        localFlat[property] = localFlat[property].value;
+      }
+    }
+
     // Tell subscribers we have changes
-    this.modelUpdated.emit(changes);
+    this.modelUpdated.emit(localFlat);
   }
 
   private mapValidators(inputDetail: InputDetail) {
