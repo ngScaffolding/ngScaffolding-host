@@ -10,7 +10,7 @@ export class FiltersHolderComponent implements OnInit {
   @Input() filterDefinition: InputBuilderDefinition;
   @Input() filterValues: any;
 
-  @Output() valuesUpdated: EventEmitter<any>;
+  @Output() valuesUpdated = new EventEmitter<any>();
   constructor() {}
 
   notifyInputsChanged(inputs) {
