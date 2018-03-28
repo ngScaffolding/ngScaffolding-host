@@ -100,7 +100,7 @@
             </div>
         </div>
     </div>
-    <div [className]="controlStyle">
+    <div [className]="controlStyle" *ngIf="inputDefinition.customButtonText || inputDefinition.cancelButtonText || inputDefinition.okButtonText">
         <div *ngIf="inputDefinition.customButtonText" class="ui-g-4">
                 <button pButton type="button"
                     (click)="onCustom()"

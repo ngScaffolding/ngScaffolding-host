@@ -1,17 +1,17 @@
 <div class="ui-g" style="float: right;">
   <button pButton class="ui-button-success toolbarButton" *ngIf="!hideFilters" type="button" icon="ui-icon-filter" tooltipPosition="bottom"
-    pTooltip="Show/Hide Filters" [label]="showLabel('Filters')">
+    (click)="this.filtersClicked.emit(null)" pTooltip="Show/Hide Filters" [label]="showLabel('Filters')">
   </button>
   <button pButton class="ui-button-info toolbarButton" *ngIf="!hideRefresh" type="button" icon="ui-icon-refresh" tooltipPosition="bottom"
     (click)="this.refreshClicked.emit(null)" pTooltip="Refresh Data" [label]="showLabel('Refresh')"></button>
   <button pButton class="ui-button-warning toolbarButton" *ngIf="!hideColumns" type="button" icon="ui-icon-view-compact" tooltipPosition="bottom"
-    pTooltip="Configure Columns" [label]="showLabel('Columns')"></button>
+    (click)="this.columnsClicked.emit(null)" pTooltip="Configure Columns" [label]="showLabel('Columns')"></button>
   <button pButton class="ui-button-success toolbarButton" *ngIf="!hideExport" type="button" icon="ui-icon-cloud-download" tooltipPosition="bottom"
-    pTooltip="Export/Print Data" [label]="showLabel('Export')"></button>
+    (click)="this.exportClicked.emit(null)" pTooltip="Export/Print Data" [label]="showLabel('Export')"></button>
   <button pButton class="ui-button-info toolbarButton" *ngIf="!hideSaveView" type="button" icon="ui-icon-save" tooltipPosition="bottom"
-    pTooltip="Save View Configuration" [label]="showLabel('Save View')"></button>
+    (click)="this.saveViewClicked.emit(null)" pTooltip="Save View Configuration" [label]="showLabel('Save View')"></button>
   <button pButton class="ui-button-warning toolbarButton" *ngIf="!hideResetView" type="button" icon="ui-icon-restore" tooltipPosition="bottom"
-    pTooltip="Reset View Configuration" [label]="showLabel('Reset View')"></button>
+    (click)="this.resetViewClicked.emit(null)" pTooltip="Reset View Configuration" [label]="showLabel('Reset View')"></button>
   <button pButton class="ui-button-success toolbarButton" *ngIf="!hideShareView" type="button" icon="ui-icon-share" tooltipPosition="bottom"
-    pTooltip="Share View" [label]="showLabel('Share View')"></button>
+    (click)="this.shareViewClicked.emit(null)" pTooltip="Share View" [label]="showLabel('Share View')"></button>
 </div>

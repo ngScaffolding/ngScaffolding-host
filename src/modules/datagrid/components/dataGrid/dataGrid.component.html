@@ -1,4 +1,4 @@
-<div class="card card-w-title">
+<div id="gridContainer" class="card card-w-title">
 
     <div class="ui-g">
         <div class="ui-g-4">
@@ -6,17 +6,23 @@
         </div>
         <div class="ui-g-8">
             <grid-toolbar
-            (refreshClicked)="loadInitialData()"
-            [hideLabels]='hideLabels'></grid-toolbar>
+              (refreshClicked)="loadInitialData()"
+              (filtersClicked)="showHideFilters()"
+              (columnsClicked)="showHideColumns()"
+              (exportClicked)="exportData()"
+              (saveViewClicked)="saveView()"
+              (resetViewClicked)="resetView()"
+              (shareViewClicked)="shareView()"
+              [hideLabels]='hideLabels'></grid-toolbar>
         </div>
     </div>
 
-    <filters-holder [filterDefinition]="filters"
+    <filters-holder [hidden]="!showFilters" [filterDefinition]="filters"
                     [filterValues]="filterValues"
                     (valuesUpdated)="onFiltersUpdated($event)"></filters-holder>
 
-    <div class="ui-g">
-        <ag-grid-angular style="width: 100%; height: 400px;" class="ui-g-12 ag-theme-material"
+    <div class="card" style="height: 70%;">
+        <ag-grid-angular style="width: 100%; height: 100%;" class="ag-theme-material"
             [rowData]="rowData"
             [columnDefs]="columnDefs"
             [gridOptions]="gridOptions"

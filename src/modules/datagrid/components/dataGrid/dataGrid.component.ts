@@ -45,6 +45,9 @@ export class DataGridComponent implements OnInit, OnDestroy {
   rowCount: number;
   hideLabels = true;
 
+  showFilters = true;
+  showToolPanel = false;
+
   private menuName: string;
   private menuItems: CoreMenuItem[];
 
@@ -60,10 +63,34 @@ export class DataGridComponent implements OnInit, OnDestroy {
     private menuService: MenuService
   ) {
     this.gridOptions = <GridOptions>{
-      rowSelection: 'single'
+      enableColResize: true,
+      enableSorting: true,
+      enableFilter: true,
+
+      rowSelection: 'single',
+      suppressCellSelection: true,
+
+      onGridReady: () => {}
     };
 
   }
+
+  // Toolbar Operations
+  showHideFilters() {
+    this.showFilters = !this.showFilters;
+  }
+  showHideColumns() {
+    this.showToolPanel = !this.showToolPanel;
+
+    this.gridOptions.api.showToolPanel(this.showToolPanel)
+  }
+  exportData() {
+
+  }
+  saveView(){}
+  resetView(){}
+  shareView(){}
+  // Toolbar Operations
 
   onGridReady(params) {
    // params.api.sizeColumnsToFit();
@@ -113,6 +140,9 @@ export class DataGridComponent implements OnInit, OnDestroy {
   private loadMenuItem() {
     if (this.menuName && this.menuItems && this.menuItems.length > 0) {
 
+      // Clear Existing Filters
+      this.filters = {};
+
       this.findMenuItem(this.menuName, this.menuItems);
 
       if (this.menuItem && this.menuItem.jsonSerialized) {
@@ -122,7 +152,7 @@ export class DataGridComponent implements OnInit, OnDestroy {
 
           if (this.gridViewDetail) {
             this.columnDefs = [];
-            this.filters = this.gridViewDetail.Filters
+            this.filters = this.gridViewDetail.Filters;
             this.gridViewDetail.Columns.forEach(column => {
               const colDef: ColDef = {
                 field: column.Field,
@@ -162,7 +192,7 @@ export class DataGridComponent implements OnInit, OnDestroy {
     this.paramSubscription = this.route.params.subscribe(params => {
       this.menuName = params['id'];
 
-      if (this.menuName && !this.menuItem) {
+      if (this.menuName && !this.menuItem || this.menuName !== this.menuItem.name) {
         this.loadMenuItem();
       }
     });
