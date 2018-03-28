@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { ActionModel } from '../../models';
+import { ButtonColorPipe } from '../../../core/coreModule';
 
 @Component({
   selector: 'actions-holder',
@@ -6,10 +8,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./actionsHolder.component.scss']
 })
 export class ActionsHolderComponent implements OnInit {
+  @Input() actions: ActionModel[];
 
-  constructor() { }
+  @Output() actionClicked = new EventEmitter<ActionModel>();
 
-  ngOnInit() {
+  constructor() {}
+
+  ngOnInit() {}
+
+  clickHandler(action: ActionModel) {
+    this.actionClicked.emit(action);
   }
-
 }

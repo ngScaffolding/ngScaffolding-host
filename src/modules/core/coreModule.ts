@@ -18,9 +18,13 @@ import { SpinnerService } from './services/spinnerService/spinner.service';
 import { RolesService } from './services/rolesService/roles.service';
 import { VersionsService } from './services/versions/versions.service';
 
+// Pipes
+import { ButtonColorPipe } from './pipes/index';
+
 export * from './services/index';
 export * from './routeGuards/index';
 export * from './models/index';
+export * from './pipes/index';
 
 // Interfaces
 
@@ -29,12 +33,14 @@ export * from './models/index';
   declarations: [
     // SampleComponent,
     // SampleDirective,
-    // SamplePipe
+    // Pipes
+    ButtonColorPipe
   ],
   exports: [
     // SampleComponent,
     // SampleDirective,
-    // SamplePipe
+    // Pipes
+    ButtonColorPipe
   ]
 })
 export class CoreModule {

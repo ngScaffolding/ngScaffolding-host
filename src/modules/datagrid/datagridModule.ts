@@ -4,7 +4,9 @@ import { CommonModule } from '@angular/common';
 
 import { RouterModule, Routes } from '@angular/router';
 
-import { MenuService, LoggingService, VersionsService } from '../core/coreModule';
+import { CoreModule, MenuService, LoggingService, VersionsService } from '../core/coreModule';
+import { ButtonColorPipe } from '../core/coreModule';
+
 import { InputBuilderModule } from '../inputbuilder/inputbuilderModule';
 
 import { FiltersHolderComponent } from './components/filtersHolder/filtersHolder.component';
@@ -29,6 +31,7 @@ const appRoutes: Routes = [
     ButtonModule,
     TooltipModule,
     InputBuilderModule,
+    CoreModule,
     AgGridModule.withComponents(
       []
   ),

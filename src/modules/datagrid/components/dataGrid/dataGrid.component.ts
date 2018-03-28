@@ -25,6 +25,7 @@ import { FiltersHolderComponent } from '../filtersHolder/filtersHolder.component
 import { DataSetResults } from '../../../core/models/datasetResults.model';
 import { MenuItem } from 'primeng/primeng';
 import { InputBuilderDefinition } from '../../../inputbuilder/inputbuilderModule';
+import { ActionModel } from '../../models';
 
 @Component({
   selector: 'data-grid',
@@ -39,6 +40,9 @@ export class DataGridComponent implements OnInit, OnDestroy {
   menuItem: CoreMenuItem;
   filterValues: any;
   filters: InputBuilderDefinition;
+
+  actions: ActionModel[];
+
   gridOptions: GridOptions;
   columnDefs: any[];
   rowData: any[];
@@ -172,6 +176,9 @@ export class DataGridComponent implements OnInit, OnDestroy {
 
               this.columnDefs.push(colDef);
             });
+
+            // Actions Here
+            this.actions = this.gridViewDetail.Actions;
           }
 
           this.loadInitialData();

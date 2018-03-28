@@ -30,8 +30,8 @@ import { APP_COMPONENTS } from './app.component.list';
 import { MessageService } from 'primeng/components/common/messageservice';
 import { AppSettingsService,  UserAuthorisationService,  BroadcastService,  CacheService,
   CoreErrorHandlerService,  LoggingService,  NotificationService,  MenuService,
-  DataSourceService ,ReferenceValuesService,
-  SpinnerService,  RolesService,  UserPreferencesService,  VersionsService} from '../modules/core/coreModule';
+  DataSourceService , ReferenceValuesService,
+  SpinnerService,  RolesService,  UserPreferencesService,  VersionsService, CoreModule} from '../modules/core/coreModule';
 
   // Externalise These Modules
   import { DatagridModule } from '../modules/datagrid/datagridModule';
@@ -52,6 +52,7 @@ import { UserSettingsComponent } from './pages/userSettings/userSettings.compone
 // Services
 import { NotificationReceiverService } from './services/notificationReceiver/notificationReceiver.service';
 import { TokenInterceptor } from './interceptors/token.interceptor';
+import { Button } from 'protractor';
 
 export function jwtOptionsFactory(appSettings: AppSettingsService) {
   return {
@@ -73,6 +74,7 @@ export function jwtOptionsFactory(appSettings: AppSettingsService) {
         PRIME_COMPONENTS,
         CUSTOM_IMPORTS,
         // To be External
+        CoreModule,
         DatagridModule,
         InputBuilderModule,
 

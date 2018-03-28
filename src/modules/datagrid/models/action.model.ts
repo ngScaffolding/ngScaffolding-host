@@ -1,6 +1,8 @@
 import { InputDetail } from '../../inputbuilder/inputbuilderModule';
 
 export class ActionModel {
+  id: number;
+  name?: string;
   type?: string;
   title?: string;
   icon?: string;
@@ -36,7 +38,7 @@ export class ActionModel {
   error?: string;
 
   // For SQL this contains the SQL Command ID
-  actionDefinition?: string;
+  dataSourceId?: number;
 
   // Angular Controller content
   // Todo?: Not sure if we need this - Maybe just a route?

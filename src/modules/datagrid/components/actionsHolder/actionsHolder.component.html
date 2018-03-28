@@ -1,3 +1,11 @@
 <div class="card">
-  <h2>Actions Here Baby</h2>
+    <div class="ui-g">
+        <button *ngFor="let action of actions"
+            pButton type="button"
+            (click)="clickHandler(action)"
+            class="{{action.colour | buttonColor}}"
+            icon="{{action.icon}}"
+            iconPos="left"
+            label="{{action.title}}"></button>
+    </div>
 </div>
