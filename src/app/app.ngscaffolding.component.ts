@@ -61,7 +61,7 @@ export class NgScaffoldingComponent implements AfterViewInit {
         this.router.navigate(['/login']);
       } else {
         this.logger.info('Logged on Redirecting to Home Page');
-        this.router.navigate(['/login']);
+        this.router.navigate(['/']);
       }
     });
 
