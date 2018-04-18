@@ -64,12 +64,12 @@ export class InputBuilderComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: { [propKey: string]: SimpleChange }) {
+    // setup the form
     this.buildForm();
   }
 
   ngOnInit(): void {
-    // setup the form
-    this.buildForm();
+    // this.buildForm();
   }
 
   private buildForm() {
