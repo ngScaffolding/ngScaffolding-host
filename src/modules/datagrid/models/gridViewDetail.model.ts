@@ -4,6 +4,7 @@ import { ActionModel } from './action.model';
 
 export class GridViewDetail {
   Title: string;
+  DisableCheckboxSelection?: boolean;
   WaitForInput?: boolean;
 
   PageSize?: number;
