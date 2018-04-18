@@ -26,6 +26,7 @@ import { DataSetResults } from '../../../core/models/datasetResults.model';
 import { MenuItem } from 'primeng/primeng';
 import { InputBuilderDefinition, InputBuilderPopupComponent } from '../../../inputbuilder/inputbuilderModule';
 import { ActionModel } from '../../models';
+import { ActionsHolderComponent } from '../actionsHolder/actionsHolder.component';
 
 @Component({
   selector: 'data-grid',
@@ -35,6 +36,7 @@ import { ActionModel } from '../../models';
 export class DataGridComponent implements OnInit, OnDestroy {
   @ViewChild(FiltersHolderComponent) filtersHolder: FiltersHolderComponent;
   @ViewChild(InputBuilderPopupComponent) actionInputPopup: InputBuilderPopupComponent;
+  @ViewChild(ActionsHolderComponent) actionsHolder: ActionsHolderComponent;
 
   @Input() gridViewDetail: GridViewDetail;
 
@@ -47,6 +49,7 @@ export class DataGridComponent implements OnInit, OnDestroy {
   actionValues: any;
 
   gridOptions: GridOptions;
+  selectedRows: any[];
   columnDefs: any[];
   rowData: any[];
   rowCount: number;
@@ -106,6 +109,12 @@ export class DataGridComponent implements OnInit, OnDestroy {
   onFiltersUpdated(filters) {
     this.filterValues = filters;
     this.loadInitialData();
+  }
+
+  onSelectionChanged($event) {
+    this.selectedRows = this.gridOptions.api.getSelectedRows();
+    this.actionsHolder.selectedRows = this.selectedRows;
+    this.actionsHolder.selectedRowsCount = this.selectedRows.length;
   }
 
   selectAllRows() {

@@ -9,6 +9,8 @@ import { ButtonColorPipe } from '../../../core/coreModule';
 })
 export class ActionsHolderComponent implements OnInit {
   @Input() actions: ActionModel[];
+  selectedRows: any[];
+  selectedRowsCount = 0;
 
   @Output() actionClicked = new EventEmitter<ActionModel>();
 

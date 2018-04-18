@@ -50,8 +50,10 @@ export class InputBuilderComponent implements OnInit, OnChanges {
   ) {}
 
   onSubmit(form: any) {
+    if(this.form.valid){
     this.okClicked.emit();
   }
+}
 
   onCancel() {
     this.cancelClicked.emit();

@@ -26,11 +26,14 @@
             [rowData]="rowData"
             [columnDefs]="columnDefs"
             [gridOptions]="gridOptions"
-
+            (selectionChanged) = 'onSelectionChanged($event)'
             (gridReady)="onGridReady($event)">
         </ag-grid-angular>
     </div>
-    <actions-holder *ngIf="actions && actions.length > 0" (actionClicked)="actionClicked($event)" [actions]="actions"></actions-holder>
+    <actions-holder #actionsHolder
+      *ngIf="actions && actions.length > 0"
+      (actionClicked)="actionClicked($event)"
+      [actions]="actions"></actions-holder>
     <input-builder-popup #actionInputPopup
       [inputBuilderDefinition]="actionInputDefinition"
       [inputModel]="actionValues"

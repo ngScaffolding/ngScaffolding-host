@@ -1,6 +1,7 @@
 <div class="card">
     <div class="ui-g">
         <button *ngFor="let action of actions"
+            [disabled]="(action.multipleTarget && selectedRowsCount < 1) || (action.selectionRequired && selectedRowsCount === 0)"
             pButton type="button"
             (click)="clickHandler(action)"
             class="{{action.colour | buttonColor}}"
