@@ -4,6 +4,10 @@ export const enum OrientationValues {
   Horizontal = 'horizontal'
 }
 export class InputBuilderDefinition {
+
+  // Title if required
+  title?: string;
+
   // Arrange Controls
   orientation?: string;
 

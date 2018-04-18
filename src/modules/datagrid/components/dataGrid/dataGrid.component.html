@@ -30,7 +30,7 @@
             (gridReady)="onGridReady($event)">
         </ag-grid-angular>
     </div>
-    <actions-holder (actionClicked)="actionClicked($event)" [actions]="actions"></actions-holder>
+    <actions-holder *ngIf="actions && actions.length > 0" (actionClicked)="actionClicked($event)" [actions]="actions"></actions-holder>
     <input-builder-popup #actionInputPopup
       [inputBuilderDefinition]="actionInputDefinition"
       [inputModel]="actionValues"
