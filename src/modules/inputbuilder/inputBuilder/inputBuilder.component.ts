@@ -29,7 +29,7 @@ import { InputDetailReferenceValues } from '../models/inputDetail.model';
   styleUrls: ['inputBuilder.component.scss']
 })
 export class InputBuilderComponent implements OnInit, OnChanges {
-  @Input() inputDefinition: InputBuilderDefinition;
+  @Input() inputBuilderDefinition: InputBuilderDefinition;
   @Input() inputModel: any;
 
   @Output() modelUpdated = new EventEmitter<any>();
@@ -58,8 +58,8 @@ export class InputBuilderComponent implements OnInit, OnChanges {
   }
 
   onCustom() {
-    if (this.inputDefinition.customButtonCallBack) {
-      this.inputDefinition.customButtonCallBack();
+    if (this.inputBuilderDefinition.customButtonCallBack) {
+      this.inputBuilderDefinition.customButtonCallBack();
     }
   }
 
@@ -80,12 +80,12 @@ export class InputBuilderComponent implements OnInit, OnChanges {
     // Default to full width (changes if help found)
     this.inputContainerClass = 'ui-g-12';
 
-    if (this.inputDefinition.orientation === OrientationValues.Horizontal) {
+    if (this.inputBuilderDefinition.orientation === OrientationValues.Horizontal) {
       if (
-        this.inputDefinition.horizontalColumnCount > 0 &&
-        this.inputDefinition.horizontalColumnCount < 5
+        this.inputBuilderDefinition.horizontalColumnCount > 0 &&
+        this.inputBuilderDefinition.horizontalColumnCount < 5
       ) {
-        const colSize = 12 / this.inputDefinition.horizontalColumnCount;
+        const colSize = 12 / this.inputBuilderDefinition.horizontalColumnCount;
         this.controlStyle = `ui-g-${colSize}`;
       }
     } else {
@@ -93,8 +93,8 @@ export class InputBuilderComponent implements OnInit, OnChanges {
     }
     const formGroup = {};
 
-    if (this.inputDefinition.inputDetails) {
-      this.inputDefinition.inputDetails.forEach(inputDetail => {
+    if (this.inputBuilderDefinition.inputDetails) {
+      this.inputBuilderDefinition.inputDetails.forEach(inputDetail => {
         inputDetail.containerClass = inputDetail.help ? 'ui-g-11' : 'ui-g-12';
 
         // Get value from model and apply to new FormControl
@@ -176,7 +176,7 @@ export class InputBuilderComponent implements OnInit, OnChanges {
     }
 
     // Do We need to notify another input of this change?
-    this.inputDefinition.inputDetails.forEach(input => {
+    this.inputBuilderDefinition.inputDetails.forEach(input => {
       if (
         input.hasOwnProperty('referenceValueSeedDependency') &&
         (<InputDetailReferenceValues>input).referenceValueSeedDependency &&

@@ -186,6 +186,15 @@ export class DataGridComponent implements OnInit, OnDestroy {
     }
   }
 
+  //
+  // Action Stuff
+  //
+  actionClicked(action: ActionModel){
+    if (action.inputControls && action.inputControls.length > 0) {
+
+    }
+  }
+
   ngOnInit(): void {
     this.menuSubscription = this.menuService.menuSubject.subscribe(
       menuItems => {
