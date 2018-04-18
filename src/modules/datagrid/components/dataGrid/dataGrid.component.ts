@@ -24,7 +24,7 @@ import { GridViewDetail } from '../../models/gridViewDetail.model';
 import { FiltersHolderComponent } from '../filtersHolder/filtersHolder.component';
 import { DataSetResults } from '../../../core/models/datasetResults.model';
 import { MenuItem } from 'primeng/primeng';
-import { InputBuilderDefinition } from '../../../inputbuilder/inputbuilderModule';
+import { InputBuilderDefinition, InputBuilderPopupComponent } from '../../../inputbuilder/inputbuilderModule';
 import { ActionModel } from '../../models';
 
 @Component({
@@ -34,6 +34,7 @@ import { ActionModel } from '../../models';
 })
 export class DataGridComponent implements OnInit, OnDestroy {
   @ViewChild(FiltersHolderComponent) filtersHolder: FiltersHolderComponent;
+  @ViewChild(InputBuilderPopupComponent) actionInputPopup: InputBuilderPopupComponent;
 
   @Input() gridViewDetail: GridViewDetail;
 
@@ -42,6 +43,8 @@ export class DataGridComponent implements OnInit, OnDestroy {
   filters: InputBuilderDefinition;
 
   actions: ActionModel[];
+  actionInputDefinition: InputBuilderDefinition;
+  actionValues: any;
 
   gridOptions: GridOptions;
   columnDefs: any[];
@@ -190,10 +193,24 @@ export class DataGridComponent implements OnInit, OnDestroy {
   // Action Stuff
   //
   actionClicked(action: ActionModel){
-    if (action.inputControls && action.inputControls.length > 0) {
-
+    if (action.inputBuilderDefinition && action.inputBuilderDefinition.inputDetails.length > 0) {
+      this.actionInputDefinition = action.inputBuilderDefinition;
+      this.actionInputPopup.showPopup();
     }
   }
+
+  //
+  // User Cliecked OK on popup
+  //
+  actionOkClicked(model: any) {
+    this.actionValues = model;
+  }
+
+  // User clicked Cancel
+  actionCancelClicked() {
+    alert('User Cancelled');
+  }
+
 
   ngOnInit(): void {
     this.menuSubscription = this.menuService.menuSubject.subscribe(

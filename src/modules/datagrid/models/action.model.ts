@@ -1,4 +1,4 @@
-import { InputDetail } from '../../inputbuilder/inputbuilderModule';
+import { InputDetail, InputBuilderDefinition } from '../../inputbuilder/inputbuilderModule';
 
 export class ActionModel {
   id: number;
@@ -27,7 +27,7 @@ export class ActionModel {
   idValue?: string;
   entityType?: string;
   additionalProperties?: string;
-  inputControls?: Array<InputDetail>;
+  inputBuilderDefinition?: InputBuilderDefinition;
   refresh?: boolean;
 
   isAudit?: boolean;

@@ -31,4 +31,9 @@
         </ag-grid-angular>
     </div>
     <actions-holder (actionClicked)="actionClicked($event)" [actions]="actions"></actions-holder>
+    <input-builder-popup #actionInputPopup
+      [inputBuilderDefinition]="actionInputDefinition"
+      [inputModel]="actionValues"
+      (okClicked)="actionOkClicked($event)"
+      (cancelCliecked)="actionCancelClicked()"></input-builder-popup>
 </div>

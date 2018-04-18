@@ -5,8 +5,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { VersionsService } from '../core/coreModule';
 
 import { InputBuilderComponent } from './inputBuilder/inputBuilder.component';
+import { InputBuilderPopupComponent } from './inputBuilderPopup/inputBuilderPopup.component';
 
 import {
+  DialogModule,
   InputTextModule,
   InputSwitchModule,
   CalendarModule,
@@ -29,6 +31,7 @@ import {
 } from 'primeng/primeng';
 
 export * from './inputBuilder/inputBuilder.component';
+export * from './inputBuilderPopup/inputBuilderPopup.component';
 export * from './models/inputDetail.model';
 export * from './models/inputBuilderDefinition.model';
 
@@ -37,6 +40,7 @@ export * from './models/inputBuilderDefinition.model';
     CommonModule,
     AutoCompleteModule,
     FormsModule,
+    DialogModule,
     EditorModule,
     ListboxModule,
     SelectButtonModule,
@@ -58,10 +62,12 @@ export * from './models/inputBuilderDefinition.model';
     MultiSelectModule, ToggleButtonModule, TooltipModule
   ],
   declarations: [
-    InputBuilderComponent
+    InputBuilderComponent,
+    InputBuilderPopupComponent
   ],
   exports: [
-    InputBuilderComponent
+    InputBuilderComponent,
+    InputBuilderPopupComponent
   ]
 })
 export class InputBuilderModule {

@@ -6,7 +6,7 @@ import {
   OnInit
 } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
-import { InputBuilderDefinition } from '../inputbuilderModule';
+import { InputBuilderDefinition } from '../models/inputBuilderDefinition.model';
 
 @Component({
   selector: 'input-builder-popup',
@@ -16,12 +16,20 @@ import { InputBuilderDefinition } from '../inputbuilderModule';
 export class InputBuilderPopupComponent implements OnInit {
   @Input() inputBuilderDefinition: InputBuilderDefinition;
   @Input() inputModel: any;
-  @Input() showPopup: boolean;
+
+  @Output() modelUpdated = new EventEmitter<any>();
+  @Output() valueUpdated = new EventEmitter<[string, any]>();
 
   @Output() okClicked = new EventEmitter<any>();
   @Output() cancelClicked = new EventEmitter<any>();
 
+  isShown: boolean;
 
+  private returnModel: any;
+
+  showPopup() {
+    this.isShown = true;
+  }
 
   ngOnInit(): void {
 
@@ -31,12 +39,19 @@ export class InputBuilderPopupComponent implements OnInit {
 
   }
 
-  onOkClicked() {
-    this.okClicked.emit(this.inputModel);
-    this.showPopup = false;
+  onModelUpdated(model: any){
+    this.modelUpdated.emit(model);
+    this.returnModel  = model;
+  }
+  onValueUpdated(){}
+
+  onOkClicked(model: any) {
+    this.okClicked.emit(this.returnModel);
+    this.isShown = false;
   }
   onCancelClicked() {
     this.cancelClicked.emit(null);
-    this.showPopup = false;
+    this.isShown = false;
   }
 }
+

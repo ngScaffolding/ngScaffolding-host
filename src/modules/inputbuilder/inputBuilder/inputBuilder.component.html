@@ -1,5 +1,5 @@
 <form novalidate class="ui-g form-group" (ngSubmit)="onSubmit(form)" [formGroup]="form">
-    <div [className]="controlStyle" *ngFor="let input of inputDefinition.inputDetails">
+    <div [className]="controlStyle" *ngFor="let input of inputBuilderDefinition.inputDetails">
         <div [ngSwitch]="input.type" [className]="input.containerClass">
 
             <!-- textbox -->
@@ -100,26 +100,26 @@
             </div>
         </div>
     </div>
-    <div [className]="controlStyle" *ngIf="inputDefinition.customButtonText || inputDefinition.cancelButtonText || inputDefinition.okButtonText">
-        <div *ngIf="inputDefinition.customButtonText" class="ui-g-4">
+    <div [className]="controlStyle" *ngIf="inputBuilderDefinition.customButtonText || inputBuilderDefinition.cancelButtonText || inputBuilderDefinition.okButtonText">
+        <div *ngIf="inputBuilderDefinition.customButtonText" class="ui-g-4">
                 <button pButton type="button"
                     (click)="onCustom()"
                     class="ui-button-info"
-                    icon="{{inputDefinition.customButtonIcon}}"
-                    iconPos="left" label="{{inputDefinition.customButtonText}}"></button>
+                    icon="{{inputBuilderDefinition.customButtonIcon}}"
+                    iconPos="left" label="{{inputBuilderDefinition.customButtonText}}"></button>
             </div>
-        <div *ngIf="inputDefinition.cancelButtonText" class="ui-g-4">
+        <div *ngIf="inputBuilderDefinition.cancelButtonText" class="ui-g-4">
             <button pButton type="button"
                 (click)="onCancel()"
                 class="ui-button-danger"
-                icon="{{inputDefinition.cancelButtonIcon}}"
-                iconPos="left" label="{{inputDefinition.cancelButtonText}}"></button>
+                icon="{{inputBuilderDefinition.cancelButtonIcon}}"
+                iconPos="left" label="{{inputBuilderDefinition.cancelButtonText}}"></button>
         </div>
-        <div *ngIf="inputDefinition.okButtonText" class="ui-g-4">
+        <div *ngIf="inputBuilderDefinition.okButtonText" class="ui-g-4">
             <button pButton type="submit"
                 class="ui-button-success"
-                icon="{{inputDefinition.okButtonIcon}}"
-                iconPos="left" label="{{inputDefinition.okButtonText}}"></button>
+                icon="{{inputBuilderDefinition.okButtonIcon}}"
+                iconPos="left" label="{{inputBuilderDefinition.okButtonText}}"></button>
         </div>
     </div>
 </form>
