@@ -30,5 +30,5 @@
             (gridReady)="onGridReady($event)">
         </ag-grid-angular>
     </div>
-    <actions-holder [actions]="actions"></actions-holder>
+    <actions-holder (actionClicked)="actionClicked($event)" [actions]="actions"></actions-holder>
 </div>
