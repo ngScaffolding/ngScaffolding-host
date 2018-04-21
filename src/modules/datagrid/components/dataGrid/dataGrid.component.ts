@@ -77,7 +77,7 @@ export class DataGridComponent implements OnInit, OnDestroy {
       enableSorting: true,
       enableFilter: true,
 
-      rowSelection: 'single',
+      rowSelection: 'multiple',
       suppressCellSelection: true,
 
       onGridReady: () => {}
@@ -222,6 +222,10 @@ export class DataGridComponent implements OnInit, OnDestroy {
   //
   actionOkClicked(model: any) {
     this.actionValues = model;
+
+    // Setup call to service to run Action
+
+    // Once Complete
   }
 
   // User clicked Cancel
