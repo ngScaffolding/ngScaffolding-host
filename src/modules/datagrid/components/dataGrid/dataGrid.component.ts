@@ -173,7 +173,9 @@ export class DataGridComponent implements OnInit, OnDestroy {
             this.columnDefs.push({
               headerName: 'Selection',
               checkboxSelection: true,
-              pinned: 'left'
+              pinned: 'left',
+              headerCheckboxSelection: true,
+              headerCheckboxSelectionFilteredOnly: false
             });
            }
             this.gridViewDetail.Columns.forEach(column => {
