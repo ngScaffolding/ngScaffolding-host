@@ -28,7 +28,7 @@ import { JwtModule, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { PRIME_COMPONENTS } from './app.prime.components';
 import { APP_COMPONENTS } from './app.component.list';
 import { MessageService } from 'primeng/components/common/messageservice';
-import { AppSettingsService,  UserAuthorisationService,  BroadcastService,  CacheService,
+import { ActionService, AppSettingsService,  UserAuthorisationService,  BroadcastService,  CacheService,
   CoreErrorHandlerService,  LoggingService,  NotificationService,  MenuService,
   DataSourceService , ReferenceValuesService,
   SpinnerService,  RolesService,  UserPreferencesService,  VersionsService, CoreModule} from '../modules/core/coreModule';
@@ -117,6 +117,7 @@ export function jwtOptionsFactory(appSettings: AppSettingsService) {
         { provide: ErrorHandler, useClass: CoreErrorHandlerService },
         // HTTP Token Interceptor
         { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true},
+        ActionService,
         AppSettingsService,
         UserAuthorisationService,
         BroadcastService,

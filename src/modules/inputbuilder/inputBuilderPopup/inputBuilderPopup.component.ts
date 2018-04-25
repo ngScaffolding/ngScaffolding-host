@@ -47,7 +47,7 @@ export class InputBuilderPopupComponent implements OnInit {
 
   onOkClicked(model: any) {
     this.okClicked.emit(this.returnModel);
-    this.isShown = false;
+    // this.isShown = false;
   }
   onCancelClicked() {
     this.cancelClicked.emit(null);

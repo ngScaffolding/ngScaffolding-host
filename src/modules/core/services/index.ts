@@ -1,5 +1,6 @@
 
 export * from './appSettings/appSettings.service';
+export * from './action/action.service';
 export * from './userAuthorisation/userAuthorisation.service';
 export * from './broadcast/broadcast.service';
 export * from './cache/cache.service';

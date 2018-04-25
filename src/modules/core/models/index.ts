@@ -1,3 +1,4 @@
+export * from './action.model';
 export * from './appSettings.model';
 export * from './authUser.model';
 export * from './authUserResponse.model';

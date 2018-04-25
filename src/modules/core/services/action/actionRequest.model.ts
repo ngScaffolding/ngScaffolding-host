@@ -5,3 +5,9 @@ export class ActionRequestModel{
   inputDetails: any;
   rows: any[];
 }
+
+export class ActionResultModel
+{
+    success: boolean;
+    message: string;
+}

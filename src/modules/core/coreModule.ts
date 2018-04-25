@@ -3,6 +3,7 @@ import { VERSION } from './version';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 
+import { ActionService } from './services/action/action.service';
 import { AppSettingsService } from './services/appSettings/appSettings.service';
 import { UserAuthorisationService } from './services/userAuthorisation/userAuthorisation.service';
 import { BroadcastService } from './services/broadcast/broadcast.service';
@@ -48,6 +49,7 @@ export class CoreModule {
     return {
       ngModule: CoreModule,
       providers: [
+        ActionService,
         AppSettingsService,
         DataSourceService,
         UserAuthorisationService,

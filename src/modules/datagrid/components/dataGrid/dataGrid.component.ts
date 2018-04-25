@@ -12,6 +12,7 @@ import { ActivatedRoute } from '@angular/router';
 import { GridOptions, ColDef, ColDefUtil } from 'ag-grid/main';
 
 import {
+  ActionModel,
   AppSettingsService,
   DataSourceService,
   MenuService,
@@ -25,8 +26,8 @@ import { FiltersHolderComponent } from '../filtersHolder/filtersHolder.component
 import { DataSetResults } from '../../../core/models/datasetResults.model';
 import { MenuItem } from 'primeng/primeng';
 import { InputBuilderDefinition, InputBuilderPopupComponent } from '../../../inputbuilder/inputbuilderModule';
-import { ActionModel } from '../../models';
 import { ActionsHolderComponent } from '../actionsHolder/actionsHolder.component';
+import { ActionService } from '../../../core/services/action/action.service';
 
 @Component({
   selector: 'data-grid',
@@ -64,10 +65,13 @@ export class DataGridComponent implements OnInit, OnDestroy {
   private paramSubscription: any;
   private menuSubscription: any;
 
+  private clickedAction: ActionModel;
+
   constructor(
     private logger: LoggingService,
     private route: ActivatedRoute,
     private notification: NotificationService,
+    private actionService: ActionService,
     private appSettingsService: AppSettingsService,
     private dataSourceService: DataSourceService,
     private menuService: MenuService
@@ -212,6 +216,7 @@ export class DataGridComponent implements OnInit, OnDestroy {
   //
   actionClicked(action: ActionModel){
     if (action.inputBuilderDefinition && action.inputBuilderDefinition.inputDetails.length > 0) {
+      this.clickedAction = action;
       this.actionInputDefinition = action.inputBuilderDefinition;
       this.actionInputPopup.showPopup();
     }
@@ -224,7 +229,12 @@ export class DataGridComponent implements OnInit, OnDestroy {
     this.actionValues = model;
 
     // Setup call to service to run Action
+    this.actionService.callAction(this.clickedAction, model, this.selectedRows)
+    .subscribe(result => {
 
+    }, err => {
+
+    });
     // Once Complete
   }
 

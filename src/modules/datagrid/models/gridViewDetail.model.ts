@@ -1,6 +1,6 @@
 import { ColumnModel } from './column.model';
 import { InputBuilderDefinition } from '../../inputbuilder/inputbuilderModule';
-import { ActionModel } from './action.model';
+import { ActionModel } from '../../core/coreModule';
 
 export class GridViewDetail {
   Title: string;
