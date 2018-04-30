@@ -18,7 +18,7 @@ export class ActionService {
   callAction(action: ActionModel, inputDetails: any, rows: any[]): Observable<ActionResultModel> {
 
     const request: ActionRequestModel = {
-      action: action, inputDetails: inputDetails, rows: rows
+      action: action, inputDetails:  JSON.stringify(inputDetails), rows: JSON.stringify(rows)
     };
 
     return this.http.post<ActionResultModel>(`${this.appSettingsService.apiHome}/api/action`, request);
