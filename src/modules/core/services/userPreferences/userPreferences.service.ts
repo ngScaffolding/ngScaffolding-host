@@ -7,10 +7,7 @@ import { UserAuthorisationService } from '../userAuthorisation/userAuthorisation
 import { AppSettingsService } from '../appSettings/appSettings.service';
 
 // Models
-import {
-  UserPreferenceDefinition,
-  UserPreferenceValue
-} from '../../models/userPreference.model';
+import { UserPreferenceDefinition, UserPreferenceValue } from '@ngscaffolding/models';
 
 @Injectable()
 export class UserPreferencesService {
@@ -23,8 +20,12 @@ export class UserPreferencesService {
   private preferenceValues = new Array<UserPreferenceValue>();
   private preferenceDefinitions = new Array<UserPreferenceDefinition>();
 
-  public preferenceDefinitionsSubject = new BehaviorSubject<Array<UserPreferenceDefinition>>(null);
-  public preferenceValuesSubject = new BehaviorSubject<Array<UserPreferenceValue>>(null);
+  public preferenceDefinitionsSubject = new BehaviorSubject<
+    Array<UserPreferenceDefinition>
+  >(null);
+  public preferenceValuesSubject = new BehaviorSubject<
+    Array<UserPreferenceValue>
+  >(null);
 
   constructor(
     private http: HttpClient,
@@ -81,8 +82,9 @@ export class UserPreferencesService {
   }
 
   public setValue(key: string, value: any) {
-    this.http.post(`${this.apiRootValues}`, {name: key, value: value})
-    .subscribe();
+    this.http
+      .post(`${this.apiRootValues}`, { name: key, value: value })
+      .subscribe();
 
     // Save and tell the world
     this.newValue(key, value);
@@ -125,7 +127,7 @@ export class UserPreferencesService {
     if (stored) {
       const map: Array<UserPreferenceValue> = JSON.parse(stored);
       if (map && map.length > 0) {
-        map.forEach((value) => {
+        map.forEach(value => {
           this.newValue(value.name, value.value);
         });
       }

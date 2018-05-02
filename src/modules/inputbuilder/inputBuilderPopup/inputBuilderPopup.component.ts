@@ -6,7 +6,7 @@ import {
   OnInit
 } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
-import { InputBuilderDefinition } from '../models/inputBuilderDefinition.model';
+import { InputBuilderDefinition } from '@ngscaffolding/models';
 
 @Component({
   selector: 'input-builder-popup',

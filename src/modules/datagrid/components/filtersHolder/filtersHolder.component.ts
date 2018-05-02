@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { InputBuilderDefinition } from '../../../inputbuilder/inputbuilderModule';
+import { InputBuilderDefinition } from '@ngscaffolding/models';
 
 @Component({
   selector: 'filters-holder',

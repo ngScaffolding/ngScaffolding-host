@@ -5,7 +5,7 @@ import {
   UserPreferencesService
 } from '../../../modules/core/coreModule';
 import { Subscription } from 'rxjs/Subscription';
-import { InputBuilderDefinition, OrientationValues } from '../../../modules/inputbuilder/inputbuilderModule';
+import { InputBuilderDefinition, OrientationValues } from '@ngscaffolding/models';
 
 @Component({
   templateUrl: './userSettings.component.html',

@@ -32,8 +32,6 @@ import {
 
 export * from './inputBuilder/inputBuilder.component';
 export * from './inputBuilderPopup/inputBuilderPopup.component';
-export * from './models/inputDetail.model';
-export * from './models/inputBuilderDefinition.model';
 
 @NgModule({
   imports: [

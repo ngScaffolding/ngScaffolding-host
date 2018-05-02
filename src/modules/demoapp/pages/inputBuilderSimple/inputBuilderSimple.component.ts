@@ -7,7 +7,7 @@ import {
   InputDetailToggleButton,
   InputDetailTextArea,
   InputDetailTextBox
-} from '../../../inputbuilder/inputbuilderModule';
+} from '@ngscaffolding/models';
 
 @Component({
   templateUrl: 'inputBuilderSimple.component.html',

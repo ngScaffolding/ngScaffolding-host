@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { GridViewDetail, ColumnModel } from '../../../datagrid/datagridModule';
+import { GridViewDetail, ColumnModel } from '@ngscaffolding/models';
 
 import {
   InputBuilderDefinition,
@@ -10,7 +10,7 @@ import {
   InputDetailToggleButton,
   InputDetailTextArea,
   InputDetailTextBox
-} from '../../../inputbuilder/inputbuilderModule';
+} from '@ngscaffolding/models';
 
 @Component({
   templateUrl: 'dataGridSample.component.html',

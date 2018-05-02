@@ -12,7 +12,8 @@ import {
 import { Router, NavigationEnd, NavigationError, NavigationStart } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import 'rxjs/add/operator/filter';
-import { LoggingService, AppSettingsService, SpinnerService, UserPreferenceValue } from '../modules/core/coreModule';
+import { UserPreferenceValue } from '@ngscaffolding/models';
+import { LoggingService, AppSettingsService, SpinnerService } from '../modules/core/coreModule';
 import { UserAuthorisationService, UserPreferencesService } from '../modules/core/coreModule';
 import { BroadcastService, BroadcastTypes, MenuService } from '../modules/core/coreModule';
 import { NotificationReceiverService } from './services/notificationReceiver/notificationReceiver.service';

@@ -4,13 +4,9 @@ import { CommonModule } from '@angular/common';
 
 import { RouterModule, Routes } from '@angular/router';
 
-import {
-  AppSettingsService,
-  AppSettings,
-  MenuService,
-  LoggingService,
-  VersionsService
-} from '../core/coreModule';
+import { AppSettings } from '@ngscaffolding/models';
+
+import { AppSettingsService, MenuService, LoggingService, VersionsService } from '../core/coreModule';
 
 import { InputBuilderModule } from '../inputbuilder/inputbuilderModule';
 

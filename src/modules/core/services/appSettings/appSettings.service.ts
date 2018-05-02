@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/Rx';
-import { AppSettings } from '../../models/appSettings.model';
+import { AppSettings } from '@ngscaffolding/models';
 import { LoggingService } from '../logging/logging.service';
 
 @Injectable()

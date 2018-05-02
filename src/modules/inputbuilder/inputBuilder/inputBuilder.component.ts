@@ -9,19 +9,14 @@ import {
 } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { InputDetail, InputTypes } from '../models/inputDetail.model';
-import {
-  InputBuilderDefinition,
-  OrientationValues
-} from '../models/inputBuilderDefinition.model';
+import { InputDetail, InputTypes } from '@ngscaffolding/models';
+import { InputBuilderDefinition, OrientationValues, ReferenceValueItem, ReferenceValue } from '@ngscaffolding/models';
 
 import {
   AppSettingsService,
   ReferenceValuesService,
-  ReferenceValueItem,
-  ReferenceValue
 } from '../../core/coreModule';
-import { InputDetailReferenceValues } from '../models/inputDetail.model';
+import { InputDetailReferenceValues } from '@ngscaffolding/models';
 
 @Component({
   selector: 'input-builder',

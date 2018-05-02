@@ -17,9 +17,6 @@ import { ToolBarComponent } from './components/toolBar/toolBar.component';
 import { ButtonModule, TooltipModule } from 'primeng/primeng';
 import { AgGridModule } from 'ag-grid-angular/main';
 
-// Export Models
-export * from './models/index';
-
 const appRoutes: Routes = [
   { path: 'datagrid/:id', component: DataGridComponent },
   { path: 'datagrid', component: DataGridComponent }

@@ -11,8 +11,9 @@ import {
 import { ActivatedRoute } from '@angular/router';
 import { GridOptions, ColDef, ColDefUtil } from 'ag-grid/main';
 
+import { ActionModel, GridViewDetail, InputBuilderDefinition } from '@ngscaffolding/models';
+
 import {
-  ActionModel,
   AppSettingsService,
   DataSourceService,
   MenuService,
@@ -21,11 +22,10 @@ import {
   NotificationService
 } from '../../../core/coreModule';
 
-import { GridViewDetail } from '../../models/gridViewDetail.model';
 import { FiltersHolderComponent } from '../filtersHolder/filtersHolder.component';
 import { DataSetResults } from '../../../core/models/datasetResults.model';
 import { MenuItem } from 'primeng/primeng';
-import { InputBuilderDefinition, InputBuilderPopupComponent } from '../../../inputbuilder/inputbuilderModule';
+import { InputBuilderPopupComponent } from '../../../inputbuilder/inputbuilderModule';
 import { ActionsHolderComponent } from '../actionsHolder/actionsHolder.component';
 import { ActionService } from '../../../core/services/action/action.service';
 

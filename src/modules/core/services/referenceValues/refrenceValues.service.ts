@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { AppSettingsService } from '../appSettings/appSettings.service';
-import { ReferenceValue } from '../../models/referenceValue.model';
+import { ReferenceValue } from '@ngscaffolding/models';
 import { LoggingService } from '../logging/logging.service';
 import { CacheService } from '../cache/cache.service';
 

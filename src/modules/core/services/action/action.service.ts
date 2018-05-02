@@ -4,8 +4,8 @@ import { Injectable } from '@angular/core';
 import { AppSettingsService } from '../appSettings/appSettings.service';
 import { LoggingService } from '../logging/logging.service';
 
-import { ActionModel } from '../../models/index';
-import { ActionResultModel, ActionRequestModel } from './actionRequest.model';
+import { ActionModel } from '@ngscaffolding/models';
+import { ActionResultModel, ActionRequestModel } from '@ngscaffolding/models';
 
 @Injectable()
 export class ActionService {
