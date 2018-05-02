@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { ActionModel } from '@ngscaffolding/models';
+import { Action } from '@ngscaffolding/models';
 import { ButtonColorPipe } from '../../../core/coreModule';
 
 @Component({
@@ -8,17 +8,17 @@ import { ButtonColorPipe } from '../../../core/coreModule';
   styleUrls: ['./actionsHolder.component.scss']
 })
 export class ActionsHolderComponent implements OnInit {
-  @Input() actions: ActionModel[];
+  @Input() actions: Action[];
   selectedRows: any[];
   selectedRowsCount = 0;
 
-  @Output() actionClicked = new EventEmitter<ActionModel>();
+  @Output() actionClicked = new EventEmitter<Action>();
 
   constructor() {}
 
   ngOnInit() {}
 
-  clickHandler(action: ActionModel) {
+  clickHandler(action: Action) {
     this.actionClicked.emit(action);
   }
 }

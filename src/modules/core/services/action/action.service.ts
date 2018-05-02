@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 import { AppSettingsService } from '../appSettings/appSettings.service';
 import { LoggingService } from '../logging/logging.service';
 
-import { ActionModel } from '@ngscaffolding/models';
+import { Action } from '@ngscaffolding/models';
 import { ActionResultModel, ActionRequestModel } from '@ngscaffolding/models';
 
 @Injectable()
@@ -15,7 +15,7 @@ export class ActionService {
     private logger: LoggingService
   ) {}
 
-  callAction(action: ActionModel, inputDetails: any, rows: any[]): Observable<ActionResultModel> {
+  callAction(action: Action, inputDetails: any, rows: any[]): Observable<ActionResultModel> {
 
     const request: ActionRequestModel = {
       action: action, inputDetails:  JSON.stringify(inputDetails), rows: JSON.stringify(rows)

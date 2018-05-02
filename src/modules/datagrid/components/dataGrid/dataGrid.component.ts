@@ -11,7 +11,7 @@ import {
 import { ActivatedRoute } from '@angular/router';
 import { GridOptions, ColDef, ColDefUtil } from 'ag-grid/main';
 
-import { ActionModel, GridViewDetail, InputBuilderDefinition } from '@ngscaffolding/models';
+import { Action, GridViewDetail, InputBuilderDefinition } from '@ngscaffolding/models';
 
 import {
   AppSettingsService,
@@ -45,7 +45,7 @@ export class DataGridComponent implements OnInit, OnDestroy {
   filterValues: any;
   filters: InputBuilderDefinition;
 
-  actions: ActionModel[];
+  actions: Action[];
   actionInputDefinition: InputBuilderDefinition;
   actionValues: any;
 
@@ -65,7 +65,7 @@ export class DataGridComponent implements OnInit, OnDestroy {
   private paramSubscription: any;
   private menuSubscription: any;
 
-  private clickedAction: ActionModel;
+  private clickedAction: Action;
 
   constructor(
     private logger: LoggingService,
@@ -214,7 +214,7 @@ export class DataGridComponent implements OnInit, OnDestroy {
   //
   // Action Stuff
   //
-  actionClicked(action: ActionModel){
+  actionClicked(action: Action){
     if (action.inputBuilderDefinition && action.inputBuilderDefinition.inputDetails.length > 0) {
       this.clickedAction = action;
       this.actionInputDefinition = action.inputBuilderDefinition;
