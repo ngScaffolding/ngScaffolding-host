@@ -234,6 +234,22 @@ export class DataGridComponent implements OnInit, OnDestroy {
   // Action Stuff
   //
   actionClicked(action: Action) {
+    // check if we need confirmation
+    if (action.confirmationMessage) {
+      this.confirmationService.confirm({
+        message: action.confirmationMessage,
+        header: 'Confirmation',
+        accept: () => {
+          this.checkForActionInputs(action);
+        }
+      });
+    } else {
+      // Just do it without asking
+      this.checkForActionInputs(action);
+    }
+  }
+
+  private checkForActionInputs(action: Action) {
     if (
       action.inputBuilderDefinition &&
       action.inputBuilderDefinition.inputDetails.length > 0
@@ -241,14 +257,42 @@ export class DataGridComponent implements OnInit, OnDestroy {
       this.clickedAction = action;
       this.actionInputDefinition = action.inputBuilderDefinition;
 
-      if (action.confirmationMessage) {
-        this.confirmationService.confirm({
-          message: 'Are you sure to perform this action?'
-        });
-      }
-
       this.actionInputPopup.showPopup();
+    } else{
+      this.actionValues = {};
+      this.callAction(action);
     }
+  }
+
+  private callAction(action: Action){
+    this.actionService
+    .callAction(action, this.actionValues, this.selectedRows)
+    .subscribe(
+      result => {
+        if (action.successMessage) {
+          this.confirmationService.confirm({
+            message: action.successMessage,
+            acceptLabel: 'OK',
+            icon: 'fa-check',
+            header: 'Success',
+            rejectVisible: false
+          });
+        }
+        // finally
+        this.actionInputPopup.isShown = false;
+      },
+      err => {
+        if (action.successMessage) {
+          this.confirmationService.confirm({
+            message: action.errorMessage,
+            icon: 'fa-close',
+            acceptLabel: 'OK',
+            header: 'Error',
+            rejectVisible: false
+          });
+        }
+      }
+    );
   }
 
   //
@@ -260,34 +304,7 @@ export class DataGridComponent implements OnInit, OnDestroy {
     // Setup call to service to run Action
     // Once Complete
 
-    this.actionService
-      .callAction(this.clickedAction, model, this.selectedRows)
-      .subscribe(
-        result => {
-          if (this.clickedAction.successMessage) {
-            this.confirmationService.confirm({
-              message: this.clickedAction.successMessage,
-              icon: 'fa-check',
-              header: 'Success',
-              rejectVisible: false
-            });
-          }
-          // finally
-          this.actionInputPopup.isShown = false;
-        },
-        err => {
-          if (this.clickedAction.successMessage) {
-            this.confirmationService.confirm({
-              message: this.clickedAction.errorMessage,
-              icon: 'fa-close',
-              header: 'Error',
-              rejectVisible: false
-            });
-          }
-        }
-      );
-
-
+    this.callAction(this.clickedAction);
   }
 
   // User clicked Cancel
