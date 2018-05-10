@@ -1,9 +1,21 @@
-import { Component, Input, Output, EventEmitter, OnInit, OnDestroy, ViewChild} from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  OnInit,
+  OnDestroy,
+  ViewChild
+} from '@angular/core';
 
 import { ActivatedRoute } from '@angular/router';
 import { GridOptions, ColDef, ColDefUtil } from 'ag-grid/main';
 
-import { Action, GridViewDetail, InputBuilderDefinition } from '@ngscaffolding/models';
+import {
+  Action,
+  GridViewDetail,
+  InputBuilderDefinition
+} from '@ngscaffolding/models';
 
 import { ConfirmationService } from 'primeng/primeng';
 
@@ -30,7 +42,8 @@ import { ActionService } from '../../../core/services/action/action.service';
 })
 export class DataGridComponent implements OnInit, OnDestroy {
   @ViewChild(FiltersHolderComponent) filtersHolder: FiltersHolderComponent;
-  @ViewChild(InputBuilderPopupComponent) actionInputPopup: InputBuilderPopupComponent;
+  @ViewChild(InputBuilderPopupComponent)
+  actionInputPopup: InputBuilderPopupComponent;
   @ViewChild(ActionsHolderComponent) actionsHolder: ActionsHolderComponent;
 
   @Input() gridViewDetail: GridViewDetail;
@@ -81,7 +94,6 @@ export class DataGridComponent implements OnInit, OnDestroy {
 
       onGridReady: () => {}
     };
-
   }
 
   // Toolbar Operations
@@ -91,18 +103,16 @@ export class DataGridComponent implements OnInit, OnDestroy {
   showHideColumns() {
     this.showToolPanel = !this.showToolPanel;
 
-    this.gridOptions.api.showToolPanel(this.showToolPanel)
+    this.gridOptions.api.showToolPanel(this.showToolPanel);
   }
-  exportData() {
-
-  }
-  saveView(){}
-  resetView(){}
-  shareView(){}
+  exportData() {}
+  saveView() {}
+  resetView() {}
+  shareView() {}
   // Toolbar Operations
 
   onGridReady(params) {
-   // params.api.sizeColumnsToFit();
+    // params.api.sizeColumnsToFit();
   }
 
   onFiltersUpdated(filters) {
@@ -124,29 +134,42 @@ export class DataGridComponent implements OnInit, OnDestroy {
   public loadInitialData() {
     this.rowData = [];
 
-    this.dataSourceService.getData({
-      id: this.gridViewDetail.SelectDataSourceId,
-      filterValues: JSON.stringify(this.filterValues)
-    }, true)
-    .subscribe(data => {
-      this.rowData = JSON.parse(data.jsonData);
-      if (data.rowCount) {
-        this.rowCount = data.rowCount;
-      }
-    }, error => {
-      // Failed Select
-      this.logger.error(error);
+    this.dataSourceService
+      .getData(
+        {
+          id: this.gridViewDetail.SelectDataSourceId,
+          filterValues: JSON.stringify(this.filterValues)
+        },
+        true
+      )
+      .subscribe(
+        data => {
+          this.rowData = JSON.parse(data.jsonData);
+          if (data.rowCount) {
+            this.rowCount = data.rowCount;
+          }
+        },
+        error => {
+          // Failed Select
+          this.logger.error(error);
 
-      this.notification.showMessage({detail: 'Unable to get data', severity: 'error'});
-    });
+          this.notification.showMessage({
+            detail: 'Unable to get data',
+            severity: 'error'
+          });
+        }
+      );
   }
 
   private findMenuItem(name: string, menuItems: CoreMenuItem[]) {
     if (menuItems) {
       menuItems.forEach(menuItem => {
-         this.findMenuItem(name, menuItem.items as CoreMenuItem[]);
-         if (menuItem.name && menuItem.name.toLowerCase() === name.toLowerCase()) {
-            this.menuItem = menuItem;
+        this.findMenuItem(name, menuItem.items as CoreMenuItem[]);
+        if (
+          menuItem.name &&
+          menuItem.name.toLowerCase() === name.toLowerCase()
+        ) {
+          this.menuItem = menuItem;
         }
       });
     }
@@ -154,21 +177,22 @@ export class DataGridComponent implements OnInit, OnDestroy {
 
   private loadMenuItem() {
     if (this.menuName && this.menuItems && this.menuItems.length > 0) {
-
       // Clear Existing Filters
       this.filters = {};
 
       this.findMenuItem(this.menuName, this.menuItems);
 
       if (this.menuItem && this.menuItem.jsonSerialized) {
-          this.logger.info(`dataGrid Loading menu ${this.menuName}`);
+        this.logger.info(`dataGrid Loading menu ${this.menuName}`);
 
-          this.gridViewDetail = JSON.parse(this.menuItem.jsonSerialized) as GridViewDetail;
+        this.gridViewDetail = JSON.parse(
+          this.menuItem.jsonSerialized
+        ) as GridViewDetail;
 
-          if (this.gridViewDetail) {
-            this.columnDefs = [];
-            this.filters = this.gridViewDetail.Filters;
-           if(!this.gridViewDetail.DisableCheckboxSelection){
+        if (this.gridViewDetail) {
+          this.columnDefs = [];
+          this.filters = this.gridViewDetail.Filters;
+          if (!this.gridViewDetail.DisableCheckboxSelection) {
             this.columnDefs.push({
               headerName: 'Selection',
               checkboxSelection: true,
@@ -176,32 +200,32 @@ export class DataGridComponent implements OnInit, OnDestroy {
               headerCheckboxSelection: true,
               headerCheckboxSelectionFilteredOnly: false
             });
-           }
-            this.gridViewDetail.Columns.forEach(column => {
-              const colDef: ColDef = {
-                field: column.Field,
-                cellClass: column.CellClass,
-                filter: column.Filter,
-                tooltipField: column.TooltipField,
-                headerName: column.HeaderName,
-                headerTooltip: column.HeaderTooltip,
-                pinned: column.Pinned,
-                suppressMenu: column.SuppressMenu,
-                suppressFilter: column.SuppressFilter,
-                suppressSorting: column.SuppressSorting,
-
-                type: column.Type,
-                hide: column.Hide
-              };
-
-              this.columnDefs.push(colDef);
-            });
-
-            // Actions Here
-            this.actions = this.gridViewDetail.Actions;
           }
+          this.gridViewDetail.Columns.forEach(column => {
+            const colDef: ColDef = {
+              field: column.Field,
+              cellClass: column.CellClass,
+              filter: column.Filter,
+              tooltipField: column.TooltipField,
+              headerName: column.HeaderName,
+              headerTooltip: column.HeaderTooltip,
+              pinned: column.Pinned,
+              suppressMenu: column.SuppressMenu,
+              suppressFilter: column.SuppressFilter,
+              suppressSorting: column.SuppressSorting,
 
-          this.loadInitialData();
+              type: column.Type,
+              hide: column.Hide
+            };
+
+            this.columnDefs.push(colDef);
+          });
+
+          // Actions Here
+          this.actions = this.gridViewDetail.Actions;
+        }
+
+        this.loadInitialData();
       }
     }
   }
@@ -209,16 +233,18 @@ export class DataGridComponent implements OnInit, OnDestroy {
   //
   // Action Stuff
   //
-  actionClicked(action: Action){
-    if (action.inputBuilderDefinition && action.inputBuilderDefinition.inputDetails.length > 0) {
+  actionClicked(action: Action) {
+    if (
+      action.inputBuilderDefinition &&
+      action.inputBuilderDefinition.inputDetails.length > 0
+    ) {
       this.clickedAction = action;
       this.actionInputDefinition = action.inputBuilderDefinition;
 
-      if(action.confirmationMessage){
+      if (action.confirmationMessage) {
         this.confirmationService.confirm({
           message: 'Are you sure to perform this action?'
-      });
-
+        });
       }
 
       this.actionInputPopup.showPopup();
@@ -232,20 +258,42 @@ export class DataGridComponent implements OnInit, OnDestroy {
     this.actionValues = model;
 
     // Setup call to service to run Action
-    this.actionService.callAction(this.clickedAction, model, this.selectedRows)
-    .subscribe(result => {
-
-    }, err => {
-
-    });
     // Once Complete
+
+    this.actionService
+      .callAction(this.clickedAction, model, this.selectedRows)
+      .subscribe(
+        result => {
+          if (this.clickedAction.successMessage) {
+            this.confirmationService.confirm({
+              message: this.clickedAction.successMessage,
+              icon: 'fa-check',
+              header: 'Success',
+              rejectVisible: false
+            });
+          }
+          // finally
+          this.actionInputPopup.isShown = false;
+        },
+        err => {
+          if (this.clickedAction.successMessage) {
+            this.confirmationService.confirm({
+              message: this.clickedAction.errorMessage,
+              icon: 'fa-close',
+              header: 'Error',
+              rejectVisible: false
+            });
+          }
+        }
+      );
+
+
   }
 
   // User clicked Cancel
   actionCancelClicked() {
     alert('User Cancelled');
   }
-
 
   ngOnInit(): void {
     this.menuSubscription = this.menuService.menuSubject.subscribe(
@@ -260,7 +308,10 @@ export class DataGridComponent implements OnInit, OnDestroy {
     this.paramSubscription = this.route.params.subscribe(params => {
       this.menuName = params['id'];
 
-      if (this.menuName && !this.menuItem || this.menuName !== this.menuItem.name) {
+      if (
+        (this.menuName && !this.menuItem) ||
+        this.menuName !== this.menuItem.name
+      ) {
         this.loadMenuItem();
       }
     });
