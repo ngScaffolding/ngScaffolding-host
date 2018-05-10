@@ -26,6 +26,7 @@ import { Title } from '@angular/platform-browser';
 import { JwtModule, JWT_OPTIONS } from '@auth0/angular-jwt';
 
 import { PRIME_COMPONENTS } from './app.prime.components';
+import { ConfirmationService } from 'primeng/primeng';
 import { APP_COMPONENTS } from './app.component.list';
 import { MessageService } from 'primeng/components/common/messageservice';
 import { ActionService, AppSettingsService,  UserAuthorisationService,  BroadcastService,  CacheService,
@@ -113,6 +114,7 @@ export function jwtOptionsFactory(appSettings: AppSettingsService) {
         // ngScaffolding
         Title,
         CookieService,
+        ConfirmationService,
         // ngScaffolding-core
         { provide: ErrorHandler, useClass: CoreErrorHandlerService },
         // HTTP Token Interceptor

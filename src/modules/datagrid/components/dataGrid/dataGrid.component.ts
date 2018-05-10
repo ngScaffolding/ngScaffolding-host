@@ -1,17 +1,11 @@
-import {
-  Component,
-  Input,
-  Output,
-  EventEmitter,
-  OnInit,
-  OnDestroy,
-  ViewChild
-} from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, OnDestroy, ViewChild} from '@angular/core';
 
 import { ActivatedRoute } from '@angular/router';
 import { GridOptions, ColDef, ColDefUtil } from 'ag-grid/main';
 
 import { Action, GridViewDetail, InputBuilderDefinition } from '@ngscaffolding/models';
+
+import { ConfirmationService } from 'primeng/primeng';
 
 import {
   AppSettingsService,
@@ -74,7 +68,8 @@ export class DataGridComponent implements OnInit, OnDestroy {
     private actionService: ActionService,
     private appSettingsService: AppSettingsService,
     private dataSourceService: DataSourceService,
-    private menuService: MenuService
+    private menuService: MenuService,
+    private confirmationService: ConfirmationService
   ) {
     this.gridOptions = <GridOptions>{
       enableColResize: true,
@@ -218,6 +213,14 @@ export class DataGridComponent implements OnInit, OnDestroy {
     if (action.inputBuilderDefinition && action.inputBuilderDefinition.inputDetails.length > 0) {
       this.clickedAction = action;
       this.actionInputDefinition = action.inputBuilderDefinition;
+
+      if(action.confirmationMessage){
+        this.confirmationService.confirm({
+          message: 'Are you sure to perform this action?'
+      });
+
+      }
+
       this.actionInputPopup.showPopup();
     }
   }
