@@ -18,6 +18,7 @@ import {
 } from '@ngscaffolding/models';
 
 import { ConfirmationService } from 'primeng/primeng';
+import { MessageService } from 'primeng/components/common/messageservice';
 
 import {
   AppSettingsService,
@@ -82,7 +83,8 @@ export class DataGridComponent implements OnInit, OnDestroy {
     private appSettingsService: AppSettingsService,
     private dataSourceService: DataSourceService,
     private menuService: MenuService,
-    private confirmationService: ConfirmationService
+    private confirmationService: ConfirmationService,
+    private messageService: MessageService
   ) {
     this.gridOptions = <GridOptions>{
       enableColResize: true,
@@ -258,41 +260,64 @@ export class DataGridComponent implements OnInit, OnDestroy {
       this.actionInputDefinition = action.inputBuilderDefinition;
 
       this.actionInputPopup.showPopup();
-    } else{
+    } else {
       this.actionValues = {};
       this.callAction(action);
     }
   }
 
-  private callAction(action: Action){
+  private callAction(action: Action) {
     this.actionService
-    .callAction(action, this.actionValues, this.selectedRows)
-    .subscribe(
-      result => {
-        if (action.successMessage) {
-          this.confirmationService.confirm({
-            message: action.successMessage,
-            acceptLabel: 'OK',
-            icon: 'fa-check',
-            header: 'Success',
-            rejectVisible: false
-          });
+      .callAction(action, this.actionValues, this.selectedRows)
+      .subscribe(
+        result => {
+          if (result.success) {
+          if (action.successMessage) {
+            if (action.successToast) {
+              this.messageService.add({
+                severity: 'success',
+                summary: 'Success',
+                detail: action.successMessage
+              });
+            } else {
+              this.confirmationService.confirm({
+                message: action.successMessage,
+                acceptLabel: 'OK',
+                icon: 'fa-check',
+                header: 'Success',
+                rejectVisible: false
+              });
+            }
+          }
+          // finally
+          this.actionInputPopup.isShown = false;
+
+          // Refresh Data
+          this.loadInitialData();
+        } else {
+          if (action.errorMessage) {
+            this.confirmationService.confirm({
+              message: action.errorMessage,
+              icon: 'fa-close',
+              acceptLabel: 'OK',
+              header: 'Error',
+              rejectVisible: false
+            });
+          }
         }
-        // finally
-        this.actionInputPopup.isShown = false;
-      },
-      err => {
-        if (action.successMessage) {
-          this.confirmationService.confirm({
-            message: action.errorMessage,
-            icon: 'fa-close',
-            acceptLabel: 'OK',
-            header: 'Error',
-            rejectVisible: false
-          });
+        },
+        err => {
+          if (action.errorMessage) {
+            this.confirmationService.confirm({
+              message: action.errorMessage,
+              icon: 'fa-close',
+              acceptLabel: 'OK',
+              header: 'Error',
+              rejectVisible: false
+            });
+          }
         }
-      }
-    );
+      );
   }
 
   //
