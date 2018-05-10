@@ -121,7 +121,7 @@ export class DataGridComponent implements OnInit, OnDestroy {
   }
 
   // Load First Data and if any criteria Changes
-  private loadInitialData() {
+  public loadInitialData() {
     this.rowData = [];
 
     this.dataSourceService.getData({

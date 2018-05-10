@@ -9,7 +9,7 @@ import 'rxjs/add/operator/toPromise';
 
 import {AppComponent} from './app.component';
 import {AppMenuComponent, AppSubMenuComponent} from './app.menu.component';
-import {AppTopbarComponent} from './app.topbar.component';
+// import {AppTopbarComponent} from './app.topbar.component';
 import {AppFooterComponent} from './app.footer.component';
 import {AppBreadcrumbComponent } from './app.breadcrumb.component';
 import {AppRightpanelComponent} from './app.rightpanel.component';
@@ -24,6 +24,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Title } from '@angular/platform-browser';
 import { JwtModule, JWT_OPTIONS } from '@auth0/angular-jwt';
+import { AppTopBarComponent } from './components/appTopbar/app.topbar.component';
 
 import { PRIME_COMPONENTS } from './app.prime.components';
 import { ConfirmationService } from 'primeng/primeng';
@@ -90,7 +91,8 @@ export function jwtOptionsFactory(appSettings: AppSettingsService) {
         AppComponent,
         AppMenuComponent,
         AppSubMenuComponent,
-        AppTopbarComponent,
+        // AppTopbarComponent,
+        AppTopBarComponent,
         AppFooterComponent,
         AppBreadcrumbComponent,
         AppRightpanelComponent,
