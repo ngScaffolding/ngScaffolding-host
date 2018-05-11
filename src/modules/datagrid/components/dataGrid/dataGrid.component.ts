@@ -35,6 +35,7 @@ import { MenuItem } from 'primeng/primeng';
 import { InputBuilderPopupComponent } from '../../../inputbuilder/inputbuilderModule';
 import { ActionsHolderComponent } from '../actionsHolder/actionsHolder.component';
 import { ActionService } from '../../../core/services/action/action.service';
+import { ButtonCellComponent } from '../../cellTemplates/buttonCell/buttonCell.component';
 
 @Component({
   selector: 'data-grid',
@@ -194,6 +195,8 @@ export class DataGridComponent implements OnInit, OnDestroy {
         if (this.gridViewDetail) {
           this.columnDefs = [];
           this.filters = this.gridViewDetail.Filters;
+
+          // Do We need a Checkbox
           if (!this.gridViewDetail.DisableCheckboxSelection) {
             this.columnDefs.push({
               headerName: 'Selection',
@@ -203,6 +206,15 @@ export class DataGridComponent implements OnInit, OnDestroy {
               headerCheckboxSelectionFilteredOnly: false
             });
           }
+
+          // Do We need an Actions button
+         this.columnDefs.push({
+            headerName: 'Clickable Component',
+            field: 'Id',
+            cellRendererFramework: ButtonCellComponent,
+            width: 330
+        });
+
           this.gridViewDetail.Columns.forEach(column => {
             const colDef: ColDef = {
               field: column.Field,

@@ -17,6 +17,8 @@ import { ToolBarComponent } from './components/toolBar/toolBar.component';
 import { ButtonModule, TooltipModule, ConfirmDialogModule } from 'primeng/primeng';
 import { AgGridModule } from 'ag-grid-angular/main';
 
+import { ButtonCellComponent } from './cellTemplates/buttonCell/buttonCell.component';
+
 const appRoutes: Routes = [
   { path: 'datagrid/:id', component: DataGridComponent },
   { path: 'datagrid', component: DataGridComponent }
@@ -31,15 +33,17 @@ const appRoutes: Routes = [
     ConfirmDialogModule,
     CoreModule,
     AgGridModule.withComponents(
-      []
-  ),
+      [
+        ButtonCellComponent
+      ]),
     RouterModule.forChild(appRoutes)
   ],
   declarations: [
     ActionsHolderComponent,
     DataGridComponent,
     FiltersHolderComponent,
-    ToolBarComponent
+    ToolBarComponent,
+    ButtonCellComponent
   ],
   exports: [
     DataGridComponent,
