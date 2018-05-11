@@ -208,12 +208,14 @@ export class DataGridComponent implements OnInit, OnDestroy {
           }
 
           // Do We need an Actions button
-         this.columnDefs.push({
-            headerName: 'Clickable Component',
-            field: 'Id',
-            cellRendererFramework: ButtonCellComponent,
-            width: 330
-        });
+          if (this.gridViewDetail.Actions.filter(action => action.columnButton).length > 0) {
+            this.columnDefs.push({
+                headerName: 'Actions',
+                field: 'Id',
+                cellRendererFramework: ButtonCellComponent,
+                cellRendererParams : {actions: this.gridViewDetail.Actions },
+            });
+          }
 
           this.gridViewDetail.Columns.forEach(column => {
             const colDef: ColDef = {
