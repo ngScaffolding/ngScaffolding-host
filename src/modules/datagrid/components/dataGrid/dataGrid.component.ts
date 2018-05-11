@@ -38,11 +38,12 @@ import { ActionService } from '../../../core/services/action/action.service';
 import { ButtonCellComponent } from '../../cellTemplates/buttonCell/buttonCell.component';
 
 @Component({
-  selector: 'data-grid',
+  selector: 'app-data-grid',
   templateUrl: './datagrid.component.html',
   styleUrls: ['./datagrid.component.scss']
 })
 export class DataGridComponent implements OnInit, OnDestroy {
+
   @ViewChild(FiltersHolderComponent) filtersHolder: FiltersHolderComponent;
   @ViewChild(InputBuilderPopupComponent)
   actionInputPopup: InputBuilderPopupComponent;
@@ -140,7 +141,7 @@ export class DataGridComponent implements OnInit, OnDestroy {
     this.dataSourceService
       .getData(
         {
-          id: this.gridViewDetail.SelectDataSourceId,
+          id: this.gridViewDetail.selectDataSourceId,
           filterValues: JSON.stringify(this.filterValues)
         },
         true
@@ -194,12 +195,15 @@ export class DataGridComponent implements OnInit, OnDestroy {
 
         if (this.gridViewDetail) {
           this.columnDefs = [];
-          this.filters = this.gridViewDetail.Filters;
+          this.filters = this.gridViewDetail.filters;
 
           // Do We need a Checkbox
-          if (!this.gridViewDetail.DisableCheckboxSelection) {
+          if (!this.gridViewDetail.disableCheckboxSelection) {
             this.columnDefs.push({
               headerName: 'Selection',
+              suppressMenu: true,
+              suppressFilter: true,
+              suppressSorting: true,
               checkboxSelection: true,
               pinned: 'left',
               headerCheckboxSelection: true,
@@ -208,16 +212,22 @@ export class DataGridComponent implements OnInit, OnDestroy {
           }
 
           // Do We need an Actions button
-          if (this.gridViewDetail.Actions.filter(action => action.columnButton).length > 0) {
+          if (this.gridViewDetail.actions.filter(action => action.columnButton).length > 0) {
             this.columnDefs.push({
                 headerName: 'Actions',
+                suppressMenu: true,
+                suppressFilter: true,
+                suppressSorting: true,
                 field: 'Id',
                 cellRendererFramework: ButtonCellComponent,
-                cellRendererParams : {actions: this.gridViewDetail.Actions },
+                cellRendererParams : {
+                  actions: this.gridViewDetail.actions,
+                  splitButton: this.gridViewDetail.isActionColumnSplitButton
+                },
             });
           }
 
-          this.gridViewDetail.Columns.forEach(column => {
+          this.gridViewDetail.columns.forEach(column => {
             const colDef: ColDef = {
               field: column.Field,
               cellClass: column.CellClass,
@@ -238,7 +248,7 @@ export class DataGridComponent implements OnInit, OnDestroy {
           });
 
           // Actions Here
-          this.actions = this.gridViewDetail.Actions;
+          this.actions = this.gridViewDetail.actions;
         }
 
         this.loadInitialData();

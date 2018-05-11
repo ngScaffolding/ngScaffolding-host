@@ -18,9 +18,9 @@ import {
 })
 export class DatagridSampleComponent {
   gridViewDetail: GridViewDetail = {
-    Title: 'Test Grid',
-    Columns: [{ Field: 'TestField' }],
-    SelectDataSourceId: 1
+    title: 'Test Grid',
+    columns: [{ Field: 'TestField' }],
+    selectDataSourceId: 1
   };
   constructor() {}
 }
