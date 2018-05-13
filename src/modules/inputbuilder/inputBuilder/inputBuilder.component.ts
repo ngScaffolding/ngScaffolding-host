@@ -19,7 +19,7 @@ import {
 import { InputDetailReferenceValues } from '@ngscaffolding/models';
 
 @Component({
-  selector: 'input-builder',
+  selector: 'app-input-builder',
   templateUrl: 'inputBuilder.component.html',
   styleUrls: ['inputBuilder.component.scss']
 })
@@ -66,12 +66,10 @@ export class InputBuilderComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-    // this.buildForm();
   }
 
   private buildForm() {
     // Clone our inputModel
-
     this.clonedInputModel = Object.assign({}, this.inputModel);
 
     // Default to full width (changes if help found)
@@ -217,7 +215,7 @@ export class InputBuilderComponent implements OnInit, OnChanges {
     // });
 
 
-    this.clonedInputModel = changes;
+    // this.clonedInputModel = changes;
 
     // Flatten out Objects to value
     const localFlat = Object.assign({}, changes);
