@@ -33,9 +33,9 @@
       *ngIf="actions && actions.length > 0"
       (actionClicked)="actionClicked($event)"
       [actions]="actions"></actions-holder>
-    <input-builder-popup #actionInputPopup
+    <app-input-builder-popup #actionInputPopup
       [inputBuilderDefinition]="actionInputDefinition"
       [inputModel]="actionValues"
       (okClicked)="actionOkClicked($event)"
-      (cancelCliecked)="actionCancelClicked()"></input-builder-popup>
+      (cancelCliecked)="actionCancelClicked()"></app-input-builder-popup>
 </div>
