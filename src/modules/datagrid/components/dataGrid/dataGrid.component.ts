@@ -26,7 +26,8 @@ import {
   MenuService,
   CoreMenuItem,
   LoggingService,
-  NotificationService
+  NotificationService,
+  BroadcastService
 } from '../../../core/coreModule';
 
 import { FiltersHolderComponent } from '../filtersHolder/filtersHolder.component';
@@ -36,6 +37,7 @@ import { InputBuilderPopupComponent } from '../../../inputbuilder/inputbuilderMo
 import { ActionsHolderComponent } from '../actionsHolder/actionsHolder.component';
 import { ActionService } from '../../../core/services/action/action.service';
 import { ButtonCellComponent } from '../../cellTemplates/buttonCell/buttonCell.component';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-data-grid',
@@ -77,6 +79,8 @@ export class DataGridComponent implements OnInit, OnDestroy {
 
   private clickedAction: Action;
 
+  private broadcastSubscription: Subscription;
+
   constructor(
     private logger: LoggingService,
     private route: ActivatedRoute,
@@ -86,7 +90,8 @@ export class DataGridComponent implements OnInit, OnDestroy {
     private dataSourceService: DataSourceService,
     private menuService: MenuService,
     private confirmationService: ConfirmationService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private broadcast: BroadcastService
   ) {
     this.gridOptions = <GridOptions>{
       enableColResize: true,
@@ -98,6 +103,12 @@ export class DataGridComponent implements OnInit, OnDestroy {
 
       onGridReady: () => {}
     };
+
+    // Wire up broadcast for action clicked
+    this.broadcastSubscription = broadcast.on('ACTION_CLICKED')
+      .subscribe(action => {
+        this.actionClicked(action as Action);
+      });
   }
 
   // Toolbar Operations
@@ -199,6 +210,11 @@ export class DataGridComponent implements OnInit, OnDestroy {
 
           // Do We need a Checkbox
           if (!this.gridViewDetail.disableCheckboxSelection) {
+
+            // Switch off RowSelection
+            this.gridOptions.suppressRowClickSelection = true;
+
+            // Add the selection column
             this.columnDefs.push({
               headerName: 'Selection',
               suppressMenu: true,
@@ -389,6 +405,9 @@ export class DataGridComponent implements OnInit, OnDestroy {
     }
     if (this.menuSubscription) {
       this.menuSubscription.unsubscribe();
+    }
+    if (this.broadcastSubscription) {
+      this.broadcastSubscription.unsubscribe();
     }
   }
 }

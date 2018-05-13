@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ICellRendererAngularComp } from 'ag-grid-angular';
 import { Action } from '@ngscaffolding/models';
 import { MenuItem } from 'primeng/components/common/menuitem';
+import { BroadcastService } from '../../../core/services';
 
 @Component({
   selector: 'app-button-cell',
@@ -9,6 +10,10 @@ import { MenuItem } from 'primeng/components/common/menuitem';
   styleUrls: ['buttonCell.component.scss']
 })
 export class ButtonCellComponent implements ICellRendererAngularComp {
+
+  constructor(private broadcast: BroadcastService){
+
+  }
   public cell: any;
 
   public actions: Action[];
@@ -37,7 +42,7 @@ export class ButtonCellComponent implements ICellRendererAngularComp {
   }
 
   public clicked(action: Action): void {
-    console.log('Child Cell Clicked: ' + JSON.stringify(action));
+    this.broadcast.broadcast('ACTION_CLICKED', action);
   }
 
   refresh(): boolean {
