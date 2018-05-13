@@ -4,6 +4,11 @@ import { Action } from '@ngscaffolding/models';
 import { MenuItem } from 'primeng/components/common/menuitem';
 import { BroadcastService } from '../../../core/services';
 
+export interface ActionClickedData {
+  action: Action;
+  row: any;
+}
+
 @Component({
   selector: 'app-button-cell',
   templateUrl: 'buttonCell.component.html',
@@ -26,7 +31,7 @@ export class ButtonCellComponent implements ICellRendererAngularComp {
   agInit(params: any): void {
     this.actions = params.actions;
     this.splitButton = params.splitButton;
-    this.cell = { row: params.value, col: params.colDef.headerName };
+    this.cell = { row: params.data, col: params.colDef.headerName };
 
     // if (this.splitButton) {
     //   this.actions.forEach(action => {
@@ -42,7 +47,7 @@ export class ButtonCellComponent implements ICellRendererAngularComp {
   }
 
   public clicked(action: Action): void {
-    this.broadcast.broadcast('ACTION_CLICKED', action);
+    this.broadcast.broadcast('ACTION_CLICKED', { action: action, row: this.cell.row} as ActionClickedData);
   }
 
   refresh(): boolean {

@@ -36,7 +36,7 @@ import { MenuItem } from 'primeng/primeng';
 import { InputBuilderPopupComponent } from '../../../inputbuilder/inputbuilderModule';
 import { ActionsHolderComponent } from '../actionsHolder/actionsHolder.component';
 import { ActionService } from '../../../core/services/action/action.service';
-import { ButtonCellComponent } from '../../cellTemplates/buttonCell/buttonCell.component';
+import { ButtonCellComponent, ActionClickedData } from '../../cellTemplates/buttonCell/buttonCell.component';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -106,8 +106,9 @@ export class DataGridComponent implements OnInit, OnDestroy {
 
     // Wire up broadcast for action clicked
     this.broadcastSubscription = broadcast.on('ACTION_CLICKED')
-      .subscribe(action => {
-        this.actionClicked(action as Action);
+      .subscribe(actionData => {
+        const actionClickedData = actionData as ActionClickedData;
+        this.actionClicked(actionClickedData.action, actionClickedData.row);
       });
   }
 
@@ -275,30 +276,34 @@ export class DataGridComponent implements OnInit, OnDestroy {
   //
   // Action Stuff
   //
-  actionClicked(action: Action) {
+  actionClicked(action: Action, row: any) {
     // check if we need confirmation
     if (action.confirmationMessage) {
       this.confirmationService.confirm({
         message: action.confirmationMessage,
         header: 'Confirmation',
         accept: () => {
-          this.checkForActionInputs(action);
+          this.checkForActionInputs(action, row);
         }
       });
     } else {
       // Just do it without asking
-      this.checkForActionInputs(action);
+      this.checkForActionInputs(action, row);
     }
   }
 
-  private checkForActionInputs(action: Action) {
+  private checkForActionInputs(action: Action, row: any) {
     if (
       action.inputBuilderDefinition &&
       action.inputBuilderDefinition.inputDetails.length > 0
     ) {
       this.clickedAction = action;
       this.actionInputDefinition = action.inputBuilderDefinition;
-
+      if (row) {
+        this.actionValues = row;
+      } else {
+        this.actionValues = {};
+      }
       this.actionInputPopup.showPopup();
     } else {
       this.actionValues = {};
