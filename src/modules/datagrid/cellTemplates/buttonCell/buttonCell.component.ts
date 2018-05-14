@@ -15,18 +15,18 @@ export interface ActionClickedData {
   styleUrls: ['buttonCell.component.scss']
 })
 export class ButtonCellComponent implements ICellRendererAngularComp {
-
-  constructor(private broadcast: BroadcastService){
-
-  }
+  constructor(private broadcast: BroadcastService) {}
   public cell: any;
 
   public actions: Action[];
   public splitButton: boolean;
 
-  public splitButtonItems: MenuItem[] = [{
-    label: 'hello'
-  },{label: 'world'}];
+  public splitButtonItems: MenuItem[] = [
+    {
+      label: 'hello'
+    },
+    { label: 'world' }
+  ];
 
   agInit(params: any): void {
     this.actions = params.actions;
@@ -47,7 +47,10 @@ export class ButtonCellComponent implements ICellRendererAngularComp {
   }
 
   public clicked(action: Action): void {
-    this.broadcast.broadcast('ACTION_CLICKED', { action: action, row: this.cell.row} as ActionClickedData);
+    this.broadcast.broadcast('ACTION_CLICKED', {
+      action: action,
+      row: this.cell.row
+    } as ActionClickedData);
   }
 
   refresh(): boolean {

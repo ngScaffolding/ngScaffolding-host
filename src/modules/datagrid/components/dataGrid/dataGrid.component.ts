@@ -37,7 +37,7 @@ import { InputBuilderPopupComponent } from '../../../inputbuilder/inputbuilderMo
 import { ActionsHolderComponent } from '../actionsHolder/actionsHolder.component';
 import { ActionService } from '../../../core/services/action/action.service';
 import { ButtonCellComponent, ActionClickedData } from '../../cellTemplates/buttonCell/buttonCell.component';
-import { Subscription } from 'rxjs';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-data-grid',
@@ -229,7 +229,7 @@ export class DataGridComponent implements OnInit, OnDestroy {
           }
 
           // Do We need an Actions button
-          if (this.gridViewDetail.actions.filter(action => action.columnButton).length > 0) {
+          if (this.gridViewDetail.actions && this.gridViewDetail.actions.filter(action => action.columnButton).length > 0) {
             this.columnDefs.push({
                 headerName: 'Actions',
                 suppressMenu: true,
