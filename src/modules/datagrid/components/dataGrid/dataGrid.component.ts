@@ -217,7 +217,7 @@ export class DataGridComponent implements OnInit, OnDestroy {
 
             // Add the selection column
             this.columnDefs.push({
-              headerName: 'Selection',
+              width: 70,
               suppressMenu: true,
               suppressFilter: true,
               suppressSorting: true,

@@ -3,7 +3,7 @@
     icon="{{action.icon}}" iconPos="left" label="{{action.title}}"></button>
 </span>
 
-<span *ngIf="splitButton">
+<span >
   <!-- Split button need Line-height to work Also possibly needs to be an EditorCell with Popup -->
-  <p-splitButton style="" label="Actions" [model]="splitButtonItems"></p-splitButton>
+  <p-splitButton [style]="{'line-height': '0px'}" label="Actions" appendTo="body" menuStyleClass="editorButtonMenu" styleClass="ui-button-success" [model]="splitButtonItems"></p-splitButton>
 </span>
