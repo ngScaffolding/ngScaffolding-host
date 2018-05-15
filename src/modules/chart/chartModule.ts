@@ -1,4 +1,5 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { VERSION } from './version';
 import { CommonModule } from '@angular/common';
 
@@ -8,7 +9,7 @@ import { CoreModule, MenuService, LoggingService, VersionsService } from '../cor
 import { ButtonColorPipe } from '../core/coreModule';
 
 import { InputBuilderModule } from '../inputbuilder/inputbuilderModule';
-
+import { HighchartsChartComponent } from './components/chart/highcharts-chart.component';
 import { ChartComponent } from './components/chart/chart.component';
 
 const appRoutes: Routes = [
@@ -19,12 +20,14 @@ const appRoutes: Routes = [
 @NgModule({
   imports: [
     CommonModule,
+    FormsModule,
     InputBuilderModule,
     CoreModule,
     RouterModule.forChild(appRoutes)
   ],
   declarations: [
-    ChartComponent
+    ChartComponent,
+    HighchartsChartComponent
   ],
   exports: [
     ChartComponent,
