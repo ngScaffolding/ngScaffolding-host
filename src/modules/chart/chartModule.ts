@@ -12,6 +12,9 @@ import { InputBuilderModule } from '../inputbuilder/inputbuilderModule';
 import { HighchartsChartComponent } from './components/chart/highcharts-chart.component';
 import { ChartComponent } from './components/chart/chart.component';
 
+// Services
+import { ChartDataService } from './services/chartData.service';
+
 const appRoutes: Routes = [
   { path: 'chart/:id', component: ChartComponent },
   { path: 'chart', component: ChartComponent }
@@ -32,6 +35,9 @@ const appRoutes: Routes = [
   exports: [
     ChartComponent,
     RouterModule
+  ],
+  providers: [
+    ChartDataService
   ]
 })
 export class ChartModule {
