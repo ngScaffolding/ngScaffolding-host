@@ -8,7 +8,7 @@ import * as HC_exporting from 'highcharts/modules/exporting';
 import * as HC_ce from 'highcharts-custom-events';
 import { ChartDataService } from '../../services/chartData.service';
 import { DataSourceService, LoggingService, MenuService } from '../../../core/services';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { CoreMenuItem } from '@ngscaffolding/models';
 import { Observable } from 'rxjs/Observable';
 
@@ -44,6 +44,7 @@ export class ChartComponent implements OnInit, OnDestroy {
   public chartOptions: Highcharts.chartOptions;
 
   constructor(private router: Router,
+    private route: ActivatedRoute,
     private logger: LoggingService,
     private menuService: MenuService,
     private chartDataService: ChartDataService,

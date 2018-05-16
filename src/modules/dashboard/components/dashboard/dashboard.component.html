@@ -1,0 +1,14 @@
+<div id="gridContainer" class="card card-w-title">
+  <h1>
+    Dashboard
+  </h1>
+
+
+  <div style="width: 100%; height: 400px;">
+    <gridster [options]="options">
+      <gridster-item [item]="item" *ngFor="let item of dashboard">
+        <!-- your content here -->
+      </gridster-item>
+    </gridster>
+  </div>
+</div>
