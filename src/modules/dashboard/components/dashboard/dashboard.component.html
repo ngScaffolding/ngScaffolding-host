@@ -1,13 +1,13 @@
-<div id="gridContainer" class="card card-w-title" appFillHeight>
-  <h1>
-    Dashboard
-  </h1>
+<p-card title="Header">
+  <p-header>
+    Tool Bar Here
+  </p-header>
 
-  <div style="height: 100%">
-    <gridster [options]="options" style="width: 100%;">
+  <div appFillHeight>
+    <gridster [options]="options" style="width: 100%;height: 100%">
       <gridster-item [item]="item" *ngFor="let item of dashboard">
         <!-- your content here -->
       </gridster-item>
     </gridster>
   </div>
-</div>
+</p-card>

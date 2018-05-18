@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { DataSourceService, LoggingService, MenuService } from '../../../core/services';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { CoreMenuItem } from '@ngscaffolding/models';
 import { Observable } from 'rxjs/Observable';
 
@@ -13,21 +13,48 @@ import {CompactType, DisplayGrid, GridsterConfig, GridsterItem, GridType} from '
   styles: ['dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit, OnDestroy {
+  private paramSubscription: any;
+  private menuName: string;
+  private menuItem: CoreMenuItem;
+
+  private options: GridsterConfig;
+  private dashboard: Array<GridsterItem>;
+
+  constructor(private router: Router,
+    private route: ActivatedRoute,
+    private logger: LoggingService,
+    private menuService: MenuService,
+    private dataSourceService: DataSourceService) {}
+
+    loadDashboard(){
+      this.menuItem = this.menuService.getMenuItemByName(this.menuName);
+
+      if (this.menuItem) {
+
+      }
+    }
 
 
-  options: GridsterConfig;
-  dashboard: Array<GridsterItem>;
 
-  static itemChange(item, itemComponent) {
+  private itemChange(item, itemComponent) {
     console.log('itemChanged', item, itemComponent);
   }
 
-  static itemResize(item, itemComponent) {
+  private itemResize(item, itemComponent) {
     console.log('itemResized', item, itemComponent);
   }
 
   ngOnInit() {
+    // Get Menu Id
+    this.paramSubscription = this.route.params.subscribe(params => {
+      this.menuName = params['id'];
+      this.loadDashboard();
+    });
+
     this.options = {
+      itemChangeCallback: this.itemChange,
+       itemResizeCallback: this.itemResize,
+
       gridType: GridType.Fit,
       compactType: CompactType.None,
       margin: 10,
@@ -74,20 +101,21 @@ export class DashboardComponent implements OnInit, OnDestroy {
       disablePushOnResize: false,
       pushDirections: {north: true, east: true, south: true, west: true},
       pushResizeItems: false,
-      displayGrid: DisplayGrid.Always,
+      displayGrid: DisplayGrid.OnDragAndResize,
       disableWindowResize: false,
       disableWarnings: false,
-      scrollToNewItems: false
+      scrollToNewItems: true
     };
 
     this.dashboard = [
-      {cols: 2, rows: 1, y: 0, x: 0},
-      {cols: 2, rows: 2, y: 0, x: 2}
+
     ];
   }
 
   ngOnDestroy(): void {
-    throw new Error("Method not implemented.");
+    if (this.paramSubscription) {
+      this.paramSubscription.unsubscribe();
+    }
   }
 
   changedOptions() {

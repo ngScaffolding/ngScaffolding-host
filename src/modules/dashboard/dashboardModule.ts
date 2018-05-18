@@ -12,6 +12,7 @@ import { InputBuilderModule } from '../inputbuilder/inputbuilderModule';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 import { GridsterModule } from 'angular-gridster2';
+import { CardModule } from 'primeng/card';
 
 // Services
 
@@ -27,6 +28,7 @@ const appRoutes: Routes = [
     InputBuilderModule,
     CoreModule,
     GridsterModule,
+    CardModule,
     RouterModule.forChild(appRoutes)
   ],
   declarations: [

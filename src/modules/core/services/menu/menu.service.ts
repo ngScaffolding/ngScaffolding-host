@@ -17,6 +17,8 @@ export class MenuService {
   private menuItems: Array<CoreMenuItem> = [];
   private routes: Array<Route> = [];
 
+  private menuItem: CoreMenuItem;
+
   public menuSubject = new BehaviorSubject<Array<CoreMenuItem>>(this.menuItems);
   public routeSubject = new BehaviorSubject<Array<Route>>(this.routes);
 
@@ -48,6 +50,15 @@ export class MenuService {
       this.menuItems.push(menuItem);
     });
     this.menuSubject.next(this.menuItems);
+  }
+
+  public getMenuItemByName(name: string): MenuItem {
+    this.menuItem = null;
+
+    if (this.menuItems && this.menuItems.length > 0){
+      this.findMenuItem(name, this.menuItems);
+    }
+      return this.menuItem;
   }
 
   public downloadMenuItems() {
@@ -85,6 +96,20 @@ export class MenuService {
     }
   }
 
+  private findMenuItem(name: string, menuItems: CoreMenuItem[]) {
+    if (menuItems) {
+      menuItems.forEach(menuItem => {
+        this.findMenuItem(name, menuItem.items as CoreMenuItem[]);
+        if (
+          menuItem.name &&
+          menuItem.name.toLowerCase() === name.toLowerCase()
+        ) {
+          this.menuItem = menuItem;
+        }
+      });
+    }
+  }
+
   private addDownloadedMenuItem(targetMenu: CoreMenuItem[], newMenuItem: CoreMenuItem) {
     let calcRouterLink: string|string[];
 
@@ -105,7 +130,7 @@ export class MenuService {
 
     if (newMenuItem.items && newMenuItem.items.length > 0) {
       createdMenuItem.items = [];
-      let castItems = newMenuItem.items as CoreMenuItem[];
+      const castItems = newMenuItem.items as CoreMenuItem[];
       castItems.forEach(menuItem => {
         this.addDownloadedMenuItem(createdMenuItem.items as CoreMenuItem[], menuItem);
       });
