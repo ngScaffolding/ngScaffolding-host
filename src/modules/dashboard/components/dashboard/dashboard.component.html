@@ -3,10 +3,11 @@
     Dashboard
   </h1>
 
-
-    <gridster [options]="options" style="width: 100%; height: 90%" >
+  <div style="height: 100%">
+    <gridster [options]="options" style="width: 100%;">
       <gridster-item [item]="item" *ngFor="let item of dashboard">
         <!-- your content here -->
       </gridster-item>
     </gridster>
+  </div>
 </div>
