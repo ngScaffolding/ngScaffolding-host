@@ -1,14 +1,12 @@
-<div id="gridContainer" class="card card-w-title">
+<div id="gridContainer" class="card card-w-title" appFillHeight>
   <h1>
     Dashboard
   </h1>
 
 
-  <div style="width: 100%; height: 400px;">
-    <gridster [options]="options">
+    <gridster [options]="options" style="width: 100%; height: 90%" >
       <gridster-item [item]="item" *ngFor="let item of dashboard">
         <!-- your content here -->
       </gridster-item>
     </gridster>
-  </div>
 </div>

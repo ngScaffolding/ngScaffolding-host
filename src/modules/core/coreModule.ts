@@ -22,6 +22,9 @@ import { VersionsService } from './services/versions/versions.service';
 // Pipes
 import { ButtonColorPipe } from './pipes/index';
 
+// Directives
+import { FillHeightDirective } from './directives/fill-height.directive';
+
 export * from './services/index';
 export * from './routeGuards/index';
 export * from './models/index';
@@ -32,16 +35,12 @@ export * from './pipes/index';
 @NgModule({
   imports: [CommonModule, HttpClientModule],
   declarations: [
-    // SampleComponent,
-    // SampleDirective,
-    // Pipes
+    FillHeightDirective,
     ButtonColorPipe
   ],
   exports: [
-    // SampleComponent,
-    // SampleDirective,
-    // Pipes
-    ButtonColorPipe
+    ButtonColorPipe,
+    FillHeightDirective
   ]
 })
 export class CoreModule {
