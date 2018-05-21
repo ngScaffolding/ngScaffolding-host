@@ -125,7 +125,24 @@ export class DataGridComponent implements OnInit, OnDestroy {
       });
     });
   }
-  resetView() {}
+  resetView() {
+    // Remove our saved settings
+    this.prefService.deleteValue(this.gridviewPrefPrefix + this.menuName)
+    .subscribe(() => {
+      this.messageService.add({
+        severity: 'success',
+        summary: 'Success',
+        detail: 'View Reset'
+      });
+      this.loadMenuItem();
+    }, err => {
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Error',
+        detail: 'View not Reset'
+      });
+    });
+  }
   shareView() {}
   // Toolbar Operations
 

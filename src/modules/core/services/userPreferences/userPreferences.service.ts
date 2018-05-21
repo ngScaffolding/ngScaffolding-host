@@ -55,6 +55,28 @@ export class UserPreferencesService {
     this.preferenceValuesSubject.next(this.preferenceValues);
   }
 
+  public deleteValue(key: string){
+    return new Observable<any>(observer => {
+      this.http.delete(`${this.apiRootValues}/${key}`).subscribe(
+        () => {
+          // Save and tell the world
+          this.preferenceValues = this.preferenceValues.filter(p => p.name !== key);
+
+          localStorage.removeItem(this.storageKey);
+
+          // Tell the world about the updates
+          this.preferenceValuesSubject.next(this.preferenceValues);
+
+          observer.next();
+          observer.complete();
+        },
+        err => {
+          observer.error(err);
+        }
+      );
+    });
+  }
+
   public getValues() {
     // Load values from Server
     this.http.get<Array<UserPreferenceValue>>(`${this.apiRootValues}`).subscribe(prefValues => {
