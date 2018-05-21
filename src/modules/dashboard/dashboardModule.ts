@@ -11,6 +11,11 @@ import { ButtonColorPipe } from '../core/coreModule';
 import { InputBuilderModule } from '../inputbuilder/inputbuilderModule';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 
+import { DataGridComponent } from '../datagrid/components/dataGrid/dataGrid.component';
+import { ChartComponent, } from '../chart/components/chart/chart.component';
+
+import { DynamicModule } from 'ng-dynamic-component';
+
 import { GridsterModule } from 'angular-gridster2';
 import { CardModule } from 'primeng/card';
 
@@ -29,6 +34,7 @@ const appRoutes: Routes = [
     CoreModule,
     GridsterModule,
     CardModule,
+    DynamicModule.withComponents([DataGridComponent, ChartComponent]),
     RouterModule.forChild(appRoutes)
   ],
   declarations: [

@@ -6,7 +6,8 @@
   <div appFillHeight>
     <gridster [options]="options" style="width: 100%;height: 100%">
       <gridster-item [item]="widget" *ngFor="let widget of dashboard.widgets">
-        <h2>widget title {{widget.title}}</h2>
+        <h2>{{widget.title}}</h2>
+        <ndc-dynamic  [ndcDynamicComponent]="component"></ndc-dynamic>
       </gridster-item>
     </gridster>
   </div>
