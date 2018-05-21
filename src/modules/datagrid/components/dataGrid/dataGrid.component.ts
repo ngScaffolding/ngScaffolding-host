@@ -56,9 +56,13 @@ export class DataGridComponent implements OnInit, OnDestroy {
   private paramSubscription: any;
   private menuSubscription: any;
 
+  private prefsSubscription: any;
+
   private clickedAction: Action;
 
   private broadcastSubscription: Subscription;
+
+  private gridSavedState: any;
 
   constructor(
     private logger: LoggingService,
@@ -81,9 +85,12 @@ export class DataGridComponent implements OnInit, OnDestroy {
       rowSelection: 'multiple',
       suppressCellSelection: true,
 
-      onGridReady: () => {}
-    };
-
+      onGridReady: () => {
+        if(this.gridSavedState){
+          this.gridOptions.columnApi.setColumnState(this.gridSavedState);
+        }
+      },
+    }
     // Wire up broadcast for action clicked
     this.broadcastSubscription = broadcast.on('ACTION_CLICKED').subscribe(actionData => {
       const actionClickedData = actionData as ActionClickedData;
@@ -128,6 +135,7 @@ export class DataGridComponent implements OnInit, OnDestroy {
 
   onFiltersUpdated(filters) {
     this.filterValues = filters;
+
     this.loadInitialData();
   }
 
@@ -381,7 +389,16 @@ export class DataGridComponent implements OnInit, OnDestroy {
         this.loadMenuItem();
       }
     });
-  }
+
+     // watch for Prefs changes
+     this.prefsSubscription = this.prefService.preferenceValuesSubject
+     .subscribe(prefs => {
+       const pref = prefs.find(loopPref => loopPref.name === this.gridviewPrefPrefix + this.menuName);
+       if (pref) {
+         this.gridSavedState = JSON.parse(pref.value);
+       }
+     });
+   }
 
   ngOnDestroy() {
     if (this.paramSubscription) {
@@ -392,6 +409,9 @@ export class DataGridComponent implements OnInit, OnDestroy {
     }
     if (this.broadcastSubscription) {
       this.broadcastSubscription.unsubscribe();
+    }
+    if (this.prefsSubscription) {
+      this.prefsSubscription.unsubscribe();
     }
   }
 }
