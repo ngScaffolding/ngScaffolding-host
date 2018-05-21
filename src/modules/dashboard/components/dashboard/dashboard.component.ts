@@ -4,6 +4,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { CoreMenuItem } from '@ngscaffolding/models';
 import { Observable } from 'rxjs/Observable';
 
+import { DashboardModel } from '@ngscaffolding/models';
+
 import {CompactType, DisplayGrid, GridsterConfig, GridsterItem, GridType} from 'angular-gridster2';
 
 
@@ -18,7 +20,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
   private menuItem: CoreMenuItem;
 
   private options: GridsterConfig;
-  private dashboard: Array<GridsterItem>;
+  private dashboard: DashboardModel;
+
+
 
   constructor(private router: Router,
     private route: ActivatedRoute,
@@ -29,8 +33,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
     loadDashboard(){
       this.menuItem = this.menuService.getMenuItemByName(this.menuName);
 
-      if (this.menuItem) {
-
+      if (this.menuItem && this.menuItem.jsonSerialized) {
+        this.dashboard = JSON.parse(this.menuItem.jsonSerialized) as DashboardModel;
       }
     }
 
@@ -106,10 +110,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
       disableWarnings: false,
       scrollToNewItems: true
     };
-
-    this.dashboard = [
-
-    ];
   }
 
   ngOnDestroy(): void {
@@ -123,10 +123,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   removeItem(item) {
-    this.dashboard.splice(this.dashboard.indexOf(item), 1);
+
   }
 
   addItem() {
-    this.dashboard.push({});
+
   }
 }

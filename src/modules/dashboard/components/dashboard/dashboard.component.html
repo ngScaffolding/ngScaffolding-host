@@ -1,12 +1,12 @@
-<p-card title="Header">
+<p-card [title]="dashboard.title">
   <p-header>
     Tool Bar Here
   </p-header>
 
   <div appFillHeight>
     <gridster [options]="options" style="width: 100%;height: 100%">
-      <gridster-item [item]="item" *ngFor="let item of dashboard">
-        <!-- your content here -->
+      <gridster-item [item]="widget" *ngFor="let widget of dashboard.widgets">
+        <h2>widget title {{widget.title}}</h2>
       </gridster-item>
     </gridster>
   </div>
