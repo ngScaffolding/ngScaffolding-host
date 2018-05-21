@@ -1,34 +1,14 @@
-import {
-  Component,
-  Input,
-  Output,
-  EventEmitter,
-  OnInit,
-  OnDestroy,
-  ViewChild
-} from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, OnDestroy, ViewChild } from '@angular/core';
 
 import { ActivatedRoute } from '@angular/router';
 import { GridOptions, ColDef, ColDefUtil } from 'ag-grid/main';
 
-import {
-  Action,
-  GridViewDetail,
-  InputBuilderDefinition
-} from '@ngscaffolding/models';
+import { Action, GridViewDetail, InputBuilderDefinition } from '@ngscaffolding/models';
 
 import { ConfirmationService } from 'primeng/primeng';
 import { MessageService } from 'primeng/components/common/messageservice';
 
-import {
-  AppSettingsService,
-  DataSourceService,
-  MenuService,
-  CoreMenuItem,
-  LoggingService,
-  NotificationService,
-  BroadcastService
-} from '../../../core/coreModule';
+import { AppSettingsService, DataSourceService, MenuService, CoreMenuItem, LoggingService, NotificationService, BroadcastService, UserPreferencesService } from '../../../core/coreModule';
 
 import { FiltersHolderComponent } from '../filtersHolder/filtersHolder.component';
 import { DataSetResults } from '../../../core/models/datasetResults.model';
@@ -45,10 +25,8 @@ import { Subscription } from 'rxjs/Subscription';
   styleUrls: ['./datagrid.component.scss']
 })
 export class DataGridComponent implements OnInit, OnDestroy {
-
   @ViewChild(FiltersHolderComponent) filtersHolder: FiltersHolderComponent;
-  @ViewChild(InputBuilderPopupComponent)
-  actionInputPopup: InputBuilderPopupComponent;
+  @ViewChild(InputBuilderPopupComponent) actionInputPopup: InputBuilderPopupComponent;
   @ViewChild(ActionsHolderComponent) actionsHolder: ActionsHolderComponent;
 
   @Input() gridViewDetail: GridViewDetail;
@@ -71,6 +49,7 @@ export class DataGridComponent implements OnInit, OnDestroy {
   showFilters = true;
   showToolPanel = false;
 
+  private gridviewPrefPrefix = 'GridViewPrefs_';
   private menuName: string;
   private menuItems: CoreMenuItem[];
 
@@ -91,7 +70,8 @@ export class DataGridComponent implements OnInit, OnDestroy {
     private menuService: MenuService,
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
-    private broadcast: BroadcastService
+    private broadcast: BroadcastService,
+    private prefService: UserPreferencesService
   ) {
     this.gridOptions = <GridOptions>{
       enableColResize: true,
@@ -105,11 +85,10 @@ export class DataGridComponent implements OnInit, OnDestroy {
     };
 
     // Wire up broadcast for action clicked
-    this.broadcastSubscription = broadcast.on('ACTION_CLICKED')
-      .subscribe(actionData => {
-        const actionClickedData = actionData as ActionClickedData;
-        this.actionClicked(actionClickedData.action, actionClickedData.row);
-      });
+    this.broadcastSubscription = broadcast.on('ACTION_CLICKED').subscribe(actionData => {
+      const actionClickedData = actionData as ActionClickedData;
+      this.actionClicked(actionClickedData.action, actionClickedData.row);
+    });
   }
 
   // Toolbar Operations
@@ -122,7 +101,23 @@ export class DataGridComponent implements OnInit, OnDestroy {
     this.gridOptions.api.showToolPanel(this.showToolPanel);
   }
   exportData() {}
-  saveView() {}
+  saveView() {
+    const savedState = this.gridOptions.columnApi.getColumnState();
+    this.prefService.setValue(this.gridviewPrefPrefix + this.menuName, JSON.stringify(savedState))
+    .subscribe(() => {
+      this.messageService.add({
+        severity: 'success',
+        summary: 'Success',
+        detail: 'View Saved'
+      });
+    }, err => {
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Error',
+        detail: 'View not Saved'
+      });
+    });
+  }
   resetView() {}
   shareView() {}
   // Toolbar Operations
@@ -181,10 +176,7 @@ export class DataGridComponent implements OnInit, OnDestroy {
     if (menuItems) {
       menuItems.forEach(menuItem => {
         this.findMenuItem(name, menuItem.items as CoreMenuItem[]);
-        if (
-          menuItem.name &&
-          menuItem.name.toLowerCase() === name.toLowerCase()
-        ) {
+        if (menuItem.name && menuItem.name.toLowerCase() === name.toLowerCase()) {
           this.menuItem = menuItem;
         }
       });
@@ -201,9 +193,7 @@ export class DataGridComponent implements OnInit, OnDestroy {
       if (this.menuItem && this.menuItem.jsonSerialized) {
         this.logger.info(`dataGrid Loading menu ${this.menuName}`);
 
-        this.gridViewDetail = JSON.parse(
-          this.menuItem.jsonSerialized
-        ) as GridViewDetail;
+        this.gridViewDetail = JSON.parse(this.menuItem.jsonSerialized) as GridViewDetail;
 
         if (this.gridViewDetail) {
           this.columnDefs = [];
@@ -211,7 +201,6 @@ export class DataGridComponent implements OnInit, OnDestroy {
 
           // Do We need a Checkbox
           if (!this.gridViewDetail.disableCheckboxSelection) {
-
             // Switch off RowSelection
             this.gridOptions.suppressRowClickSelection = true;
 
@@ -231,16 +220,16 @@ export class DataGridComponent implements OnInit, OnDestroy {
           // Do We need an Actions button
           if (this.gridViewDetail.actions && this.gridViewDetail.actions.filter(action => action.columnButton).length > 0) {
             this.columnDefs.push({
-                headerName: 'Actions',
-                suppressMenu: true,
-                suppressFilter: true,
-                suppressSorting: true,
-                field: 'Id',
-                cellRendererFramework: ButtonCellComponent,
-                cellRendererParams : {
-                  actions: this.gridViewDetail.actions,
-                  splitButton: this.gridViewDetail.isActionColumnSplitButton
-                },
+              headerName: 'Actions',
+              suppressMenu: true,
+              suppressFilter: true,
+              suppressSorting: true,
+              field: 'Id',
+              cellRendererFramework: ButtonCellComponent,
+              cellRendererParams: {
+                actions: this.gridViewDetail.actions,
+                splitButton: this.gridViewDetail.isActionColumnSplitButton
+              }
             });
           }
 
@@ -293,10 +282,7 @@ export class DataGridComponent implements OnInit, OnDestroy {
   }
 
   private checkForActionInputs(action: Action, row: any) {
-    if (
-      action.inputBuilderDefinition &&
-      action.inputBuilderDefinition.inputDetails.length > 0
-    ) {
+    if (action.inputBuilderDefinition && action.inputBuilderDefinition.inputDetails.length > 0) {
       this.clickedAction = action;
       this.actionInputDefinition = action.inputBuilderDefinition;
       if (row) {
@@ -312,11 +298,9 @@ export class DataGridComponent implements OnInit, OnDestroy {
   }
 
   private callAction(action: Action) {
-    this.actionService
-      .callAction(action, this.actionValues, this.selectedRows)
-      .subscribe(
-        result => {
-          if (result.success) {
+    this.actionService.callAction(action, this.actionValues, this.selectedRows).subscribe(
+      result => {
+        if (result.success) {
           if (action.successMessage) {
             if (action.successToast) {
               this.messageService.add({
@@ -350,19 +334,19 @@ export class DataGridComponent implements OnInit, OnDestroy {
             });
           }
         }
-        },
-        err => {
-          if (action.errorMessage) {
-            this.confirmationService.confirm({
-              message: action.errorMessage,
-              icon: 'fa-close',
-              acceptLabel: 'OK',
-              header: 'Error',
-              rejectVisible: false
-            });
-          }
+      },
+      err => {
+        if (action.errorMessage) {
+          this.confirmationService.confirm({
+            message: action.errorMessage,
+            icon: 'fa-close',
+            acceptLabel: 'OK',
+            header: 'Error',
+            rejectVisible: false
+          });
         }
-      );
+      }
+    );
   }
 
   //
@@ -383,22 +367,17 @@ export class DataGridComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.menuSubscription = this.menuService.menuSubject.subscribe(
-      menuItems => {
-        this.menuItems = menuItems;
+    this.menuSubscription = this.menuService.menuSubject.subscribe(menuItems => {
+      this.menuItems = menuItems;
 
-        if (this.menuItems && this.menuItems.length > 0 && !this.menuItem) {
-          this.loadMenuItem();
-        }
+      if (this.menuItems && this.menuItems.length > 0 && !this.menuItem) {
+        this.loadMenuItem();
       }
-    );
+    });
     this.paramSubscription = this.route.params.subscribe(params => {
       this.menuName = params['id'];
 
-      if (
-        (this.menuName && !this.menuItem) ||
-        this.menuName !== this.menuItem.name
-      ) {
+      if ((this.menuName && !this.menuItem) || this.menuName !== this.menuItem.name) {
         this.loadMenuItem();
       }
     });

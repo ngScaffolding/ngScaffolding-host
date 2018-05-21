@@ -20,23 +20,13 @@ export class UserPreferencesService {
   private preferenceValues = new Array<UserPreferenceValue>();
   private preferenceDefinitions = new Array<UserPreferenceDefinition>();
 
-  public preferenceDefinitionsSubject = new BehaviorSubject<
-    Array<UserPreferenceDefinition>
-  >(null);
-  public preferenceValuesSubject = new BehaviorSubject<
-    Array<UserPreferenceValue>
-  >(null);
+  public preferenceDefinitionsSubject = new BehaviorSubject<Array<UserPreferenceDefinition>>(null);
+  public preferenceValuesSubject = new BehaviorSubject<Array<UserPreferenceValue>>(null);
 
-  constructor(
-    private http: HttpClient,
-    private auth: UserAuthorisationService,
-    private appSettings: AppSettingsService
-  ) {
+  constructor(private http: HttpClient, private auth: UserAuthorisationService, private appSettings: AppSettingsService) {
     appSettings.settingsSubject.subscribe(settings => {
       this.apiRootValues = `${settings.apiHome}/api/userPreferencevalues`;
-      this.apiRootDefinitions = `${
-        settings.apiHome
-      }/api/UserPreferenceDefinitions`;
+      this.apiRootDefinitions = `${settings.apiHome}/api/UserPreferenceDefinitions`;
     });
 
     auth.authenticatedSubject.subscribe(isAuthorised => {
@@ -67,27 +57,33 @@ export class UserPreferencesService {
 
   public getValues() {
     // Load values from Server
-    this.http
-      .get<Array<UserPreferenceValue>>(`${this.apiRootValues}`)
-      .subscribe(prefValues => {
-        if (prefValues) {
-          prefValues.forEach(prefValue => {
-            this.newValue(prefValue.name, prefValue.value);
-          });
+    this.http.get<Array<UserPreferenceValue>>(`${this.apiRootValues}`).subscribe(prefValues => {
+      if (prefValues) {
+        prefValues.forEach(prefValue => {
+          this.newValue(prefValue.name, prefValue.value);
+        });
 
-          // Tell the world the values
-          this.preferenceValuesSubject.next(this.preferenceValues);
-        }
-      });
+        // Tell the world the values
+        this.preferenceValuesSubject.next(this.preferenceValues);
+      }
+    });
   }
 
-  public setValue(key: string, value: any) {
-    this.http
-      .post(`${this.apiRootValues}`, { name: key, value: value })
-      .subscribe();
+  public setValue(key: string, value: any): Observable<any> {
+    return new Observable<any>(observer => {
+      this.http.post(`${this.apiRootValues}`, { name: key, value: value }).subscribe(
+        () => {
+          // Save and tell the world
+          this.newValue(key, value);
 
-    // Save and tell the world
-    this.newValue(key, value);
+          observer.next();
+          observer.complete();
+        },
+        err => {
+          observer.error(err);
+        }
+      );
+    });
   }
 
   private newValue(key: string, value: any) {
@@ -109,17 +105,15 @@ export class UserPreferencesService {
 
   private getDefinitions() {
     this.preferenceDefinitions = new Array<UserPreferenceDefinition>();
-    this.http
-      .get<Array<UserPreferenceDefinition>>(`${this.apiRootDefinitions}`)
-      .subscribe(prefDefinitions => {
-        if (prefDefinitions && prefDefinitions.length > 0) {
-          prefDefinitions.forEach(definition => {
-            this.preferenceDefinitions.push(definition);
-          });
-        }
-        // Tell the world the value
-        this.preferenceDefinitionsSubject.next(this.preferenceDefinitions);
-      });
+    this.http.get<Array<UserPreferenceDefinition>>(`${this.apiRootDefinitions}`).subscribe(prefDefinitions => {
+      if (prefDefinitions && prefDefinitions.length > 0) {
+        prefDefinitions.forEach(definition => {
+          this.preferenceDefinitions.push(definition);
+        });
+      }
+      // Tell the world the value
+      this.preferenceDefinitionsSubject.next(this.preferenceDefinitions);
+    });
   }
 
   private loadFromLocal() {
