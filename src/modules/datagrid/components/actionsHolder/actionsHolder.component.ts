@@ -3,7 +3,7 @@ import { Action } from '@ngscaffolding/models';
 import { ButtonColorPipe } from '../../../core/coreModule';
 
 @Component({
-  selector: 'actions-holder',
+  selector: 'app-actions-holder',
   templateUrl: './actionsHolder.component.html',
   styleUrls: ['./actionsHolder.component.scss']
 })

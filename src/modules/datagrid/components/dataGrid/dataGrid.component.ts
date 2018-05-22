@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { HostListener, Component, Input, Output, EventEmitter, OnInit, OnDestroy, ViewChild } from '@angular/core';
 
 import { ActivatedRoute } from '@angular/router';
 import { GridOptions, ColDef, ColDefUtil } from 'ag-grid/main';
@@ -25,11 +25,21 @@ import { Subscription } from 'rxjs/Subscription';
   styleUrls: ['./datagrid.component.scss']
 })
 export class DataGridComponent implements OnInit, OnDestroy {
+  @ViewChild(HTMLDivElement) gridArea: HTMLDivElement;
+  @ViewChild(HTMLDivElement) gridSection: HTMLDivElement;
   @ViewChild(FiltersHolderComponent) filtersHolder: FiltersHolderComponent;
   @ViewChild(InputBuilderPopupComponent) actionInputPopup: InputBuilderPopupComponent;
   @ViewChild(ActionsHolderComponent) actionsHolder: ActionsHolderComponent;
 
   @Input() gridViewDetail: GridViewDetail;
+
+  // @HostListener('window:resize', ['$event'])
+  //   onResize(event) {
+  //   TODO: This is not complete
+
+  //     let height = this.gridArea.clientHeight - this.filtersHolder.clientHeight;
+  //   this.gridSection.style.height = height + 'px';
+  // }
 
   menuItem: CoreMenuItem;
   filterValues: any;

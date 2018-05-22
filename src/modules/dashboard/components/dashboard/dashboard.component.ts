@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { DataSourceService, LoggingService, MenuService } from '../../../core/services';
 import { Router, ActivatedRoute } from '@angular/router';
-import { CoreMenuItem } from '@ngscaffolding/models';
+import { CoreMenuItem, ResizableWidget } from '@ngscaffolding/models';
 import { Observable } from 'rxjs/Observable';
 
 import { DashboardModel } from '@ngscaffolding/models';
@@ -9,8 +9,7 @@ import { DashboardModel } from '@ngscaffolding/models';
 import { DataGridComponent } from '../../../datagrid/components/dataGrid/dataGrid.component';
 import { ChartComponent } from '../../../chart/components/chart/chart.component';
 
-import {CompactType, DisplayGrid, GridsterConfig, GridsterItem, GridType} from 'angular-gridster2';
-
+import { CompactType, DisplayGrid, GridsterConfig, GridsterItem, GridType } from 'angular-gridster2';
 
 @Component({
   selector: 'app-dashboard',
@@ -27,28 +26,24 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   public component = ChartComponent;
 
-  constructor(private router: Router,
-    private route: ActivatedRoute,
-    private logger: LoggingService,
-    private menuService: MenuService,
-    private dataSourceService: DataSourceService) {}
+  constructor(private router: Router, private route: ActivatedRoute,
+    private logger: LoggingService, private menuService: MenuService, private dataSourceService: DataSourceService) {}
 
-    loadDashboard(){
-      this.menuItem = this.menuService.getMenuItemByName(this.menuName);
+  loadDashboard() {
+    this.menuItem = this.menuService.getMenuItemByName(this.menuName);
 
-      if (this.menuItem && this.menuItem.jsonSerialized) {
-        this.dashboard = JSON.parse(this.menuItem.jsonSerialized) as DashboardModel;
-      }
+    if (this.menuItem && this.menuItem.jsonSerialized) {
+      this.dashboard = JSON.parse(this.menuItem.jsonSerialized) as DashboardModel;
     }
-
-
-
-  private itemChange(item, itemComponent) {
-    console.log('itemChanged', item, itemComponent);
   }
 
+  private itemChange(item, itemComponent) {}
+
   private itemResize(item, itemComponent) {
-    console.log('itemResized', item, itemComponent);
+    const resizinator = itemComponent as ResizableWidget;
+    if (resizinator) {
+      resizinator.resized();
+    }
   }
 
   ngOnInit() {
@@ -60,7 +55,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     this.options = {
       itemChangeCallback: this.itemChange,
-       itemResizeCallback: this.itemResize,
+      itemResizeCallback: this.itemResize,
 
       gridType: GridType.Fit,
       compactType: CompactType.None,
@@ -97,16 +92,16 @@ export class DashboardComponent implements OnInit, OnDestroy {
       emptyCellDragMaxRows: 50,
       ignoreMarginInRow: false,
       draggable: {
-        enabled: true,
+        enabled: true
       },
       resizable: {
-        enabled: true,
+        enabled: true
       },
       swap: false,
       pushItems: true,
       disablePushOnDrag: false,
       disablePushOnResize: false,
-      pushDirections: {north: true, east: true, south: true, west: true},
+      pushDirections: { north: true, east: true, south: true, west: true },
       pushResizeItems: false,
       displayGrid: DisplayGrid.OnDragAndResize,
       disableWindowResize: false,
@@ -125,11 +120,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.options.api.optionsChanged();
   }
 
-  removeItem(item) {
+  removeItem(item) {}
 
-  }
-
-  addItem() {
-
-  }
+  addItem() {}
 }

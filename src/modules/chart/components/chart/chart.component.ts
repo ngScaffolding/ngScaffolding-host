@@ -9,7 +9,7 @@ import * as HC_ce from 'highcharts-custom-events';
 import { ChartDataService } from '../../services/chartData.service';
 import { DataSourceService, LoggingService, MenuService } from '../../../core/services';
 import { Router, ActivatedRoute } from '@angular/router';
-import { CoreMenuItem } from '@ngscaffolding/models';
+import { CoreMenuItem, ResizableWidget } from '@ngscaffolding/models';
 import { Observable } from 'rxjs/Observable';
 
 HC_map(Highcharts);
@@ -31,7 +31,8 @@ Highcharts.setOptions({
   templateUrl: 'chart.component.html',
   styles: ['chart.component.scss']
 })
-export class ChartComponent implements OnInit, OnDestroy {
+export class ChartComponent implements ResizableWidget, OnInit, OnDestroy {
+
   Highcharts = Highcharts;
 
   private paramSubscription: any;
@@ -40,8 +41,11 @@ export class ChartComponent implements OnInit, OnDestroy {
 
   private menuSubscription: any;
   private menuItems: CoreMenuItem[];
+  private chart : Highcharts.Chart;
 
   public chartOptions: Highcharts.chartOptions;
+
+  public isInDashboard: boolean;
 
   constructor(private router: Router,
     private route: ActivatedRoute,
@@ -81,6 +85,18 @@ export class ChartComponent implements OnInit, OnDestroy {
     if (this.menuSubscription) {
       this.menuSubscription.unsubscribe();
     }
+  }
+
+
+    saveInstance(chartInstance) {
+      if(chartInstance){
+        this.chart = chartInstance;
+    }
+  }
+
+  public resized() {
+    //this.chart.red
+    let x = 0;
   }
 
   // Demo #1

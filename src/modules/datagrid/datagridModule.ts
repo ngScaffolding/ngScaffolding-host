@@ -19,6 +19,7 @@ import { AgGridModule } from 'ag-grid-angular/main';
 
 import { ButtonCellComponent } from './cellTemplates/buttonCell/buttonCell.component';
 import { ActionsPipe } from './pipes/actionsPipe/actions.pipe';
+import { CardModule } from 'primeng/card';
 
 const appRoutes: Routes = [
   { path: 'datagrid/:id', component: DataGridComponent },
@@ -34,6 +35,7 @@ const appRoutes: Routes = [
     ConfirmDialogModule,
     SplitButtonModule,
     CoreModule,
+    CardModule,
     AgGridModule.withComponents(
       [
         ButtonCellComponent

@@ -4,7 +4,7 @@
             [disabled]="(action.multipleTarget && selectedRowsCount < 1) || (action.selectionRequired && selectedRowsCount === 0)"
             pButton type="button"
             (click)="clickHandler(action)"
-            class="{{action.colour | buttonColor}}"
+            class="{{action.colour | buttonColor}} action-button"
             icon="{{action.icon}}"
             iconPos="left"
             label="{{action.title}}"></button>
