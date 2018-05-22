@@ -127,7 +127,8 @@ export class InputBuilderComponent implements OnInit, OnChanges {
             if (this.clonedInputModel[inputDetail.name] && (<InputDetailReferenceValues>inputDetail).datasourceItems) {
 
               const foundInputValue = (<InputDetailReferenceValues>inputDetail)
-                .datasourceItems.find(ds => ds.value === inputValue);
+                // tslint:disable-next-line:triple-equals
+                .datasourceItems.find(ds => ds.value == inputValue);
 
               if (foundInputValue) {
                 formControl.setValue(foundInputValue, { onlySelf: true, emitEvent: true });
