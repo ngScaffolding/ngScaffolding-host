@@ -15,7 +15,7 @@
   <div appFillHeight #gridArea>
     <filters-holder #filtersHolder [hidden]="!showFilters" [filterDefinition]="filters" [filterValues]="filterValues" (valuesUpdated)="onFiltersUpdated($event)"></filters-holder>
 
-      <ag-grid-angular #gridSection style="width: 100%; height: 100%;" class="ag-theme-material" [rowData]="rowData" [columnDefs]="columnDefs"
+      <ag-grid-angular #gridSection style="width: 100%; height: 70%;" class="ag-theme-material" [rowData]="rowData" [columnDefs]="columnDefs"
         [gridOptions]="gridOptions" (selectionChanged)='onSelectionChanged($event)' (gridReady)="onGridReady($event)">
       </ag-grid-angular>
 
