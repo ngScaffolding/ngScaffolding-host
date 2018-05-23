@@ -120,6 +120,8 @@ export class MenuService {
     }
 
     const createdMenuItem: CoreMenuItem = {
+      icon: newMenuItem.icon,
+      separator: newMenuItem.separator,
       name: newMenuItem.name,
       label: newMenuItem.label,
       routerLink: calcRouterLink,

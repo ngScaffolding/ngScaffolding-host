@@ -32,9 +32,8 @@ menuItems: Array<MenuItem>;
 
     ngOnInit() {
 // ngScaffolding
-		this.menuService.menuSubject.subscribe(items => {
-		            this.menuItems = items;
-		        });
+    this.menuService.menuSubject.subscribe(items => {
+      this.menuItems = items;});
 // ngScaffolding
 
         this.model = [
