@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ComponentRef } from '@angular/core';
 import { DataSourceService, LoggingService, MenuService } from '../../../core/services';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CoreMenuItem, ResizableWidget } from '@ngscaffolding/models';
@@ -24,6 +24,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
   private options: GridsterConfig;
   private dashboard: DashboardModel;
 
+  private components: ResizableWidget[] = [];
+
   public component = ChartComponent;
 
   constructor(private router: Router, private route: ActivatedRoute,
@@ -41,9 +43,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   private itemResize(item, itemComponent) {
     const resizinator = itemComponent as ResizableWidget;
-    if (resizinator) {
-      resizinator.resized();
-    }
+    this.components.forEach(widget => widget.resized() );
+  }
+
+  public componentCreated(compRef: ComponentRef<any>) {
+    // utilize compRef in some way ...
+    this.components.push(compRef.instance);
   }
 
   ngOnInit() {
