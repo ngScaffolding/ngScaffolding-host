@@ -21,12 +21,6 @@ import { AppSettingsService } from '../modules/core/services';
                 </a>
             </li>
             <li role="menuitem">
-                <a href="#" class="ripplelink" [attr.tabindex]="!active ? '-1' : null">
-                    <i class="material-icons">security</i>
-                    <span>Privacy</span>
-                </a>
-            </li>
-            <li role="menuitem">
                 <a href="#" routerLink="usersettings" class="ripplelink" [attr.tabindex]="!active ? '-1' : null">
                     <i class="material-icons">settings_application</i>
                     <span>Settings</span>

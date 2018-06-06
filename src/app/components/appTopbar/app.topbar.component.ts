@@ -13,7 +13,7 @@ export class AppTopBarComponent {
   constructor(
     @Inject(forwardRef(() => AppComponent))
     public app: AppComponent,
-    public appSettingsService: AppSettingsService,
+    public appSettings: AppSettingsService,
     private referenceValuesService: ReferenceValuesService,
     public userAuthService: UserAuthorisationService
   ) {
