@@ -5,7 +5,10 @@ import {
   UserPreferencesService
 } from '../../../modules/core/coreModule';
 import { Subscription } from 'rxjs/Subscription';
-import { InputBuilderDefinition, OrientationValues } from '@ngscaffolding/models';
+import {
+  InputBuilderDefinition,
+  OrientationValues
+} from '@ngscaffolding/models';
 
 @Component({
   templateUrl: './profilePage.component.html',
@@ -15,35 +18,22 @@ export class ProfilePageComponent implements OnInit, OnDestroy {
   private prefDetailsSub: Subscription;
   private prefValuesSub: Subscription;
 
-  private baseInputDefinition: InputBuilderDefinition = {
-    inputDetails: [],
-    orientation: OrientationValues.Vertical,
-    okButtonText: null,
-    cancelButtonText: null
-  };
-
   constructor(private userPrefs: UserPreferencesService) {}
 
   inputBuilderDefinition = new InputBuilderDefinition();
 
-  userPrefsModel: Array<any> = [];
+  userPrefsModel: any = {};
 
   ngOnInit() {
     // Load Preference Definitions Here
     this.prefDetailsSub = this.userPrefs.preferenceDefinitionsSubject.subscribe(
       defs => {
         if (defs) {
-          // Build our Input Definition from this input
-          const newInputDefinition = Object.assign({}, this.baseInputDefinition);
+          const profile = defs.find(def => def.name === 'UserPrefs_Profile');
 
-          defs.forEach((value, key) => {
-            const inputDef = JSON.parse(value.inputDetails);
-            if (inputDef) {
-              newInputDefinition.inputDetails.push(inputDef);
-            }
-          });
-
-          this.inputBuilderDefinition = newInputDefinition;
+          if (profile) {
+            this.inputBuilderDefinition = JSON.parse(profile.inputDetails);
+          }
         }
       }
     );
@@ -52,20 +42,22 @@ export class ProfilePageComponent implements OnInit, OnDestroy {
     this.prefValuesSub = this.userPrefs.preferenceValuesSubject.subscribe(
       values => {
         if (values) {
-          values.forEach((value, key) => {
-            this.userPrefsModel[value.name] = value.value;
-          });
+          const userValue = values.find(
+            value => value.name === 'UserPrefs_Profile'
+          );
+          if (userValue) {
+            this.userPrefsModel = JSON.parse(userValue.value);
+          }
         }
       }
     );
   }
 
   valueChanged(changedValue: [string, any]) {
-    this.userPrefs.setValue(changedValue[0], changedValue[1]).subscribe();
+    //this.userPrefs.setValue(changedValue[0], changedValue[1]).subscribe();
   }
 
-  notifyChanged(changedValue: any) {
-  }
+  notifyChanged(changedValue: any) {}
 
   ngOnDestroy() {
     if (this.prefDetailsSub) {
