@@ -223,7 +223,7 @@ export class InputBuilderComponent implements OnInit, OnChanges {
     const localFlat = Object.assign({}, changes);
 
     for (const property in localFlat) {
-      if (localFlat[property] !== undefined && localFlat[property].hasOwnProperty('value')) {
+      if (localFlat[property] && localFlat[property].hasOwnProperty('value')) {
         returnValue[property] = localFlat[property].value;
       } else {
         returnValue[property] = localFlat[property];

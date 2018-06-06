@@ -62,7 +62,7 @@ export class UserSettingsComponent implements OnInit, OnDestroy {
   }
 
   valueChanged(changedValue: [string, any]) {
-    this.userPrefs.setValue(changedValue[0], changedValue[1]);
+    this.userPrefs.setValue(changedValue[0], changedValue[1]).subscribe();
   }
 
   notifyChanged(changedValue: any) {
