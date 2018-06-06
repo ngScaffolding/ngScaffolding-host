@@ -54,10 +54,15 @@ export class ProfilePageComponent implements OnInit, OnDestroy {
   }
 
   valueChanged(changedValue: [string, any]) {
-    //this.userPrefs.setValue(changedValue[0], changedValue[1]).subscribe();
   }
 
-  notifyChanged(changedValue: any) {}
+  notifyChanged(changedValue: any) {
+  }
+
+  okClicked(changedModel: any){
+    this.userPrefs.setValue('UserPrefs_Profile', JSON.stringify(changedModel)).subscribe();
+
+  }
 
   ngOnDestroy() {
     if (this.prefDetailsSub) {

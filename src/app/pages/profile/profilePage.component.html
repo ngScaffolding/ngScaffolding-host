@@ -2,6 +2,7 @@
   <div class="ui-g-12 card card-w-title">
     <app-input-builder [inputBuilderDefinition]="inputBuilderDefinition"
     [inputModel]="userPrefsModel"
+    (okClicked)="okClicked($event)"
     (valueUpdated)="valueChanged($event)"
     (modelUpdated)="notifyChanged($event)"></app-input-builder>
 

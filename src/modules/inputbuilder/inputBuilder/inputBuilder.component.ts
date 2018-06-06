@@ -10,11 +10,16 @@ import {
 import { Observable } from 'rxjs/Rx';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { InputDetail, InputTypes } from '@ngscaffolding/models';
-import { InputBuilderDefinition, OrientationValues, ReferenceValueItem, ReferenceValue } from '@ngscaffolding/models';
+import {
+  InputBuilderDefinition,
+  OrientationValues,
+  ReferenceValueItem,
+  ReferenceValue
+} from '@ngscaffolding/models';
 
 import {
   AppSettingsService,
-  ReferenceValuesService,
+  ReferenceValuesService
 } from '../../core/coreModule';
 import { InputDetailReferenceValues } from '@ngscaffolding/models';
 
@@ -45,10 +50,10 @@ export class InputBuilderComponent implements OnInit, OnChanges {
   ) {}
 
   onSubmit(form: any) {
-    if(this.form.valid){
-    this.okClicked.emit();
+    if (this.form.valid) {
+      this.okClicked.emit(this.clonedInputModel);
+    }
   }
-}
 
   onCancel() {
     this.cancelClicked.emit();
@@ -65,8 +70,7 @@ export class InputBuilderComponent implements OnInit, OnChanges {
     this.buildForm();
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   private buildForm() {
     // Clone our inputModel
@@ -75,7 +79,9 @@ export class InputBuilderComponent implements OnInit, OnChanges {
     // Default to full width (changes if help found)
     this.inputContainerClass = 'ui-g-12';
 
-    if (this.inputBuilderDefinition.orientation === OrientationValues.Horizontal) {
+    if (
+      this.inputBuilderDefinition.orientation === OrientationValues.Horizontal
+    ) {
       if (
         this.inputBuilderDefinition.horizontalColumnCount > 0 &&
         this.inputBuilderDefinition.horizontalColumnCount < 5
@@ -96,7 +102,10 @@ export class InputBuilderComponent implements OnInit, OnChanges {
         let inputValue: any = null;
         if (this.clonedInputModel[inputDetail.name]) {
           // If we have a passed value in the model, set the control value to this
-            inputValue = this.parseValue(inputDetail, this.clonedInputModel[inputDetail.name]);
+          inputValue = this.parseValue(
+            inputDetail,
+            this.clonedInputModel[inputDetail.name]
+          );
         } else if (inputDetail.value) {
           // If we have a value passed in the Input definition set the control value to this.
           inputValue = inputDetail.value;
@@ -105,7 +114,6 @@ export class InputBuilderComponent implements OnInit, OnChanges {
           // This ensures that the property is set if not passed in
           this.clonedInputModel[inputDetail.name] = null;
         }
-
 
         const formControl = new FormControl(
           inputValue,
@@ -119,25 +127,31 @@ export class InputBuilderComponent implements OnInit, OnChanges {
         formGroup[inputDetail.name] = formControl;
 
         // If Datasource, get the values
-        if (inputDetail.hasOwnProperty('referenceValueName') &&
-          (<InputDetailReferenceValues>inputDetail).referenceValueName) {
+        if (
+          inputDetail.hasOwnProperty('referenceValueName') &&
+          (<InputDetailReferenceValues>inputDetail).referenceValueName
+        ) {
           this.loadDataSource(inputDetail).subscribe(_ => {
-
             // Now we have the values, find the ReferenceValue that matches the inputValue from above
-            if (this.clonedInputModel[inputDetail.name] && (<InputDetailReferenceValues>inputDetail).datasourceItems) {
-
-              const foundInputValue = (<InputDetailReferenceValues>inputDetail)
-                // tslint:disable-next-line:triple-equals
-                .datasourceItems.find(ds => ds.value == inputValue);
+            if (
+              this.clonedInputModel[inputDetail.name] &&
+              (<InputDetailReferenceValues>inputDetail).datasourceItems
+            ) {
+              const foundInputValue = (<InputDetailReferenceValues>(
+                inputDetail
+              ))// tslint:disable-next-line:triple-equals
+              .datasourceItems
+                .find(ds => ds.value == inputValue);
 
               if (foundInputValue) {
-                formControl.setValue(foundInputValue, { onlySelf: true, emitEvent: true });
+                formControl.setValue(foundInputValue, {
+                  onlySelf: true,
+                  emitEvent: true
+                });
               }
             }
-
           });
         }
-
       });
     }
 
@@ -151,8 +165,7 @@ export class InputBuilderComponent implements OnInit, OnChanges {
   private parseValue(inputDetail: InputDetail, value: string): any {
     switch (inputDetail.type) {
       case InputTypes.checkbox:
-      case InputTypes.switch:
-      {
+      case InputTypes.switch: {
         return value === 'true';
       }
     }
@@ -184,18 +197,20 @@ export class InputBuilderComponent implements OnInit, OnChanges {
     });
   }
 
-  private loadDataSource(inputDetail: InputDetail, seed: string = ''): Observable<ReferenceValue> {
-    const obs = this.refValuesService
-      .getReferenceValue(
-        (<InputDetailReferenceValues>inputDetail).referenceValueName,
-        seed
-      );
+  private loadDataSource(
+    inputDetail: InputDetail,
+    seed: string = ''
+  ): Observable<ReferenceValue> {
+    const obs = this.refValuesService.getReferenceValue(
+      (<InputDetailReferenceValues>inputDetail).referenceValueName,
+      seed
+    );
 
-      obs.subscribe(refValue => {
-        (<InputDetailReferenceValues>inputDetail).datasourceItems =
-          refValue.referenceValueItems;
-      });
-      return obs;
+    obs.subscribe(refValue => {
+      (<InputDetailReferenceValues>inputDetail).datasourceItems =
+        refValue.referenceValueItems;
+    });
+    return obs;
   }
 
   private formChanges(changes: any) {
@@ -214,7 +229,6 @@ export class InputBuilderComponent implements OnInit, OnChanges {
     //     this.valueUpdated.emit(property);
     //   }
     // });
-
 
     // this.clonedInputModel = changes;
 
