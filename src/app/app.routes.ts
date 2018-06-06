@@ -9,6 +9,7 @@ import { PageNotFoundComponent } from './pages/pageNotFound/pageNotFound.compone
 import { AboutComponent } from './pages/about/about.component';
 
 import { UserSettingsComponent } from './pages/userSettings/userSettings.component';
+import { ProfilePageComponent } from './pages/profile/profilePage.component';
 
 export const routes: Routes = [
   { path: '', component: LandingPageComponent },
@@ -16,6 +17,7 @@ export const routes: Routes = [
   { path: 'logoff', component: LogoffPageComponent },
   { path: 'about', component: AboutComponent },
   { path: 'usersettings', component: UserSettingsComponent },
+  { path: 'profile', component: ProfilePageComponent},
   { path: '**', component: PageNotFoundComponent }
 ];
 

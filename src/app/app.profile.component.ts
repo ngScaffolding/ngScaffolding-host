@@ -1,5 +1,6 @@
 import {Component, trigger, state, transition, style, animate} from '@angular/core';
 import {AppComponent} from './app.component';
+import { AppSettingsService } from '../modules/core/services';
 
 @Component({
     selector: 'app-inline-profile',
@@ -13,8 +14,8 @@ import {AppComponent} from './app.component';
         </div>
 
         <ul class="ultima-menu profile-menu" [@menu]="active ? 'visible' : 'hidden'">
-            <li role="menuitem">
-                <a href="#" class="ripplelink" [attr.tabindex]="!active ? '-1' : null">
+            <li role="menuitem" *ngIf="appSettings.showProfileSetting">
+                <a href="#" routerLink="/profile"  class="ripplelink" [attr.tabindex]="!active ? '-1' : null">
                     <i class="material-icons">person</i>
                     <span>Profile</span>
                 </a>
@@ -62,7 +63,7 @@ export class AppInlineProfileComponent {
 
     active: boolean;
 
-    constructor(public app: AppComponent) {}
+    constructor(public app: AppComponent, public appSettings: AppSettingsService) {}
 
     onClick(event) {
         this.active = !this.active;

@@ -19,9 +19,9 @@
                         <div *ngIf="loginForm.submitted && !password.valid" class="ui-message ui-messages-error ui-corner-all">Password is required</div>
                     </span>
                 </div>
-                
+
                 <div class="ui-g-12"></div>
-                <div *ngIf="appSettings.authShowRememberMe" class="ui-g-12">
+                <div *ngIf="appSettings.authShowoMe" class="ui-g-12">
                         <p-checkbox name="rememberMe" binary="true" label="Remember Me?" (onChange)="rememberChanged($event)" [(ngModel)]="rememberMe"></p-checkbox>
                 </div>
 

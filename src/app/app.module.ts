@@ -52,6 +52,7 @@ import { RegisterComponent } from './pages/register/register.component';
 import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
 import { AboutComponent } from './pages/about/about.component';
 import { UserSettingsComponent } from './pages/userSettings/userSettings.component';
+import { ProfilePageComponent } from './pages/profile/profilePage.component';
 
 // Services
 import { NotificationReceiverService } from './services/notificationReceiver/notificationReceiver.service';
@@ -109,6 +110,7 @@ export function jwtOptionsFactory(appSettings: AppSettingsService) {
         LoginPageComponent,
         LogoffPageComponent,
         PageNotFoundComponent,
+        ProfilePageComponent,
         APP_COMPONENTS,
         RegisterComponent,
         ForgotPasswordComponent,
