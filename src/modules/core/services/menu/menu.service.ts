@@ -30,10 +30,10 @@ export class MenuService {
     public rolesService: RolesService
   ) {
     // Wait for settings, then load from server
-    authService.authenticatedSubject.subscribe(authorised =>{
-      if(authorised){
+    authService.authenticatedSubject.subscribe(authorised => {
+      if (authorised) {
         this.downloadMenuItems();
-      }else{
+      } else {
         this.menuItems = [];
         this.menuSubject.next(this.menuItems);
       }
@@ -41,10 +41,7 @@ export class MenuService {
   }
 
   public addMenuItems(menuItems: CoreMenuItem[], roles: string[] = null) {
-    this.log.info(
-      `Adding MenuItems ${JSON.stringify(menuItems)}`,
-      this.className
-    );
+    this.log.info(`Adding MenuItems ${JSON.stringify(menuItems)}`, this.className);
 
     menuItems.forEach(menuItem => {
       this.menuItems.push(menuItem);
@@ -55,21 +52,19 @@ export class MenuService {
   public getMenuItemByName(name: string): MenuItem {
     this.menuItem = null;
 
-    if (this.menuItems && this.menuItems.length > 0){
+    if (this.menuItems && this.menuItems.length > 0) {
       this.findMenuItem(name, this.menuItems);
     }
-      return this.menuItem;
+    return this.menuItem;
   }
 
   public downloadMenuItems() {
-    this.http
-      .get<Array<CoreMenuItem>>(this.appSettings.apiHome + '/api/menuitems')
-      .subscribe(menuItems => {
-        menuItems.forEach(loopMenuItem => {
-          this.addDownloadedMenuItem(this.menuItems, loopMenuItem);
-        });
-        this.menuSubject.next(this.menuItems);
+    this.http.get<Array<CoreMenuItem>>(this.appSettings.apiHome + '/api/menuitems').subscribe(menuItems => {
+      menuItems.forEach(loopMenuItem => {
+        this.addDownloadedMenuItem(this.menuItems, loopMenuItem);
       });
+      this.menuSubject.next(this.menuItems);
+    });
   }
 
   public addMenuItem(menuItem: CoreMenuItem, route: Route = null, roles: string[] = null) {
@@ -100,10 +95,7 @@ export class MenuService {
     if (menuItems) {
       menuItems.forEach(menuItem => {
         this.findMenuItem(name, menuItem.items as CoreMenuItem[]);
-        if (
-          menuItem.name &&
-          menuItem.name.toLowerCase() === name.toLowerCase()
-        ) {
+        if (menuItem.name && menuItem.name.toLowerCase() === name.toLowerCase()) {
           this.menuItem = menuItem;
         }
       });
@@ -111,11 +103,11 @@ export class MenuService {
   }
 
   private addDownloadedMenuItem(targetMenu: CoreMenuItem[], newMenuItem: CoreMenuItem) {
-    let calcRouterLink: string|string[];
+    let calcRouterLink: string | string[];
 
-    if (newMenuItem.routerLink && (<string>newMenuItem.routerLink).indexOf(',') > -1){
+    if (newMenuItem.routerLink && (<string>newMenuItem.routerLink).indexOf(',') > -1) {
       calcRouterLink = (<string>newMenuItem.routerLink).split(',');
-    }else {
+    } else {
       calcRouterLink = newMenuItem.routerLink;
     }
 

@@ -9,8 +9,7 @@ import { DashboardModel } from '@ngscaffolding/models';
 import { DataGridComponent } from '../../../datagrid/components/dataGrid/dataGrid.component';
 import { ChartComponent } from '../../../chart/components/chart/chart.component';
 
-import { CompactType, DisplayGrid, GridsterConfig, GridsterItem, GridType,
-   GridsterItemComponent, GridsterItemComponentInterface } from 'angular-gridster2';
+import { CompactType, DisplayGrid, GridsterConfig, GridsterItem, GridType, GridsterItemComponent, GridsterItemComponentInterface } from 'angular-gridster2';
 
 @Component({
   selector: 'app-dashboard',
@@ -18,8 +17,6 @@ import { CompactType, DisplayGrid, GridsterConfig, GridsterItem, GridType,
   styles: ['dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
-
-
   @ViewChildren(GridsterItemComponent) gridsterItems: QueryList<GridsterItemComponent>;
 
   private paramSubscription: any;
@@ -32,10 +29,17 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
   private components: ResizableWidget[] = [];
 
   public component = ChartComponent;
+  public componentInputs = {};
+
   public unitHeight: number;
 
-  constructor(private router: Router, private route: ActivatedRoute,
-    private logger: LoggingService, private menuService: MenuService, private dataSourceService: DataSourceService) {}
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private logger: LoggingService,
+    private menuService: MenuService,
+    private dataSourceService: DataSourceService
+  ) {}
 
   loadDashboard() {
     this.menuItem = this.menuService.getMenuItemByName(this.menuName);
@@ -43,16 +47,21 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
     if (this.menuItem && this.menuItem.jsonSerialized) {
       this.dashboard = JSON.parse(this.menuItem.jsonSerialized) as DashboardModel;
     }
+
+    // Set unitheight for later resize
+    this.dashboard.widgets.forEach(widget => (widget['unitHeight'] = 0));
   }
 
   private itemChange(item, itemComponent) {}
 
   public itemResize(item: GridsterItem, itemComponent: GridsterItemComponentInterface): void {
     if (itemComponent.gridster.curRowHeight > 1) {
-        this.unitHeight = itemComponent.gridster.curRowHeight;
+      item['unitHeight'] = itemComponent.gridster.curRowHeight;
     }
-    itemComponent.gridster.curRowHeight += (item.cols * 100 - item.rows) / 10000;
-}
+
+    // item['unitHeight'] = (item.cols * 100 - item.rows) / 10000;
+    // itemComponent.item.curRowHeight += (item.cols * 100 - item.rows) / 10000;
+  }
 
   public componentCreated(compRef: ComponentRef<any>) {
     // utilize compRef in some way ...
@@ -62,8 +71,8 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (this.gridsterItems && this.gridsterItems.length > 0 && this.gridsterItems[0].gridster.curRowHeight > 1) {
       this.unitHeight = this.gridsterItems[0].gridster.curRowHeight;
+    }
   }
-}
 
   ngOnInit() {
     // Get Menu Id
@@ -74,7 +83,7 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
 
     this.options = {
       itemChangeCallback: this.itemChange,
-      itemResizeCallback:  this.itemResize.bind(this),
+      itemResizeCallback: this.itemResize.bind(this),
 
       gridType: GridType.Fit,
       compactType: CompactType.None,
