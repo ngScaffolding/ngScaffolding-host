@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, ComponentRef, ViewChildren, QueryList, OnChanges, SimpleChanges } from '@angular/core';
 import { DataSourceService, LoggingService, MenuService } from '../../../core/services';
 import { Router, ActivatedRoute } from '@angular/router';
-import { CoreMenuItem, ResizableWidget } from '@ngscaffolding/models';
+import { CoreMenuItem } from '@ngscaffolding/models';
 import { Observable } from 'rxjs/Observable';
 
 import { DashboardModel } from '@ngscaffolding/models';
@@ -26,7 +26,7 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
   private options: GridsterConfig;
   private dashboard: DashboardModel;
 
-  private components: ResizableWidget[] = [];
+  private components: any[] = [];
 
   public component = ChartComponent;
   public componentInputs = {};

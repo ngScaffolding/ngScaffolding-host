@@ -11,7 +11,7 @@ interface BroadcastEvent {
 
 export const enum BroadcastTypes {
   SHOW_MESSAGE = 'SHOW_MESSAGE',
-  SHOW_TOAST = 'SHOW_TOAST',
+
   SHOW_SPINNER = 'SHOW_SPINNER',
   HIDE_SPINNER = 'HIDE_SPINNER'
 }

@@ -2,7 +2,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import {
   VersionsService,
   SoftwareVersion,
-  UserPreferencesService
+  UserPreferencesService,
+  NotificationService
 } from '../../../modules/core/coreModule';
 import { Subscription } from 'rxjs/Subscription';
 import {
@@ -18,7 +19,7 @@ export class ProfilePageComponent implements OnInit, OnDestroy {
   private prefDetailsSub: Subscription;
   private prefValuesSub: Subscription;
 
-  constructor(private userPrefs: UserPreferencesService) {}
+  constructor(private userPrefs: UserPreferencesService, private notification: NotificationService) {}
 
   inputBuilderDefinition = new InputBuilderDefinition();
 
@@ -60,7 +61,11 @@ export class ProfilePageComponent implements OnInit, OnDestroy {
   }
 
   okClicked(changedModel: any){
-    this.userPrefs.setValue('UserPrefs_Profile', JSON.stringify(changedModel)).subscribe();
+    this.userPrefs.setValue('UserPrefs_Profile', JSON.stringify(changedModel)).subscribe(
+      () => {
+        this.notification.showMessage({detail: 'Profile Saved'});
+      }
+    );
 
   }
 

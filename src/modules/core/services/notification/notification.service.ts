@@ -11,7 +11,5 @@ export class NotificationService {
     this.broadcast.broadcast(BroadcastTypes.SHOW_MESSAGE, message);
   }
 
-  showToast(message: Message) {
-    this.broadcast.broadcast(BroadcastTypes.SHOW_TOAST, message);
-  }
+
 }
