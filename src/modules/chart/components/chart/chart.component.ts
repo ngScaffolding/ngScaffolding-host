@@ -2,10 +2,7 @@ declare var require: any;
 
 import { Component, OnInit, OnDestroy, Input, OnChanges, SimpleChanges } from '@angular/core';
 
-import * as Highcharts from 'highcharts/highstock';
-import * as HC_map from 'highcharts/modules/map';
-import * as HC_exporting from 'highcharts/modules/exporting';
-import * as HC_ce from 'highcharts-custom-events';
+import { Chart, Highcharts } from 'angular-highcharts';
 import { ChartDataService } from '../../services/chartData.service';
 import { DataSourceService, LoggingService, MenuService } from '../../../core/services';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -13,29 +10,16 @@ import { CoreMenuItem } from '@ngscaffolding/models';
 import { Observable } from 'rxjs/Observable';
 import { GridsterItem } from 'angular-gridster2';
 
-HC_map(Highcharts);
-// require('../../js/worldmap')(Highcharts);
-
-HC_exporting(Highcharts);
-HC_ce(Highcharts);
-
-Highcharts.setOptions({
-  title: {
-    style: {
-      color: 'orange'
-    }
-  }
-});
-
 @Component({
   selector: 'app-chart',
   templateUrl: 'chart.component.html',
   styles: ['chart.component.scss']
 })
 export class ChartComponent implements OnInit, OnDestroy, OnChanges {
-  Highcharts = Highcharts;
-
   @Input() public unitHeight: number;
+  @Input() public unitWidth: number;
+  @Input() public unitUpdate: number;
+
   @Input() public gridsterItem: GridsterItem;
 
   private paramSubscription: any;
@@ -44,9 +28,33 @@ export class ChartComponent implements OnInit, OnDestroy, OnChanges {
 
   private menuSubscription: any;
   private menuItems: CoreMenuItem[];
-  // private chart: Highcharts.Chart;
 
-  // public chartOptions: Highcharts.chartOptions;
+  public chart: Chart;
+  public highChartsOptions: Highcharts.Options = {
+    chart: {
+        type: "bar"
+    },
+    title: {
+        text: "Basic drilldown"
+    },
+    legend: {
+        enabled: false
+    },
+
+    plotOptions: {
+        series: {
+            dataLabels: {
+                enabled: true
+            }
+        }
+    },
+    series: [
+      {
+        name: "random series",
+        data: [[0,2],[1,2],[2,3],[4,4],[4,5]]
+      }
+    ]
+  };
 
   public isInDashboard: boolean;
 
@@ -59,34 +67,25 @@ export class ChartComponent implements OnInit, OnDestroy, OnChanges {
     private dataSourceService: DataSourceService
   ) {}
 
-  chartOptions: Highcharts.Chart = {
-    title: { text: 'Highcharts chart' },
-      subtitle: { text: 'Highcharts chart' },
-    series: [{
-      data: [1, 2, 3]
-    }]
-  };
-
-  chart: any;
   public onChartCreated(chart: any) {
-    this.chart = chart;
+    // this.chart = chart;
     this.resizeChart();
   }
 
   loadChart() {
     this.menuItem = this.menuItems.find(menuItem => menuItem.name === this.menuName);
 
+    this.chart = new Chart(this.highChartsOptions);
     if (this.menuItem) {
     }
   }
 
   public resizeChart(): void {
-    if (this.gridsterItem) {
-      this.chartOptions.chart.height = this.gridsterItem.rows * (this.unitHeight - 10) + (this.gridsterItem.rows - 4) * 10;
-      this.chartOptions.chart.width = this.gridsterItem.cols * (this.unitHeight - 10) + (this.gridsterItem.cols - 4) * 10;
-    }
-    if (this.chart.ref) {
-      this.chart.ref.setSize(this.chartOptions.chart.width, this.chartOptions.chart.height, false);
+    if (this.gridsterItem && this.chart && this.chart.ref) {
+      this.chart.ref.plotHeight = this.gridsterItem.rows * (this.unitHeight - 10);
+      this.chart.ref.plotWidth = this.gridsterItem.cols * (this.unitWidth - 10);
+
+      this.chart.ref.setSize(this.chart.ref.plotWidth, this.chart.ref.plotHeight, false);
     }
   }
 
@@ -108,6 +107,8 @@ export class ChartComponent implements OnInit, OnDestroy, OnChanges {
     Observable.zip([this.paramSubscription, this.menuSubscription]).subscribe(() => {
       this.loadChart();
     });
+
+    this.loadChart();
   }
   ngOnDestroy(): void {
     if (this.paramSubscription) {

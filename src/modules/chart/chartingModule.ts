@@ -12,6 +12,8 @@ import { InputBuilderModule } from '../inputbuilder/inputbuilderModule';
 import { HighchartsChartComponent } from './components/chart/highcharts-chart.component';
 import { ChartComponent } from './components/chart/chart.component';
 
+import { ChartModule, HIGHCHARTS_MODULES } from 'angular-highcharts';
+
 // Services
 import { ChartDataService } from './services/chartData.service';
 
@@ -26,6 +28,7 @@ const appRoutes: Routes = [
     FormsModule,
     InputBuilderModule,
     CoreModule,
+    ChartModule,
     RouterModule.forChild(appRoutes)
   ],
   declarations: [
@@ -40,10 +43,10 @@ const appRoutes: Routes = [
     ChartDataService
   ]
 })
-export class ChartModule {
+export class ChartingModule {
   static forRoot(): ModuleWithProviders {
     return {
-      ngModule: ChartModule
+      ngModule: ChartingModule
     };
   }
 

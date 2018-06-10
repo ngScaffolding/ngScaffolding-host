@@ -325,6 +325,10 @@ angular-gridster2@5.3.3:
   version "5.3.3"
   resolved "https://registry.yarnpkg.com/angular-gridster2/-/angular-gridster2-5.3.3.tgz#034cc53d6138c2e8dc2f437afc25f5ab9d95e066"
 
+angular-highcharts@^6.1.4:
+  version "6.1.4"
+  resolved "https://registry.yarnpkg.com/angular-highcharts/-/angular-highcharts-6.1.4.tgz#ecfafae5bfd36561c96bf5673aa5427fc1890013"
+
 angular-jwt@^0.1.9:
   version "0.1.9"
   resolved "https://registry.yarnpkg.com/angular-jwt/-/angular-jwt-0.1.9.tgz#db8bcf18f05aa57320ac2fda161d7e9622c099c3"
@@ -1379,7 +1383,7 @@ core-js@2.5.1:
   version "2.5.1"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.5.1.tgz#ae6874dc66937789b80754ff5428df66819ca50b"
 
-core-js@^2.2.0, core-js@^2.4.0, core-js@^2.4.1:
+core-js@^2.2.0, core-js@^2.4.0:
   version "2.5.6"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.5.6.tgz#0fe6d45bf3cac3ac364a9d72de7576f4eb221b9d"
 
@@ -2827,25 +2831,6 @@ hawk@~3.1.3:
 he@1.1.x:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/he/-/he-1.1.1.tgz#93410fd21b009735151f8868c2f271f3427e23fd"
-
-highcharts-angular@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/highcharts-angular/-/highcharts-angular-1.0.2.tgz#f4dd0ed45f4e3d6c6829f82f5d3faf6950fa64b8"
-  dependencies:
-    "@angular/animations" "^5.2.0"
-    "@angular/common" "^5.2.0"
-    "@angular/compiler" "^5.2.0"
-    "@angular/core" "^5.2.0"
-    "@angular/forms" "^5.2.0"
-    "@angular/http" "^5.2.0"
-    "@angular/platform-browser" "^5.2.0"
-    "@angular/platform-browser-dynamic" "^5.2.0"
-    "@angular/router" "^5.2.0"
-    core-js "^2.4.1"
-    highcharts "^6.0.7"
-    highcharts-custom-events "^2.0.20"
-    rxjs "^5.5.6"
-    zone.js "^0.8.19"
 
 highcharts-custom-events@^2.0.20:
   version "2.1.4"
@@ -7013,6 +6998,6 @@ yn@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/yn/-/yn-2.0.0.tgz#e5adabc8acf408f6385fc76495684c88e6af689a"
 
-zone.js@^0.8.19, zone.js@^0.8.20:
+zone.js@^0.8.20:
   version "0.8.26"
   resolved "https://registry.yarnpkg.com/zone.js/-/zone.js-0.8.26.tgz#7bdd72f7668c5a7ad6b118148b4ea39c59d08d2d"

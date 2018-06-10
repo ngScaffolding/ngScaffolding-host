@@ -38,7 +38,7 @@ import { ActionService, AppSettingsService,  UserAuthorisationService,  Broadcas
   // Externalise These Modules
   import { DatagridModule } from '../modules/datagrid/datagridModule';
   import { InputBuilderModule } from '../modules/inputbuilder/inputbuilderModule';
-  import { ChartModule } from '../modules/chart/chartModule';
+  import { ChartingModule } from '../modules/chart/chartingModule';
   import { DashboardModule } from '../modules/dashboard/dashboardModule';
   import { CUSTOM_IMPORTS } from '../../custom/custom.app';
 
@@ -82,7 +82,7 @@ export function jwtOptionsFactory(appSettings: AppSettingsService) {
         CoreModule,
         DatagridModule,
         InputBuilderModule,
-        ChartModule,
+        ChartingModule,
         DashboardModule,
 
         JwtModule.forRoot({

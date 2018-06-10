@@ -49,7 +49,11 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
     }
 
     // Set unitheight for later resize
-    this.dashboard.widgets.forEach(widget => (widget['unitHeight'] = 0));
+    this.dashboard.widgets.forEach(widget => {
+      widget['unitHeight'] = 0;
+      widget['unitWidth'] = 0;
+      widget['unitUpdate'] = 0;
+    });
   }
 
   private itemChange(item, itemComponent) {}
@@ -57,6 +61,8 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
   public itemResize(item: GridsterItem, itemComponent: GridsterItemComponentInterface): void {
     if (itemComponent.gridster.curRowHeight > 1) {
       item['unitHeight'] = itemComponent.gridster.curRowHeight;
+      item['unitWidth'] = itemComponent.gridster.curColWidth;
+      item['unitUpdate']++;
     }
 
     // item['unitHeight'] = (item.cols * 100 - item.rows) / 10000;
