@@ -1,10 +1,21 @@
 declare var require: any;
 
-import { Component, OnInit, OnDestroy, Input, OnChanges, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  Input,
+  OnChanges,
+  SimpleChanges
+} from '@angular/core';
 
 import { Chart, Highcharts } from 'angular-highcharts';
 import { ChartDataService } from '../../services/chartData.service';
-import { DataSourceService, LoggingService, MenuService } from '../../../core/services';
+import {
+  DataSourceService,
+  LoggingService,
+  MenuService
+} from '../../../core/services';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CoreMenuItem } from '@ngscaffolding/models';
 import { Observable } from 'rxjs/Observable';
@@ -28,32 +39,29 @@ export class ChartComponent implements OnInit, OnDestroy, OnChanges {
   private menuName: string;
   private menuItem: CoreMenuItem;
 
-  private menuSubscription: any;
-  private menuItems: CoreMenuItem[];
-
   public chart: Chart;
   public highChartsOptions: Highcharts.Options = {
     chart: {
-        type: "bar"
+      type: 'bar'
     },
     title: {
-        text: "Basic drilldown"
+      text: 'Basic drilldown'
     },
     legend: {
-        enabled: false
+      enabled: false
     },
 
     plotOptions: {
-        series: {
-            dataLabels: {
-                enabled: true
-            }
+      series: {
+        dataLabels: {
+          enabled: true
         }
+      }
     },
     series: [
       {
-        name: "random series",
-        data: [[0,2],[1,2],[2,3],[4,4],[4,5]]
+        name: 'random series',
+        data: [[0, 2], [1, 2], [2, 3], [4, 4], [4, 5]]
       }
     ]
   };
@@ -75,8 +83,6 @@ export class ChartComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   loadChart() {
-    this.menuItem = this.menuItems.find(menuItem => menuItem.name === this.menuName);
-
     this.chart = new Chart(this.highChartsOptions);
     if (this.menuItem) {
     }
@@ -84,10 +90,15 @@ export class ChartComponent implements OnInit, OnDestroy, OnChanges {
 
   public resizeChart(): void {
     if (this.gridsterItem && this.chart && this.chart.ref) {
-      this.chart.ref.plotHeight = this.gridsterItem.rows * (this.unitHeight - 10);
+      this.chart.ref.plotHeight =
+        this.gridsterItem.rows * (this.unitHeight - 10);
       this.chart.ref.plotWidth = this.gridsterItem.cols * (this.unitWidth - 10);
 
-      this.chart.ref.setSize(this.chart.ref.plotWidth, this.chart.ref.plotHeight, false);
+      this.chart.ref.setSize(
+        this.chart.ref.plotWidth,
+        this.chart.ref.plotHeight,
+        false
+      );
     }
   }
 
@@ -99,26 +110,15 @@ export class ChartComponent implements OnInit, OnDestroy, OnChanges {
     // Get Menu Id
     this.paramSubscription = this.route.params.subscribe(params => {
       this.menuName = params['id'];
+      this.menuItem = this.menuService.getMenuItemByName(this.menuName);
+          // get Menu Items
+          this.loadChart();
     });
-
-    // get Menu Items
-    this.menuSubscription = this.menuService.menuSubject.subscribe(menuItems => {
-      this.menuItems = menuItems;
-    });
-
-    Observable.zip([this.paramSubscription, this.menuSubscription]).subscribe(() => {
-      this.loadChart();
-    });
-
-    this.loadChart();
   }
+
   ngOnDestroy(): void {
     if (this.paramSubscription) {
       this.paramSubscription.unsubscribe();
-    }
-
-    if (this.menuSubscription) {
-      this.menuSubscription.unsubscribe();
     }
   }
 }
