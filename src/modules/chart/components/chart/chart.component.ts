@@ -20,6 +20,8 @@ export class ChartComponent implements OnInit, OnDestroy, OnChanges {
   @Input() public unitWidth: number;
   @Input() public unitUpdate: number;
 
+  @Input() public isWidget: boolean;
+
   @Input() public gridsterItem: GridsterItem;
 
   private paramSubscription: any;
