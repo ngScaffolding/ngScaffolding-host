@@ -11,6 +11,7 @@ import { ButtonColorPipe } from '../core/coreModule';
 import { InputBuilderModule } from '../inputbuilder/inputbuilderModule';
 import { HighchartsChartComponent } from './components/chart/highcharts-chart.component';
 import { ChartComponent } from './components/chart/chart.component';
+import { ChartHolderComponent } from './components/chartHolder/chartHolder.component';
 
 import { ChartModule, HIGHCHARTS_MODULES } from 'angular-highcharts';
 
@@ -18,8 +19,8 @@ import { ChartModule, HIGHCHARTS_MODULES } from 'angular-highcharts';
 import { ChartDataService } from './services/chartData.service';
 
 const appRoutes: Routes = [
-  { path: 'chart/:id', component: ChartComponent },
-  { path: 'chart', component: ChartComponent }
+  { path: 'chart/:id', component: ChartHolderComponent },
+  { path: 'chart', component: ChartHolderComponent }
 ];
 
 @NgModule({
@@ -33,10 +34,12 @@ const appRoutes: Routes = [
   ],
   declarations: [
     ChartComponent,
+    ChartHolderComponent,
     HighchartsChartComponent
   ],
   exports: [
     ChartComponent,
+    ChartHolderComponent,
     RouterModule
   ],
   providers: [
