@@ -17,6 +17,8 @@ import {
   ReferenceValue
 } from '@ngscaffolding/models';
 
+import { JsonEditorComponent, JsonEditorOptions } from 'ang-jsoneditor';
+
 import {
   AppSettingsService,
   ReferenceValuesService
@@ -43,11 +45,15 @@ export class InputBuilderComponent implements OnInit, OnChanges {
   form: FormGroup;
   controlStyle = 'ui-g-12';
   inputContainerClass = 'ui-g-12'; // This changes to allow the help Icon
+  editorOptions: JsonEditorOptions;
 
   constructor(
     public appSettings: AppSettingsService,
     public refValuesService: ReferenceValuesService
-  ) {}
+  ) {
+    this.editorOptions = new JsonEditorOptions()
+    this.editorOptions.modes = ['code', 'text', 'tree', 'view']; // set all allowed modes
+  }
 
   onSubmit(form: any) {
     if (this.form.valid) {

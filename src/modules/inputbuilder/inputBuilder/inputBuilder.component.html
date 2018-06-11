@@ -71,6 +71,12 @@
                 <label>{{input.label}}</label>
             </span>
 
+             <!-- JSon Edit -->
+             <span *ngSwitchCase="'json'" class="md-inputfield">
+              <json-editor [options]="editorOptions" [data]="input.value"></json-editor>
+              <label>{{input.label}}</label>
+          </span>
+
         </div>
 
 

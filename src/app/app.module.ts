@@ -26,6 +26,8 @@ import { Title } from '@angular/platform-browser';
 import { JwtModule, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { AppTopBarComponent } from './components/appTopbar/app.topbar.component';
 
+import { NgJsonEditorModule } from 'ang-jsoneditor';
+
 import { PRIME_COMPONENTS } from './app.prime.components';
 import { ConfirmationService } from 'primeng/primeng';
 import { APP_COMPONENTS } from './app.component.list';
@@ -84,6 +86,7 @@ export function jwtOptionsFactory(appSettings: AppSettingsService) {
         InputBuilderModule,
         ChartingModule,
         DashboardModule,
+        NgJsonEditorModule,
 
         JwtModule.forRoot({
           jwtOptionsProvider: {

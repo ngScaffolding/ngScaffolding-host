@@ -60,14 +60,14 @@ export class ChartComponent implements OnInit, OnDestroy, OnChanges {
 
           const parsedChartOptions = JSON.parse(this.chartDefinition.chartOptions);
 
-          switch (this.chart.options.chart.type) {
+          switch (parsedChartOptions.chart.type) {
             case 'bar': {
-              this.chart.addSerie(this.chartDataService.convertToBarChart(this.chartDefinition, parsedChartOptions, JSON.parse(response.jsonData)));
+              this.chartDataService.convertToBarChart(this.chartDefinition, parsedChartOptions, JSON.parse(response.jsonData));
               break;
             }
           }
 
-          this.chart = new Chart(JSON.parse(this.chartDefinition.chartOptions));
+          this.chart = new Chart(parsedChartOptions);
         });
     }
   }
