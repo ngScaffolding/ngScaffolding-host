@@ -5,9 +5,12 @@ import * as Highcharts from 'highcharts/highstock';
 export interface ChartDetailModel {
   title: string;
 
+  xAxisName: string;
+  seriesNames: string[];
+
   filters?: InputBuilderDefinition;
 
-  chartOptions: Highcharts.Chart;
+  chartOptions: string;
 
   dataSourceId?: number;
 }

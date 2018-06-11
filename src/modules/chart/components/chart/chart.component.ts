@@ -11,15 +11,10 @@ import {
 
 import { Chart, Highcharts } from 'angular-highcharts';
 import { ChartDataService } from '../../services/chartData.service';
-import {
-  DataSourceService,
-  LoggingService,
-  MenuService
-} from '../../../core/services';
-import { Router, ActivatedRoute } from '@angular/router';
-import { CoreMenuItem } from '@ngscaffolding/models';
-import { Observable } from 'rxjs/Observable';
+import { DataSourceService, LoggingService } from '../../../core/services';
 import { GridsterItem } from 'angular-gridster2';
+import { ChartDetailModel } from '../../models/chartDetail.model';
+import { DataSourceRequest } from '../../../core/services/dataSource/dataSource.request.model';
 
 @Component({
   selector: 'app-chart',
@@ -33,46 +28,17 @@ export class ChartComponent implements OnInit, OnDestroy, OnChanges {
 
   @Input() public isWidget: boolean;
 
+  @Input() public chartDefinition: ChartDetailModel;
+  @Input() public inputModel: any;
   @Input() public gridsterItem: GridsterItem;
 
-  private paramSubscription: any;
-  private menuName: string;
-  private menuItem: CoreMenuItem;
-
   public chart: Chart;
-  public highChartsOptions: Highcharts.Options = {
-    chart: {
-      type: 'bar'
-    },
-    title: {
-      text: 'Basic drilldown'
-    },
-    legend: {
-      enabled: false
-    },
-
-    plotOptions: {
-      series: {
-        dataLabels: {
-          enabled: true
-        }
-      }
-    },
-    series: [
-      {
-        name: 'random series',
-        data: [[0, 2], [1, 2], [2, 3], [4, 4], [4, 5]]
-      }
-    ]
-  };
+  public highChartsOptions: Highcharts.Options;
 
   public isInDashboard: boolean;
 
   constructor(
-    private router: Router,
-    private route: ActivatedRoute,
     private logger: LoggingService,
-    private menuService: MenuService,
     private chartDataService: ChartDataService,
     private dataSourceService: DataSourceService
   ) {}
@@ -83,8 +49,26 @@ export class ChartComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   loadChart() {
-    this.chart = new Chart(this.highChartsOptions);
-    if (this.menuItem) {
+    if (this.chartDefinition) {
+      // Get Data from Server
+      this.dataSourceService
+        .getData(
+          { id: this.chartDefinition.dataSourceId, inputData: this.inputModel },
+          false
+        )
+        .subscribe(response => {
+
+          const parsedChartOptions = JSON.parse(this.chartDefinition.chartOptions);
+
+          switch (this.chart.options.chart.type) {
+            case 'bar': {
+              this.chart.addSerie(this.chartDataService.convertToBarChart(this.chartDefinition, parsedChartOptions, JSON.parse(response.jsonData)));
+              break;
+            }
+          }
+
+          this.chart = new Chart(JSON.parse(this.chartDefinition.chartOptions));
+        });
     }
   }
 
@@ -108,17 +92,17 @@ export class ChartComponent implements OnInit, OnDestroy, OnChanges {
 
   ngOnInit(): void {
     // Get Menu Id
-    this.paramSubscription = this.route.params.subscribe(params => {
-      this.menuName = params['id'];
-      this.menuItem = this.menuService.getMenuItemByName(this.menuName);
-          // get Menu Items
-          this.loadChart();
-    });
+    // this.paramSubscription = this.route.params.subscribe(params => {
+    //   this.menuName = params['id'];
+    //   this.menuItem = this.menuService.getMenuItemByName(this.menuName);
+      // get Menu Items
+      this.loadChart();
+    // });
   }
 
   ngOnDestroy(): void {
-    if (this.paramSubscription) {
-      this.paramSubscription.unsubscribe();
-    }
+    // if (this.paramSubscription) {
+    //   this.paramSubscription.unsubscribe();
+    // }
   }
 }

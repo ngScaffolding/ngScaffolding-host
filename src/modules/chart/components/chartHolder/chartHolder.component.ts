@@ -6,6 +6,7 @@ import { MenuService } from '../../../core/services/menu/menu.service';
 import { LoggingService } from '../../../core/services/logging/logging.service';
 import { CoreMenuItem } from '@ngscaffolding/models';
 import { Observable } from 'rxjs/Observable';
+import { ChartDetailModel } from '../../models/chartDetail.model';
 
 @Component({
   selector: 'app-chart-holder',
@@ -17,15 +18,19 @@ export class ChartHolderComponent implements OnInit, OnDestroy {
   private menuName: string;
   private menuItem: CoreMenuItem;
 
+  public chartDetail: ChartDetailModel;
+
   constructor(private route: ActivatedRoute, private logger: LoggingService, private menuService: MenuService) {}
 
   ngOnInit(): void {
     // Get Menu Id
     this.paramSubscription = this.route.params.subscribe(params => {
       this.menuName = params['id'];
-      this.menuItem = this.menuService.getMenuItemByName(this.menuName);
+
       // get Menu Items
-      // this.loadChart();
+      this.menuItem = this.menuService.getMenuItemByName(this.menuName);
+
+      this.chartDetail = JSON.parse(this.menuItem.jsonSerialized) as ChartDetailModel;
     });
   }
 
