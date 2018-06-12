@@ -41,6 +41,10 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
     private dataSourceService: DataSourceService
   ) {}
 
+  public getComponent() {
+    return ChartComponent;
+  }
+
   loadDashboard() {
     this.menuItem = this.menuService.getMenuItemByName(this.menuName);
 
@@ -53,7 +57,15 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
       widget['unitHeight'] = 0;
       widget['unitWidth'] = 0;
       widget['unitUpdate'] = 0;
-      widget['itemDetail'] = {};
+
+      // Prepare our details
+      if(widget.gridViewDetail)      {
+        widget['itemDetail'] = widget.gridViewDetail;
+      } else if (widget.chartDetail) {
+        widget['itemDetail'] = widget.chartDetail;
+      } else if (widget.htmlContent) {
+        widget['itemDetail'] = widget.htmlContent;
+      }
     });
   }
 
