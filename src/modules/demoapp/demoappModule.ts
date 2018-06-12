@@ -13,14 +13,12 @@ import { InputBuilderModule } from '../inputbuilder/inputbuilderModule';
 import { DatagridModule } from '../datagrid/datagridModule';
 
 import { InputBuilderSimpleComponent } from './pages/inputBuilderSimple/inputBuilderSimple.component';
-import { DatagridSampleComponent } from './pages/dataGridSample/dataGridSample.component';
 
 export * from './pages/inputBuilderSimple/inputBuilderSimple.component';
 
 const appRoutes: Routes = [
   { path: 'inputbuildersimple', component: InputBuilderSimpleComponent },
-  { path: 'inputbuildersimpletest', component: InputBuilderSimpleComponent },
-  { path: 'datagridtest', component: DatagridSampleComponent }
+  { path: 'inputbuildersimpletest', component: InputBuilderSimpleComponent }
 ];
 
 @NgModule({
@@ -31,12 +29,10 @@ const appRoutes: Routes = [
     RouterModule.forChild(appRoutes)
   ],
   declarations: [
-    InputBuilderSimpleComponent,
-    DatagridSampleComponent
+    InputBuilderSimpleComponent
   ],
   exports: [
     InputBuilderSimpleComponent,
-    DatagridSampleComponent,
     RouterModule
   ]
 })

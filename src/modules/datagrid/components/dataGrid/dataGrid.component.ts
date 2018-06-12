@@ -1,14 +1,38 @@
-import { HostListener, Component, Input, Output, EventEmitter, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import {
+  HostListener,
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  OnInit,
+  OnDestroy,
+  ViewChild,
+  OnChanges,
+  SimpleChanges
+} from '@angular/core';
 
 import { ActivatedRoute } from '@angular/router';
 import { GridOptions, ColDef, ColDefUtil } from 'ag-grid/main';
 
-import { Action, GridViewDetail, InputBuilderDefinition } from '@ngscaffolding/models';
+import {
+  Action,
+  GridViewDetail,
+  InputBuilderDefinition
+} from '@ngscaffolding/models';
 
 import { ConfirmationService } from 'primeng/primeng';
 import { MessageService } from 'primeng/components/common/messageservice';
 
-import { AppSettingsService, DataSourceService, MenuService, CoreMenuItem, LoggingService, NotificationService, BroadcastService, UserPreferencesService } from '../../../core/coreModule';
+import {
+  AppSettingsService,
+  DataSourceService,
+  MenuService,
+  CoreMenuItem,
+  LoggingService,
+  NotificationService,
+  BroadcastService,
+  UserPreferencesService
+} from '../../../core/coreModule';
 
 import { FiltersHolderComponent } from '../filtersHolder/filtersHolder.component';
 import { DataSetResults } from '../../../core/models/datasetResults.model';
@@ -16,7 +40,10 @@ import { MenuItem } from 'primeng/primeng';
 import { InputBuilderPopupComponent } from '../../../inputbuilder/inputbuilderModule';
 import { ActionsHolderComponent } from '../actionsHolder/actionsHolder.component';
 import { ActionService } from '../../../core/services/action/action.service';
-import { ButtonCellComponent, ActionClickedData } from '../../cellTemplates/buttonCell/buttonCell.component';
+import {
+  ButtonCellComponent,
+  ActionClickedData
+} from '../../cellTemplates/buttonCell/buttonCell.component';
 import { Subscription } from 'rxjs/Subscription';
 
 @Component({
@@ -24,24 +51,18 @@ import { Subscription } from 'rxjs/Subscription';
   templateUrl: './datagrid.component.html',
   styleUrls: ['./datagrid.component.scss']
 })
-export class DataGridComponent implements OnInit, OnDestroy {
+export class DataGridComponent implements OnInit, OnDestroy, OnChanges {
+
   @ViewChild(HTMLDivElement) gridArea: HTMLDivElement;
   @ViewChild(HTMLDivElement) gridSection: HTMLDivElement;
   @ViewChild(FiltersHolderComponent) filtersHolder: FiltersHolderComponent;
-  @ViewChild(InputBuilderPopupComponent) actionInputPopup: InputBuilderPopupComponent;
+  @ViewChild(InputBuilderPopupComponent)
+  actionInputPopup: InputBuilderPopupComponent;
   @ViewChild(ActionsHolderComponent) actionsHolder: ActionsHolderComponent;
 
-  @Input() gridViewDetail: GridViewDetail;
+  @Input() itemId: string;
+  @Input() itemDetail: GridViewDetail;
 
-  // @HostListener('window:resize', ['$event'])
-  //   onResize(event) {
-  //   TODO: This is not complete
-
-  //     let height = this.gridArea.clientHeight - this.filtersHolder.clientHeight;
-  //   this.gridSection.style.height = height + 'px';
-  // }
-
-  menuItem: CoreMenuItem;
   filterValues: any;
   filters: InputBuilderDefinition;
 
@@ -60,11 +81,6 @@ export class DataGridComponent implements OnInit, OnDestroy {
   showToolPanel = false;
 
   private gridviewPrefPrefix = 'GridViewPrefs_';
-  private menuName: string;
-  private menuItems: CoreMenuItem[];
-
-  private paramSubscription: any;
-  private menuSubscription: any;
 
   private prefsSubscription: any;
 
@@ -96,16 +112,18 @@ export class DataGridComponent implements OnInit, OnDestroy {
       suppressCellSelection: true,
 
       onGridReady: () => {
-        if(this.gridSavedState){
+        if (this.gridSavedState) {
           this.gridOptions.columnApi.setColumnState(this.gridSavedState);
         }
-      },
-    }
+      }
+    };
     // Wire up broadcast for action clicked
-    this.broadcastSubscription = broadcast.on('ACTION_CLICKED').subscribe(actionData => {
-      const actionClickedData = actionData as ActionClickedData;
-      this.actionClicked(actionClickedData.action, actionClickedData.row);
-    });
+    this.broadcastSubscription = broadcast
+      .on('ACTION_CLICKED')
+      .subscribe(actionData => {
+        const actionClickedData = actionData as ActionClickedData;
+        this.actionClicked(actionClickedData.action, actionClickedData.row);
+      });
   }
 
   // Toolbar Operations
@@ -120,38 +138,49 @@ export class DataGridComponent implements OnInit, OnDestroy {
   exportData() {}
   saveView() {
     const savedState = this.gridOptions.columnApi.getColumnState();
-    this.prefService.setValue(this.gridviewPrefPrefix + this.menuName, JSON.stringify(savedState))
-    .subscribe(() => {
-      this.messageService.add({
-        severity: 'success',
-        summary: 'Success',
-        detail: 'View Saved'
-      });
-    }, err => {
-      this.messageService.add({
-        severity: 'error',
-        summary: 'Error',
-        detail: 'View not Saved'
-      });
-    });
+    this.prefService
+      .setValue(
+        this.gridviewPrefPrefix + this.itemId,
+        JSON.stringify(savedState)
+      )
+      .subscribe(
+        () => {
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Success',
+            detail: 'View Saved'
+          });
+        },
+        err => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'View not Saved'
+          });
+        }
+      );
   }
   resetView() {
     // Remove our saved settings
-    this.prefService.deleteValue(this.gridviewPrefPrefix + this.menuName)
-    .subscribe(() => {
-      this.messageService.add({
-        severity: 'success',
-        summary: 'Success',
-        detail: 'View Reset'
-      });
-      this.loadMenuItem();
-    }, err => {
-      this.messageService.add({
-        severity: 'error',
-        summary: 'Error',
-        detail: 'View not Reset'
-      });
-    });
+    this.prefService
+      .deleteValue(this.gridviewPrefPrefix + this.itemId)
+      .subscribe(
+        () => {
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Success',
+            detail: 'View Reset'
+          });
+          this.loadMenuItem();
+        },
+        err => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'View not Reset'
+          });
+        }
+      );
   }
   shareView() {}
   // Toolbar Operations
@@ -183,7 +212,7 @@ export class DataGridComponent implements OnInit, OnDestroy {
     this.dataSourceService
       .getData(
         {
-          id: this.gridViewDetail.selectDataSourceId,
+          id: this.itemDetail.selectDataSourceId,
           filterValues: JSON.stringify(this.filterValues)
         },
         true
@@ -207,94 +236,73 @@ export class DataGridComponent implements OnInit, OnDestroy {
       );
   }
 
-  private findMenuItem(name: string, menuItems: CoreMenuItem[]) {
-    if (menuItems) {
-      menuItems.forEach(menuItem => {
-        this.findMenuItem(name, menuItem.items as CoreMenuItem[]);
-        if (menuItem.name && menuItem.name.toLowerCase() === name.toLowerCase()) {
-          this.menuItem = menuItem;
-        }
-      });
-    }
-  }
-
   private loadMenuItem() {
-    if (this.menuName && this.menuItems && this.menuItems.length > 0) {
-      // Clear Existing Filters
-      this.filters = {};
+    if (this.itemDetail) {
+      this.columnDefs = [];
+      this.filters = this.itemDetail.filters;
 
-      this.findMenuItem(this.menuName, this.menuItems);
+      // Do We need a Checkbox
+      if (!this.itemDetail.disableCheckboxSelection) {
+        // Switch off RowSelection
+        this.gridOptions.suppressRowClickSelection = true;
 
-      if (this.menuItem && this.menuItem.jsonSerialized) {
-        this.logger.info(`dataGrid Loading menu ${this.menuName}`);
-
-        this.gridViewDetail = JSON.parse(this.menuItem.jsonSerialized) as GridViewDetail;
-
-        if (this.gridViewDetail) {
-          this.columnDefs = [];
-          this.filters = this.gridViewDetail.filters;
-
-          // Do We need a Checkbox
-          if (!this.gridViewDetail.disableCheckboxSelection) {
-            // Switch off RowSelection
-            this.gridOptions.suppressRowClickSelection = true;
-
-            // Add the selection column
-            this.columnDefs.push({
-              width: 70,
-              suppressMenu: true,
-              suppressFilter: true,
-              suppressSorting: true,
-              checkboxSelection: true,
-              pinned: 'left',
-              headerCheckboxSelection: true,
-              headerCheckboxSelectionFilteredOnly: false
-            });
-          }
-
-          // Do We need an Actions button
-          if (this.gridViewDetail.actions && this.gridViewDetail.actions.filter(action => action.columnButton).length > 0) {
-            this.columnDefs.push({
-              headerName: 'Actions',
-              suppressMenu: true,
-              suppressFilter: true,
-              suppressSorting: true,
-              field: 'Id',
-              cellRendererFramework: ButtonCellComponent,
-              cellRendererParams: {
-                actions: this.gridViewDetail.actions,
-                splitButton: this.gridViewDetail.isActionColumnSplitButton
-              }
-            });
-          }
-
-          this.gridViewDetail.columns.forEach(column => {
-            const colDef: ColDef = {
-              field: column.Field,
-              cellClass: column.CellClass,
-              filter: column.Filter,
-              tooltipField: column.TooltipField,
-              headerName: column.HeaderName,
-              headerTooltip: column.HeaderTooltip,
-              pinned: column.Pinned,
-              suppressMenu: column.SuppressMenu,
-              suppressFilter: column.SuppressFilter,
-              suppressSorting: column.SuppressSorting,
-
-              type: column.Type,
-              hide: column.Hide
-            };
-
-            this.columnDefs.push(colDef);
-          });
-
-          // Actions Here
-          this.actions = this.gridViewDetail.actions;
-        }
-
-        this.loadInitialData();
+        // Add the selection column
+        this.columnDefs.push({
+          width: 70,
+          suppressMenu: true,
+          suppressFilter: true,
+          suppressSorting: true,
+          checkboxSelection: true,
+          pinned: 'left',
+          headerCheckboxSelection: true,
+          headerCheckboxSelectionFilteredOnly: false
+        });
       }
+
+      // Do We need an Actions button
+      if (
+        this.itemDetail.actions &&
+        this.itemDetail.actions.filter(action => action.columnButton).length > 0
+      ) {
+        this.columnDefs.push({
+          headerName: 'Actions',
+          suppressMenu: true,
+          suppressFilter: true,
+          suppressSorting: true,
+          field: 'Id',
+          cellRendererFramework: ButtonCellComponent,
+          cellRendererParams: {
+            actions: this.itemDetail.actions,
+            splitButton: this.itemDetail.isActionColumnSplitButton
+          }
+        });
+      }
+
+      this.itemDetail.columns.forEach(column => {
+        const colDef: ColDef = {
+          field: column.Field,
+          cellClass: column.CellClass,
+          filter: column.Filter,
+          tooltipField: column.TooltipField,
+          headerName: column.HeaderName,
+          headerTooltip: column.HeaderTooltip,
+          pinned: column.Pinned,
+          suppressMenu: column.SuppressMenu,
+          suppressFilter: column.SuppressFilter,
+          suppressSorting: column.SuppressSorting,
+
+          type: column.Type,
+          hide: column.Hide
+        };
+
+        this.columnDefs.push(colDef);
+      });
+
+      // Actions Here
+      this.actions = this.itemDetail.actions;
     }
+
+    this.loadInitialData();
   }
 
   //
@@ -317,7 +325,10 @@ export class DataGridComponent implements OnInit, OnDestroy {
   }
 
   private checkForActionInputs(action: Action, row: any) {
-    if (action.inputBuilderDefinition && action.inputBuilderDefinition.inputDetails.length > 0) {
+    if (
+      action.inputBuilderDefinition &&
+      action.inputBuilderDefinition.inputDetails.length > 0
+    ) {
       this.clickedAction = action;
       this.actionInputDefinition = action.inputBuilderDefinition;
       if (row) {
@@ -333,32 +344,46 @@ export class DataGridComponent implements OnInit, OnDestroy {
   }
 
   private callAction(action: Action) {
-    this.actionService.callAction(action, this.actionValues, this.selectedRows).subscribe(
-      result => {
-        if (result.success) {
-          if (action.successMessage) {
-            if (action.successToast) {
-              this.messageService.add({
-                severity: 'success',
-                summary: 'Success',
-                detail: action.successMessage
-              });
-            } else {
+    this.actionService
+      .callAction(action, this.actionValues, this.selectedRows)
+      .subscribe(
+        result => {
+          if (result.success) {
+            if (action.successMessage) {
+              if (action.successToast) {
+                this.messageService.add({
+                  severity: 'success',
+                  summary: 'Success',
+                  detail: action.successMessage
+                });
+              } else {
+                this.confirmationService.confirm({
+                  message: action.successMessage,
+                  acceptLabel: 'OK',
+                  icon: 'fa-check',
+                  header: 'Success',
+                  rejectVisible: false
+                });
+              }
+            }
+            // finally
+            this.actionInputPopup.isShown = false;
+
+            // Refresh Data
+            this.loadInitialData();
+          } else {
+            if (action.errorMessage) {
               this.confirmationService.confirm({
-                message: action.successMessage,
+                message: action.errorMessage,
+                icon: 'fa-close',
                 acceptLabel: 'OK',
-                icon: 'fa-check',
-                header: 'Success',
+                header: 'Error',
                 rejectVisible: false
               });
             }
           }
-          // finally
-          this.actionInputPopup.isShown = false;
-
-          // Refresh Data
-          this.loadInitialData();
-        } else {
+        },
+        err => {
           if (action.errorMessage) {
             this.confirmationService.confirm({
               message: action.errorMessage,
@@ -369,19 +394,7 @@ export class DataGridComponent implements OnInit, OnDestroy {
             });
           }
         }
-      },
-      err => {
-        if (action.errorMessage) {
-          this.confirmationService.confirm({
-            message: action.errorMessage,
-            icon: 'fa-close',
-            acceptLabel: 'OK',
-            header: 'Error',
-            rejectVisible: false
-          });
-        }
-      }
-    );
+      );
   }
 
   //
@@ -401,39 +414,25 @@ export class DataGridComponent implements OnInit, OnDestroy {
     alert('User Cancelled');
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    this.loadMenuItem();
+  }
+
   ngOnInit(): void {
-    this.menuSubscription = this.menuService.menuSubject.subscribe(menuItems => {
-      this.menuItems = menuItems;
-
-      if (this.menuItems && this.menuItems.length > 0 && !this.menuItem) {
-        this.loadMenuItem();
+    // watch for Prefs changes
+    this.prefsSubscription = this.prefService.preferenceValuesSubject.subscribe(
+      prefs => {
+        const pref = prefs.find(
+          loopPref => loopPref.name === this.gridviewPrefPrefix + this.itemId
+        );
+        if (pref) {
+          this.gridSavedState = JSON.parse(pref.value);
+        }
       }
-    });
-    this.paramSubscription = this.route.params.subscribe(params => {
-      this.menuName = params['id'];
-
-      if ((this.menuName && !this.menuItem) || this.menuName !== this.menuItem.name) {
-        this.loadMenuItem();
-      }
-    });
-
-     // watch for Prefs changes
-     this.prefsSubscription = this.prefService.preferenceValuesSubject
-     .subscribe(prefs => {
-       const pref = prefs.find(loopPref => loopPref.name === this.gridviewPrefPrefix + this.menuName);
-       if (pref) {
-         this.gridSavedState = JSON.parse(pref.value);
-       }
-     });
-   }
+    );
+  }
 
   ngOnDestroy() {
-    if (this.paramSubscription) {
-      this.paramSubscription.unsubscribe();
-    }
-    if (this.menuSubscription) {
-      this.menuSubscription.unsubscribe();
-    }
     if (this.broadcastSubscription) {
       this.broadcastSubscription.unsubscribe();
     }

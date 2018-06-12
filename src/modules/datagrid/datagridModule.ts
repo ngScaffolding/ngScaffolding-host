@@ -10,7 +10,6 @@ import { ButtonColorPipe } from '../core/coreModule';
 import { InputBuilderModule } from '../inputbuilder/inputbuilderModule';
 
 import { FiltersHolderComponent } from './components/filtersHolder/filtersHolder.component';
-import { DataGridComponent } from './components/dataGrid/dataGrid.component';
 import { ActionsHolderComponent } from './components/actionsHolder/actionsHolder.component';
 import { ToolBarComponent } from './components/toolBar/toolBar.component';
 
@@ -20,10 +19,12 @@ import { AgGridModule } from 'ag-grid-angular/main';
 import { ButtonCellComponent } from './cellTemplates/buttonCell/buttonCell.component';
 import { ActionsPipe } from './pipes/actionsPipe/actions.pipe';
 import { CardModule } from 'primeng/card';
+import { DataGridComponent } from './components/dataGrid/dataGrid.component';
+import { DataGridHolderComponent } from './components/dataGridHolder/dataGridHolder.component';
 
 const appRoutes: Routes = [
-  { path: 'datagrid/:id', component: DataGridComponent },
-  { path: 'datagrid', component: DataGridComponent }
+  { path: 'datagrid/:id', component: DataGridHolderComponent },
+  { path: 'datagrid', component: DataGridHolderComponent }
 ];
 
 @NgModule({
@@ -45,6 +46,7 @@ const appRoutes: Routes = [
   declarations: [
     ActionsHolderComponent,
     DataGridComponent,
+    DataGridHolderComponent,
     FiltersHolderComponent,
     ToolBarComponent,
     ButtonCellComponent,
@@ -52,6 +54,7 @@ const appRoutes: Routes = [
   ],
   exports: [
     DataGridComponent,
+    DataGridHolderComponent,
     RouterModule
   ]
 })
