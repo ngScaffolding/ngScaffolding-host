@@ -28,7 +28,7 @@ export class ChartComponent implements OnInit, OnDestroy, OnChanges {
 
   @Input() public isWidget: boolean;
 
-  @Input() public chartDefinition: ChartDetailModel;
+  @Input() public itemDetail: ChartDetailModel;
   @Input() public inputModel: any;
   @Input() public gridsterItem: GridsterItem;
 
@@ -49,20 +49,20 @@ export class ChartComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   loadChart() {
-    if (this.chartDefinition) {
+    if (this.itemDetail) {
       // Get Data from Server
       this.dataSourceService
         .getData(
-          { id: this.chartDefinition.dataSourceId, inputData: this.inputModel },
+          { id: this.itemDetail.dataSourceId, inputData: this.inputModel },
           false
         )
         .subscribe(response => {
 
-          const parsedChartOptions = JSON.parse(this.chartDefinition.chartOptions);
+          const parsedChartOptions = JSON.parse(this.itemDetail.chartOptions);
 
           switch (parsedChartOptions.chart.type) {
             case 'bar': {
-              this.chartDataService.convertToBarChart(this.chartDefinition, parsedChartOptions, JSON.parse(response.jsonData));
+              this.chartDataService.convertToBarChart(this.itemDetail, parsedChartOptions, JSON.parse(response.jsonData));
               break;
             }
           }
