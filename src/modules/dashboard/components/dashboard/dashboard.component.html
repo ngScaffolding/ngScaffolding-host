@@ -9,7 +9,7 @@
         <ndc-dynamic
         [ndcDynamicInputs]="{itemDetail: widget.itemDetail, isWidget: true, gridsterItem: loopGridster.item, unitHeight: widget.unitHeight, unitWidth: widget.unitWidth, unitUpdate: widget.unitUpdate }"
         (ndcDynamicCreated)="componentCreated($event)"
-        [ndcDynamicComponent]="getComponent()"></ndc-dynamic>
+        [ndcDynamicComponent]="getComponent(widget)"></ndc-dynamic>
       </gridster-item>
     </gridster>
   </div>

@@ -60,6 +60,7 @@ export class DataGridComponent implements OnInit, OnDestroy, OnChanges {
   actionInputPopup: InputBuilderPopupComponent;
   @ViewChild(ActionsHolderComponent) actionsHolder: ActionsHolderComponent;
 
+  @Input() isWidget: boolean;
   @Input() itemId: string;
   @Input() itemDetail: GridViewDetail;
 

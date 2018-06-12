@@ -35,8 +35,6 @@ export class ChartComponent implements OnInit, OnDestroy, OnChanges {
   public chart: Chart;
   public highChartsOptions: Highcharts.Options;
 
-  public isInDashboard: boolean;
-
   constructor(
     private logger: LoggingService,
     private chartDataService: ChartDataService,
