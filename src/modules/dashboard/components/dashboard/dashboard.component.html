@@ -7,7 +7,7 @@
     <gridster [options]="options" style="width: 100%;height: 100%">
       <gridster-item [item]="widget" *ngFor="let widget of dashboard.widgets" #loopGridster>
         <ndc-dynamic
-        [ndcDynamicInputs]="{ isWidget: true, gridsterItem: loopGridster.item, unitHeight: widget.unitHeight, unitWidth: widget.unitWidth, unitUpdate: widget.unitUpdate }"
+        [ndcDynamicInputs]="{itemDetail: widget.itemDetail, isWidget: true, gridsterItem: loopGridster.item, unitHeight: widget.unitHeight, unitWidth: widget.unitWidth, unitUpdate: widget.unitUpdate }"
         (ndcDynamicCreated)="componentCreated($event)"
         [ndcDynamicComponent]="component"></ndc-dynamic>
       </gridster-item>

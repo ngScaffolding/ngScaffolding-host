@@ -18,7 +18,7 @@ export class ChartHolderComponent implements OnInit, OnDestroy {
   private menuName: string;
   private menuItem: CoreMenuItem;
 
-  public chartDetail: ChartDetailModel;
+  public itemDetail: ChartDetailModel;
 
   constructor(private route: ActivatedRoute, private logger: LoggingService, private menuService: MenuService) {}
 
@@ -30,7 +30,7 @@ export class ChartHolderComponent implements OnInit, OnDestroy {
       // get Menu Items
       this.menuItem = this.menuService.getMenuItemByName(this.menuName);
 
-      this.chartDetail = JSON.parse(this.menuItem.jsonSerialized) as ChartDetailModel;
+      this.itemDetail = JSON.parse(this.menuItem.jsonSerialized) as ChartDetailModel;
     });
   }
 

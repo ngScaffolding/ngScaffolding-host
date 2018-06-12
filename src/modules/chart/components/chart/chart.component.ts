@@ -74,15 +74,10 @@ export class ChartComponent implements OnInit, OnDestroy, OnChanges {
 
   public resizeChart(): void {
     if (this.gridsterItem && this.chart && this.chart.ref) {
-      this.chart.ref.plotHeight =
-        this.gridsterItem.rows * (this.unitHeight - 10);
-      this.chart.ref.plotWidth = this.gridsterItem.cols * (this.unitWidth - 10);
+    const height = this.gridsterItem.rows * (this.unitHeight - 10);
+      const width = this.gridsterItem.cols * (this.unitWidth - 10);
 
-      this.chart.ref.setSize(
-        this.chart.ref.plotWidth,
-        this.chart.ref.plotHeight,
-        false
-      );
+      this.chart.ref.setSize(height, width);
     }
   }
 

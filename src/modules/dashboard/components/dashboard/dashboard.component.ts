@@ -53,6 +53,7 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
       widget['unitHeight'] = 0;
       widget['unitWidth'] = 0;
       widget['unitUpdate'] = 0;
+      widget['itemDetail'] = {};
     });
   }
 
@@ -62,11 +63,8 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
     if (itemComponent.gridster.curRowHeight > 1) {
       item['unitHeight'] = itemComponent.gridster.curRowHeight;
       item['unitWidth'] = itemComponent.gridster.curColWidth;
-      item['unitUpdate']++;
+      item['unitUpdate']++; // This forces the update if the values above haven't changed;
     }
-
-    // item['unitHeight'] = (item.cols * 100 - item.rows) / 10000;
-    // itemComponent.item.curRowHeight += (item.cols * 100 - item.rows) / 10000;
   }
 
   public componentCreated(compRef: ComponentRef<any>) {

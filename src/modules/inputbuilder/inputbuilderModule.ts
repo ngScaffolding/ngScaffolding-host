@@ -7,6 +7,8 @@ import { VersionsService } from '../core/coreModule';
 import { InputBuilderComponent } from './inputBuilder/inputBuilder.component';
 import { InputBuilderPopupComponent } from './inputBuilderPopup/inputBuilderPopup.component';
 
+import { NgJsonEditorModule } from 'ang-jsoneditor';
+
 import {
   DialogModule,
   InputTextModule,
@@ -27,6 +29,7 @@ import {
   PasswordModule,
   RatingModule,
   AutoCompleteModule,
+
   MultiSelectModule, ToggleButtonModule, TooltipModule
 } from 'primeng/primeng';
 
@@ -57,7 +60,8 @@ export * from './inputBuilderPopup/inputBuilderPopup.component';
     DropdownModule,
     PasswordModule,
     RatingModule,
-    MultiSelectModule, ToggleButtonModule, TooltipModule
+    MultiSelectModule, ToggleButtonModule, TooltipModule,
+    NgJsonEditorModule
   ],
   declarations: [
     InputBuilderComponent,
