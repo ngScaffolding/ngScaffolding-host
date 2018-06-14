@@ -18,7 +18,7 @@ export class UserAuthorisationService {
   private readonly tokenStorageKey = 'USER_TOKEN';
 
   public authenticatedSubject: BehaviorSubject<boolean>;
-  public isAuthenticated: boolean;
+
   private refreshToken: string;
 
   currentUser: AuthUser;
@@ -36,7 +36,7 @@ export class UserAuthorisationService {
 
     appSettingsService.settingsSubject.subscribe(settings => {
       if (settings && settings.authSaveinLocalStorage) {
-        let savedToken = localStorage.getItem(this.tokenStorageKey); // Loaded from Saved Storage
+        const savedToken = localStorage.getItem(this.tokenStorageKey); // Loaded from Saved Storage
         if (savedToken !== null) {
           // New AuthUser Based on Token
           if (!this.jwtHelper.isTokenExpired(savedToken)) {
@@ -51,6 +51,11 @@ export class UserAuthorisationService {
         }
       }
     });
+  }
+
+  public isAuthenticated(): boolean{
+    const token =  this.getToken();
+    return !this.jwtHelper.isTokenExpired(token);
   }
 
   public setToken(token: any) {
@@ -68,14 +73,13 @@ export class UserAuthorisationService {
       localStorage.setItem(this.tokenStorageKey, token);
     }
 
-    let roles = tokenDetails['role'] as Array<string>;
+    const roles = tokenDetails['role'] as Array<string>;
     if (roles) {
       roles.forEach(role => this.currentUser.roles.push(role));
     }
 
     this.appSettingsService.authToken = token;
-    this.isAuthenticated = true;
-    this.authenticatedSubject.next(this.isAuthenticated);
+    this.authenticatedSubject.next(this.isAuthenticated());
 
     this.spinnerService.hideSpinner();
   }
@@ -152,7 +156,6 @@ export class UserAuthorisationService {
   }
 
   public logoff(): void {
-    this.isAuthenticated = false;
     if (this.appSettingsService.authSaveinLocalStorage) {
       // Remove token from Local Storage
       localStorage.removeItem(this.tokenStorageKey);
@@ -160,7 +163,7 @@ export class UserAuthorisationService {
     this.appSettingsService.authToken = null;
 
     // Tell the world
-    this.authenticatedSubject.next(this.isAuthenticated);
+    this.authenticatedSubject.next(this.isAuthenticated());
   }
 
   private tokenExpired() {}

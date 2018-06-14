@@ -58,6 +58,7 @@ import { ProfilePageComponent } from './pages/profile/profilePage.component';
 // Services
 import { NotificationReceiverService } from './services/notificationReceiver/notificationReceiver.service';
 import { TokenInterceptor } from './interceptors/token.interceptor';
+import { AuthoriseRoleGuard } from './routeGuards/authoriseRoleGuard';
 import { Button } from 'protractor';
 
 export function jwtOptionsFactory(appSettings: AppSettingsService) {
@@ -130,6 +131,7 @@ export function jwtOptionsFactory(appSettings: AppSettingsService) {
         { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true},
         ActionService,
         AppSettingsService,
+        AuthoriseRoleGuard,
         UserAuthorisationService,
         BroadcastService,
         CacheService,

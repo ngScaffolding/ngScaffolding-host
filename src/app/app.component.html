@@ -11,7 +11,7 @@
 
         <app-topbar></app-topbar>
 
-        <div [hidden]="!userAuthService.isAuthenticated" class="layout-menu" [ngClass]="{'layout-menu-dark':darkMenu}" (click)="onMenuClick($event)">
+        <div [hidden]="!userAuthService.isAuthenticated()" class="layout-menu" [ngClass]="{'layout-menu-dark':darkMenu}" (click)="onMenuClick($event)">
             <p-scrollPanel #scrollPanel [style]="{height: '100%'}">
                 <app-inline-profile *ngIf="profileMode=='inline'&&!isHorizontal()"></app-inline-profile>
                 <app-menu [reset]="resetMenu"></app-menu>

@@ -149,7 +149,7 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
         enabled: true
       },
       swap: false,
-      pushItems: true,
+      pushItems: false,
       disablePushOnDrag: false,
       disablePushOnResize: false,
       pushDirections: { north: true, east: true, south: true, west: true },

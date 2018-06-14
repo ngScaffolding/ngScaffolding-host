@@ -26,7 +26,6 @@ import { ButtonColorPipe } from './pipes/index';
 import { FillHeightDirective } from './directives/fill-height.directive';
 
 export * from './services/index';
-export * from './routeGuards/index';
 export * from './models/index';
 export * from './pipes/index';
 

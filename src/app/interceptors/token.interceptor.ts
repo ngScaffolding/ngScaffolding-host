@@ -1,12 +1,22 @@
 import { Injectable, Injector } from '@angular/core';
-import { HttpRequest, HttpHandler, HttpErrorResponse, HttpEvent, HttpInterceptor, HttpResponse } from '@angular/common/http';
-import { UserAuthorisationService, LoggingService } from '../../modules/core/coreModule';
+import {
+  HttpRequest,
+  HttpHandler,
+  HttpErrorResponse,
+  HttpEvent,
+  HttpInterceptor,
+  HttpResponse
+} from '@angular/common/http';
+import {
+  UserAuthorisationService,
+  LoggingService
+} from '../../modules/core/coreModule';
 import { Observable } from 'rxjs/Observable';
 import { finalize, tap } from 'rxjs/operators';
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
-  constructor(private injector: Injector, private logger: LoggingService) {}
+  constructor(private injector: Injector, private logger: LoggingService, private authService: UserAuthorisationService) {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler) {
     const started = Date.now();
@@ -20,31 +30,43 @@ export class TokenInterceptor implements HttpInterceptor {
       }
     });
 
-    return next.handle(request)
-    .pipe(
+    return next.handle(request).pipe(
       tap(
         // Succeeds when there is a response; ignore other events
-        event => ok = event instanceof HttpResponse ? 'succeeded' : '',
+        event => {
+          ok = event instanceof HttpResponse ? 'succeeded' : '';
+        },
         // Operation failed; error is an HttpErrorResponse
-        error => ok = 'failed'
+        error => {
+          ok = 'failed';
+          if (error instanceof HttpErrorResponse)
+            {
+                if (error.status === 401)
+                {
+                    return;
+                }
+            }
+        }
       ),
       // Log when response observable either completes or errors
       finalize(() => {
         const elapsed = Date.now() - started;
-        const msg = `${request.method} "${request.urlWithParams}" ${ok} in ${elapsed} ms.`;
+        const msg = `${request.method} "${
+          request.urlWithParams
+        }" ${ok} in ${elapsed} ms.`;
         this.logger.info(msg);
       })
     );
 
-  //     event => {
-  //       this.logger.info(`Returned Data ${JSON.stringify(request.body)}`, 'HttpInterceptor');
-  //     },
-  //     error => {
-  //     if (error instanceof HttpErrorResponse && error.status === 401) {
-  //         // handle 401 errors
-  //       this.logger.info(`Returned 401 Error`, 'HttpInterceptor');
-  //         auth.logoff();
-  //     }
-  // });
+    //     event => {
+    //       this.logger.info(`Returned Data ${JSON.stringify(request.body)}`, 'HttpInterceptor');
+    //     },
+    //     error => {
+    //     if (error instanceof HttpErrorResponse && error.status === 401) {
+    //         // handle 401 errors
+    //       this.logger.info(`Returned 401 Error`, 'HttpInterceptor');
+    //         auth.logoff();
+    //     }
+    // });
   }
 }
