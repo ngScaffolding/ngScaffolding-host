@@ -24,10 +24,12 @@ import { ButtonColorPipe } from './pipes/index';
 
 // Directives
 import { FillHeightDirective } from './directives/fill-height.directive';
+import { AuthoriseRoleGuard } from './routeGuards/authoriseRoleGuard';
 
 export * from './services/index';
 export * from './models/index';
 export * from './pipes/index';
+export * from './routeGuards/authoriseRoleGuard';
 
 // Interfaces
 
@@ -61,7 +63,8 @@ export class CoreModule {
         RolesService,
         UserPreferencesService,
         SpinnerService,
-        VersionsService
+        VersionsService,
+        AuthoriseRoleGuard
       ]
     };
   }

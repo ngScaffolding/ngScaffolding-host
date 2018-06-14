@@ -6,7 +6,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { AppSettings } from '@ngscaffolding/models';
 
-import { AppSettingsService, MenuService, LoggingService, VersionsService } from '../core/coreModule';
+import { AppSettingsService, MenuService, LoggingService, VersionsService, AuthoriseRoleGuard } from '../core/coreModule';
 
 import { InputBuilderModule } from '../inputbuilder/inputbuilderModule';
 
@@ -17,8 +17,8 @@ import { InputBuilderSimpleComponent } from './pages/inputBuilderSimple/inputBui
 export * from './pages/inputBuilderSimple/inputBuilderSimple.component';
 
 const appRoutes: Routes = [
-  { path: 'inputbuildersimple', component: InputBuilderSimpleComponent },
-  { path: 'inputbuildersimpletest', component: InputBuilderSimpleComponent }
+  { path: 'inputbuildersimple', component: InputBuilderSimpleComponent, canActivate: [AuthoriseRoleGuard]  },
+  { path: 'inputbuildersimpletest', component: InputBuilderSimpleComponent, canActivate: [AuthoriseRoleGuard]  }
 ];
 
 @NgModule({

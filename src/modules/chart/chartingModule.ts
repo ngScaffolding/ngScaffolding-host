@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
 
 import { RouterModule, Routes } from '@angular/router';
 
-import { CoreModule, MenuService, LoggingService, VersionsService } from '../core/coreModule';
+import { CoreModule, MenuService, LoggingService, VersionsService, AuthoriseRoleGuard } from '../core/coreModule';
 import { ButtonColorPipe } from '../core/coreModule';
 
 import { InputBuilderModule } from '../inputbuilder/inputbuilderModule';
@@ -15,12 +15,13 @@ import { ChartHolderComponent } from './components/chartHolder/chartHolder.compo
 
 import { ChartModule, HIGHCHARTS_MODULES } from 'angular-highcharts';
 
+
 // Services
 import { ChartDataService } from './services/chartData.service';
 
 const appRoutes: Routes = [
-  { path: 'chart/:id', component: ChartHolderComponent },
-  { path: 'chart', component: ChartHolderComponent }
+  { path: 'chart/:id', component: ChartHolderComponent, canActivate: [AuthoriseRoleGuard]  },
+  { path: 'chart', component: ChartHolderComponent, canActivate: [AuthoriseRoleGuard]  }
 ];
 
 @NgModule({

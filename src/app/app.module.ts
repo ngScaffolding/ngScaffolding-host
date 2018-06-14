@@ -33,7 +33,7 @@ import { APP_COMPONENTS } from './app.component.list';
 import { MessageService } from 'primeng/components/common/messageservice';
 import { ActionService, AppSettingsService,  UserAuthorisationService,  BroadcastService,  CacheService,
   CoreErrorHandlerService,  LoggingService,  NotificationService,  MenuService,
-  DataSourceService , ReferenceValuesService,
+  DataSourceService , ReferenceValuesService, AuthoriseRoleGuard
   SpinnerService,  RolesService,  UserPreferencesService,  VersionsService, CoreModule} from '../modules/core/coreModule';
 
   // Externalise These Modules
@@ -58,7 +58,6 @@ import { ProfilePageComponent } from './pages/profile/profilePage.component';
 // Services
 import { NotificationReceiverService } from './services/notificationReceiver/notificationReceiver.service';
 import { TokenInterceptor } from './interceptors/token.interceptor';
-import { AuthoriseRoleGuard } from './routeGuards/authoriseRoleGuard';
 import { Button } from 'protractor';
 
 export function jwtOptionsFactory(appSettings: AppSettingsService) {

@@ -1,5 +1,5 @@
 import { CanActivate, Router } from '@angular/router';
-import { UserAuthorisationService } from '../../modules/core/coreModule';
+import { UserAuthorisationService } from '../services/userAuthorisation/userAuthorisation.service';
 import { Injectable } from '@angular/core';
 
 @Injectable()

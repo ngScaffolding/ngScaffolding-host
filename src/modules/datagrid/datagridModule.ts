@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 
 import { RouterModule, Routes } from '@angular/router';
 
-import { CoreModule, MenuService, LoggingService, VersionsService } from '../core/coreModule';
+import { CoreModule, MenuService, LoggingService, VersionsService, AuthoriseRoleGuard } from '../core/coreModule';
 import { ButtonColorPipe } from '../core/coreModule';
 
 import { InputBuilderModule } from '../inputbuilder/inputbuilderModule';
@@ -23,8 +23,8 @@ import { DataGridComponent } from './components/dataGrid/dataGrid.component';
 import { DataGridHolderComponent } from './components/dataGridHolder/dataGridHolder.component';
 
 const appRoutes: Routes = [
-  { path: 'datagrid/:id', component: DataGridHolderComponent },
-  { path: 'datagrid', component: DataGridHolderComponent }
+  { path: 'datagrid/:id', component: DataGridHolderComponent, canActivate: [AuthoriseRoleGuard]  },
+  { path: 'datagrid', component: DataGridHolderComponent, canActivate: [AuthoriseRoleGuard]  }
 ];
 
 @NgModule({

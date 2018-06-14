@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
 
 import { RouterModule, Routes } from '@angular/router';
 
-import { CoreModule, MenuService, LoggingService, VersionsService } from '../core/coreModule';
+import { CoreModule, MenuService, LoggingService, VersionsService, AuthoriseRoleGuard } from '../core/coreModule';
 import { ButtonColorPipe } from '../core/coreModule';
 
 import { InputBuilderModule } from '../inputbuilder/inputbuilderModule';
@@ -22,8 +22,8 @@ import { CardModule } from 'primeng/card';
 // Services
 
 const appRoutes: Routes = [
-  { path: 'dashboard/:id', component: DashboardComponent },
-  { path: 'dashboard', component: DashboardComponent }
+  { path: 'dashboard/:id', component: DashboardComponent, canActivate: [AuthoriseRoleGuard]  },
+  { path: 'dashboard', component: DashboardComponent, canActivate: [AuthoriseRoleGuard]  }
 ];
 
 @NgModule({
