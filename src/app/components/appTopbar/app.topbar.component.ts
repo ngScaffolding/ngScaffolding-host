@@ -17,9 +17,6 @@ export class AppTopBarComponent {
     private referenceValuesService: ReferenceValuesService,
     public userAuthService: UserAuthorisationService
   ) {
-    // this.referenceValuesService.getValue('title', null).subscribe(v => {
-    //   this.title = v;
-    // });
   }
 
   public logoff(): void {
