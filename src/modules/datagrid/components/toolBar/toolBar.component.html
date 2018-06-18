@@ -1,4 +1,4 @@
-<!-- <div class="ui-g" style="float: right;">
+<div *ngIf="!collapsedToolbar" class="ui-g" style="float: right;">
   <button pButton class="ui-button-success toolbarButton" *ngIf="!hideFilters" type="button" icon="ui-icon-filter" tooltipPosition="bottom"
     (click)="this.filtersClicked.emit(null)" pTooltip="Show/Hide Filters" [label]="showLabel('Filters')">
   </button>
@@ -14,9 +14,9 @@
     (click)="this.resetViewClicked.emit(null)" pTooltip="Reset View Configuration" [label]="showLabel('Reset View')"></button>
   <button pButton class="ui-button-success toolbarButton" *ngIf="!hideShareView" type="button" icon="ui-icon-share" tooltipPosition="bottom"
     (click)="this.shareViewClicked.emit(null)" pTooltip="Share View" [label]="showLabel('Share View')"></button>
-</div> -->
+</div>
 
-<div class="expand-toolbar">
+<div class="expand-toolbar" *ngIf="collapsedToolbar">
 
   <span [hidden]="!expanded">
     <button pButton class="ui-button-success toolbarButton" *ngIf="!hideFilters" type="button" icon="ui-icon-filter" tooltipPosition="bottom"

@@ -16,6 +16,7 @@ export class ToolBarComponent implements OnInit {
   @Input() hideShareView: boolean;
 
   @Input() hideLabels: boolean;
+  @Input() collapsedToolbar: boolean;
 
   @Output() filtersClicked = new EventEmitter<any>();
   @Output() refreshClicked = new EventEmitter<any>();
