@@ -1,4 +1,12 @@
 @import '../../../assets/sass/_variables.scss';
-.profile-icon{
-    color: $textSecondaryColor !important;
+.profile-icon {
+  color: $textSecondaryColor !important;
+}
+
+.application-title {
+  color: $topbarButtonColor;
+  position: relative;
+  top: 12px;
+  font-weight: 100;
+  font-size: 35px;
 }
