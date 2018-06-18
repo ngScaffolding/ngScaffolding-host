@@ -25,7 +25,13 @@ export class ToolBarComponent implements OnInit {
   @Output() resetViewClicked = new EventEmitter<any>();
   @Output() shareViewClicked = new EventEmitter<any>();
 
+  public expanded = false;
+
   constructor() {}
+
+  public toggleMenu(){
+    this.expanded = !this.expanded;
+  }
 
   showLabel(label: string) {
     if (!this.hideLabels) {

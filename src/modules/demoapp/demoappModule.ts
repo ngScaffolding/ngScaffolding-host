@@ -66,6 +66,7 @@ export class DemoAppModule {
     settings.showToastMessages = true;
 
     settings.showProfileSetting = true;
+    settings.showProfilePicture = true;
 
     settings.authClientId = 'ngscaffolding_client';
     settings.authClientSecret = 'secret';

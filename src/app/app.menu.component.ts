@@ -10,8 +10,15 @@ import { MenuService } from '../modules/core/coreModule';
 
 @Component({
     selector: 'app-menu',
+    styleUrls: ['./app.menu.scss'],
     template: `
         <ul app-submenu [item]="menuItems" root="true" class="ultima-menu ultima-main-menu clearfix" [reset]="reset" visible="true"></ul>
+
+        <div class="menu-spinner-continer" *ngIf="isLoading" >
+          <p-progressSpinner class="spinner-spinner"></p-progressSpinner>
+          <br/>
+          <p class="spinner-message">Menu Loading...</p>
+        </div>
     `
 })
 export class AppMenuComponent implements OnInit {
@@ -21,7 +28,8 @@ export class AppMenuComponent implements OnInit {
     model: any[];
 
 // ngScaffolding
-menuItems: Array<MenuItem>;
+    menuItems: Array<MenuItem>;
+    public isLoading = true;
 
     constructor( @Inject(forwardRef(() => AppComponent)) public app: AppComponent,
         private menuService: MenuService) { }
@@ -32,8 +40,11 @@ menuItems: Array<MenuItem>;
 
     ngOnInit() {
 // ngScaffolding
-    this.menuService.menuSubject.subscribe(items => {
-      this.menuItems = items;});
+      this.menuService.menuSubject.subscribe(items => {
+        this.menuItems = items;
+        console.log('Menu Loaded');
+        this.isLoading = false;
+      });
 // ngScaffolding
 
         this.model = [
