@@ -33,7 +33,7 @@ import { APP_COMPONENTS } from './app.component.list';
 import { MessageService } from 'primeng/components/common/messageservice';
 import { ActionService, AppSettingsService,  UserAuthorisationService,  BroadcastService,  CacheService,
   CoreErrorHandlerService,  LoggingService,  NotificationService,  MenuService,
-  DataSourceService , ReferenceValuesService, AuthoriseRoleGuard
+  DataSourceService , ReferenceValuesService, AuthoriseRoleGuard,
   SpinnerService,  RolesService,  UserPreferencesService,  VersionsService, CoreModule} from '../modules/core/coreModule';
 
   // Externalise These Modules
