@@ -1,0 +1,17 @@
+<p-dialog title="Column Picker" [(visible)]="isShown" [contentStyle]="{'overflow':'visible', 'max-height':'400px'}">
+  <p-header>
+    {{ inputBuilderDefinition?.title }}
+  </p-header>
+  <div class="ui-fluid">
+    <div class="card ui-g-12">
+      <div class="ui-g-12">
+        <!-- Checkbox -->
+        <span *ngFor="let column of columns">
+          <p-checkbox binary="true" [label]="column.HeaderName"
+          [id]="column.Field" [formControl]="form.controls[column.Field]">
+          </p-checkbox>
+        </span>
+      </div>
+    </div>
+  </div>
+</p-dialog>
