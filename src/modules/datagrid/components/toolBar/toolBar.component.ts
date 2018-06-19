@@ -1,11 +1,32 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { trigger, state, style, animate, transition } from '@angular/animations';
 
 @Component({
   selector: 'app-grid-toolbar',
   templateUrl: './toolBar.component.html',
-  styleUrls: ['./toolBar.component.scss']
+  styleUrls: ['./toolBar.component.scss'],
+  animations: [
+    trigger('toolBarExpandedState', [
+      state(
+        'false',
+        style({
+          width: '0px',
+          opacity: '0',
+          overflow: 'hidden'
+        })
+      ),
+      state(
+        'true',
+        style({
+          width: '*',
+          opacity: '1'
+        })
+      ),
+      transition('false => true', animate('200ms ease-in')),
+      transition('true => false', animate('200ms ease-out'))
+    ])
+  ]
 })
-
 export class ToolBarComponent implements OnInit {
   @Input() hideFilters: boolean;
   @Input() hideRefresh: boolean;
@@ -26,12 +47,16 @@ export class ToolBarComponent implements OnInit {
   @Output() resetViewClicked = new EventEmitter<any>();
   @Output() shareViewClicked = new EventEmitter<any>();
 
-  public expanded = false;
+  public expanded = 'false';
 
   constructor() {}
 
-  public toggleMenu(){
-    this.expanded = !this.expanded;
+  public toggleMenu() {
+    this.expanded = this.expanded === 'true' ? 'false' : 'true';
+  }
+
+  public buttonClicked() {
+    this.expanded = 'false';
   }
 
   showLabel(label: string) {
