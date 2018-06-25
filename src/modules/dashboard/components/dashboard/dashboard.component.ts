@@ -65,6 +65,8 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
       widget['unitWidth'] = 0;
       widget['unitUpdate'] = 0;
 
+      widget['isWidget'] = true;
+
       // Prepare our details
       if(widget.gridViewDetail)      {
         widget['itemDetail'] = widget.gridViewDetail;

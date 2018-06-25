@@ -1,13 +1,15 @@
 <p-card id="gridContainer">
   <p-header>
     <div class="ui-g">
-      <div class="ui-g-4">
-        <h2>{{itemDetail.title}}</h2>
-      </div>
       <div class="ui-g-8">
-        <grid-toolbar (refreshClicked)="loadInitialData()" (filtersClicked)="showHideFilters()" (columnsClicked)="showHideColumns()"
+        <span class="grid-title">{{itemDetail.title}}</span>
+      </div>
+      <div class="ui-g-4">
+        <app-grid-toolbar
+          [collapsedToolbar]="isWidget"
+        (refreshClicked)="loadInitialData()" (filtersClicked)="showHideFilters()" (columnsClicked)="showHideColumns()"
           (exportClicked)="exportData()" (saveViewClicked)="saveView()" (resetViewClicked)="resetView()" (shareViewClicked)="shareView()"
-          [hideLabels]='hideLabels'></grid-toolbar>
+          [hideLabels]='hideLabels'></app-grid-toolbar>
       </div>
     </div>
   </p-header>

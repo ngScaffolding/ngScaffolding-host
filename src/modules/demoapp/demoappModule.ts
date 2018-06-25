@@ -54,6 +54,7 @@ export class DemoAppModule {
 
     const settings: AppSettings = new AppSettings();
     settings.title = 'ngScaffolding Demo';
+    settings.iconUrl = '';
     settings.apiHome = 'http://localhost:50000';
     settings.apiAuth = 'http://localhost:50020';
     settings.errorLogConsole = true;
@@ -66,6 +67,7 @@ export class DemoAppModule {
     settings.showToastMessages = true;
 
     settings.showProfileSetting = true;
+    settings.showProfilePicture = true;
 
     settings.authClientId = 'ngscaffolding_client';
     settings.authClientSecret = 'secret';

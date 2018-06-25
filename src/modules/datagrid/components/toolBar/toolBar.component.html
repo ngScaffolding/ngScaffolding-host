@@ -1,6 +1,4 @@
-<!-- <button class="menuContainer" type="button" icon="ui-icon-menu" pButton></button> -->
-
-<div class="ui-g" style="float: right;">
+<div *ngIf="!collapsedToolbar" class="ui-g" style="float: right;">
   <button pButton class="ui-button-success toolbarButton" *ngIf="!hideFilters" type="button" icon="ui-icon-filter" tooltipPosition="bottom"
     (click)="this.filtersClicked.emit(null)" pTooltip="Show/Hide Filters" [label]="showLabel('Filters')">
   </button>
@@ -16,4 +14,29 @@
     (click)="this.resetViewClicked.emit(null)" pTooltip="Reset View Configuration" [label]="showLabel('Reset View')"></button>
   <button pButton class="ui-button-success toolbarButton" *ngIf="!hideShareView" type="button" icon="ui-icon-share" tooltipPosition="bottom"
     (click)="this.shareViewClicked.emit(null)" pTooltip="Share View" [label]="showLabel('Share View')"></button>
+</div>
+
+ <div class="expand-toolbar" *ngIf="collapsedToolbar">
+
+  <span  [@toolBarExpandedState]="expanded">
+    <button pButton class="ui-button-success toolbarButton" *ngIf="!hideFilters" type="button" icon="ui-icon-filter" tooltipPosition="bottom"
+      (click)="this.filtersClicked.emit(null)" pTooltip="Show/Hide Filters" [label]="showLabel('Filters')">
+    </button>
+    <button pButton class="ui-button-info toolbarButton" *ngIf="!hideRefresh" type="button" icon="ui-icon-refresh" tooltipPosition="bottom"
+      (click)="buttonClicked(); this.refreshClicked.emit(null);" pTooltip="Refresh Data" [label]="showLabel('Refresh')"></button>
+    <button pButton class="ui-button-warning toolbarButton" *ngIf="!hideColumns" type="button" icon="ui-icon-view-compact" tooltipPosition="bottom"
+      (click)="buttonClicked(); this.columnsClicked.emit(null);" pTooltip="Configure Columns" [label]="showLabel('Columns')"></button>
+    <button pButton class="ui-button-success toolbarButton" *ngIf="!hideExport" type="button" icon="ui-icon-cloud-download" tooltipPosition="bottom"
+      (click)="buttonClicked(); this.exportClicked.emit(null);" pTooltip="Export/Print Data" [label]="showLabel('Export')"></button>
+    <button pButton class="ui-button-info toolbarButton" *ngIf="!hideSaveView" type="button" icon="ui-icon-save" tooltipPosition="bottom"
+      (click)="buttonClicked(); this.saveViewClicked.emit(null);" pTooltip="Save View Configuration" [label]="showLabel('Save View')"></button>
+    <button pButton class="ui-button-warning toolbarButton" *ngIf="!hideResetView" type="button" icon="ui-icon-restore" tooltipPosition="bottom"
+      (click)="buttonClicked(); this.resetViewClicked.emit(null);" pTooltip="Reset View Configuration" [label]="showLabel('Reset View')"></button>
+    <button pButton class="ui-button-success toolbarButton" *ngIf="!hideShareView" type="button" icon="ui-icon-share" tooltipPosition="bottom"
+      (click)="buttonClicked(); this.shareViewClicked.emit(null);" pTooltip="Share View" [label]="showLabel('Share View')"></button>
+
+  </span>
+  <button pButton class="ui-button-success toolbarButton mainButton" type="button" icon="ui-icon-menu" tooltipPosition="bottom"
+    (click)="this.toggleMenu()" pTooltip="Show/Hide Toolbar">
+  </button>
 </div>
