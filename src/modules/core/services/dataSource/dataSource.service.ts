@@ -3,12 +3,9 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { AppSettingsService } from '../appSettings/appSettings.service';
-import { ReferenceValue } from '@ngscaffolding/models';
+import { ReferenceValue, DataSourceRequest, DataSetResults } from '@ngscaffolding/models';
 import { LoggingService } from '../logging/logging.service';
 import { CacheService } from '../cache/cache.service';
-
-import { DataSourceRequest } from './dataSource.request.model';
-import { DataSetResults } from '../../models/datasetResults.model';
 
 @Injectable()
 export class DataSourceService {

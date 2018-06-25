@@ -17,7 +17,8 @@ import { GridOptions, ColDef, ColDefUtil } from 'ag-grid/main';
 import {
   Action,
   GridViewDetail,
-  InputBuilderDefinition
+  InputBuilderDefinition,
+  DataSetResults
 } from '@ngscaffolding/models';
 
 import { ConfirmationService } from 'primeng/primeng';
@@ -35,7 +36,6 @@ import {
 } from '../../../core/coreModule';
 
 import { FiltersHolderComponent } from '../filtersHolder/filtersHolder.component';
-import { DataSetResults } from '../../../core/models/datasetResults.model';
 import { MenuItem } from 'primeng/primeng';
 import { InputBuilderPopupComponent } from '../../../inputbuilder/inputbuilderModule';
 import { ActionsHolderComponent } from '../actionsHolder/actionsHolder.component';

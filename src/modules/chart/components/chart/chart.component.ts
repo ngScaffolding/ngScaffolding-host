@@ -14,7 +14,7 @@ import { ChartDataService } from '../../services/chartData.service';
 import { DataSourceService, LoggingService } from '../../../core/services';
 import { GridsterItem } from 'angular-gridster2';
 import { ChartDetailModel } from '../../models/chartDetail.model';
-import { DataSourceRequest } from '../../../core/services/dataSource/dataSource.request.model';
+import { DataSourceRequest } from '@ngscaffolding/models';
 
 @Component({
   selector: 'app-chart',
