@@ -5,7 +5,7 @@ import {
   EventEmitter,
   OnInit
 } from '@angular/core';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs';
 import { InputBuilderDefinition } from '@ngscaffolding/models';
 
 @Component({

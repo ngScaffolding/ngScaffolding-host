@@ -7,7 +7,7 @@ import {
   OnChanges,
   SimpleChange
 } from '@angular/core';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { InputDetail, InputTypes } from '@ngscaffolding/models';
 import {
