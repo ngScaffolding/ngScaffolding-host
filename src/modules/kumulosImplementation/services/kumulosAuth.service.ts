@@ -1,4 +1,4 @@
-import { IUserAuthorisationService } from '../../core/services/userAuthorisation/IUserAuthorisation';
+import { UserAuthorisationBase } from '../../core/coreModule';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
@@ -15,7 +15,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { SpinnerService } from '../../core/services/spinnerService/spinner.service';
 
 @Injectable()
-export class KumulosAuthService implements IUserAuthorisationService {
+export class KumulosAuthService implements UserAuthorisationBase {
   private readonly tokenStorageKey = 'USER_TOKEN';
 
   public authenticatedSubject: BehaviorSubject<boolean>;
@@ -54,7 +54,7 @@ export class KumulosAuthService implements IUserAuthorisationService {
     });
   }
 
-  public isAuthenticated(): boolean{
+  public isAuthenticated(): boolean {
     const token =  this.getToken();
     return !this.jwtHelper.isTokenExpired(token);
   }
