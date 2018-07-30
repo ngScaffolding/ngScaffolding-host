@@ -2,6 +2,7 @@
 export * from './appSettings/appSettings.service';
 export * from './action/action.service';
 export * from './userAuthorisation/userAuthorisation.service';
+export * from './userAuthorisation/UserAuthorisationBase';
 export * from './broadcast/broadcast.service';
 export * from './cache/cache.service';
 export * from './coreErrorHandler/coreErrorHandler.service';

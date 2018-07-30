@@ -31,7 +31,8 @@ import { PRIME_COMPONENTS } from './app.prime.components';
 import { ConfirmationService } from 'primeng/primeng';
 import { APP_COMPONENTS } from './app.component.list';
 import { MessageService } from 'primeng/components/common/messageservice';
-import { ActionService, AppSettingsService,  UserAuthorisationService,  BroadcastService,  CacheService,
+import { ActionService, AppSettingsService,
+  UserAuthorisationBase, UserAuthorisationService,  BroadcastService,  CacheService,
   CoreErrorHandlerService,  LoggingService,  NotificationService,  MenuService,
   DataSourceService , ReferenceValuesService, AuthoriseRoleGuard,
   SpinnerService,  RolesService,  UserPreferencesService,  VersionsService, CoreModule} from '../modules/core/coreModule';
@@ -131,7 +132,7 @@ export function jwtOptionsFactory(appSettings: AppSettingsService) {
         ActionService,
         AppSettingsService,
         AuthoriseRoleGuard,
-        UserAuthorisationService,
+        { provide: UserAuthorisationBase, useClass: UserAuthorisationService},
         BroadcastService,
         CacheService,
         LoggingService,

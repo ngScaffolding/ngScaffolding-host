@@ -1,4 +1,4 @@
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 
@@ -12,10 +12,10 @@ import { NotificationService } from '../notification/notification.service';
 
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { SpinnerService } from '../spinnerService/spinner.service';
-import { IUserAuthorisationService } from './IUserAuthorisation';
+import { UserAuthorisationBase } from './UserAuthorisationBase';
 
 @Injectable()
-export class UserAuthorisationService implements IUserAuthorisationService {
+export class UserAuthorisationService implements UserAuthorisationBase {
   private readonly tokenStorageKey = 'USER_TOKEN';
 
   public authenticatedSubject: BehaviorSubject<boolean>;
@@ -54,7 +54,7 @@ export class UserAuthorisationService implements IUserAuthorisationService {
     });
   }
 
-  public isAuthenticated(): boolean{
+  public isAuthenticated(): boolean {
     const token =  this.getToken();
     return !this.jwtHelper.isTokenExpired(token);
   }
