@@ -21,7 +21,8 @@ const KumulosResponseCode = {
 @Injectable()
 export class KumulosDataService {
     private readonly apiKey = '81a0d051-0d32-4d26-ad17-e45b6e9de6cc';
-    private readonly encodedPassword = 'Basic ODFhMGQwNTEtMGQzMi00ZDI2LWFkMTctZTQ1YjZlOWRlNmNjOmk1NlZyVnRoRkJvajhINkRzeG5Qc2o0R05Ia1hIZDZsVFJCSQ==';
+    private readonly encodedPassword =
+      'Basic ODFhMGQwNTEtMGQzMi00ZDI2LWFkMTctZTQ1YjZlOWRlNmNjOmk1NlZyVnRoRkJvajhINkRzeG5Qc2o0R05Ia1hIZDZsVFJCSQ==';
 
     private apiHome: string;
 
@@ -51,7 +52,8 @@ export class KumulosDataService {
 
             this.http
                 .post<KumulosResponse>(`${this.apiHome}/${name}.json`, paramString, {
-                    headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded').set('Authorization', this.encodedPassword)
+                    headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
+                      .set('Authorization', this.encodedPassword)
                 })
                 .subscribe(
                     values => {
@@ -62,7 +64,8 @@ export class KumulosDataService {
                             observer.complete();
                         } else {
                             // Something gone wrong
-                            this.log.error(`Kumulos call Failed: ${kumulosResp.responseMessage}`, 'KumulosDataService', JSON.stringify(kumulosResp));
+                            this.log.error(`Kumulos call Failed: ${kumulosResp.responseMessage}`,
+                             'KumulosDataService');
                             observer.error(kumulosResp.responseMessage);
                             observer.complete();
                         }
