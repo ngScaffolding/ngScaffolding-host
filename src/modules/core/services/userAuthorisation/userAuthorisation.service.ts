@@ -12,9 +12,10 @@ import { NotificationService } from '../notification/notification.service';
 
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { SpinnerService } from '../spinnerService/spinner.service';
+import { IUserAuthorisationService } from './IUserAuthorisation';
 
 @Injectable()
-export class UserAuthorisationService {
+export class UserAuthorisationService implements IUserAuthorisationService {
   private readonly tokenStorageKey = 'USER_TOKEN';
 
   public authenticatedSubject: BehaviorSubject<boolean>;
