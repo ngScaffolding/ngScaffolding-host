@@ -6,7 +6,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 
 import { ErrorModel } from '../../models/error.model';
-import { UserAuthorisationService } from '../userAuthorisation/userAuthorisation.service';
+import { UserAuthorisationBase } from '../userAuthorisation/UserAuthorisationBase';
 import { AppSettingsService } from '../appSettings/appSettings.service';
 import { NotificationService } from '../notification/notification.service';
 
@@ -14,7 +14,7 @@ import { NotificationService } from '../notification/notification.service';
 export class CoreErrorHandlerService extends ErrorHandler {
     constructor(private appSettingsService: AppSettingsService,
         private notificationService: NotificationService,
-        private authService: UserAuthorisationService,
+        private authService: UserAuthorisationBase,
         private http: HttpClient) {
         super();
     }
@@ -34,7 +34,7 @@ export class CoreErrorHandlerService extends ErrorHandler {
             console.error(error.message);
         }
         if (this.appSettingsService.errorLogServer) {
-            let errorModel = new ErrorModel(error);
+            const errorModel = new ErrorModel(error);
 
             if (source) {
                 errorModel.source = source;

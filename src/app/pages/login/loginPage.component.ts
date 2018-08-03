@@ -4,7 +4,7 @@ import {
   AppSettingsService,
   NotificationService,
   SpinnerService,
-  UserAuthorisationService
+  UserAuthorisationBase
 } from '../../../modules/core/coreModule';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
@@ -33,7 +33,7 @@ export class LoginPageComponent implements OnInit {
     private notificationService: NotificationService,
     private route: ActivatedRoute,
     private router: Router,
-    private userAuthService: UserAuthorisationService
+    private userAuthService: UserAuthorisationBase
   ) {}
 
   ngOnInit() {

@@ -8,7 +8,7 @@ import {
   HttpResponse
 } from '@angular/common/http';
 import {
-  UserAuthorisationService,
+  UserAuthorisationBase,
   LoggingService
 } from '../../modules/core/coreModule';
 import { Observable } from 'rxjs/Observable';
@@ -16,13 +16,13 @@ import { finalize, tap } from 'rxjs/operators';
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
-  constructor(private injector: Injector, private logger: LoggingService, private authService: UserAuthorisationService) {}
+  constructor(private injector: Injector, private logger: LoggingService, private authService: UserAuthorisationBase) {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler) {
     const started = Date.now();
     let ok: string;
 
-    const auth = this.injector.get(UserAuthorisationService);
+    const auth = this.injector.get(UserAuthorisationBase);
 
     request = request.clone({
       setHeaders: {
@@ -39,10 +39,8 @@ export class TokenInterceptor implements HttpInterceptor {
         // Operation failed; error is an HttpErrorResponse
         error => {
           ok = 'failed';
-          if (error instanceof HttpErrorResponse)
-            {
-                if (error.status === 401)
-                {
+          if (error instanceof HttpErrorResponse) {
+                if (error.status === 401) {
                     return;
                 }
             }

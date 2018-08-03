@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { UserAuthorisationService } from '../userAuthorisation/userAuthorisation.service';
+import { UserAuthorisationBase } from '../userAuthorisation/UserAuthorisationBase';
 
 @Injectable()
 export class RolesService {
   private routeRoles = new Map<string, string[]>();
 
-  constructor(public userAuth: UserAuthorisationService) {}
+  constructor(public userAuth: UserAuthorisationBase) {}
 
   // Checks if the current user is in this role.
   public isInRole(role: string): boolean {

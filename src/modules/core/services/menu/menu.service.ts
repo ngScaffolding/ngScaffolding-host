@@ -8,7 +8,7 @@ import { LoggingService } from '../logging/logging.service';
 import { CoreMenuItem } from '../../models/coreMenuItem.model';
 import { MenuItem } from 'primeng/primeng';
 import { AppSettingsService } from '../appSettings/appSettings.service';
-import { UserAuthorisationService } from '../userAuthorisation/userAuthorisation.service';
+import { UserAuthorisationBase } from '../userAuthorisation/UserAuthorisationBase';
 
 @Injectable()
 export class MenuService {
@@ -25,7 +25,7 @@ export class MenuService {
   constructor(
     private http: HttpClient,
     private appSettings: AppSettingsService,
-    private authService: UserAuthorisationService,
+    private authService: UserAuthorisationBase,
     private log: LoggingService,
     public rolesService: RolesService
   ) {

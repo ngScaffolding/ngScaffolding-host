@@ -7,7 +7,7 @@ import { NgScaffoldingComponent } from './app.ngscaffolding.component';
 import { Title } from '@angular/platform-browser';
 import 'rxjs/add/operator/filter';
 import { LoggingService, AppSettingsService, SpinnerService } from '../modules/core/coreModule';
-import { UserAuthorisationService, UserPreferencesService } from '../modules/core/coreModule';
+import { UserAuthorisationBase, UserPreferencesService } from '../modules/core/coreModule';
 import { BroadcastService, BroadcastTypes, MenuService } from '../modules/core/coreModule';
 import { NotificationReceiverService } from './services/notificationReceiver/notificationReceiver.service';
 
@@ -74,7 +74,7 @@ export class AppComponent extends NgScaffoldingComponent
     public renderer: Renderer,
     public zone: NgZone,
     public logger: LoggingService,
-    public userAuthService: UserAuthorisationService,
+    public userAuthService: UserAuthorisationBase,
     public titleService: Title,
     public appSettingsService: AppSettingsService,
     public notificationReceiverService: NotificationReceiverService,
@@ -157,7 +157,7 @@ export class AppComponent extends NgScaffoldingComponent
       if (this.hasClass(element, 'ripplelink')) {
         element
           .querySelector('span')
-          .insertAdjacentHTML('afterend', "<span class='ink'></span>");
+          .insertAdjacentHTML('afterend', '<span class="ink"></span>');
       } else {
         element.appendChild(inkEl);
       }
