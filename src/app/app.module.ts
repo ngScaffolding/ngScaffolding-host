@@ -60,6 +60,7 @@ import { ProfilePageComponent } from './pages/profile/profilePage.component';
 import { NotificationReceiverService } from './services/notificationReceiver/notificationReceiver.service';
 import { TokenInterceptor } from './interceptors/token.interceptor';
 import { KumulosAuthService } from '../modules/kumulosImplementation/services/kumulosAuth.service';
+import { KumulosDataService } from '../modules/kumulosImplementation/services/kumulosData.service';
 
 export function jwtOptionsFactory(appSettings: AppSettingsService) {
   return {
@@ -128,11 +129,12 @@ export function jwtOptionsFactory(appSettings: AppSettingsService) {
         // ngScaffolding-core
         { provide: ErrorHandler, useClass: CoreErrorHandlerService },
         // HTTP Token Interceptor
-        { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true},
+        // { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true},
         ActionService,
         AppSettingsService,
         AuthoriseRoleGuard,
         { provide: UserAuthorisationBase, useClass: KumulosAuthService},
+        KumulosDataService,
         BroadcastService,
         CacheService,
         LoggingService,

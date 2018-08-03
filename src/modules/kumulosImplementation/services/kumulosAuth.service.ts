@@ -13,6 +13,7 @@ import { NotificationService } from '../../core/services/notification/notificati
 
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { SpinnerService } from '../../core/services/spinnerService/spinner.service';
+import { KumulosDataService } from './kumulosData.service';
 
 @Injectable()
 export class KumulosAuthService implements UserAuthorisationBase {
@@ -31,7 +32,9 @@ export class KumulosAuthService implements UserAuthorisationBase {
     private appSettingsService: AppSettingsService,
     private notificationService: NotificationService,
     private broadcastService: BroadcastService,
-    private jwtHelper: JwtHelperService
+    private jwtHelper: JwtHelperService,
+    // Kumulos bits
+    private kumulos: KumulosDataService
   ) {
     this.authenticatedSubject = new BehaviorSubject<boolean>(null);
 
@@ -55,7 +58,7 @@ export class KumulosAuthService implements UserAuthorisationBase {
   }
 
   public isAuthenticated(): boolean {
-    const token =  this.getToken();
+    const token = this.getToken();
     return !this.jwtHelper.isTokenExpired(token);
   }
 
@@ -90,70 +93,32 @@ export class KumulosAuthService implements UserAuthorisationBase {
   }
 
   private getUserDetails() {
-    this.http
-      .get<AuthUserResponse>(
-        this.appSettingsService.apiAuth + '/connect/userinfo',
-        {
-          headers: new HttpHeaders().set(
-            'Authorization',
-            'Bearer ' + this.appSettingsService.authToken
-          )
-        }
-      )
-      .subscribe(
-        authResponse => {
-          this.currentUser.email = authResponse.email;
-          this.currentUser.name = authResponse.name;
-          this.currentUser.roles = authResponse.role;
-          this.currentUser.userId = authResponse.sub;
-        },
-        err => {
-          if (err.status === 401) {
-            this.logoff();
-          }
-        }
-      );
+    const helper = new JwtHelperService();
+    const decodedToken = helper.decodeToken(this.getToken());
+
+    this.currentUser.roles = decodedToken['roles'];
+    this.currentUser.userId = decodedToken['sub'];
   }
 
   public logon(userName: string, password: string) {
-    let body = new HttpParams();
-    body = body
-      .append('username', userName)
-      .append('password', password)
-      .append('grant_type', 'password')
-      .append('client_id', this.appSettingsService.authClientId)
-      .append('client_secret', this.appSettingsService.authClientSecret)
-      .append(
-        'scope',
-        this.appSettingsService.authScope + ' offline_access openid'
-      );
+    this.kumulos.callFunction('loginUser', null, { email: userName, password: password }).subscribe(
+      result => {
+        this.setToken(result);
 
-    this.http
-      .post(this.appSettingsService.apiAuth + '/connect/token', body, {
-        headers: new HttpHeaders().set(
-          'Content-Type',
-          'application/x-www-form-urlencoded'
-        )
-      })
-      .subscribe(
-        response => {
-          this.setToken(response['access_token']);
-          if (response['refresh_token']) {
-            this.refreshToken = response['refresh_token'];
-          }
+        this.currentUser.email = userName;
 
-          // Get Additional Details
-          this.getUserDetails();
-        },
-        err => {
-          this.notificationService.showMessage({
-            summary: 'Logon Failed',
-            detail: 'Check you User Name and Password and try again',
-            severity: 'error'
-          });
-          this.spinnerService.hideSpinner();
-        }
-      );
+        // Get Additional Details
+        this.getUserDetails();
+      },
+      err => {
+        this.notificationService.showMessage({
+          summary: 'Logon Failed',
+          detail: 'Check you User Name and Password and try again',
+          severity: 'error'
+        });
+        this.spinnerService.hideSpinner();
+      }
+    );
   }
 
   public logoff(): void {
