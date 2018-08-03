@@ -1,4 +1,4 @@
-import { UserAuthorisationService } from '../userAuthorisation/userAuthorisation.service';
+import { UserAuthorisationBase } from '../userAuthorisation/UserAuthorisationBase';
 import { TestBed, inject } from '@angular/core/testing';
 import { RolesService } from '../rolesService/roles.service';
 
@@ -8,7 +8,7 @@ describe('RolesService', () => {
       providers: [
         RolesService,
         {
-          provide: UserAuthorisationService,
+          provide: UserAuthorisationBase,
           useValue: { currentUser: { roles: ['users', 'admin'] } }
         }
       ]
@@ -50,7 +50,7 @@ describe('RolesService', () => {
 
   it('Route/Role Repository - Roles for Route',
     inject([RolesService], (rolesService: RolesService) => {
-      rolesService.addRouteRoles('/route1:test',['admin', 'users']);
+      rolesService.addRouteRoles('/route1:test', ['admin', 'users']);
       expect(rolesService.getRouteRoles('/route1:test'))
       .toEqual(['admin', 'users']);
     })
@@ -58,7 +58,7 @@ describe('RolesService', () => {
 
   it('Route/Role Repository - No Roles for Route',
   inject([RolesService], (rolesService: RolesService) => {
-    rolesService.addRouteRoles('/route1:test',['admin', 'users']);
+    rolesService.addRouteRoles('/route1:test', ['admin', 'users']);
     expect(rolesService.getRouteRoles('/route1:notest'))
     .toEqual(undefined);
   })

@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 
-import { UserAuthorisationService } from '../userAuthorisation/userAuthorisation.service';
+import { UserAuthorisationBase } from '../userAuthorisation/UserAuthorisationBase';
 import { AppSettingsService } from '../appSettings/appSettings.service';
 
 // Models
@@ -23,7 +23,7 @@ export class UserPreferencesService {
   public preferenceDefinitionsSubject = new BehaviorSubject<Array<UserPreferenceDefinition>>(null);
   public preferenceValuesSubject = new BehaviorSubject<Array<UserPreferenceValue>>(null);
 
-  constructor(private http: HttpClient, private auth: UserAuthorisationService, private appSettings: AppSettingsService) {
+  constructor(private http: HttpClient, private auth: UserAuthorisationBase, private appSettings: AppSettingsService) {
     appSettings.settingsSubject.subscribe(settings => {
       this.apiRootValues = `${settings.apiHome}/api/userPreferencevalues`;
       this.apiRootDefinitions = `${settings.apiHome}/api/UserPreferenceDefinitions`;
@@ -55,7 +55,7 @@ export class UserPreferencesService {
     this.preferenceValuesSubject.next(this.preferenceValues);
   }
 
-  public deleteValue(key: string){
+  public deleteValue(key: string) {
     return new Observable<any>(observer => {
       this.http.delete(`${this.apiRootValues}/${key}`).subscribe(
         () => {

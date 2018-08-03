@@ -1,5 +1,5 @@
 import { MenuService } from './menu.service';
-import { UserAuthorisationService } from '../userAuthorisation/userAuthorisation.service';
+import { UserAuthorisationBase } from '../userAuthorisation/UserAuthorisationBase';
 import { TestBed, inject } from '@angular/core/testing';
 import { RolesService } from '../rolesService/roles.service';
 
@@ -10,7 +10,7 @@ describe('MenuService', () => {
         MenuService,
         RolesService,
         {
-          provide: UserAuthorisationService,
+          provide: UserAuthorisationBase,
           useValue: { currentUser: { roles: ['users', 'admin'] } }
         }
       ]
@@ -25,5 +25,5 @@ describe('MenuService', () => {
     })
   );
 
- 
+
 });

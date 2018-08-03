@@ -1,6 +1,6 @@
 import { Component, Inject, forwardRef } from '@angular/core';
 import { AppComponent } from '../../app.component';
-import { AppSettingsService, ReferenceValuesService, UserAuthorisationService } from '../../../modules/core/coreModule';
+import { AppSettingsService, ReferenceValuesService, UserAuthorisationBase } from '../../../modules/core/coreModule';
 
 @Component({
   selector: 'app-topbar',
@@ -15,7 +15,7 @@ export class AppTopBarComponent {
     public app: AppComponent,
     public appSettings: AppSettingsService,
     private referenceValuesService: ReferenceValuesService,
-    public userAuthService: UserAuthorisationService
+    public userAuthService: UserAuthorisationBase
   ) {
   }
 

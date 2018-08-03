@@ -14,7 +14,7 @@ import { Title } from '@angular/platform-browser';
 import 'rxjs/add/operator/filter';
 import { UserPreferenceValue } from '@ngscaffolding/models';
 import { LoggingService, AppSettingsService, SpinnerService } from '../modules/core/coreModule';
-import { UserAuthorisationService, UserPreferencesService } from '../modules/core/coreModule';
+import { UserAuthorisationBase, UserPreferencesService } from '../modules/core/coreModule';
 import { BroadcastService, BroadcastTypes, MenuService } from '../modules/core/coreModule';
 import { NotificationReceiverService } from './services/notificationReceiver/notificationReceiver.service';
 
@@ -39,7 +39,7 @@ export class NgScaffoldingComponent implements AfterViewInit {
   constructor(
     public router: Router,
     public logger: LoggingService,
-    public userAuthService: UserAuthorisationService,
+    public userAuthService: UserAuthorisationBase,
     public titleService: Title,
     public appSettingsService: AppSettingsService,
     public notificationReceiverService: NotificationReceiverService,
