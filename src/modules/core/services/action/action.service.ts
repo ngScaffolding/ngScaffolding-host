@@ -21,6 +21,6 @@ export class ActionService {
       action: action, inputDetails:  JSON.stringify(inputDetails), rows: JSON.stringify(rows)
     };
 
-    return this.http.post<ActionResultModel>(`${this.appSettingsService.apiHome}/api/action`, request);
+    return this.http.post<ActionResultModel>(`${this.appSettingsService.apiHome}/api/v1/action`, request);
   }
 }
