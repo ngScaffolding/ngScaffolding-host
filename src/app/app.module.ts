@@ -129,7 +129,7 @@ export function jwtOptionsFactory(appSettings: AppSettingsService) {
         // ngScaffolding-core
         { provide: ErrorHandler, useClass: CoreErrorHandlerService },
         // HTTP Token Interceptor
-        // { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true},
+        { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true},
         ActionService,
         AppSettingsService,
         AuthoriseRoleGuard,
