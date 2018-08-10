@@ -83,7 +83,7 @@ export class DemoAppModule {
 
     menuService.addMenuItems([
       {label: 'DataGrid Samples',
-    items:[
+    items: [
       {
         label: 'Data Grid Test',
         icon: 'grid',
