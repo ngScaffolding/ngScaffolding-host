@@ -1,4 +1,4 @@
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
@@ -94,7 +94,7 @@ export class ReferenceValuesService {
         // We have already asked for this, return our existing Observable
         return this.requestsInFlight.get(this.getKey(name, seed));
       } else {
-        let wrapper = new Observable<ReferenceValue>(observer => {
+        const wrapper = new Observable<ReferenceValue>(observer => {
 
           // Call HTTP Here
           const httpRequest = this.http.get<ReferenceValue>(
