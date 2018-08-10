@@ -30,7 +30,7 @@ export class DataGridHolderComponent implements OnInit, OnDestroy {
       this.menuItem = this.menuService.getMenuItemByName(menuName);
       this.itemId = menuName;
 
-      this.itemDetail = JSON.parse(this.menuItem.jsonSerialized) as GridViewDetail;
+      this.itemDetail = this.menuItem.menuDetails as GridViewDetail;
     });
   }
 
