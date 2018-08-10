@@ -51,7 +51,7 @@ export class CoreErrorHandlerService extends ErrorHandler {
             // Consume any errors here. Otherwise we will just get stuck
             try {
                 // This post is a fire and forget. Don't have to authorise either
-                this.http.post(this.appSettingsService.apiHome + '/api/errors', errorModel)
+                this.http.post(this.appSettingsService.apiHome + '/api/v1/errors', errorModel)
                     .subscribe((data) => {
                         // alert('ID: ' + data.id);
                     },

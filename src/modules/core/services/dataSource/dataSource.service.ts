@@ -22,7 +22,7 @@ export class DataSourceService {
     return new Observable<DataSetResults>(observer => {
       this.http
         .post<DataSetResults>(
-          `${this.appSettingsService.apiHome}/api/datasource`,
+          `${this.appSettingsService.apiHome}/api/v1/datasource`,
           dataRequest
         )
         .subscribe(values => {
