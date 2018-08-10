@@ -57,7 +57,7 @@ export class ReferenceValuesService {
       this.http
         .get<Array<ReferenceValue>>(
           `${this.appSettingsService
-            .apiHome}/api/referencevalues?group=${group}`
+            .apiHome}/api/v1/referencevalues?group=${group}`
         )
         .subscribe(values => {
           // Save each returned value to our cache
@@ -99,7 +99,7 @@ export class ReferenceValuesService {
           // Call HTTP Here
           const httpRequest = this.http.get<ReferenceValue>(
             `${this.appSettingsService
-              .apiHome}/api/referencevalues?name=${name}&seed=${seed}`
+              .apiHome}/api/v1/referencevalues?name=${name}&seed=${seed}`
           );
           httpRequest.subscribe(value => {
             this.cacheService.setValue(this.getKey(name, seed), value);

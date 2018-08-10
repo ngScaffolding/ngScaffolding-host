@@ -59,7 +59,7 @@ export class MenuService {
   }
 
   public downloadMenuItems() {
-    this.http.get<Array<CoreMenuItem>>(this.appSettings.apiHome + '/api/menuitems').subscribe(menuItems => {
+    this.http.get<Array<CoreMenuItem>>(this.appSettings.apiHome + '/api/v1/menuitems').subscribe(menuItems => {
       menuItems.forEach(loopMenuItem => {
         this.addDownloadedMenuItem(this.menuItems, loopMenuItem);
       });
