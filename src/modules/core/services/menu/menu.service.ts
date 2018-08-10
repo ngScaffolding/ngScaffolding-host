@@ -5,7 +5,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { HttpClient } from '@angular/common/http';
 
 import { LoggingService } from '../logging/logging.service';
-import { CoreMenuItem } from '../../models/coreMenuItem.model';
+import { CoreMenuItem } from '@ngscaffolding/models';
 import { MenuItem } from 'primeng/primeng';
 import { AppSettingsService } from '../appSettings/appSettings.service';
 import { UserAuthorisationBase } from '../userAuthorisation/UserAuthorisationBase';
@@ -111,14 +111,11 @@ export class MenuService {
       calcRouterLink = newMenuItem.routerLink;
     }
 
-    const createdMenuItem: CoreMenuItem = {
-      icon: newMenuItem.icon,
-      separator: newMenuItem.separator,
-      name: newMenuItem.name,
-      label: newMenuItem.label,
-      routerLink: calcRouterLink,
-      jsonSerialized: newMenuItem.jsonSerialized
-    };
+    const createdMenuItem: CoreMenuItem = {...newMenuItem, routerLink: calcRouterLink};
+
+    if (createdMenuItem.jsonSerialized && !createdMenuItem.menuDetails) {
+      createdMenuItem.menuDetails = JSON.parse(createdMenuItem.jsonSerialized);
+    }
 
     targetMenu.push(createdMenuItem);
 

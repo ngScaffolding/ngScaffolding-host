@@ -16,6 +16,7 @@ import { GridOptions, ColDef, ColDefUtil } from 'ag-grid/main';
 
 import {
   Action,
+  CoreMenuItem,
   GridViewDetail,
   InputBuilderDefinition,
   DataSetResults
@@ -28,7 +29,6 @@ import {
   AppSettingsService,
   DataSourceService,
   MenuService,
-  CoreMenuItem,
   LoggingService,
   NotificationService,
   BroadcastService,
