@@ -51,7 +51,7 @@ export class ChartComponent implements OnInit, OnDestroy, OnChanges {
       // Get Data from Server
       this.dataSourceService
         .getData(
-          { id: this.itemDetail.dataSourceId, inputData: this.inputModel },
+          { name: this.itemDetail.dataSourceName, inputData: this.inputModel },
           false
         )
         .subscribe(response => {

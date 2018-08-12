@@ -12,5 +12,5 @@ export interface ChartDetailModel {
 
   chartOptions: string;
 
-  dataSourceId?: number;
+  dataSourceName?: string;
 }
