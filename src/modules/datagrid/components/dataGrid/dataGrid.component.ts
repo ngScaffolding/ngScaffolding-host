@@ -213,7 +213,7 @@ export class DataGridComponent implements OnInit, OnDestroy, OnChanges {
     this.dataSourceService
       .getData(
         {
-          id: this.itemDetail.selectDataSourceId,
+          name: this.itemDetail.selectDataSourceName,
           filterValues: JSON.stringify(this.filterValues)
         },
         true
