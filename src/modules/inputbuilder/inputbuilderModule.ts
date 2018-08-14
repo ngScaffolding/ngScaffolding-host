@@ -29,6 +29,7 @@ import {
   PasswordModule,
   RatingModule,
   AutoCompleteModule,
+  InputMaskModule,
 
   MultiSelectModule, ToggleButtonModule, TooltipModule
 } from 'primeng/primeng';
@@ -51,6 +52,7 @@ export * from './inputBuilderPopup/inputBuilderPopup.component';
     ReactiveFormsModule,
     InputSwitchModule,
     InputTextModule,
+    InputMaskModule,
     SpinnerModule,
     CalendarModule,
     TriStateCheckboxModule,

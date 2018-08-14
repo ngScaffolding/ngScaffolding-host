@@ -4,9 +4,16 @@
 
             <!-- textbox -->
             <span *ngSwitchCase="'textbox'" class="md-inputfield">
-                <input type="text" [formControlName]="input.name" [id]="input.name" pInputText>
+                <input *ngIf="!input.mask" type="text" [formControlName]="input.name" [id]="input.name" pInputText>
                 <label>{{input.label}}</label>
             </span>
+
+            <!-- Mask -->
+            <span *ngSwitchCase="'mask'">
+                <p-inputMask [mask]="input.mask" [id]="input.name" [formControl]="form.controls[input.name]"></p-inputMask>
+                <label>{{input.label}}</label>
+            </span>
+
 
             <!-- TextArea -->
             <span *ngSwitchCase="'textarea'" class="md-inputfield">
@@ -75,7 +82,14 @@
              <span *ngSwitchCase="'json'" class="md-inputfield">
               <json-editor [options]="editorOptions" [data]="input.value"></json-editor>
               <label>{{input.label}}</label>
+            </span>
+
+               <!-- DEFUALT textbox -->
+            <span *ngSwitchDefault class="md-inputfield">
+              <input type="text" [formControlName]="input.name" [id]="input.name" pInputText>
+              <label>{{input.label}}</label>
           </span>
+
 
         </div>
 
