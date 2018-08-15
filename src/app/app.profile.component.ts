@@ -1,6 +1,6 @@
 import {Component, trigger, state, transition, style, animate} from '@angular/core';
 import {AppComponent} from './app.component';
-import { AppSettingsService } from '../modules/core/services';
+import { AppSettingsService, UserAuthorisationBase } from '../modules/core/services';
 
 @Component({
     selector: 'app-inline-profile',
@@ -8,7 +8,7 @@ import { AppSettingsService } from '../modules/core/services';
         <div class="profile" [ngClass]="{'profile-expanded':active}">
             <a href="#" (click)="onClick($event)">
                 <img *ngIf="appSettings.showProfilePicture" class="profile-image" src="assets/layout/images/avatar.png" />
-                <span class="profile-name">Jane Williams</span>
+                <span class="profile-name">{{authService.currentUser.name}}</span>
                 <i class="material-icons">keyboard_arrow_down</i>
             </a>
         </div>
@@ -57,7 +57,7 @@ export class AppInlineProfileComponent {
 
     active: boolean;
 
-    constructor(public app: AppComponent, public appSettings: AppSettingsService) {}
+    constructor(public app: AppComponent, public appSettings: AppSettingsService, public authService: UserAuthorisationBase) {}
 
     onClick(event) {
         this.active = !this.active;
