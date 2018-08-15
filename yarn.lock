@@ -160,6 +160,10 @@
   dependencies:
     url "^0.11.0"
 
+"@ngscaffolding/models@^1.0.11":
+  version "1.0.11"
+  resolved "https://registry.yarnpkg.com/@ngscaffolding/models/-/models-1.0.11.tgz#15446b34f01ad098df895be1a784b942123bb584"
+
 "@ngtools/json-schema@1.1.0", "@ngtools/json-schema@^1.1.0":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@ngtools/json-schema/-/json-schema-1.1.0.tgz#c3a0c544d62392acc2813a42c8a0dc6f58f86922"
