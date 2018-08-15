@@ -7,7 +7,7 @@ import { AppSettingsService } from '../modules/core/services';
     template: `
         <div class="profile" [ngClass]="{'profile-expanded':active}">
             <a href="#" (click)="onClick($event)">
-                <img class="profile-image" src="assets/layout/images/avatar.png" />
+                <img *ngIf="appSettings.showProfilePicture" class="profile-image" src="assets/layout/images/avatar.png" />
                 <span class="profile-name">Jane Williams</span>
                 <i class="material-icons">keyboard_arrow_down</i>
             </a>
@@ -20,7 +20,7 @@ import { AppSettingsService } from '../modules/core/services';
                     <span>Profile</span>
                 </a>
             </li>
-            <li role="menuitem">
+            <li role="menuitem" *ngIf="appSettings.showUserSetting">
                 <a href="#" routerLink="usersettings" class="ripplelink" [attr.tabindex]="!active ? '-1' : null">
                     <i class="material-icons">settings_application</i>
                     <span>Settings</span>

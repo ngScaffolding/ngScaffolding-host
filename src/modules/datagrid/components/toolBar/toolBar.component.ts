@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { trigger, state, style, animate, transition } from '@angular/animations';
+import { AppSettingsService } from '../../../core/services';
 
 @Component({
   selector: 'app-grid-toolbar',
@@ -49,7 +50,7 @@ export class ToolBarComponent implements OnInit {
 
   public expanded = 'false';
 
-  constructor() {}
+  constructor(public appSettingsService: AppSettingsService) {}
 
   public toggleMenu() {
     this.expanded = this.expanded === 'true' ? 'false' : 'true';
