@@ -32,7 +32,8 @@ import {
   LoggingService,
   NotificationService,
   BroadcastService,
-  UserPreferencesService
+  UserPreferencesService,
+  CacheService
 } from '../../../core/coreModule';
 
 import { FiltersHolderComponent } from '../filtersHolder/filtersHolder.component';
@@ -98,6 +99,7 @@ export class DataGridComponent implements OnInit, OnDestroy, OnChanges {
     private actionService: ActionService,
     private appSettingsService: AppSettingsService,
     private dataSourceService: DataSourceService,
+    private cacheService: CacheService,
     private menuService: MenuService,
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
@@ -357,6 +359,9 @@ export class DataGridComponent implements OnInit, OnDestroy, OnChanges {
                   summary: 'Success',
                   detail: action.successMessage
                 });
+                if(action.flushDataSource) {
+                  this.cacheService.resetValue(action.flushDataSource);
+                }
               } else {
                 this.confirmationService.confirm({
                   message: action.successMessage,
