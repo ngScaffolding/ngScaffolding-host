@@ -1,6 +1,6 @@
-import { DemoAppModule } from '../src/modules/demoapp/demoappModule';
+import { SpotAdminAppModule } from '../src/modules/spotAdmin/spotAdminModule';
 
 export const CUSTOM_IMPORTS: any[] = [
-    DemoAppModule.forRoot()
+  SpotAdminAppModule.forRoot()
 ];
-export const CUSTOM_COMPONENTS: any[] = [];
+export const CUSTOM_COMPONENTS: any[] =  [];

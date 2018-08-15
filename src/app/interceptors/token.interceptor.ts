@@ -16,7 +16,11 @@ import { finalize, tap } from 'rxjs/operators';
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
-  constructor(private injector: Injector, private logger: LoggingService, private authService: UserAuthorisationBase) {}
+  constructor(
+    private injector: Injector,
+    private logger: LoggingService,
+    private authService: UserAuthorisationBase
+  ) {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler) {
     const started = Date.now();
@@ -24,11 +28,13 @@ export class TokenInterceptor implements HttpInterceptor {
 
     const auth = this.injector.get(UserAuthorisationBase);
 
-    request = request.clone({
-      setHeaders: {
-        Authorization: `Bearer ${auth.getToken()}`
-      }
-    });
+    if (request.url.indexOf('loginUser') === -1) {
+      request = request.clone({
+        setHeaders: {
+          Authorization: `Bearer ${auth.getToken()}`
+        }
+      });
+    }
 
     return next.handle(request).pipe(
       tap(
@@ -40,10 +46,10 @@ export class TokenInterceptor implements HttpInterceptor {
         error => {
           ok = 'failed';
           if (error instanceof HttpErrorResponse) {
-                if (error.status === 401) {
-                    return;
-                }
+            if (error.status === 401) {
+              return;
             }
+          }
         }
       ),
       // Log when response observable either completes or errors

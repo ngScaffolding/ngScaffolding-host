@@ -64,6 +64,7 @@ export class SpotAdminAppModule {
     settings.showFullMessages = false;
     settings.showToastMessages = true;
 
+
     settings.showProfileSetting = false;
     settings.showUserSetting = false;
     settings.showProfilePicture = false;

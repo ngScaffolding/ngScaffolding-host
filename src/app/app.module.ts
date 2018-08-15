@@ -59,7 +59,8 @@ import { ProfilePageComponent } from './pages/profile/profilePage.component';
 // Services
 import { NotificationReceiverService } from './services/notificationReceiver/notificationReceiver.service';
 import { TokenInterceptor } from './interceptors/token.interceptor';
-import { Button } from 'protractor';
+import { KumulosAuthService } from '../modules/kumulosImplementation/services/kumulosAuth.service';
+import { KumulosDataService } from '../modules/kumulosImplementation/services/kumulosData.service';
 
 export function jwtOptionsFactory(appSettings: AppSettingsService) {
   return {
@@ -132,7 +133,8 @@ export function jwtOptionsFactory(appSettings: AppSettingsService) {
         ActionService,
         AppSettingsService,
         AuthoriseRoleGuard,
-        { provide: UserAuthorisationBase, useClass: UserAuthorisationService},
+        { provide: UserAuthorisationBase, useClass: KumulosAuthService},
+        KumulosDataService,
         BroadcastService,
         CacheService,
         LoggingService,
