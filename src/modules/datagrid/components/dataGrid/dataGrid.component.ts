@@ -359,8 +359,8 @@ export class DataGridComponent implements OnInit, OnDestroy, OnChanges {
                   summary: 'Success',
                   detail: action.successMessage
                 });
-                if(action.flushDataSource) {
-                  this.cacheService.resetValue(action.flushDataSource);
+                if(action.flushReferenceValues) {
+                  this.cacheService.resetValue('referenceValue::' + action.flushReferenceValues + '::');
                 }
               } else {
                 this.confirmationService.confirm({
