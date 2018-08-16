@@ -26,7 +26,7 @@ export class UserPreferencesService {
   constructor(private http: HttpClient, private auth: UserAuthorisationBase, private appSettings: AppSettingsService) {
     appSettings.settingsSubject.subscribe(settings => {
       this.apiRootValues = `${settings.apiHome}/api/v1/userPreferencevalues`;
-      this.apiRootDefinitions = `${settings.apiHome}/api/v1/UserPreferenceDefinitions`;
+      this.apiRootDefinitions = `${settings.apiHome}/api/v1/UserPreferenceDefinition`;
     });
 
     auth.authenticatedSubject.subscribe(isAuthorised => {
