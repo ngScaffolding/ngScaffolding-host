@@ -17,7 +17,7 @@ export class UserSettingsComponent implements OnInit, OnDestroy {
 
   private baseInputDefinition: InputBuilderDefinition = {
     inputDetails: [],
-    horizontalColumnCount: 2,
+    columnCount: 2,
     orientation: OrientationValues.Horizontal,
     okButtonText: null,
     cancelButtonText: null

@@ -16,7 +16,7 @@ import {
 export class InputBuilderSimpleComponent {
   inputDefinition1: InputBuilderDefinition = {
     orientation: OrientationValues.Horizontal,
-    horizontalColumnCount: 3,
+    columnCount: 3,
     okButtonText: 'Save Me',
     okButtonIcon: 'fa-check',
     cancelButtonText: 'Cancel Me',

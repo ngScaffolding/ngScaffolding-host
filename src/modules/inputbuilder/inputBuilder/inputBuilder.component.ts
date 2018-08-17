@@ -89,10 +89,10 @@ export class InputBuilderComponent implements OnInit, OnChanges {
       this.inputBuilderDefinition.orientation === OrientationValues.Horizontal
     ) {
       if (
-        this.inputBuilderDefinition.horizontalColumnCount > 0 &&
-        this.inputBuilderDefinition.horizontalColumnCount < 5
+        this.inputBuilderDefinition.columnCount > 0 &&
+        this.inputBuilderDefinition.columnCount < 5
       ) {
-        const colSize = 12 / this.inputBuilderDefinition.horizontalColumnCount;
+        const colSize = 12 / this.inputBuilderDefinition.columnCount;
         this.controlStyle = `ui-g-${colSize}`;
       }
     } else {
