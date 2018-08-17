@@ -8,7 +8,7 @@ import { AppSettingsService, UserAuthorisationBase } from '../modules/core/servi
         <div class="profile" [ngClass]="{'profile-expanded':active}">
             <a href="#" (click)="onClick($event)">
                 <img *ngIf="appSettings.showProfilePicture" class="profile-image" src="assets/layout/images/avatar.png" />
-                <span class="profile-name">{{authService.currentUser.name}}</span>
+                <span class="profile-name">{{authService.currentUser?.name}}</span>
                 <i class="material-icons">keyboard_arrow_down</i>
             </a>
         </div>

@@ -23,8 +23,8 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
   private menuName: string;
   private menuItem: CoreMenuItem;
 
-  private options: GridsterConfig;
-  private dashboard: DashboardModel;
+  public options: GridsterConfig;
+  public dashboard: DashboardModel;
 
   private components: any[] = [];
 

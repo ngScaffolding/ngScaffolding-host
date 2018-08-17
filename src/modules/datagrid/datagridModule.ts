@@ -21,6 +21,7 @@ import { ActionsPipe } from './pipes/actionsPipe/actions.pipe';
 import { CardModule } from 'primeng/card';
 import { DataGridComponent } from './components/dataGrid/dataGrid.component';
 import { DataGridHolderComponent } from './components/dataGridHolder/dataGridHolder.component';
+import { ColumnPickerComponent } from './components/columnPicker/columnPicker.component';
 
 const appRoutes: Routes = [
   { path: 'datagrid/:id', component: DataGridHolderComponent, canActivate: [AuthoriseRoleGuard]  },
@@ -47,6 +48,7 @@ const appRoutes: Routes = [
     ActionsHolderComponent,
     DataGridComponent,
     DataGridHolderComponent,
+    ColumnPickerComponent,
     FiltersHolderComponent,
     ToolBarComponent,
     ButtonCellComponent,

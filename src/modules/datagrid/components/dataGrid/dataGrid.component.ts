@@ -54,8 +54,8 @@ import { Subscription } from 'rxjs/Subscription';
 })
 export class DataGridComponent implements OnInit, OnDestroy, OnChanges {
 
-  @ViewChild(HTMLDivElement) gridArea: HTMLDivElement;
-  @ViewChild(HTMLDivElement) gridSection: HTMLDivElement;
+  // @ViewChild(HTMLDivElement) gridArea: HTMLDivElement;
+  //@ViewChild(HTMLDivElement) gridSection: HTMLDivElement;
   @ViewChild(FiltersHolderComponent) filtersHolder: FiltersHolderComponent;
   @ViewChild(InputBuilderPopupComponent)
   actionInputPopup: InputBuilderPopupComponent;
