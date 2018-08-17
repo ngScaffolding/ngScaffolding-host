@@ -30,6 +30,7 @@ import {
   RatingModule,
   AutoCompleteModule,
   InputMaskModule,
+  KeyFilterModule,
 
   MultiSelectModule, ToggleButtonModule, TooltipModule
 } from 'primeng/primeng';
@@ -62,6 +63,7 @@ export * from './inputBuilderPopup/inputBuilderPopup.component';
     DropdownModule,
     PasswordModule,
     RatingModule,
+    KeyFilterModule,
     MultiSelectModule, ToggleButtonModule, TooltipModule,
     NgJsonEditorModule
   ],

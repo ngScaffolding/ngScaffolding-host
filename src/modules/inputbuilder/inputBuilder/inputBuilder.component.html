@@ -1,10 +1,17 @@
-<form novalidate *ngIf="inputBuilderDefinition && inputBuilderDefinition.inputDetails" class="ui-g form-group" (ngSubmit)="onSubmit(form)" [formGroup]="form">
+<form novalidate *ngIf="inputBuilderDefinition && inputBuilderDefinition.inputDetails" class="ui-g form-group" (ngSubmit)="onSubmit(form)"
+    [formGroup]="form">
     <div [className]="controlStyle" *ngFor="let input of inputBuilderDefinition.inputDetails">
         <div [ngSwitch]="input.type" [className]="input.containerClass">
 
             <!-- textbox -->
             <span *ngSwitchCase="'textbox'" class="md-inputfield">
                 <input *ngIf="!input.mask" type="text" [formControlName]="input.name" [id]="input.name" pInputText>
+                <label>{{input.label}}</label>
+            </span>
+
+            <!-- keyfilter -->
+            <span *ngSwitchCase="'keyfilter'" class="md-inputfield">
+                <input type="text" [formControlName]="input.name" [id]="input.name" [pKeyFilter]="input.filter">
                 <label>{{input.label}}</label>
             </span>
 
@@ -38,13 +45,8 @@
             <!-- Simple DropDown -->
             <span *ngSwitchCase="'dropdown'">
                 <label class="small-label" [for]="input.name">{{input.label}}</label>
-                    <p-dropdown [id]="input.name" [options]="input.datasourceItems"
-                    [autoWidth]="false"
-                    [filter]="input.selectFilter"
-
-                    dataKey="value"
-                    optionLabel="display"
-                    [formControlName]="input.name"></p-dropdown>
+                <p-dropdown [id]="input.name" [options]="input.datasourceItems" [autoWidth]="false" [filter]="input.selectFilter" dataKey="value"
+                    optionLabel="display" [formControlName]="input.name"></p-dropdown>
             </span>
 
             <!-- Chips -->
@@ -83,68 +85,59 @@
                 <label>{{input.label}}</label>
             </span>
 
-             <!-- JSon Edit -->
-             <span *ngSwitchCase="'json'" class="md-inputfield">
-              <json-editor [options]="editorOptions" [data]="input.value"></json-editor>
-              <label>{{input.label}}</label>
+            <!-- JSon Edit -->
+            <span *ngSwitchCase="'json'" class="md-inputfield">
+                <json-editor [options]="editorOptions" [data]="input.value"></json-editor>
+                <label>{{input.label}}</label>
             </span>
 
-               <!-- DEFUALT textbox -->
+            <!-- DEFUALT textbox -->
             <span *ngSwitchDefault class="md-inputfield">
-              <input type="text" [formControlName]="input.name" [id]="input.name" pInputText>
-              <label>{{input.label}}</label>
-          </span>
+                <input type="text" [formControlName]="input.name" [id]="input.name" pInputText>
+                <label>{{input.label}}</label>
+            </span>
 
 
         </div>
 
 
         <!-- Help text here -->
-         <span *ngIf="input.help" class="ui-g-1">
+        <span *ngIf="input.help" class="ui-g-1">
             <i class="fa fa-info-circle help-icon" pTooltip="{{input.help}}" tooltipPosition="bottom"></i>
-         </span>
+        </span>
 
         <div class="ui-message ui-messages-error ui-corner-all" *ngIf="form.get(input.name)?.invalid && (form.get(input.name)?.dirty || form.get(input.name)?.touched)">
             <div *ngIf="form.get(input.name).errors.required">
                 {{input.validateRequired}}
             </div>
             <div *ngIf="form.get(input.name).errors.requiredTrue">
-                    {{input.validateRequiredTrue}}
+                {{input.validateRequiredTrue}}
             </div>
             <div *ngIf="form.get(input.name).errors.email">
-                    {{input.validateEmail}}
+                {{input.validateEmail}}
             </div>
             <div *ngIf="form.get(input.name).errors.pattern">
-                    {{input.validatePatternMessage}}
+                {{input.validatePatternMessage}}
             </div>
             <div *ngIf="form.get(input.name).errors.minlength">
-                    {{input.validateMinLengthMessage}}
+                {{input.validateMinLengthMessage}}
             </div>
             <div *ngIf="form.get(input.name).errors.maxlength">
-                    {{input.validateMaxLengthMessage}}
+                {{input.validateMaxLengthMessage}}
             </div>
         </div>
     </div>
     <div [className]="" class="ui-g-12" *ngIf="inputBuilderDefinition.customButtonText || inputBuilderDefinition.cancelButtonText || inputBuilderDefinition.okButtonText">
         <div *ngIf="inputBuilderDefinition.customButtonText" class="ui-g-4">
-                <button pButton type="button"
-                    (click)="onCustom()"
-                    class="ui-button-info"
-                    icon="{{inputBuilderDefinition.customButtonIcon}}"
-                    iconPos="left" label="{{inputBuilderDefinition.customButtonText}}"></button>
-            </div>
+            <button pButton type="button" (click)="onCustom()" class="ui-button-info" icon="{{inputBuilderDefinition.customButtonIcon}}"
+                iconPos="left" label="{{inputBuilderDefinition.customButtonText}}"></button>
+        </div>
         <div *ngIf="inputBuilderDefinition.cancelButtonText" class="ui-g-4">
-            <button pButton type="button"
-                (click)="onCancel()"
-                class="ui-button-danger"
-                icon="{{inputBuilderDefinition.cancelButtonIcon}}"
+            <button pButton type="button" (click)="onCancel()" class="ui-button-danger" icon="{{inputBuilderDefinition.cancelButtonIcon}}"
                 iconPos="left" label="{{inputBuilderDefinition.cancelButtonText}}"></button>
         </div>
         <div *ngIf="inputBuilderDefinition.okButtonText" class="ui-g-4">
-            <button pButton type="submit"
-                class="ui-button-success"
-                icon="{{inputBuilderDefinition.okButtonIcon}}"
-                iconPos="left" label="{{inputBuilderDefinition.okButtonText}}"></button>
+            <button pButton type="submit" class="ui-button-success" icon="{{inputBuilderDefinition.okButtonIcon}}" iconPos="left" label="{{inputBuilderDefinition.okButtonText}}"></button>
         </div>
     </div>
 </form>
