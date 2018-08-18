@@ -7,7 +7,7 @@ import {
   OnChanges,
   SimpleChange
 } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/observable';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { InputDetail, InputTypes } from '@ngscaffolding/models';
 import {
@@ -51,7 +51,7 @@ export class InputBuilderComponent implements OnInit, OnChanges {
     public appSettings: AppSettingsService,
     public refValuesService: ReferenceValuesService
   ) {
-    this.editorOptions = new JsonEditorOptions()
+    this.editorOptions = new JsonEditorOptions();
     this.editorOptions.modes = ['code', 'text', 'tree', 'view']; // set all allowed modes
   }
 
@@ -147,7 +147,7 @@ export class InputBuilderComponent implements OnInit, OnChanges {
                 inputDetail
               ))// tslint:disable-next-line:triple-equals
               .datasourceItems
-                .find(ds => ds.value == inputValue);
+                .find(ds => ds.value === inputValue);
 
               if (foundInputValue) {
                 formControl.setValue(foundInputValue, {

@@ -10,8 +10,8 @@
             </span>
 
             <!-- keyfilter -->
-            <span *ngSwitchCase="'keyfilter'" class="md-inputfield">
-                <input type="text" [formControlName]="input.name" [id]="input.name" pKeyFilter="num">
+            <span *ngSwitchCase="'number'" class="md-inputfield">
+                <input type="text" [formControlName]="input.name" [id]="input.name" pKeyFilter="num"  pInputText>
                 <label>{{input.label}}</label>
             </span>
 
