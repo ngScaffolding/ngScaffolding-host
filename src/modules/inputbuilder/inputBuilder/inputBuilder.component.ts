@@ -147,7 +147,7 @@ export class InputBuilderComponent implements OnInit, OnChanges {
                 inputDetail
               ))// tslint:disable-next-line:triple-equals
               .datasourceItems
-                .find(ds => ds.value === inputValue);
+                .find(ds => ds.value == inputValue);
 
               if (foundInputValue) {
                 formControl.setValue(foundInputValue, {
