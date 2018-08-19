@@ -41,6 +41,8 @@ export class DataSourceService {
 
           // Finally
           observer.complete();
+        }, err => {
+          observer.error(err);
         });
     });
   }
