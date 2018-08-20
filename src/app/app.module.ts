@@ -1,4 +1,4 @@
-import {NgModule} from '@angular/core';
+import {NgModule, APP_INITIALIZER } from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import {BrowserModule} from '@angular/platform-browser';
@@ -42,7 +42,7 @@ import { ActionService, AppSettingsService,
   import { InputBuilderModule } from '../modules/inputbuilder/inputbuilderModule';
   import { ChartingModule } from '../modules/chart/chartingModule';
   import { DashboardModule } from '../modules/dashboard/dashboardModule';
-  import { CUSTOM_IMPORTS } from '../../custom/custom.app';
+  import { CUSTOM_IMPORTS } from '../custom/custom.app';
 
 // Pages
 import { NgScaffoldingComponent } from './app.ngscaffolding.component';
@@ -69,6 +69,12 @@ export function jwtOptionsFactory(appSettings: AppSettingsService) {
     }
   };
 }
+
+const appInitializerFn = (appConfig: AppSettingsService) => {
+  return () => {
+    return appConfig.loadFromJSON();
+  };
+};
 
 // ngScaffolding Imports
 
@@ -132,6 +138,12 @@ export function jwtOptionsFactory(appSettings: AppSettingsService) {
         { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true},
         ActionService,
         AppSettingsService,
+        {
+          provide: APP_INITIALIZER,
+          useFactory: appInitializerFn,
+          multi: true,
+          deps: [AppSettingsService]
+        },
         AuthoriseRoleGuard,
         { provide: UserAuthorisationBase, useClass: KumulosAuthService},
         KumulosDataService,

@@ -55,7 +55,6 @@ export class DemoAppModule {
     const settings: AppSettings = new AppSettings();
     settings.title = 'ngScaffolding Demo';
     settings.iconUrl = '';
-    settings.apiHome = 'http://localhost:3000';
     settings.apiAuth = 'http://localhost:50020';
     settings.errorLogConsole = true;
     settings.errorLogServer = true;

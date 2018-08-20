@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { AppSettings } from '@ngscaffolding/models';
 import { LoggingService } from '../logging/logging.service';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class AppSettingsService extends AppSettings {
@@ -9,7 +10,7 @@ export class AppSettingsService extends AppSettings {
 
   public settingsSubject = new BehaviorSubject<AppSettings>(null);
 
-  constructor(private logger: LoggingService) {
+  constructor(private logger: LoggingService, private http: HttpClient) {
     super();
   }
 
@@ -25,12 +26,11 @@ export class AppSettingsService extends AppSettings {
     this.settingsSubject.next(this);
   }
 
-  public loadFromJSON(settingsJson: string): void {
-    console.log('Got Values:' + settingsJson);
-    let settings = JSON.parse(settingsJson);
-
-    if (settings) {
-      // this.appSettings = settings;
-    }
+  public loadFromJSON() {
+    return this.http.get('/assets/data/appConfig.json')
+      .toPromise()
+      .then(data => {
+        this.setValues(data as AppSettings);
+      });
   }
 }
