@@ -42,7 +42,7 @@ import { ActionService, AppSettingsService,
   import { InputBuilderModule } from '../modules/inputbuilder/inputbuilderModule';
   import { ChartingModule } from '../modules/chart/chartingModule';
   import { DashboardModule } from '../modules/dashboard/dashboardModule';
-  import { CUSTOM_IMPORTS } from '../custom/custom.app';
+  import { CUSTOM_IMPORTS } from '../../custom/custom.app';
 
 // Pages
 import { NgScaffoldingComponent } from './app.ngscaffolding.component';
