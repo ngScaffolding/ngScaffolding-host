@@ -1,15 +1,14 @@
-export class AuthUser {
-  public token: string;
-  public tokenExpires: Date;
+export class BasicUser {
   public userId: string;
   public email: string;
   public name: string;
   public firstName: string;
   public lastName: string;
 
-  public roles: Array<string>;
+  public roles: string[] = [];
+}
 
-  constructor() {
-    this.roles = new Array<string>();
-  }
+export class AuthUser extends BasicUser {
+  public token: string;
+  public tokenExpires: Date;
 }

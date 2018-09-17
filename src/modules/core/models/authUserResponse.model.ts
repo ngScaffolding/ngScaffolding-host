@@ -1,4 +1,4 @@
-export class AuthUserResponse{
+export class AuthUserResponse {
     name: string;
     email: string;
     role: string[];
