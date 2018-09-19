@@ -1,6 +1,6 @@
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Injectable } from '@angular/core';
-import { AuthUser } from '../../models';
+import { AuthUser } from '@ngscaffolding/models';
 
 @Injectable()
 export abstract class UserAuthorisationBase {

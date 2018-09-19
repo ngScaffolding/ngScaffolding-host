@@ -6,7 +6,7 @@ import { BroadcastService } from '../broadcast/broadcast.service';
 import { AppSettingsService } from '../appSettings/appSettings.service';
 import { LoggingService } from '../logging/logging.service';
 
-import { AuthUser } from '../../models/authUser.model';
+import { AuthUser } from '@ngscaffolding/models';
 import { AuthUserResponse } from '../../models/authUserResponse.model';
 import { NotificationService } from '../notification/notification.service';
 
@@ -129,7 +129,7 @@ export class UserAuthorisationService implements UserAuthorisationBase {
       );
 
     this.http
-      .post(this.appSettingsService.apiAuth + '/connect/token', body, {
+      .post(this.appSettingsService.apiAuth + this.appSettingsService.authTokenEndpoint, body, {
         headers: new HttpHeaders().set(
           'Content-Type',
           'application/x-www-form-urlencoded'
