@@ -7,7 +7,7 @@ import { BroadcastService } from '../../core/services/broadcast/broadcast.servic
 import { AppSettingsService } from '../../core/services/appSettings/appSettings.service';
 import { LoggingService } from '../../core/services/logging/logging.service';
 
-import { AuthUser } from '../../core/models/authUser.model';
+import { AuthUser } from '@ngscaffolding/models';
 import { AuthUserResponse } from '../../core/models/authUserResponse.model';
 import { NotificationService } from '../../core/services/notification/notification.service';
 
