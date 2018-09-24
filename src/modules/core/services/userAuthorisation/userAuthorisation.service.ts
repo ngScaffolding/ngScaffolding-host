@@ -65,7 +65,7 @@ export class UserAuthorisationService implements UserAuthorisationBase {
 
     this.currentUser = new AuthUser();
     this.currentUser.tokenExpires = this.jwtHelper.getTokenExpirationDate(token);
-    if (this.currentUser.tokenExpires < new Date()) {
+    if (this.jwtHelper.isTokenExpired(token)) {
       this.tokenExpired();
     }
 
@@ -74,9 +74,12 @@ export class UserAuthorisationService implements UserAuthorisationBase {
       localStorage.setItem(this.tokenStorageKey, token);
     }
 
-    const roles = tokenDetails['role'] as Array<string>;
-    if (roles) {
-      roles.forEach(role => this.currentUser.roles.push(role));
+    if (tokenDetails['firstName'] && tokenDetails['lastName']) {
+            this.currentUser.name = tokenDetails['firstName'] + ' ' + tokenDetails['lastName'];
+    }
+
+    if (tokenDetails['roles']) {
+      this.currentUser.roles = tokenDetails['roles'];
     }
 
     this.appSettingsService.authToken = token;
@@ -143,7 +146,7 @@ export class UserAuthorisationService implements UserAuthorisationBase {
           }
 
           // Get Additional Details
-          this.getUserDetails();
+          // this.getUserDetails();
         },
         err => {
           this.notificationService.showMessage({
