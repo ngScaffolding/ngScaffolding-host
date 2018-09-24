@@ -145,7 +145,7 @@ const appInitializerFn = (appConfig: AppSettingsService) => {
           deps: [AppSettingsService]
         },
         AuthoriseRoleGuard,
-        { provide: UserAuthorisationBase, useClass: KumulosAuthService},
+        { provide: UserAuthorisationBase, useClass: UserAuthorisationService},
         KumulosDataService,
         BroadcastService,
         CacheService,

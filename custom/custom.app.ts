@@ -1,6 +1,6 @@
-import { SpotAdminAppModule } from '../src/modules/spotAdmin/spotAdminModule';
+import { FieldForceAppModule } from '../src/modules/fieldForce/fieldForceModule';
 
 export const CUSTOM_IMPORTS: any[] = [
-  SpotAdminAppModule.forRoot()
+  FieldForceAppModule.forRoot()
 ];
 export const CUSTOM_COMPONENTS: any[] =  [];
