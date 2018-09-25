@@ -52,9 +52,9 @@ export class FieldForceAppModule {
 
     const settings: AppSettings = new AppSettings();
     settings.title = 'FieldForce Application';
-    settings.iconUrl = '';
-    settings.apiHome = 'http://localhost:3000';
-    settings.apiAuth = 'http://localhost:3010';
+    settings.iconUrl = '/assets/layout/images/logo.png';
+    settings.apiHome = 'http://essoft-vm.cloudapp.net:3000';
+    settings.apiAuth = 'http://essoft-vm.cloudapp.net:3010';
     settings.errorLogConsole = true;
     settings.errorLogServer = true;
     settings.errorShowUser = true;
