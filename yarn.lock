@@ -275,6 +275,10 @@ ag-grid-angular@15.0.0:
   version "15.0.0"
   resolved "https://registry.yarnpkg.com/ag-grid-angular/-/ag-grid-angular-15.0.0.tgz#35d04e7c55ff5c889af0a46cce65e0500a08a1c4"
 
+ag-grid-enterprise@15.0.0:
+  version "15.0.0"
+  resolved "https://registry.yarnpkg.com/ag-grid-enterprise/-/ag-grid-enterprise-15.0.0.tgz#0240ead5400f1af3f0753f49137bc4836a3b927b"
+
 ag-grid@15.0.0:
   version "15.0.0"
   resolved "https://registry.yarnpkg.com/ag-grid/-/ag-grid-15.0.0.tgz#73048d812a43547494d43dc7f5cba533463fcc3e"

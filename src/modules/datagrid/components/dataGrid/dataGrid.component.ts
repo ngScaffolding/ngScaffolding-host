@@ -55,7 +55,7 @@ import { Subscription } from 'rxjs/Subscription';
 export class DataGridComponent implements OnInit, OnDestroy, OnChanges {
 
   // @ViewChild(HTMLDivElement) gridArea: HTMLDivElement;
-  //@ViewChild(HTMLDivElement) gridSection: HTMLDivElement;
+  // @ViewChild(HTMLDivElement) gridSection: HTMLDivElement;
   @ViewChild(FiltersHolderComponent) filtersHolder: FiltersHolderComponent;
   @ViewChild(InputBuilderPopupComponent)
   actionInputPopup: InputBuilderPopupComponent;
@@ -110,6 +110,8 @@ export class DataGridComponent implements OnInit, OnDestroy, OnChanges {
       enableColResize: true,
       enableSorting: true,
       enableFilter: true,
+      groupMultiAutoColumn: true,
+      rowGroupPanelShow: 'always',
 
       rowSelection: 'multiple',
       suppressCellSelection: true,
@@ -293,6 +295,7 @@ export class DataGridComponent implements OnInit, OnDestroy, OnChanges {
           suppressMenu: column.SuppressMenu,
           suppressFilter: column.SuppressFilter,
           suppressSorting: column.SuppressSorting,
+          enableRowGroup: true,
 
           type: column.Type,
           hide: column.Hide
@@ -359,7 +362,7 @@ export class DataGridComponent implements OnInit, OnDestroy, OnChanges {
                   summary: 'Success',
                   detail: action.successMessage
                 });
-                if(action.flushReferenceValues) {
+                if (action.flushReferenceValues) {
                   this.cacheService.resetValue('referenceValue::' + action.flushReferenceValues + '::');
                 }
               } else {

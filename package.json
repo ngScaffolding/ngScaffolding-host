@@ -28,6 +28,7 @@
     "@ngscaffolding/models": "^1.0.14",
     "ag-grid": "15.0.0",
     "ag-grid-angular": "15.0.0",
+    "ag-grid-enterprise": "15.0.0",
     "ang-jsoneditor": "^1.5.12",
     "angular-gridster2": "5.3.3",
     "angular-highcharts": "~5.0.0",
