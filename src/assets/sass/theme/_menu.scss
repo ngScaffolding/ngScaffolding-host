@@ -93,6 +93,10 @@ body {
         .ui-menuitem-text {
           vertical-align: middle;
         }
+
+        .ui-menuitem-icon {
+            color: #757575;
+        }
     }
 
     .ui-menubar, .ui-contextmenu,
@@ -107,7 +111,7 @@ body {
     }
 
     .ui-menu {
-        width: 100%;
+        min-width: 12.5em;
         padding: .5em 0;
 
         .ui-menuitem {
@@ -273,7 +277,7 @@ body {
                    a {
                        color: $textSecondaryColor;
 
-                       .fa {
+                       .ui-menuitem-icon {
                            color: $textSecondaryColor;
                        }
                    }
@@ -291,7 +295,7 @@ body {
                    a {
                        color: $primaryColor;
 
-                       .fa {
+                       .ui-menuitem-icon {
                            color: $primaryColor;
                        }
                    }
@@ -350,7 +354,12 @@ body {
                 border-bottom: 1px solid #ffffff;
             }
 
-            .fa {
+            .pi {
+                color: #ffffff;
+                vertical-align: middle;
+            }
+
+            .ui-menuitem-icon {
                 color: #ffffff;
                 vertical-align: middle;
             }
@@ -363,7 +372,7 @@ body {
                 background-color: $accentColor;
                 @include border-radius-bottom(0);
                 margin-bottom: 0;
-                a, .fa {
+                a, .ui-menuitem-icon {
                     color: $accentTextColor;
                 }
             }
@@ -396,9 +405,13 @@ body {
                         float: none;
                     }
 
-                    .fa {
+                    .pi {
                         position: static;
                         display: inline-block;
+                        vertical-align: middle;
+                    }
+
+                    .ui-menuitem-icon {
                         vertical-align: middle;
                     }
                 }

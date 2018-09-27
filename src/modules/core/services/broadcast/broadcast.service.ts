@@ -30,7 +30,7 @@ export class BroadcastService {
 
   on<T>(key: any): Observable<T> {
     return this._eventBus.pipe(
-        filter(event => event.key === key)
+        filter(event => event.key === key),
         map(event => <T>event.data)
     )
   }

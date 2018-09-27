@@ -1,19 +1,21 @@
 body {
     .ui-inputtext {
-        background: transparent;
-        border-width: 0 0 1px 0;
-        padding: 2px 2px 1px 2px;
+        background: transparent no-repeat;
+        background-image: linear-gradient(to bottom, $primaryColor, $primaryColor), linear-gradient(to bottom, $inputBorderColor, $inputBorderColor);
+        background-size: 0 2px, 100% 1px;
+        background-position: 50% 100%, 50% 100%;
+        transition: background-size 0.3s cubic-bezier(0.64, 0.09, 0.08, 1);
+        border-width: 0;
+        padding: 2px;
         font-size: $inputFontSize;
-        border-color: $inputBorderColor;
-        border-style: solid;
-        @include transition(border-color .3s);
         @include border-radius(0px);
 
         &:focus,
         &.ui-state-focus {
-            border-width: 0 0 2px 0;
-            border-color: $primaryColor;
-            padding-bottom: 0px;
+            border-width: 0;
+            background-size: 100% 2px, 100% 1px;
+            outline: none;
+            padding-bottom: 2px;
         }
 
         &:disabled {
@@ -22,10 +24,29 @@ body {
 
         &.ui-widget-content {
             border-width: 1px;
+            background: transparent;
+            background-image: none;
         }
 
         &.ui-state-error {
             border-color: $inputBorderErrorColor;
+        }
+
+    }
+
+    .ui-inputtext:-webkit-autofill {
+        border-color: #bdbdbd;
+        border-style: solid;
+        border-width: 0px 0px 1px 0px;
+
+        &.ui-state-focus {
+            padding-bottom: 0px;
+        }
+    }
+
+    .ui-widget-header:not(.ui-dataview-header) {
+        .ui-inputtext {
+            background-image: linear-gradient(to bottom, #ffffff, #ffffff), linear-gradient(to bottom, lighten($primaryColor,25%),  lighten($primaryColor,25%));
         }
     }
 
@@ -33,7 +54,7 @@ body {
         display: block;
         position:relative;
 
-        label {
+        > label {
           color:#999;
           font-weight:normal;
           position:absolute;
@@ -65,6 +86,8 @@ body {
         }
 
         .ui-message {
+            position: absolute;
+
             &.ui-messages-error {
                 background-color: transparent;
                 border: 0 none;
@@ -124,7 +147,6 @@ body {
             }
         }
     }
-
 
     .ui-material-message {
         &.ui-message {
@@ -191,17 +213,11 @@ body {
 
             .ui-listbox-filter-container {
                 .ui-inputtext {
-                    color: #ffffff;
-                    padding: 2px 2px 1px 2px;
+                    padding: 2px;
                     padding-left: 1.5em;
-
-                    &:focus {
-                        padding-bottom: 0;
-                        border-bottom-color: #ffffff;
-                    }
                 }
 
-                .fa {
+                .pi {
                     top: 0;
                     left: 0;
                 }
@@ -221,6 +237,7 @@ body {
         -webkit-box-shadow: 0 1px 2.5px 0 rgba(0, 0, 0, 0.26), 0 1px 5px 0 rgba(0, 0, 0, 0.16);
     	box-shadow: 0 1px 2.5px 0 rgba(0, 0, 0, 0.26), 0 1px 5px 0 rgba(0, 0, 0, 0.16);
         @include transition(background-color .3s);
+        vertical-align: middle;
 
         &:enabled:not(:focus):hover {
             background-color: $primaryDarkColor;
@@ -236,7 +253,7 @@ body {
             line-height: 2.25em;
         }
 
-        .fa {
+        .pi {
             color: #ffffff;
         }
 
@@ -245,7 +262,7 @@ body {
             width: 2.5em;
             height: 2.5em;
 
-            .fa {
+            .pi {
                 margin-left: -.5em;
             }
         }
@@ -294,7 +311,7 @@ body {
 
             &:focus {
                 outline: 0 none;
-                background-color: lighten(#00BCD4,10%);
+                background-color: lighten(#00BCD4,4%);
             }
         }
 
@@ -448,7 +465,84 @@ body {
         }
     }
 
-    .ui-buttonset {
+    .ui-button.ui-state-default.ui-button-secondary, .ui-buttonset.ui-button-secondary > .ui-button.ui-state-default  {
+        color: $textColor;
+        background-color: #ffffff;
+
+        .ui-button-icon-left {
+            color: $textSecondaryColor;
+        }
+
+        .ui-button-icon-right {
+            color: $textSecondaryColor;
+        }
+
+        &:enabled:hover {
+            @include hover-element();
+        }
+
+        &:enabled:focus {
+            background-color: darken(#ffffff, 10%);
+        }
+    }
+
+    .ui-button.ui-state-default.ui-button-info, .ui-buttonset.ui-button-info > .ui-button.ui-state-default  {
+        color: #ffffff;
+        background-color: #03A9F4;
+
+        &:enabled:hover {
+            background-color: #0277BD;
+        }
+
+        &:enabled:focus {
+            outline: 0 none;
+            background-color: lighten(#03A9F4,10%);
+        }
+    }
+
+    .ui-button.ui-state-default.ui-button-success, .ui-buttonset.ui-button-success > .ui-button.ui-state-default  {
+        color: #ffffff;
+        background-color: #4CAF50;
+
+        &:enabled:hover {
+            background-color: #2E7D32;
+        }
+
+        &:enabled:focus {
+            outline: 0 none;
+            background-color: lighten(#4CAF50,10%);
+        }
+    }
+
+    .ui-button.ui-state-default.ui-button-warning, .ui-buttonset.ui-button-warning > .ui-button.ui-state-default  {
+        color: #212121;
+        background-color: #FFC107;
+
+        &:enabled:hover {
+            background-color: #FF8F00;
+        }
+
+        &:enabled:focus {
+            outline: 0 none;
+            background-color: lighten(#FFC107,10%);
+        }
+    }
+
+    .ui-button.ui-state-default.ui-button-danger, .ui-buttonset.ui-button-danger > .ui-button.ui-state-default  {
+        color: #ffffff;
+        background-color: #F44336;
+
+        &:enabled:hover {
+            background-color: #C62828;
+        }
+
+        &:enabled:focus {
+            outline: 0 none;
+            background-color: lighten(#F44336,10%);
+        }
+    }
+
+    .ui-buttonset:not(.ui-button-danger,ui-button-secondary,ui-button-success,ui-button-info,ui-button-warning) {
         .ui-button {
             &:not(.ui-state-disabled):not(.ui-state-active):hover {
                 background-color: $primaryDarkColor;
@@ -457,6 +551,18 @@ body {
             &.ui-state-active {
                 background-color: $accentColor;
                 color: $accentTextColor;
+            }
+        }
+
+
+        &.ui-button-danger {
+            &:enabled:not(:focus):hover {
+                background-color: #C62828;
+            }
+
+            &:focus {
+                outline: 0 none;
+                background-color: lighten(#F44336,10%);
             }
         }
     }
@@ -493,7 +599,8 @@ body {
         }
 
         .ui-menu {
-            // min-width: 100%;
+            width: 100%;
+            min-width: 12.5em;
         }
     }
 
@@ -539,6 +646,10 @@ body {
         }
     }
 
+    .ui-chkbox-label {
+        margin-left: $inlineSpacing;
+    }
+
     .ui-radiobutton {
         position: relative;
         margin: 0 .25em 0 0;
@@ -574,12 +685,23 @@ body {
                 margin: 0;
             }
 
-            .fa-circle {
+            .pi-circle-on {
+                &.pi:before {
+                    content: "circle";
+                }
                 background-color: $primaryColor;
                 -webkit-transform: scale(0.5);
                 transform: scale(0.5);
+                top: 50%;
+                left: 50%;
+                margin-top: -.5em;
+                margin-left: -.5em;
             }
         }
+    }
+
+    .ui-radiobutton-label {
+        margin-left: $inlineSpacing;
     }
 
     .ui-autocomplete-panel {
@@ -631,7 +753,7 @@ body {
                     display: none;
                 }
 
-                .fa {
+                .pi {
                     color: $textSecondaryColor;
                 }
             }
@@ -641,11 +763,7 @@ body {
             .ui-autocomplete-multiple-container {
                 &.ui-inputtext {
                     box-sizing: border-box;
-                    padding: 2px 2px 1px 2px;
-                }
-
-                &.ui-state-focus {
-                    padding-bottom: 0;
+                    padding: 2px;
                 }
 
                 &.ui-state-disabled {
@@ -693,40 +811,53 @@ body {
                 }
             }
         }
+        .ui-inputgroup{
+            .md-inputfield {
+                .ui-autocomplete{
+                    top: 5px;
+                }
+            }
+        }
     }
 
     .ui-dropdown {
-        border-bottom: 1px solid $inputBorderColor;
+        border-width: 0;
+        background: transparent no-repeat;
+        background-image: linear-gradient(to bottom, $primaryColor, $primaryColor), linear-gradient(to bottom, $inputBorderColor, $inputBorderColor);
+        background-size: 0 2px, 100% 1px;
+        background-position: 50% 100%, 50% 100%;
+        transition: background-size 0.3s cubic-bezier(0.64, 0.09, 0.08, 1);
+        padding-bottom: 2px;
         box-sizing: border-box;
         @include border-radius(0);
-        @include transition(border-color .3s);
 
         .ui-dropdown-trigger {
             height: 1.5em;
             width: 1.5em;
             margin-top: 0;
             padding: 0;
-            top: 0;
+            top: 2px;
             margin-right: 0;
 
-            .fa {
+            .pi {
                 color: $textSecondaryColor;
-                margin-top: 0;
-                margin-left: 0;
             }
         }
 
         .ui-dropdown-label {
+            background: none;
             &.ui-inputtext {
                 font: $inputFontSize "Roboto","Helvetica Neue",sans-serif;
             }
         }
 
-        &.ui-state-focus {
-            border-bottom: 2px solid $primaryColor;
+        &:not(.ui-state-disabled).ui-state-focus {
+            border-width: 0;
+            background-size: 100% 2px, 100% 1px;
+            padding-bottom: 2px;
 
             .ui-dropdown-label {
-                padding-bottom: 0;
+                padding-bottom: 2px;
             }
         }
     }
@@ -746,13 +877,13 @@ body {
             @include transition(background-color .3s);
             @include border-radius(0);
 
-            &:hover {
-                @include hover-element();
-            }
-
             &.ui-state-highlight {
                 background-color: $accentColor;
                 color: $accentTextColor;
+            }
+
+            &:not(.ui-state-highlight):not(.ui-state-disabled):hover {
+                @include hover-element();
             }
         }
 
@@ -774,7 +905,7 @@ body {
                 }
             }
 
-            .fa {
+            .pi {
                 top: .325em;
                 right: .75em;
                 color: #ffffff;
@@ -801,16 +932,14 @@ body {
             width: 1.5em;
             margin-top: 0;
             padding: 0;
-            top: .063em;
+            top: -2px;
 
-            .fa {
+            .pi {
                 color: $textSecondaryColor;
-                margin-top: auto;
-                margin-left: auto;
             }
         }
 
-        &.ui-state-focus {
+        &:not(.ui-state-disabled).ui-state-focus {
             border-bottom: 2px solid $primaryColor;
         }
     }
@@ -858,14 +987,13 @@ body {
                 float: none;
                 margin-left: 0;
 
-                .fa {
+                .pi {
                     top: 0;
                     left: 0;
-                    color: #ffffff;
                 }
 
                 .ui-inputtext {
-                    color: #ffffff;
+                    padding: 2px;
                     padding-left: 1.5em;
                     width: 100%;
                     box-sizing: border-box;
@@ -884,6 +1012,13 @@ body {
                 width: 1.5em;
 
                 span {
+                    position: absolute;
+                    left: 50%;
+                    top: 50%;
+                    width: 1em;
+                    height: 1em;
+                    margin-top: -.5em;
+                    margin-left: -.5em;
                     color: #ffffff;
                 }
 
@@ -901,7 +1036,7 @@ body {
             color: $textColor;
             @include border-radius(0);
 
-            &:not(.ui-state-highlight):hover {
+            &:not(.ui-state-highlight):not(.ui-state-disabled):hover {
                 @include hover-element();
             }
 
@@ -922,15 +1057,15 @@ body {
             z-index: auto;
             @include no-shadow();
 
-            .fa-triangle-1-n {
+            .pi-triangle-1-n {
                 color: $textColor;
             }
 
-            .fa-triangle-1-s {
+            .pi-triangle-1-s {
                 color: $textColor;
             }
 
-            .fa {
+            .pi {
                 top: 0px;
                 height: .5em;
                 color: $textSecondaryColor;
@@ -943,13 +1078,13 @@ body {
         }
 
         .ui-spinner-up {
-            .fa {
+            .pi {
                 top: .25em;
             }
         }
 
         .ui-spinner-down {
-            .fa {
+            .pi {
                 top: .167em;
             }
         }
@@ -965,7 +1100,7 @@ body {
                 width: 1em;
                 height: .75em;
 
-                .fa {
+                .pi {
                     left: auto;
                 }
             }
@@ -975,40 +1110,66 @@ body {
     .ui-inputswitch {
         height: 14px;
         width: 34px !important;
-        overflow: visible;
-        background-color: rgb(158,158,158);
-        border-color: rgb(158,158,158);
-        @include border-radius(8px);
 
-        .ui-inputswitch-handle {
-            top: -4px;
-            background-color: #ffffff;
-            @include border-radius(50%);
+        .ui-inputswitch-slider {
+            background-color: rgb(158,158,158);
+            @include border-radius(8px);
             @include transition(background-color .3s);
-            width: 20px !important;
-            height: 20px !important;
-            -webkit-box-shadow: rgba(0, 0, 0, 0.2) 0px 1px 3px 0px, rgba(0, 0, 0, 0.137255) 0px 1px 1px 0px, rgba(0, 0, 0, 0.117647) 0px 2px 1px -1px;
-            -moz-box-shadow: rgba(0, 0, 0, 0.2) 0px 1px 3px 0px, rgba(0, 0, 0, 0.137255) 0px 1px 1px 0px, rgba(0, 0, 0, 0.117647) 0px 2px 1px -1px;
-            box-shadow: rgba(0, 0, 0, 0.2) 0px 1px 3px 0px, rgba(0, 0, 0, 0.137255) 0px 1px 1px 0px, rgba(0, 0, 0, 0.117647) 0px 2px 1px -1px;
-        }
 
-        .ui-inputswitch-on {
-            visibility: hidden;
-        }
-
-        .ui-inputswitch-off, .ui-inputswitch-on {
-            span {
-                visibility: hidden;
+            &:before {
+                background-color: #ffffff;
+                height: 1.429em;
+                width: 1.429em;
+                left: 0;
+                bottom: -0.214em;
+                border-radius: 50%;
+                -webkit-transition: $transitionDuration;
+                transition: $transitionDuration;
+                -webkit-box-shadow: rgba(0, 0, 0, 0.2) 0px 1px 3px 0px, rgba(0, 0, 0, 0.137255) 0px 1px 1px 0px, rgba(0, 0, 0, 0.117647) 0px 2px 1px -1px;
+                -moz-box-shadow: rgba(0, 0, 0, 0.2) 0px 1px 3px 0px, rgba(0, 0, 0, 0.137255) 0px 1px 1px 0px, rgba(0, 0, 0, 0.117647) 0px 2px 1px -1px;
+                box-shadow: rgba(0, 0, 0, 0.2) 0px 1px 3px 0px, rgba(0, 0, 0, 0.137255) 0px 1px 1px 0px, rgba(0, 0, 0, 0.117647) 0px 2px 1px -1px;
             }
         }
 
         &.ui-inputswitch-checked {
-            background-color: $accentLightColor;
-            border-color: $accentLightColor;
+            .ui-inputswitch-slider:before {
+                -webkit-transform: translateX(1.250em);
+                -ms-transform: translateX(1.250em);
+                transform: translateX(1.250em);
+            }
+        }
 
-            .ui-inputswitch-handle {
-                background-color: $accentColor;
-                color: $accentTextColor;
+        &.ui-inputswitch-focus {
+            .ui-inputswitch-slider {
+                background-color: rgb(158,158,158);
+            }
+        }
+
+        &:not(.ui-state-disabled):hover {
+            .ui-inputswitch-slider {
+                background-color: rgb(158,158,158);
+            }
+        }
+
+        &.ui-inputswitch-checked {
+            .ui-inputswitch-slider {
+                background-color: $accentLightColor;
+
+                &:before {
+                    background-color: $accentColor
+                }
+            }
+
+            &:not(.ui-state-disabled):hover {
+                .ui-inputswitch-slider {
+                    background-color: $accentLightColor;
+                }
+            }
+
+            &.ui-inputswitch-focus {
+                .ui-inputswitch-slider {
+                    background: $accentLightColor;
+                }
             }
         }
     }
@@ -1067,6 +1228,9 @@ body {
     }
 
     .ui-calendar {
+        .ui-datepicker {
+            min-width: auto;
+        }
         .ui-datepicker-trigger {
             bottom: 2px;
             right: 0;
@@ -1077,7 +1241,7 @@ body {
             @include no-shadow();
             @include border-radius(0);
 
-            .fa {
+            .pi {
                 color: $textSecondaryColor;
             }
 
@@ -1097,10 +1261,35 @@ body {
 
     .ui-datepicker {
         padding: 0;
-        width: 17.5em;
+        width: 20em;
 
         &.ui-shadow {
             @include overlay-input-shadow();
+        }
+
+        &:not(.ui-state-disabled) {
+            .ui-datepicker-header {
+                .ui-datepicker-prev,
+                .ui-datepicker-next {
+                    &:hover {
+                        background-color: $primaryLightColor;
+                    }
+                }
+            }
+
+            table {
+                td {
+                    a:not(.ui-state-active):not(.ui-state-highlight):hover {
+                        @include hover-element();
+                    }
+                }
+            }
+
+            .ui-monthpicker {
+                a.ui-monthpicker-month:not(.ui-state-active):hover {
+                    @include hover-element();
+                }
+            }
         }
 
         .ui-datepicker-header {
@@ -1120,12 +1309,8 @@ body {
                 @include transition(background-color .3s);
                 color: #ffffff;
 
-                .fa {
+                .pi {
                     display: none;
-                }
-
-                &:hover {
-                    background-color: $primaryLightColor;
                 }
             }
 
@@ -1138,12 +1323,8 @@ body {
                 @include transition(background-color .3s);
                 color: #ffffff;
 
-                .fa {
+                .pi {
                     display: none;
-                }
-
-                &:hover {
-                    background-color: $primaryLightColor;
                 }
             }
 
@@ -1178,7 +1359,6 @@ body {
                         background: lighten($primaryColor,20%);
 
                         &.ui-state-active {
-                            color: #ffffff;
                             background-color: $accentColor;
                             color: $accentTextColor;
                         }
@@ -1197,13 +1377,8 @@ body {
                     line-height: 1.8em;
 
                     &.ui-state-active {
-                        color: #ffffff;
                         background-color: $accentColor;
                         color: $accentTextColor;
-                    }
-
-                    &:not(.ui-state-active):not(.ui-state-highlight):hover {
-                        @include hover-element();
                     }
 
                     span {
@@ -1227,17 +1402,53 @@ body {
                         margin-bottom: .25em;
                     }
 
-                    .fa {
-                        &.fa-angle-up {
+                    .pi {
+                        &.pi-angle-up {
                             @include rotate(0);
                             @include material-icon("keyboard_arrow_up");
                         }
 
-                        &.fa-angle-down {
+                        &.pi-angle-down {
                             @include rotate(0);
                             @include material-icon("keyboard_arrow_down");
                         }
                     }
+                }
+            }
+        }
+
+        .ui-monthpicker {
+            .ui-monthpicker-month {
+                color: $textColor;
+
+                &.ui-state-active {
+                    color: #ffffff;
+                    background-color: $accentColor;
+                }
+            }
+        }
+
+        &.ui-datepicker-multiple-month {
+            width: auto;
+            .ui-datepicker-group {
+                border-right: 1px solid $dividerColor;
+                padding-top: 0;
+                padding-bottom: 0;
+
+                .ui-datepicker-calendar-container {
+                    tbody {
+                        padding-right: .25em;
+                        padding-left: .25em;
+                    }
+                }
+
+                &:first-child {
+                    padding-left: 0;
+                }
+
+                &:last-child {
+                    padding-right: 0;
+                    border-right: 0 none;
                 }
             }
         }
@@ -1248,19 +1459,20 @@ body {
     }
 
     .ui-rating {
+        font-size: inherit;
         min-height: 1.5em;
 
-        .fa-ban {
+        .pi-ban {
             @include material-icon("cancel");
             color: $textSecondaryColor;
         }
 
-        .fa-star {
+        .pi-star {
             @include material-icon("star");
             color: $textSecondaryColor;
         }
 
-        .fa-star-o {
+        .pi-star-o {
             @include material-icon("star_border");
             color: $textSecondaryColor;
         }
@@ -1268,18 +1480,14 @@ body {
 
     .ui-chips {
         > ul.ui-inputtext {
-            padding: 2px 2px 1px 2px;
 
             &.ui-state-disabled {
                 border-bottom: 1px dotted;
             }
 
-            &.ui-state-focus {
-                padding-bottom: 0;
-            }
-
             .ui-chips-input-token {
                 padding-bottom: 2px;
+                margin-bottom: 2px;
 
                 > input {
                     padding: 0;
@@ -1298,6 +1506,7 @@ body {
                 float: none;
                 vertical-align: middle;
                 font-size: 1em;
+                margin-bottom: 2px;
 
                 .ui-chips-token-label {
                     display: inline-block;
@@ -1317,7 +1526,7 @@ body {
         .ui-fileupload-buttonbar {
             padding: $headerPadding;
 
-            .fa-arrowreturnthick-1-n {
+            .pi-arrowreturnthick-1-n {
                 @include icon_override('file_upload');
             }
 
@@ -1332,7 +1541,7 @@ body {
 
         .ui-fileupload-content {
             .ui-messages-error {
-                .fa {
+                .pi {
                     color: #ffffff;
                 }
             }
@@ -1367,6 +1576,9 @@ body {
     /* InputGroup */
     .ui-inputgroup {
         .ui-inputgroup-addon {
+            &.ui-inputgroup-addon-fill {
+                background-color: $textboxBgColor;
+            }
             border-width: 0 0 1px 0;
             border-color: $inputBorderColor;
             color: $textSecondaryColor;
@@ -1393,10 +1605,33 @@ body {
             label {
                 top: 5px;
             }
+            .ui-inputwrapper-filled ~ label {
+                top:-20px;
+            }
+            .ui-inputwrapper-focus ~ label {
+                top:-20px;
+            }
+
+            .ui-message {
+                top: 100%;
+            }
         }
 
         .ui-chkbox, .ui-radiobutton {
             margin-bottom: .125em;
+        }
+    }
+
+    .ui-selectbutton {
+        .ui-button {
+            &:not(.ui-state-active):not(.ui-state-disabled):hover {
+                background-color: $primaryDarkColor;
+            }
+
+            &.ui-state-active {
+                background-color: $accentColor;
+                color: $accentTextColor;
+            }
         }
     }
 
@@ -1418,7 +1653,8 @@ body {
     .ui-inputtext.ng-dirty.ng-invalid,
     p-dropdown.ng-dirty.ng-invalid > .ui-dropdown,
     p-autocomplete.ng-dirty.ng-invalid > .ui-autocomplete > .ui-inputtext,
-    p-calendar.ng-dirty.ng-invalid > .ui-inputtext,
+    p-calendar.ng-dirty.ng-invalid > .ui-calendar > .ui-inputtext,
+    p-chips.ng-dirty.ng-invalid > .ui-inputtext,
     p-inputmask.ng-dirty.ng-invalid > .ui-inputtext,
     p-checkbox.ng-dirty.ng-invalid .ui-chkbox-box,
     p-radiobutton.ng-dirty.ng-invalid .ui-radiobutton-box,
@@ -1428,7 +1664,7 @@ body {
     p-spinner.ng-dirty.ng-invalid > .ui-inputtext,
     p-selectbutton.ng-dirty.ng-invalid .ui-button,
     p-togglebutton.ng-dirty.ng-invalid .ui-button {
-        border-bottom-color: $invalidInputBorderColor;
+        background-image: linear-gradient(to bottom, $invalidInputBorderColor, $invalidInputBorderColor), linear-gradient(to bottom, $invalidInputBorderColor, $invalidInputBorderColor);
     }
 }
 
