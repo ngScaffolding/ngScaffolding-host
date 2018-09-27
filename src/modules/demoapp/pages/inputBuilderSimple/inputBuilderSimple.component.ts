@@ -118,8 +118,6 @@ export class InputBuilderSimpleComponent {
       },
       <InputDetailToggleButton>{
         label: 'Switch Here',
-        onLabel: 'On',
-        offLabel: 'Off',
         name: 'switch',
         value: true,
         type: InputTypes.switch

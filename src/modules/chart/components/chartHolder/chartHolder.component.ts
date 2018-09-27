@@ -5,7 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { MenuService } from '../../../core/services/menu/menu.service';
 import { LoggingService } from '../../../core/services/logging/logging.service';
 import { CoreMenuItem } from '@ngscaffolding/models';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { ChartDetailModel } from '../../models/chartDetail.model';
 
 @Component({

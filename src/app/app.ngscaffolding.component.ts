@@ -11,7 +11,8 @@ import {
 
 import { Router, NavigationEnd, NavigationError, NavigationStart } from '@angular/router';
 import { Title } from '@angular/platform-browser';
-import 'rxjs/add/operator/filter';
+import { map, filter, scan } from 'rxjs/operators';
+
 import { UserPreferenceValue } from '@ngscaffolding/models';
 import { LoggingService, AppSettingsService, SpinnerService } from '../modules/core/coreModule';
 import { UserAuthorisationBase, UserPreferencesService } from '../modules/core/coreModule';
@@ -67,11 +68,11 @@ export class NgScaffoldingComponent implements AfterViewInit {
     });
 
     // Router Events capture here
-    this.router.events
-      .filter(event => event instanceof NavigationEnd)
-      .subscribe(event => {
-        this.spinnerService.hideSpinner();
-      });
+    this.router.events.pipe(
+        filter(event => event instanceof NavigationEnd)
+      ).subscribe(event => {
+          this.spinnerService.hideSpinner();
+        });
 
       this.userPreferencesService.preferenceValuesSubject.subscribe(
         prefValues => {

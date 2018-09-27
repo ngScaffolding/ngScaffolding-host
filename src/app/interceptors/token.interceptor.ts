@@ -11,7 +11,7 @@ import {
   UserAuthorisationBase,
   LoggingService
 } from '../../modules/core/coreModule';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { finalize, tap } from 'rxjs/operators';
 
 @Injectable()

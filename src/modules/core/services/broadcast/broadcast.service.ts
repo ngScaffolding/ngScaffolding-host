@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs/Subject';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/filter';
-import 'rxjs/add/operator/map';
+
+import { Subject } from 'rxjs/internal/Subject';
+import { Observable } from 'rxjs';
+import { map, filter } from 'rxjs/operators';
 
 interface BroadcastEvent {
   key: any;
@@ -29,9 +29,9 @@ export class BroadcastService {
   }
 
   on<T>(key: any): Observable<T> {
-    return this._eventBus
-      .asObservable()
-      .filter(event => event.key === key)
-      .map(event => <T>event.data);
+    return this._eventBus.pipe(
+        filter(event => event.key === key)
+        map(event => <T>event.data)
+    )
   }
 }

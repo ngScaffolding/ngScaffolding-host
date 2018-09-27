@@ -4,7 +4,7 @@ import {
   SoftwareVersion,
   UserPreferencesService
 } from '../../../modules/core/coreModule';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 import { InputBuilderDefinition, OrientationValues } from '@ngscaffolding/models';
 
 @Component({

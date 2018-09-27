@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Observable } from 'rxjs/Observable';
+import { BehaviorSubject ,  Observable } from 'rxjs';
 
 import { UserAuthorisationBase } from '../userAuthorisation/UserAuthorisationBase';
 import { AppSettingsService } from '../appSettings/appSettings.service';

@@ -5,7 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { MenuService } from '../../../core/services/menu/menu.service';
 import { LoggingService } from '../../../core/services/logging/logging.service';
 import { CoreMenuItem, GridViewDetail } from '@ngscaffolding/models';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-datagrid-holder',

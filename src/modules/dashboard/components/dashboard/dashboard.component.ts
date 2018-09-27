@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, ComponentRef, ViewChildren, QueryList, On
 import { DataSourceService, LoggingService, MenuService } from '../../../core/services';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CoreMenuItem, WidgetModel } from '@ngscaffolding/models';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 import { DashboardModel } from '@ngscaffolding/models';
 

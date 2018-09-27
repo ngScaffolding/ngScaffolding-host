@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { LoggingService } from '../../core/coreModule';
 
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 // Models
 import { KumulosResponse } from '../models/kumulosResponse.model';

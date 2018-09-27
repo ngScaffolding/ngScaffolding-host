@@ -5,7 +5,7 @@ import { ScrollPanel } from 'primeng/primeng';
 import { Router } from '@angular/router';
 import { NgScaffoldingComponent } from './app.ngscaffolding.component';
 import { Title } from '@angular/platform-browser';
-import 'rxjs/add/operator/filter';
+
 import { LoggingService, AppSettingsService, SpinnerService } from '../modules/core/coreModule';
 import { UserAuthorisationBase, UserPreferencesService } from '../modules/core/coreModule';
 import { BroadcastService, BroadcastTypes, MenuService } from '../modules/core/coreModule';

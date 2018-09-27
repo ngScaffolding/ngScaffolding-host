@@ -45,7 +45,7 @@ import {
   ButtonCellComponent,
   ActionClickedData
 } from '../../cellTemplates/buttonCell/buttonCell.component';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-data-grid',
