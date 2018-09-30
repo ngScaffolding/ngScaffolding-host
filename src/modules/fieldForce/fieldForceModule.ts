@@ -2,7 +2,7 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 import { VERSION } from './version';
 import { CommonModule } from '@angular/common';
 
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule, Routes, Router, Route } from '@angular/router';
 
 import { AppSettings } from '@ngscaffolding/models';
 
@@ -17,13 +17,15 @@ import {
 import { InputBuilderModule } from '../inputbuilder/inputbuilderModule';
 
 import { DatagridModule } from '../datagrid/datagridModule';
-
+import { DynamicComponentService } from '../core/services/dynamicComponent/dynamicComponent.service';
 import { MachineDetailsComponent } from './pages/Finder/MachineDetails/machineDetails.component';
 
 // export * from './pages';
 
+const machineDetailsRoute: Route =  { path: 'fieldforcemachinedetails', component: MachineDetailsComponent, outlet: 'popup' };
+
 const appRoutes: Routes = [
-  { path: 'fieldforcemachinedetails', component: MachineDetailsComponent, outlet: 'popup' }
+  machineDetailsRoute
   // { path: 'inputbuildersimpletest', component: InputBuilderSimpleComponent, canActivate: [AuthoriseRoleGuard]  }
 ];
 
@@ -50,9 +52,11 @@ export class FieldForceAppModule {
 
   constructor(
     appSettingsService: AppSettingsService,
+    dynamicComponentService: DynamicComponentService,
     menuService: MenuService,
     logger: LoggingService,
-    versions: VersionsService
+    versions: VersionsService,
+    router: Router
   ) {
     logger.info('Setting Values', 'FieldForce.startup');
 
@@ -90,6 +94,8 @@ export class FieldForceAppModule {
       'FieldForce Terms and Conditions Here. Lorem ipsum dolor sit amet, consectetur adipiscing elit.';
 
     appSettingsService.setValues(settings);
+
+    dynamicComponentService.registerComponent(machineDetailsRoute);
 
     menuService.addMenuItems([
       {
