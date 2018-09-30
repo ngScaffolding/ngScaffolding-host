@@ -62,6 +62,7 @@ import { NotificationReceiverService } from './services/notificationReceiver/not
 import { TokenInterceptor } from './interceptors/token.interceptor';
 import { KumulosAuthService } from '../modules/kumulosImplementation/services/kumulosAuth.service';
 import { KumulosDataService } from '../modules/kumulosImplementation/services/kumulosData.service';
+import { DynamicComponentService } from '../modules/core/services/dynamicComponent/dynamicComponent.service';
 
 export function jwtOptionsFactory(appSettings: AppSettingsService) {
   return {
@@ -148,6 +149,7 @@ const appInitializerFn = (appConfig: AppSettingsService) => {
         AuthoriseRoleGuard,
         { provide: UserAuthorisationBase, useClass: UserAuthorisationService},
         KumulosDataService,
+        DynamicComponentService,
         BroadcastService,
         CacheService,
         LoggingService,
@@ -165,7 +167,7 @@ const appInitializerFn = (appConfig: AppSettingsService) => {
     bootstrap: [AppComponent]
 })
 export class AppModule {
-  constructor(private versions: VersionsService, private router: Router) {
+  constructor(private versions: VersionsService, private router: Router, private dynamicComponents: DynamicComponentService) {
   versions.addVersion('@ngscaffolding/host', VERSION.version);
 
   this.router.events.subscribe(async routerEvent => {
@@ -173,7 +175,7 @@ export class AppModule {
     if (routerEvent instanceof NavigationStart) {
       const event = routerEvent as NavigationStart;
       if (event.url.startsWith('/datagrid')) {
-        addDynamicDatagridComponents(this.router.config, event.url);
+        addDynamicDatagridComponents(this.router.config, this.dynamicComponents);
       }
     }
   });

@@ -24,10 +24,7 @@ import { DataGridHolderComponent } from './components/dataGridHolder/dataGridHol
 import { ColumnPickerComponent } from './components/columnPicker/columnPicker.component';
 
 const appRoutes: Routes = [
-  { path: 'datagrid/:id', component: DataGridHolderComponent, canActivate: [AuthoriseRoleGuard] , children: [
-
-  ] }
-  ,{ path: 'toolbar', component: ToolBarComponent, outlet: 'popup' }
+  { path: 'datagrid/:id', component: DataGridHolderComponent, canActivate: [AuthoriseRoleGuard], children: [] }
 ];
 
 @NgModule({
