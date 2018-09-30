@@ -11,7 +11,7 @@ import {
   SimpleChanges
 } from '@angular/core';
 
-import { ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { GridOptions, ColDef, ColDefUtil } from 'ag-grid/main';
 
 import {
@@ -93,6 +93,7 @@ export class DataGridComponent implements OnInit, OnDestroy, OnChanges {
   private gridSavedState: any;
 
   constructor(
+    private router: Router,
     private logger: LoggingService,
     private route: ActivatedRoute,
     private notification: NotificationService,
@@ -428,6 +429,16 @@ export class DataGridComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   ngOnInit(): void {
+    this.router.navigate([ { outlets: { popup: [ 'fieldforcemachinedetails' ] }}], { skipLocationChange: true, relativeTo: this.route })
+    .then(res => {
+      let x = 9;
+
+    })
+    .catch(err => {
+      let x = 9;
+
+    });
+
     // watch for Prefs changes
     this.prefsSubscription = this.prefService.preferenceValuesSubject.subscribe(
       prefs => {

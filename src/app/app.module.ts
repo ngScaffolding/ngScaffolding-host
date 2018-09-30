@@ -5,7 +5,8 @@ import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {LocationStrategy, HashLocationStrategy} from '@angular/common';
 import {AppRoutes} from './app.routes';
-
+import { Router, RouteConfigLoadEnd, NavigationStart } from '@angular/router';
+import { addDynamicDatagridComponents } from '../classes/dynamicDatagrid';
 
 import {AppComponent} from './app.component';
 import {AppMenuComponent, AppSubMenuComponent} from './app.menu.component';
@@ -164,9 +165,17 @@ const appInitializerFn = (appConfig: AppSettingsService) => {
     bootstrap: [AppComponent]
 })
 export class AppModule {
-  constructor(private versions: VersionsService) {
+  constructor(private versions: VersionsService, private router: Router) {
   versions.addVersion('@ngscaffolding/host', VERSION.version);
+
+  this.router.events.subscribe(async routerEvent => {
+
+    if (routerEvent instanceof NavigationStart) {
+      const event = routerEvent as NavigationStart;
+      if (event.url.startsWith('/datagrid')) {
+        addDynamicDatagridComponents(this.router.config, event.url);
+      }
+    }
+  });
 }
-
-
 }

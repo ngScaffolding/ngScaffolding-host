@@ -6,16 +6,24 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { AppSettings } from '@ngscaffolding/models';
 
-import { AppSettingsService, MenuService, LoggingService, VersionsService, AuthoriseRoleGuard } from '../core/coreModule';
+import {
+  AppSettingsService,
+  MenuService,
+  LoggingService,
+  VersionsService,
+  AuthoriseRoleGuard
+} from '../core/coreModule';
 
 import { InputBuilderModule } from '../inputbuilder/inputbuilderModule';
 
 import { DatagridModule } from '../datagrid/datagridModule';
 
+import { MachineDetailsComponent } from './pages/Finder/MachineDetails/machineDetails.component';
+
 // export * from './pages';
 
 const appRoutes: Routes = [
-  // { path: 'inputbuildersimple', component: InputBuilderSimpleComponent, canActivate: [AuthoriseRoleGuard]  },
+  { path: 'fieldforcemachinedetails', component: MachineDetailsComponent, outlet: 'popup' }
   // { path: 'inputbuildersimpletest', component: InputBuilderSimpleComponent, canActivate: [AuthoriseRoleGuard]  }
 ];
 
@@ -27,12 +35,11 @@ const appRoutes: Routes = [
     RouterModule.forChild(appRoutes)
   ],
   declarations: [
-    // InputBuilderSimpleComponent
+    MachineDetailsComponent
   ],
   exports: [
-    // InputBuilderSimpleComponent,
-    RouterModule
-  ]
+    // MachineDetailsComponent,
+    RouterModule]
 })
 export class FieldForceAppModule {
   static forRoot(): ModuleWithProviders {
@@ -44,7 +51,8 @@ export class FieldForceAppModule {
   constructor(
     appSettingsService: AppSettingsService,
     menuService: MenuService,
-    logger: LoggingService, versions: VersionsService
+    logger: LoggingService,
+    versions: VersionsService
   ) {
     logger.info('Setting Values', 'FieldForce.startup');
 
@@ -66,7 +74,6 @@ export class FieldForceAppModule {
     settings.showFullMessages = false;
     settings.showToastMessages = true;
 
-
     settings.showProfileSetting = false;
     settings.showUserSetting = false;
     settings.showProfilePicture = false;
@@ -84,25 +91,17 @@ export class FieldForceAppModule {
 
     appSettingsService.setValues(settings);
 
-    // menuService.addMenuItems([
-    //   {label: 'DataGrid Samples',
-    // items: [
-    //   {
-    //     label: 'Data Grid Test',
-    //     icon: 'grid',
-    //     routerLink: 'datagridtest'
-    //   }
-    // ]},
-    //   {
-    //     label: 'Input Builder (Simple)',
-    //     items: [
-    //       {
-    //         label: 'Input Builder (Works)',
-    //         icon: 'brush',
-    //         routerLink: 'inputbuildersimple'
-    //       }
-    //     ]
-    //   }
-    // ]);
+    menuService.addMenuItems([
+      {
+        label: 'Input Builder (Simple)',
+        items: [
+          {
+            label: 'Input Builder (Works)',
+            icon: 'brush',
+            routerLink: 'fieldforcemachinedetails'
+          }
+        ]
+      }
+    ]);
   }
 }
