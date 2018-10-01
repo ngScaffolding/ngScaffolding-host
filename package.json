@@ -40,7 +40,7 @@
     "highcharts-custom-events": "^2.0.20",
     "intl": "1.2.5",
     "jsoneditor": "^5.17.1",
-    "moment": "2.18.1",
+    "moment": "2.19.3",
     "ng-dynamic-component": "^3.0.0",
     "ngx-cookie": "^2.0.0",
     "ngx-cookie-service": "^1.0.9",
