@@ -105,26 +105,29 @@ export class MenuService {
   private addDownloadedMenuItem(targetMenu: CoreMenuItem[], newMenuItem: CoreMenuItem) {
     let calcRouterLink: string | string[];
 
-    if (newMenuItem.routerLink && (<string>newMenuItem.routerLink).indexOf(',') > -1) {
-      calcRouterLink = (<string>newMenuItem.routerLink).split(',');
-    } else {
-      calcRouterLink = newMenuItem.routerLink;
-    }
+    // Don't add if we already know about this
+    if (targetMenu && !targetMenu.find(menu => menu.name === newMenuItem.name)) {
+      if (newMenuItem.routerLink && (<string>newMenuItem.routerLink).indexOf(',') > -1) {
+        calcRouterLink = (<string>newMenuItem.routerLink).split(',');
+      } else {
+        calcRouterLink = newMenuItem.routerLink;
+      }
 
-    const createdMenuItem: CoreMenuItem = {...newMenuItem, routerLink: calcRouterLink};
+      const createdMenuItem: CoreMenuItem = {...newMenuItem, routerLink: calcRouterLink};
 
-    if (createdMenuItem.jsonSerialized && !createdMenuItem.menuDetails) {
-      createdMenuItem.menuDetails = JSON.parse(createdMenuItem.jsonSerialized);
-    }
+      if (createdMenuItem.jsonSerialized && !createdMenuItem.menuDetails) {
+        createdMenuItem.menuDetails = JSON.parse(createdMenuItem.jsonSerialized);
+      }
 
-    targetMenu.push(createdMenuItem);
+      targetMenu.push(createdMenuItem);
 
-    if (newMenuItem.items && newMenuItem.items.length > 0) {
-      createdMenuItem.items = [];
-      const castItems = newMenuItem.items as CoreMenuItem[];
-      castItems.forEach(menuItem => {
-        this.addDownloadedMenuItem(createdMenuItem.items as CoreMenuItem[], menuItem);
-      });
+      if (newMenuItem.items && newMenuItem.items.length > 0) {
+        createdMenuItem.items = [];
+        const castItems = newMenuItem.items as CoreMenuItem[];
+        castItems.forEach(menuItem => {
+          this.addDownloadedMenuItem(createdMenuItem.items as CoreMenuItem[], menuItem);
+        });
+      }
     }
   }
 }
