@@ -1,8 +1,3 @@
-<a [routerLink]="[{ outlets: { popup: ['toolbar'] } }]">Aux third component</a>
-<h2>Router Outlet</h2>
-<router-outlet name="popup"></router-outlet>
-<h2>Router End</h2>
-
 <p-card id="gridContainer">
   <p-header>
     <div class="ui-g">
@@ -19,8 +14,6 @@
     </div>
   </p-header>
 
-
-
   <div appFillHeight>
     <filters-holder #filtersHolder [hidden]="!showFilters" [filterDefinition]="filters" [filterValues]="filterValues" (valuesUpdated)="onFiltersUpdated($event)"></filters-holder>
 
@@ -32,7 +25,8 @@
     <app-input-builder-popup #actionInputPopup [inputBuilderDefinition]="actionInputDefinition" [inputModel]="actionValues" (okClicked)="actionOkClicked($event)"
       (cancelCliecked)="actionCancelClicked()"></app-input-builder-popup>
 
-
-
+      <p-dialog title="Input Details" [(visible)]="popupShown" [contentStyle]="{'overflow':'visible'}">
+        <router-outlet name="popup"></router-outlet>
+      </p-dialog>
 
   </div>

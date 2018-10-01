@@ -26,7 +26,6 @@ const machineDetailsRoute: Route =  { path: 'fieldforcemachinedetails', componen
 
 const appRoutes: Routes = [
   machineDetailsRoute
-  // { path: 'inputbuildersimpletest', component: InputBuilderSimpleComponent, canActivate: [AuthoriseRoleGuard]  }
 ];
 
 @NgModule({
