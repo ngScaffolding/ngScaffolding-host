@@ -6,6 +6,8 @@ import { RouterModule, Routes, Router, Route } from '@angular/router';
 
 import { AppSettings } from '@ngscaffolding/models';
 
+
+
 import {
   AppSettingsService,
   MenuService,
@@ -19,6 +21,22 @@ import { InputBuilderModule } from '../inputbuilder/inputbuilderModule';
 import { DatagridModule } from '../datagrid/datagridModule';
 import { DynamicComponentService } from '../core/services/dynamicComponent/dynamicComponent.service';
 import { MachineDetailsComponent } from './pages/Finder/MachineDetails/machineDetails.component';
+import { DetailsListComponent } from './components/detailsList/detailsList.component';
+
+import { ButtonModule } from 'primeng/primeng';
+import { CheckboxModule } from 'primeng/primeng';
+import { SharedModule } from 'primeng/primeng';
+import { DialogModule } from 'primeng/primeng';
+import { DropdownModule } from 'primeng/primeng';
+import { EditorModule } from 'primeng/primeng';
+import { FieldsetModule } from 'primeng/primeng';
+import { InputTextModule } from 'primeng/primeng';
+import { MultiSelectModule } from 'primeng/primeng';
+import { PanelModule } from 'primeng/primeng';
+import { ProgressSpinnerModule } from 'primeng/primeng';
+import { SpinnerModule } from 'primeng/primeng';
+import { TabMenuModule } from 'primeng/primeng';
+import { TabViewModule } from 'primeng/primeng';
 
 // export * from './pages';
 
@@ -33,10 +51,25 @@ const appRoutes: Routes = [
     CommonModule,
     InputBuilderModule,
     DatagridModule,
+    ButtonModule,
+    CheckboxModule,
+    SharedModule,
+    DialogModule,
+    DropdownModule,
+    EditorModule,
+    FieldsetModule,
+    InputTextModule,
+    MultiSelectModule,
+    PanelModule,
+    ProgressSpinnerModule,
+    SpinnerModule,
+    TabMenuModule,
+    TabViewModule,
     RouterModule.forChild(appRoutes)
   ],
   declarations: [
-    MachineDetailsComponent
+    MachineDetailsComponent,
+    DetailsListComponent
   ],
   exports: [
     // MachineDetailsComponent,

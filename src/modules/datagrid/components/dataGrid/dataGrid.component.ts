@@ -82,7 +82,11 @@ export class DataGridComponent implements OnInit, OnDestroy, OnChanges {
   showFilters = true;
   showToolPanel = false;
 
+  // Dialog Settings
   popupShown = false;
+  popupHeader = '';
+  popupWidth = 300;
+  popupHeight: any|number = undefined;
 
   private gridviewPrefPrefix = 'GridViewPrefs_';
 
@@ -319,7 +323,6 @@ export class DataGridComponent implements OnInit, OnDestroy, OnChanges {
   //
   actionClicked(action: Action, row: any) {
 
-
     // check if we need confirmation
     if (action.confirmationMessage) {
       this.confirmationService.confirm({
@@ -350,15 +353,17 @@ export class DataGridComponent implements OnInit, OnDestroy, OnChanges {
       this.actionInputPopup.showPopup();
     } else {
       this.actionValues = {};
-      this.callAction(action);
+      this.callAction(action, row);
     }
   }
 
-  private callAction(action: Action) {
+  private callAction(action: Action, row: any) {
 
     switch (action.type.toLowerCase()) {
       case 'angularroute': {
-        this.router.navigate([ { outlets: { popup: [ action.angularRoute ] }}], { skipLocationChange: true, relativeTo: this.route })
+        this.router.navigate([ { outlets: { popup:
+            [ action.angularRoute ] }}
+            ], { queryParams: row , skipLocationChange: true, relativeTo: this.route })
         .then(res => {
           this.popupShown = true;
         })
@@ -442,7 +447,7 @@ export class DataGridComponent implements OnInit, OnDestroy, OnChanges {
     // Setup call to service to run Action
     // Once Complete
 
-    this.callAction(this.clickedAction);
+    this.callAction(this.clickedAction, model);
   }
 
   // User clicked Cancel
@@ -455,7 +460,6 @@ export class DataGridComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   ngOnInit(): void {
-
 
     // watch for Prefs changes
     this.prefsSubscription = this.prefService.preferenceValuesSubject.subscribe(
