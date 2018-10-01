@@ -9,7 +9,6 @@ export class MachineDetailsComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    alert('Built');
 
   }
 }

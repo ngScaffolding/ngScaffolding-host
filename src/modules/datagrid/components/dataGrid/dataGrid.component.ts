@@ -82,6 +82,8 @@ export class DataGridComponent implements OnInit, OnDestroy, OnChanges {
   showFilters = true;
   showToolPanel = false;
 
+  popupShown = false;
+
   private gridviewPrefPrefix = 'GridViewPrefs_';
 
   private prefsSubscription: any;
@@ -316,6 +318,8 @@ export class DataGridComponent implements OnInit, OnDestroy, OnChanges {
   // Action Stuff
   //
   actionClicked(action: Action, row: any) {
+
+
     // check if we need confirmation
     if (action.confirmationMessage) {
       this.confirmationService.confirm({
@@ -351,37 +355,69 @@ export class DataGridComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   private callAction(action: Action) {
-    this.actionService
-      .callAction(action, this.actionValues, this.selectedRows)
-      .subscribe(
-        result => {
-          if (result.success) {
-            if (action.successMessage) {
-              if (action.successToast) {
-                this.messageService.add({
-                  severity: 'success',
-                  summary: 'Success',
-                  detail: action.successMessage
-                });
-                if (action.flushReferenceValues) {
-                  this.cacheService.resetValue('referenceValue::' + action.flushReferenceValues + '::');
+
+    switch (action.type.toLowerCase()) {
+      case 'angularroute': {
+        this.router.navigate([ { outlets: { popup: [ action.angularRoute ] }}], { skipLocationChange: true, relativeTo: this.route })
+        .then(res => {
+          this.popupShown = true;
+        })
+        .catch(err => {
+          this.confirmationService.confirm({
+            message: `Unable to navigate route: ${action.angularRoute}`,
+            icon: 'fa-close',
+            acceptLabel: 'OK',
+            header: 'Error',
+            rejectVisible: false
+          });
+        });
+
+        break;
+      }
+      default: {
+        this.actionService
+        .callAction(action, this.actionValues, this.selectedRows)
+        .subscribe(
+          result => {
+            if (result.success) {
+              if (action.successMessage) {
+                if (action.successToast) {
+                  this.messageService.add({
+                    severity: 'success',
+                    summary: 'Success',
+                    detail: action.successMessage
+                  });
+                  if (action.flushReferenceValues) {
+                    this.cacheService.resetValue('referenceValue::' + action.flushReferenceValues + '::');
+                  }
+                } else {
+                  this.confirmationService.confirm({
+                    message: action.successMessage,
+                    acceptLabel: 'OK',
+                    icon: 'fa-check',
+                    header: 'Success',
+                    rejectVisible: false
+                  });
                 }
-              } else {
+              }
+              // finally
+              this.actionInputPopup.isShown = false;
+
+              // Refresh Data
+              this.loadInitialData();
+            } else {
+              if (action.errorMessage) {
                 this.confirmationService.confirm({
-                  message: action.successMessage,
+                  message: action.errorMessage,
+                  icon: 'fa-close',
                   acceptLabel: 'OK',
-                  icon: 'fa-check',
-                  header: 'Success',
+                  header: 'Error',
                   rejectVisible: false
                 });
               }
             }
-            // finally
-            this.actionInputPopup.isShown = false;
-
-            // Refresh Data
-            this.loadInitialData();
-          } else {
+          },
+          err => {
             if (action.errorMessage) {
               this.confirmationService.confirm({
                 message: action.errorMessage,
@@ -392,19 +428,9 @@ export class DataGridComponent implements OnInit, OnDestroy, OnChanges {
               });
             }
           }
-        },
-        err => {
-          if (action.errorMessage) {
-            this.confirmationService.confirm({
-              message: action.errorMessage,
-              icon: 'fa-close',
-              acceptLabel: 'OK',
-              header: 'Error',
-              rejectVisible: false
-            });
-          }
-        }
-      );
+        );
+      }
+    }
   }
 
   //
@@ -429,15 +455,7 @@ export class DataGridComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   ngOnInit(): void {
-    this.router.navigate([ { outlets: { popup: [ 'fieldforcemachinedetails' ] }}], { skipLocationChange: true, relativeTo: this.route })
-    .then(res => {
-      let x = 9;
 
-    })
-    .catch(err => {
-      let x = 9;
-
-    });
 
     // watch for Prefs changes
     this.prefsSubscription = this.prefService.preferenceValuesSubject.subscribe(

@@ -1,6 +1,4 @@
 import { Route, Router } from '@angular/router';
-import { ToolBarComponent } from '../modules/datagrid/components/toolBar/toolBar.component';
-import { MachineDetailsComponent } from '../modules/fieldForce/pages/Finder/MachineDetails/machineDetails.component';
 import { DynamicComponentService } from '../modules/core/services/dynamicComponent/dynamicComponent.service';
 
 export function addDynamicDatagridComponents(config: Array<Route>, dynamicComponentService: DynamicComponentService) {
