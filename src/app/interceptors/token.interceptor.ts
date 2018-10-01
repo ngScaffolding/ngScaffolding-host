@@ -47,6 +47,7 @@ export class TokenInterceptor implements HttpInterceptor {
           ok = 'failed';
           if (error instanceof HttpErrorResponse) {
             if (error.status === 401) {
+              this.authService.logoff();
               return;
             }
           }
