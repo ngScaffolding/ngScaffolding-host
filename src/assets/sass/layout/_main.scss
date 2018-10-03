@@ -44,7 +44,14 @@ body {
             vertical-align: middle;
             width: 200px;
             height: 30px;
-            background: url("../images/logo2x.png") top left no-repeat;
+            background-size: 200px 30px;
+        }
+
+        .logo-custom {
+          display: inline-block;
+            vertical-align: middle;
+            height: 50px;
+            margin-top: -5px;
             background-size: 200px 30px;
         }
 
