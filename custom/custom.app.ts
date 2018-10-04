@@ -1,6 +1,6 @@
-import { DCOAppModule } from '../src/modules/dcoSystems/dcoModule';
+import { FieldForceAppModule } from '../src/modules/fieldForce/fieldForceModule';
 
 export const CUSTOM_IMPORTS: any[] = [
-  DCOAppModule.forRoot()
+  FieldForceAppModule.forRoot()
 ];
 export const CUSTOM_COMPONENTS: any[] =  [];
