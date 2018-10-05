@@ -1,26 +1,92 @@
 <p-card title="Upgrade Calculator">
+  <h4>Based on the data captured already from Finder, this calculator will help provide a rough guide to the cost of
+    upgrading machines in the existing domain.</h4>
   <div class="ui-g">
-    <div class="ui-g-4"><p-panel >
-      <p-header>
-         Upgrade Requirements
-      </p-header>
-      <app-input-builder [inputBuilderDefinition]="upgradeInputs"
-      [inputModel]="userPrefsModel"
-      (okClicked)="okClicked($event)"
-      (valueUpdated)="upgradeChanged($event)"
-      (modelUpdated)="upgradeChanged($event)"></app-input-builder>
-      <p-footer>
-          Footer content here
-      </p-footer>
-  </p-panel></div>
-    <div class="ui-g-8"><p-panel >
-      <p-header>
-          Header content here
-      </p-header>
-      Body Content
-      <p-footer>
-          Footer content here
-      </p-footer>
-  </p-panel></div>
-</div>
+    <div class="ui-g-4">
+      <p-panel>
+        <p-header>
+          Upgrade Requirements
+        </p-header>
+
+        <div class="ui-g">
+          <div class="ui-g-6">Minimum Memory</div>
+          <div class="ui-g-6">{{upgradeValuesModel.minimumMemory}} GB</div>
+        </div>
+        <div class="ui-g">
+          <div class="ui-g-6">Minimum HardDrive</div>
+          <div class="ui-g-6">{{upgradeValuesModel.minimumHardDrive}} GB</div>
+        </div>
+        <div class="ui-g">
+          <div class="ui-g-6">Minimum Processor (Ghz)</div>
+          <div class="ui-g-6">{{upgradeValuesModel.minimumProcessor}} Ghz</div>
+        </div>
+
+        <app-input-builder [inputBuilderDefinition]="upgradeInputs" [inputModel]="upgradeValuesModel" (okClicked)="calculate()"
+          (valueUpdated)="upgradeChanged($event)" (modelUpdated)="modelChanged($event)"></app-input-builder>
+
+      </p-panel>
+    </div>
+    <div class="ui-g-8">
+      <p-panel>
+        <p-header>
+          Upgrade Results
+        </p-header>
+        <div *ngIf="!resultsAvailable">
+          <h4>Enter the required upgrade details on the left, then click Calculate.</h4>
+        </div>
+        <div *ngIf="resultsAvailable">
+          <p-panel header="Calculation Results">
+            <div class="ui-g">
+              <div class="ui-g-6">Number of Computers Passed</div>
+              <div class="ui-g-6">{{upgradeValuesModel.countPassed}}</div>
+            </div>
+            <div class="ui-g">
+              <div class="ui-g-6">Number of Computers Failed</div>
+              <div class="ui-g-6">{{upgradeValuesModel.countFailed}}</div>
+            </div>
+          </p-panel>
+          <br/>
+          <p-panel header="Of the Failures:">
+            <div class="ui-g">
+              <div class="ui-g-6">Number of Memory Failed</div>
+              <div class="ui-g-6">{{upgradeValuesModel.countMemory}}</div>
+            </div>
+            <div class="ui-g">
+              <div class="ui-g-6">Number of HardDrive Failed</div>
+              <div class="ui-g-6">{{upgradeValuesModel.countHardDrive}}</div>
+            </div>
+            <div class="ui-g">
+              <div class="ui-g-6">Number of Processor Failed</div>
+              <div class="ui-g-6">{{upgradeValuesModel.countProcessor}}</div>
+            </div>
+          </p-panel>
+          <br/>
+          <p-panel header="Will Cost to upgrade:">
+            <div class="ui-g">
+              <div class="ui-g-6">Cost of Memory</div>
+              <div class="ui-g-6">{{upgradeValuesModel.totalCostMemory}}</div>
+            </div>
+            <div class="ui-g">
+              <div class="ui-g-6">Cost of HardDrive</div>
+              <div class="ui-g-6">{{upgradeValuesModel.totalCostHardDrive}}</div>
+            </div>
+            <div class="ui-g">
+              <div class="ui-g-6">Cost of Processor</div>
+              <div class="ui-g-6">{{upgradeValuesModel.totalCostProcessor}}</div>
+            </div>
+          </p-panel>
+        </div>
+        <p-footer *ngIf="resultsAvailable">
+          <div class="ui-g">
+            <div class="ui-g-6">
+              <h2>Total Upgrade Estimate</h2>
+            </div>
+            <div class="ui-g-6">
+              <h2>{{upgradeValuesModel.totalCostMemory + upgradeValuesModel.totalCostHardDrive + upgradeValuesModel.totalCostProcessor}}</h2>
+            </div>
+          </div>
+        </p-footer>
+      </p-panel>
+    </div>
+  </div>
 </p-card>

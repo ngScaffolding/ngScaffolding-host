@@ -9,9 +9,15 @@
                 <label>{{input.label}}</label>
             </span>
 
-            <!-- keyfilter -->
+            <!-- keyfilter/number -->
             <span *ngSwitchCase="'number'" class="md-inputfield">
                 <input type="text" [formControlName]="input.name" [id]="input.name" pKeyFilter="num"  pInputText>
+                <label>{{input.label}}</label>
+            </span>
+
+            <!-- slider -->
+            <span *ngSwitchCase="'slider'" class="md-inputfield">
+                <p-slider [formControlName]="input.name" [id]="input.name" [min]="input.min" [max]="input.max" [step]="input.step" ></p-slider>
                 <label>{{input.label}}</label>
             </span>
 
@@ -21,7 +27,7 @@
                 <label>{{input.label}}</label>
             </span>
 
-            <!-- Mask -->
+            <!-- Spinner -->
             <span *ngSwitchCase="'spinner'">
                 <p-spinner [id]="input.name" [formControl]="form.controls[input.name]"></p-spinner>
                 <label>{{input.label}}</label>
