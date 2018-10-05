@@ -26,6 +26,7 @@ import { UpgradeCalcComponent } from './components/upgradeCalc/upgradeCalc.compo
 
 import { ButtonModule } from 'primeng/primeng';
 import { CheckboxModule } from 'primeng/primeng';
+import { CardModule } from 'primeng/primeng';
 import { SharedModule } from 'primeng/primeng';
 import { DialogModule } from 'primeng/primeng';
 import { DropdownModule } from 'primeng/primeng';
@@ -55,6 +56,7 @@ const appRoutes: Routes = [
     InputBuilderModule,
     DatagridModule,
     ButtonModule,
+    CardModule,
     CheckboxModule,
     SharedModule,
     DialogModule,
@@ -133,18 +135,6 @@ export class FieldForceAppModule {
 
     dynamicComponentService.registerComponent(machineDetailsRoute);
 
-    menuService.addMenuItems([
-      {
-        label: 'Upgrade Function',
-        icon: 'launch',
-        items: [
-          {
-            label: 'Upgrade Calculator',
-            icon: 'tune',
-            routerLink: upgradeCalcRoute.path
-          }
-        ]
-      }
-    ]);
+    menuService.addMenuItems([]);
   }
 }

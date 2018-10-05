@@ -1,1 +1,26 @@
-<h1>Upgrade</h1>
+<p-card title="Upgrade Calculator">
+  <div class="ui-g">
+    <div class="ui-g-4"><p-panel >
+      <p-header>
+         Upgrade Requirements
+      </p-header>
+      <app-input-builder [inputBuilderDefinition]="upgradeInputs"
+      [inputModel]="userPrefsModel"
+      (okClicked)="okClicked($event)"
+      (valueUpdated)="upgradeChanged($event)"
+      (modelUpdated)="upgradeChanged($event)"></app-input-builder>
+      <p-footer>
+          Footer content here
+      </p-footer>
+  </p-panel></div>
+    <div class="ui-g-8"><p-panel >
+      <p-header>
+          Header content here
+      </p-header>
+      Body Content
+      <p-footer>
+          Footer content here
+      </p-footer>
+  </p-panel></div>
+</div>
+</p-card>
