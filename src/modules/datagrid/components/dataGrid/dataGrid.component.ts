@@ -19,10 +19,12 @@ import {
   CoreMenuItem,
   GridViewDetail,
   InputBuilderDefinition,
-  DataSetResults
+  DataSetResults,
+  DialogOptions
 } from '@ngscaffolding/models';
 
 import { ConfirmationService } from 'primeng/primeng';
+import { Dialog } from 'primeng/dialog';
 import { MessageService } from 'primeng/components/common/messageservice';
 
 import {
@@ -60,6 +62,7 @@ export class DataGridComponent implements OnInit, OnDestroy, OnChanges {
   @ViewChild(InputBuilderPopupComponent)
   actionInputPopup: InputBuilderPopupComponent;
   @ViewChild(ActionsHolderComponent) actionsHolder: ActionsHolderComponent;
+  @ViewChild(Dialog) dialog;
 
   @Input() isWidget: boolean;
   @Input() itemId: string;
@@ -84,9 +87,8 @@ export class DataGridComponent implements OnInit, OnDestroy, OnChanges {
 
   // Dialog Settings
   popupShown = false;
-  popupHeader = '';
-  popupWidth = 300;
-  popupHeight: any|number = undefined;
+  dialogOptions: DialogOptions = {};
+
 
   private gridviewPrefPrefix = 'GridViewPrefs_';
 
@@ -365,7 +367,16 @@ export class DataGridComponent implements OnInit, OnDestroy, OnChanges {
             [ action.angularRoute ] }}
             ], { queryParams: row , skipLocationChange: true, relativeTo: this.route })
         .then(res => {
+          // Use the options from our action
+          if (action.dialogOptions) {
+            this.dialogOptions = action.dialogOptions;
+          } else {
+            this.dialogOptions = {};
+          }
           this.popupShown = true;
+
+          // Center Popup here
+          window.setTimeout(() => { this.dialog.center(); });
         })
         .catch(err => {
           this.confirmationService.confirm({

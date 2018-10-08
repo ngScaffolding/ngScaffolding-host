@@ -25,7 +25,11 @@
     <app-input-builder-popup #actionInputPopup [inputBuilderDefinition]="actionInputDefinition" [inputModel]="actionValues" (okClicked)="actionOkClicked($event)"
       (cancelCliecked)="actionCancelClicked()"></app-input-builder-popup>
 
-      <p-dialog title="Input Details" [(visible)]="popupShown" [contentStyle]="{'overflow':'visible'}">
+      <p-dialog title="Input Details"
+        [width]="dialogOptions.width"
+        [height]="dialogOptions.height"
+        [(visible)]="popupShown"
+        [maximizable]="dialogOptions.maximizable" [contentStyle]="{'overflow':'auto'}"  #dialog>
         <router-outlet name="popup"></router-outlet>
       </p-dialog>
 
