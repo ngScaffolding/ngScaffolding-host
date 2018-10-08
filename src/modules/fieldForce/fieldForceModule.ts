@@ -39,6 +39,7 @@ import { ProgressSpinnerModule } from 'primeng/primeng';
 import { SpinnerModule } from 'primeng/primeng';
 import { TabMenuModule } from 'primeng/primeng';
 import { TabViewModule } from 'primeng/primeng';
+import { ScrollPanelModule } from 'primeng/primeng';
 
 // export * from './pages';
 
@@ -71,6 +72,7 @@ const appRoutes: Routes = [
     SpinnerModule,
     TabMenuModule,
     TabViewModule,
+    ScrollPanelModule,
     RouterModule.forChild(appRoutes)
   ],
   declarations: [
