@@ -37,7 +37,6 @@ import {
 } from '../../../core/coreModule';
 
 import { FiltersHolderComponent } from '../filtersHolder/filtersHolder.component';
-import { MenuItem } from 'primeng/primeng';
 import { InputBuilderPopupComponent } from '../../../inputbuilder/inputbuilderModule';
 import { ActionsHolderComponent } from '../actionsHolder/actionsHolder.component';
 import { ActionService } from '../../../core/services/action/action.service';
@@ -82,6 +81,9 @@ export class DataGridComponent implements OnInit, OnDestroy, OnChanges {
   showFilters = true;
   showToolPanel = false;
 
+  // Show spinner when loading
+  dataLoading: boolean;
+
   // Dialog Settings
   popupShown = false;
   popupHeader = '';
@@ -108,9 +110,9 @@ export class DataGridComponent implements OnInit, OnDestroy, OnChanges {
     private dataSourceService: DataSourceService,
     private cacheService: CacheService,
     private menuService: MenuService,
+    private broadcast: BroadcastService,
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
-    private broadcast: BroadcastService,
     private prefService: UserPreferencesService
   ) {
     this.gridOptions = <GridOptions>{
@@ -130,7 +132,7 @@ export class DataGridComponent implements OnInit, OnDestroy, OnChanges {
       }
     };
     // Wire up broadcast for action clicked
-    this.broadcastSubscription = broadcast
+    this.broadcastSubscription = this.broadcast
       .on('ACTION_CLICKED')
       .subscribe(actionData => {
         const actionClickedData = actionData as ActionClickedData;
@@ -221,6 +223,8 @@ export class DataGridComponent implements OnInit, OnDestroy, OnChanges {
   public loadInitialData() {
     this.rowData = [];
 
+    this.dataLoading = true;
+
     this.dataSourceService
       .getData(
         {
@@ -235,6 +239,7 @@ export class DataGridComponent implements OnInit, OnDestroy, OnChanges {
           if (data.rowCount) {
             this.rowCount = data.rowCount;
           }
+          this.dataLoading = false;
         },
         error => {
           // Failed Select
@@ -244,6 +249,7 @@ export class DataGridComponent implements OnInit, OnDestroy, OnChanges {
             detail: 'Unable to get data',
             severity: 'error'
           });
+          this.dataLoading = false;
         }
       );
   }

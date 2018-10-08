@@ -13,7 +13,7 @@ import { FiltersHolderComponent } from './components/filtersHolder/filtersHolder
 import { ActionsHolderComponent } from './components/actionsHolder/actionsHolder.component';
 import { ToolBarComponent } from './components/toolBar/toolBar.component';
 
-import { ButtonModule, TooltipModule, ConfirmDialogModule, SplitButtonModule, DialogModule } from 'primeng/primeng';
+import { ButtonModule, TooltipModule, ConfirmDialogModule, SplitButtonModule, DialogModule, ProgressSpinnerModule, SidebarModule } from 'primeng/primeng';
 import { AgGridModule } from 'ag-grid-angular/main';
 
 import { ButtonCellComponent } from './cellTemplates/buttonCell/buttonCell.component';
@@ -35,7 +35,9 @@ const appRoutes: Routes = [
     InputBuilderModule,
     ConfirmDialogModule,
     DialogModule,
+    ProgressSpinnerModule,
     SplitButtonModule,
+    SidebarModule,
     CoreModule,
     CardModule,
     AgGridModule.withComponents(
