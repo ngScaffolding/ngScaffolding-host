@@ -3,7 +3,6 @@ import {FormsModule} from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {LocationStrategy, HashLocationStrategy} from '@angular/common';
 import {AppRoutes} from './app.routes';
 import { Router, RouteConfigLoadEnd, NavigationStart } from '@angular/router';
 import { addDynamicDatagridComponents } from '../classes/dynamicDatagrid';
@@ -128,7 +127,6 @@ const appInitializerFn = (appConfig: AppSettingsService) => {
         UserSettingsComponent
     ],
     providers: [
-        {provide: LocationStrategy, useClass: HashLocationStrategy},
         BreadcrumbService,
         // ngScaffolding
         Title,
