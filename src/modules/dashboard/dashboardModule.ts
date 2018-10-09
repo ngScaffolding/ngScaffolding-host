@@ -56,6 +56,6 @@ export class DashboardModule {
   }
 
   constructor(menuService: MenuService, logger: LoggingService, versions: VersionsService) {
-    versions.addVersion('@ngscaffolding/chart', VERSION.version);
+    versions.addVersion('@ngscaffolding/dashboard', VERSION.version);
   }
 }
