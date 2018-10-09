@@ -115,9 +115,10 @@ export class MenuService {
 
       const createdMenuItem: CoreMenuItem = {...newMenuItem, routerLink: calcRouterLink};
 
-      if (createdMenuItem.jsonSerialized && !createdMenuItem.menuDetails) {
-        createdMenuItem.menuDetails = JSON.parse(createdMenuItem.jsonSerialized);
-      }
+      // Not needed?
+      // if (createdMenuItem.jsonSerialized && !createdMenuItem.menuDetails) {
+      //   createdMenuItem.menuDetails = JSON.parse(createdMenuItem.jsonSerialized);
+      // }
 
       targetMenu.push(createdMenuItem);
 

@@ -6,11 +6,7 @@ import { Chart } from 'angular-highcharts';
 export class ChartDataService {
   public convertToPieChart() {}
 
-  public convertToBarChart(
-    chartDetail: ChartDetailModel,
-    chartInstance: any,
-    data: any[]
-  ): any {
+  public convertToBarChart(chartDetail: ChartDetailModel, chartInstance: any, data: any[]): any {
     const xAxis: string[] = [];
 
     const newSeries = new Map<string, string[]>();
