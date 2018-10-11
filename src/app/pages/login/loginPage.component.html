@@ -13,8 +13,7 @@
                 <div class="ui-g-12"></div>
                 <div class="ui-g-12">
                     <span class="md-inputfield">
-                        <input type="password" pPassword [feedback]="false" name="password" [(ngModel)]="inputModel.password" #password="ngModel"
-                            required>
+                        <input type="password" pPassword [feedback]="false" name="password" [(ngModel)]="inputModel.password" #password="ngModel" required>
                         <label>Password</label>
                         <div *ngIf="loginForm.submitted && !password.valid" class="ui-message ui-messages-error ui-corner-all">Password is required</div>
                     </span>

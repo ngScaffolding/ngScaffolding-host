@@ -30,7 +30,7 @@ export class ChartHolderComponent implements OnInit, OnDestroy {
       // get Menu Items
       this.menuItem = this.menuService.getMenuItemByName(this.menuName);
 
-      this.itemDetail = JSON.parse(this.menuItem.jsonSerialized) as ChartDetailModel;
+      this.itemDetail = this.menuItem.menuDetails as ChartDetailModel;
     });
   }
 

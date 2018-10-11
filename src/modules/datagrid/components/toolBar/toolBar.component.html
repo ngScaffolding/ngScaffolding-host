@@ -25,7 +25,7 @@
 
  <div class="expand-toolbar" *ngIf="collapsedToolbar">
 
-  <span  [@toolBarExpandedState]="expanded">
+  <span [@toolBarExpandedState]="expanded">
     <button pButton class="ui-button-success toolbarButton" *ngIf="!hideFilters" type="button" icon="ui-icon-filter" tooltipPosition="bottom"
       (click)="this.filtersClicked.emit(null)" pTooltip="Show/Hide Filters" [label]="showLabel('Filters')">
     </button>

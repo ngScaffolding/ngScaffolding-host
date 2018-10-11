@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, ComponentRef, ViewChildren, QueryList, OnChanges, SimpleChanges } from '@angular/core';
 import { DataSourceService, LoggingService, MenuService } from '../../../core/services';
 import { Router, ActivatedRoute } from '@angular/router';
-import { CoreMenuItem, WidgetModel } from '@ngscaffolding/models';
+import { CoreMenuItem, WidgetModelBase } from '@ngscaffolding/models';
 import { Observable } from 'rxjs';
 
 import { DashboardModel } from '@ngscaffolding/models';
@@ -41,22 +41,22 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
     private dataSourceService: DataSourceService
   ) {}
 
-  public getComponent(widget: WidgetModel) {
-    if (widget.gridViewDetail)      {
-      return DataGridComponent;
-    } else if (widget.chartDetail) {
-      return ChartComponent;
-    } else if (widget.htmlContent) {
-      return null;
-    }
+  public getComponent(widget: WidgetModelBase) {
+    // if (widget.gridViewDetail)      {
+    //   return DataGridComponent;
+    // } else if (widget.chartDetail) {
+    //   return ChartComponent;
+    // } else if (widget.htmlContent) {
+    //   return null;
+    // }
     return null;
   }
 
   loadDashboard() {
     this.menuItem = this.menuService.getMenuItemByName(this.menuName);
 
-    if (this.menuItem && this.menuItem.jsonSerialized) {
-      this.dashboard = JSON.parse(this.menuItem.jsonSerialized) as DashboardModel;
+    if (this.menuItem && this.menuItem.menuDetails) {
+      this.dashboard = this.menuItem.menuDetails as DashboardModel;
     }
 
     // Set unitheight for later resize
@@ -68,13 +68,13 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
       widget['isWidget'] = true;
 
       // Prepare our details
-      if(widget.gridViewDetail)      {
-        widget['itemDetail'] = widget.gridViewDetail;
-      } else if (widget.chartDetail) {
-        widget['itemDetail'] = widget.chartDetail;
-      } else if (widget.htmlContent) {
-        widget['itemDetail'] = widget.htmlContent;
-      }
+      // if(widget.gridViewDetail)      {
+      //   widget['itemDetail'] = widget.gridViewDetail;
+      // } else if (widget.chartDetail) {
+      //   widget['itemDetail'] = widget.chartDetail;
+      // } else if (widget.htmlContent) {
+      //   widget['itemDetail'] = widget.htmlContent;
+      // }
     });
   }
 
