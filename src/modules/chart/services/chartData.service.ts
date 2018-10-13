@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ChartDetailModel } from '../models/chartDetail.model';
+import { ChartDetailModel } from '@ngscaffolding/models';
 import { Chart } from 'angular-highcharts';
 
 @Injectable()
@@ -10,25 +10,25 @@ export class ChartDataService {
     const xAxis: string[] = [];
 
     const newSeries = new Map<string, string[]>();
-    let firstTime = true;
+    //let firstTime = true;
 
     data.forEach(row => {
-      if (chartDetail.xAxisName) {
-        xAxis.push(row[chartDetail.xAxisName]);
-      }
+      // if (chartDetail.xAxisName) {
+      //   xAxis.push(row[chartDetail.xAxisName]);
+      // }
 
-      // First Time create arrays
-      if (firstTime) {
-        chartDetail.seriesNames.forEach(seriesName => {
-          newSeries[seriesName] = [];
-        });
-        firstTime = false;
-      }
+      // // First Time create arrays
+      // if (firstTime) {
+      //   chartDetail.seriesNames.forEach(seriesName => {
+      //     newSeries[seriesName] = [];
+      //   });
+      //   firstTime = false;
+      // }
 
-      // Add values into our Series
-      chartDetail.seriesNames.forEach(seriesName => {
-        newSeries[seriesName].push(row[seriesName]);
-      });
+      // // Add values into our Series
+      // chartDetail.seriesNames.forEach(seriesName => {
+      //   newSeries[seriesName].push(row[seriesName]);
+      // });
     });
 
     if (xAxis.length > 0) {
@@ -36,9 +36,9 @@ export class ChartDataService {
       chartInstance.xAxis.categories = xAxis;
     }
 
-    chartInstance.series = [];
-    chartDetail.seriesNames.forEach(seriesName => {
-      chartInstance.series.push({ name: seriesName, data: newSeries[seriesName] });
-    });
+    // chartInstance.series = [];
+    // chartDetail.seriesNames.forEach(seriesName => {
+    //   chartInstance.series.push({ name: seriesName, data: newSeries[seriesName] });
+    // });
   }
 }

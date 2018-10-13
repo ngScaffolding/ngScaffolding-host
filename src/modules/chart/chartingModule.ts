@@ -19,6 +19,9 @@ import { ChartModule, HIGHCHARTS_MODULES } from 'angular-highcharts';
 // Services
 import { ChartDataService } from './services/chartData.service';
 
+// Exports
+export { ChartComponent } from './components/chart/chart.component';
+
 const appRoutes: Routes = [
   { path: 'chart/:id', component: ChartHolderComponent, canActivate: [AuthoriseRoleGuard]  },
   { path: 'chart', component: ChartHolderComponent, canActivate: [AuthoriseRoleGuard]  }

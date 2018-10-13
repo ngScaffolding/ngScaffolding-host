@@ -1,13 +1,13 @@
 import { Component, OnInit, OnDestroy, ComponentRef, ViewChildren, QueryList, OnChanges, SimpleChanges } from '@angular/core';
 import { DataSourceService, LoggingService, MenuService } from '../../../core/services';
 import { Router, ActivatedRoute } from '@angular/router';
-import { CoreMenuItem, WidgetModelBase } from '@ngscaffolding/models';
+import { CoreMenuItem, WidgetModelBase, WidgetDetails } from '@ngscaffolding/models';
 import { Observable } from 'rxjs';
 
 import { DashboardModel } from '@ngscaffolding/models';
 
 import { DataGridComponent } from '../../../datagrid/components/dataGrid/dataGrid.component';
-import { ChartComponent } from '../../../chart/components/chart/chart.component';
+import { ChartComponent } from '../../../chart/chartingModule';
 
 import { CompactType, DisplayGrid, GridsterConfig, GridsterItem, GridType, GridsterItemComponent, GridsterItemComponentInterface } from 'angular-gridster2';
 
@@ -41,15 +41,8 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
     private dataSourceService: DataSourceService
   ) {}
 
-  public getComponent(widget: WidgetModelBase) {
-    // if (widget.gridViewDetail)      {
-    //   return DataGridComponent;
-    // } else if (widget.chartDetail) {
-    //   return ChartComponent;
-    // } else if (widget.htmlContent) {
-    //   return null;
-    // }
-    return null;
+  public getComponent(widgetDetails: WidgetDetails) {
+    return widgetDetails.widget.itemDetails;
   }
 
   loadDashboard() {

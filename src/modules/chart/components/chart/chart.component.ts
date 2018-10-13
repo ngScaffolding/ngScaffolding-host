@@ -13,8 +13,7 @@ import { Chart, Highcharts } from 'angular-highcharts';
 import { ChartDataService } from '../../services/chartData.service';
 import { DataSourceService, LoggingService } from '../../../core/services';
 import { GridsterItem } from 'angular-gridster2';
-import { ChartDetailModel } from '../../models/chartDetail.model';
-import { DataSourceRequest } from '@ngscaffolding/models';
+import { DataSourceRequest, ChartDetailModel } from '@ngscaffolding/models';
 
 @Component({
   selector: 'app-chart',
@@ -28,7 +27,7 @@ export class ChartComponent implements OnInit, OnDestroy, OnChanges {
 
   @Input() public isWidget: boolean;
 
-  @Input() public itemDetail: ChartDetailModel;
+  @Input() public itemDetails: ChartDetailModel;
   @Input() public inputModel: any;
   @Input() public gridsterItem: GridsterItem;
 
@@ -47,25 +46,25 @@ export class ChartComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   loadChart() {
-    if (this.itemDetail) {
+    if (this.itemDetails) {
       // Get Data from Server
       this.dataSourceService
         .getData(
-          { name: this.itemDetail.dataSourceName, inputData: this.inputModel },
+          { name: this.itemDetails.dataSourceName.toString(), inputData: this.inputModel },
           false
         )
         .subscribe(response => {
 
-          const parsedChartOptions = JSON.parse(this.itemDetail.chartOptions);
+          // const parsedChartOptions = JSON.parse(this.itemDetails.chartOptions);
 
-          switch (parsedChartOptions.chart.type) {
-            case 'bar': {
-              this.chartDataService.convertToBarChart(this.itemDetail, parsedChartOptions, JSON.parse(response.jsonData));
-              break;
-            }
-          }
+          // switch (parsedChartOptions.chart.type) {
+          //   case 'bar': {
+          //     this.chartDataService.convertToBarChart(this.itemDetails, parsedChartOptions, JSON.parse(response.jsonData));
+          //     break;
+          //   }
+          // }
 
-          this.chart = new Chart(parsedChartOptions);
+          this.chart = new Chart(this.itemDetails.chartOptions);
         });
     }
   }
