@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "ultima-cli": {
+    "ng-host": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -60,18 +60,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "ultima-cli:build"
+            "browserTarget": "ng-host:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "ultima-cli:build:production"
+              "browserTarget": "ng-host:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "ultima-cli:build"
+            "browserTarget": "ng-host:build"
           }
         },
         "test": {
@@ -113,7 +113,7 @@
         }
       }
     },
-    "ultima-cli-e2e": {
+    "ng-host-e2e": {
       "root": "e2e/",
       "projectType": "application",
       "architect": {
@@ -121,7 +121,7 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "ultima-cli:serve"
+            "devServerTarget": "ng-host:serve"
           }
         },
         "lint": {
@@ -138,7 +138,7 @@
       }
     }
   },
-  "defaultProject": "ultima-cli",
+  "defaultProject": "ng-host",
   "schematics": {
     "@schematics/angular:component": {
       "prefix": "app",
