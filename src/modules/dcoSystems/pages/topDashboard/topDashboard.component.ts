@@ -7,7 +7,7 @@ import { DataSourceService } from '../../../core/services';
 
 @Component({
   templateUrl: 'topDashboard.component.html',
-  styles: ['topDashboard.component.scss']
+  styleUrls: ['topDashboard.component.scss']
 })
 export class TopDashboardComponent implements OnInit, AfterViewInit {
 

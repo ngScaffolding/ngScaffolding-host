@@ -1,13 +1,17 @@
 <p-card id="gridContainer">
 
-    <div>
-      <h2>Maramba / Factory / Drying / Dryer 2</h2>
-    <h3>Live Data</h3></div>
+  <div>
+    <h2 class="breadcrumbs">Maramba / Factory / Drying / Dryer 2</h2>
+    <h3>Live Data</h3>
+  </div>
 
 
   <p-tabView>
     <p-tabPanel header="Header 1">
-      Content 1
+      <h4>Dryer Output</h4>
+      <div class="ui-g">
+        <app-digital-readout class="ui-g-4" displayValue="0.00" displayTitle="Tea Moisture Content"></app-digital-readout>
+      </div>
     </p-tabPanel>
     <p-tabPanel header="Header 2">
       Content 2
