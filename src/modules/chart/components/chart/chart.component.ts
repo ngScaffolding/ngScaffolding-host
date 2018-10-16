@@ -21,15 +21,22 @@ import { DataSourceRequest, ChartDetailModel } from '@ngscaffolding/models';
   styles: ['chart.component.scss']
 })
 export class ChartComponent implements OnInit, OnDestroy, OnChanges {
-  @Input() public unitHeight: number;
-  @Input() public unitWidth: number;
-  @Input() public unitUpdate: number;
+  @Input()
+  public unitHeight: number;
+  @Input()
+  public unitWidth: number;
+  @Input()
+  public unitUpdate: number;
 
-  @Input() public isWidget: boolean;
+  @Input()
+  public isWidget: boolean;
 
-  @Input() public itemDetails: ChartDetailModel;
-  @Input() public inputModel: any;
-  @Input() public gridsterItem: GridsterItem;
+  @Input()
+  public itemDetails: ChartDetailModel;
+  @Input()
+  public inputModel: any;
+  @Input()
+  public gridsterItem: GridsterItem;
 
   public chart: Chart;
   public highChartsOptions: Highcharts.Options;
@@ -47,31 +54,38 @@ export class ChartComponent implements OnInit, OnDestroy, OnChanges {
 
   loadChart() {
     if (this.itemDetails) {
-      // Get Data from Server
-      this.dataSourceService
-        .getData(
-          { name: this.itemDetails.dataSourceName.toString(), inputData: this.inputModel },
-          false
-        )
-        .subscribe(response => {
+      if (!this.itemDetails.dataSourceName) {
+        // No DataSource - Just do the Chart
+        this.chart = new Chart(this.itemDetails.chartOptions);
+      } else {
+        // Get Data from Server
+        this.dataSourceService
+          .getData(
+            {
+              name: this.itemDetails.dataSourceName.toString(),
+              inputData: this.inputModel
+            },
+            false
+          )
+          .subscribe(response => {
+            // const parsedChartOptions = JSON.parse(this.itemDetails.chartOptions);
 
-          // const parsedChartOptions = JSON.parse(this.itemDetails.chartOptions);
+            // switch (parsedChartOptions.chart.type) {
+            //   case 'bar': {
+            //     this.chartDataService.convertToBarChart(this.itemDetails, parsedChartOptions, JSON.parse(response.jsonData));
+            //     break;
+            //   }
+            // }
 
-          // switch (parsedChartOptions.chart.type) {
-          //   case 'bar': {
-          //     this.chartDataService.convertToBarChart(this.itemDetails, parsedChartOptions, JSON.parse(response.jsonData));
-          //     break;
-          //   }
-          // }
-
-          this.chart = new Chart(this.itemDetails.chartOptions);
-        });
+            this.chart = new Chart(this.itemDetails.chartOptions);
+          });
+      }
     }
   }
 
   public resizeChart(): void {
     if (this.gridsterItem && this.chart && this.chart.ref) {
-    const height = this.gridsterItem.rows * (this.unitHeight - 10);
+      const height = this.gridsterItem.rows * (this.unitHeight - 10);
       const width = this.gridsterItem.cols * (this.unitWidth - 10);
 
       this.chart.ref.setSize(height, width);
@@ -87,8 +101,8 @@ export class ChartComponent implements OnInit, OnDestroy, OnChanges {
     // this.paramSubscription = this.route.params.subscribe(params => {
     //   this.menuName = params['id'];
     //   this.menuItem = this.menuService.getMenuItemByName(this.menuName);
-      // get Menu Items
-      this.loadChart();
+    // get Menu Items
+    this.loadChart();
     // });
   }
 
