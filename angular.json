@@ -18,6 +18,7 @@
             "polyfills": "src/polyfills.ts",
             "assets": [
               "src/assets",
+              "src/assets/data/appConfig.json",
               "src/upload.php"
             ],
             "styles": [

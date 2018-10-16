@@ -37,6 +37,7 @@
     "core-js": "2.5.7",
     "fullcalendar": "4.0.0-alpha",
     "highcharts": "^6.0.7",
+    "highcharts-more": "^0.1.7",
     "highcharts-custom-events": "^2.0.20",
     "intl": "1.2.5",
     "jsoneditor": "^5.17.1",

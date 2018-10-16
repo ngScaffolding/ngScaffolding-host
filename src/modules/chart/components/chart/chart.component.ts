@@ -21,22 +21,15 @@ import { DataSourceRequest, ChartDetailModel } from '@ngscaffolding/models';
   styles: ['chart.component.scss']
 })
 export class ChartComponent implements OnInit, OnDestroy, OnChanges {
-  @Input()
-  public unitHeight: number;
-  @Input()
-  public unitWidth: number;
-  @Input()
-  public unitUpdate: number;
+  @Input() unitHeight: number;
+  @Input() unitWidth: number;
+  @Input() unitUpdate: number;
 
-  @Input()
-  public isWidget: boolean;
+  @Input() isWidget: boolean;
 
-  @Input()
-  public itemDetails: ChartDetailModel;
-  @Input()
-  public inputModel: any;
-  @Input()
-  public gridsterItem: GridsterItem;
+  @Input() itemDetails: ChartDetailModel;
+  @Input() inputModel: any;
+  @Input() gridsterItem: GridsterItem;
 
   public chart: Chart;
   public highChartsOptions: Highcharts.Options;
