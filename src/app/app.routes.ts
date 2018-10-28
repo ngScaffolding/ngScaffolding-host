@@ -1,7 +1,7 @@
 import { Routes, RouterModule } from '@angular/router';
 import { ModuleWithProviders } from '@angular/core';
 
-import { AuthoriseRoleGuard } from 'ngscaffolding-core';
+import { AuthoriseRoleGuard } from '../modules/core/coreModule';
 
 import { LandingPageComponent } from './components/landingPage/landingPage.component';
 import { LoginPageComponent } from './pages/login/loginPage.component';

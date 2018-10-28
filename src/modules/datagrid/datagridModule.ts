@@ -4,8 +4,8 @@ import { CommonModule } from '@angular/common';
 
 import { RouterModule, Routes } from '@angular/router';
 
-import { MenuService, LoggingService, VersionsService, AuthoriseRoleGuard } from 'ngscaffolding-core';
-import { ButtonColorPipe, CoreModule } from '../core/coreModule';
+import { MenuService, LoggingService, VersionsService } from 'ngscaffolding-core';
+import { ButtonColorPipe, CoreModule, AuthoriseRoleGuard } from '../core/coreModule';
 
 import { InputBuilderModule } from '../inputbuilder/inputbuilderModule';
 
@@ -13,7 +13,8 @@ import { FiltersHolderComponent } from './components/filtersHolder/filtersHolder
 import { ActionsHolderComponent } from './components/actionsHolder/actionsHolder.component';
 import { ToolBarComponent } from './components/toolBar/toolBar.component';
 
-import { ButtonModule, TooltipModule, ConfirmDialogModule, SplitButtonModule, DialogModule, ProgressSpinnerModule, SidebarModule } from 'primeng/primeng';
+import { ButtonModule, TooltipModule, ConfirmDialogModule, SplitButtonModule,
+   DialogModule, ProgressSpinnerModule, SidebarModule } from 'primeng/primeng';
 import { AgGridModule } from 'ag-grid-angular/main';
 
 import { ButtonCellComponent } from './cellTemplates/buttonCell/buttonCell.component';
