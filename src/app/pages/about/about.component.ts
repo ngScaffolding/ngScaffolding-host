@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { VersionsService, SoftwareVersion } from '../../../modules/core/coreModule';
-import { AppModule } from 'app/app.module';
+import { VersionsService, SoftwareVersion } from 'ngscaffolding-core';
 
 @Component({
   templateUrl: './about.component.html',

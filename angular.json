@@ -79,9 +79,9 @@
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
             "main": "src/test.ts",
-              "polyfills": "src/polyfills.ts",
-              "tsConfig": "src/tsconfig.spec.json",
-              "karmaConfig": "src/karma.conf.js",
+            "polyfills": "src/polyfills.ts",
+            "tsConfig": "src/tsconfig.spec.json",
+            "karmaConfig": "src/karma.conf.js",
             "scripts": [
               "node_modules/moment/moment.js",
               "node_modules/chart.js/dist/Chart.js",
@@ -95,6 +95,7 @@
               "styles.css"
             ],
             "assets": [
+			  "src/favicon.ico",
               "src/assets",
               "src/upload.php"
             ]
@@ -130,6 +131,46 @@
           "options": {
             "tsConfig": [
               "e2e/tsconfig.e2e.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "ngscaffolding-core": {
+      "root": "projects/ngscaffolding-core",
+      "sourceRoot": "projects/ngscaffolding-core/src",
+      "projectType": "library",
+      "prefix": "ngs",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/ngscaffolding-core/tsconfig.lib.json",
+            "project": "projects/ngscaffolding-core/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "project": "projects/ngscaffolding-core/ng-package.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/ngscaffolding-core/src/test.ts",
+            "tsConfig": "projects/ngscaffolding-core/tsconfig.spec.json",
+            "karmaConfig": "projects/ngscaffolding-core/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/ngscaffolding-core/tsconfig.lib.json",
+              "projects/ngscaffolding-core/tsconfig.spec.json"
             ],
             "exclude": [
               "**/node_modules/**"

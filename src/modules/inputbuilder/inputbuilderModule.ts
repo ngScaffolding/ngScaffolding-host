@@ -2,7 +2,7 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 import { VERSION } from './version';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { VersionsService } from '../core/coreModule';
+import { VersionsService } from 'ngscaffolding-core';
 
 import { InputBuilderComponent } from './inputBuilder/inputBuilder.component';
 import { InputBuilderPopupComponent } from './inputBuilderPopup/inputBuilderPopup.component';

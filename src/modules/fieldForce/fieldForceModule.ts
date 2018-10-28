@@ -14,7 +14,7 @@ import {
   LoggingService,
   VersionsService,
   AuthoriseRoleGuard
-} from '../core/coreModule';
+} from 'ngscaffolding-core';
 
 import { InputBuilderModule } from '../inputbuilder/inputbuilderModule';
 

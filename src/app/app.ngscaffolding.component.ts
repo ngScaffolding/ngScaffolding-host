@@ -14,9 +14,9 @@ import { Title } from '@angular/platform-browser';
 import { map, filter, scan } from 'rxjs/operators';
 
 import { UserPreferenceValue } from '@ngscaffolding/models';
-import { LoggingService, AppSettingsService, SpinnerService } from '../modules/core/coreModule';
-import { UserAuthorisationBase, UserPreferencesService } from '../modules/core/coreModule';
-import { BroadcastService, BroadcastTypes, MenuService } from '../modules/core/coreModule';
+import { LoggingService, AppSettingsService, SpinnerService } from 'ngscaffolding-core';
+import { UserAuthorisationBase, UserPreferencesService } from 'ngscaffolding-core';
+import { BroadcastService, BroadcastTypes, MenuService } from 'ngscaffolding-core';
 import { NotificationReceiverService } from './services/notificationReceiver/notificationReceiver.service';
 
 enum MenuOrientation {

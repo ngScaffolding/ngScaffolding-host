@@ -12,14 +12,12 @@ import {
   AppSettingsService,
   MenuService,
   LoggingService,
-  VersionsService,
-  AuthoriseRoleGuard
-} from '../core/coreModule';
+  VersionsService, DynamicComponentService
+} from 'ngscaffolding-core';
 
 import { InputBuilderModule } from '../inputbuilder/inputbuilderModule';
 
 import { DatagridModule } from '../datagrid/datagridModule';
-import { DynamicComponentService } from '../core/services/dynamicComponent/dynamicComponent.service';
 import { TopDashboardComponent } from './pages/topDashboard/topDashboard.component';
 import { DigitalReadoutComponent } from './components/digitalReadout/digitalReadout.component';
 

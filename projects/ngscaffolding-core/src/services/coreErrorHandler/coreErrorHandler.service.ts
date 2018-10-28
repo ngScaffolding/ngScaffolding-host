@@ -5,7 +5,7 @@ import { HttpClient } from '@angular/common/http';
 
 
 
-import { ErrorModel } from '../../models/error.model';
+import { ErrorModel } from '@ngscaffolding/models';
 import { UserAuthorisationBase } from '../userAuthorisation/UserAuthorisationBase';
 import { AppSettingsService } from '../appSettings/appSettings.service';
 import { NotificationService } from '../notification/notification.service';

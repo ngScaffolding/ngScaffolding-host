@@ -22,7 +22,7 @@ import { JsonEditorComponent, JsonEditorOptions } from 'ang-jsoneditor';
 import {
   AppSettingsService,
   ReferenceValuesService
-} from '../../core/coreModule';
+} from 'ngscaffolding-core';
 import { InputDetailReferenceValues } from '@ngscaffolding/models';
 
 @Component({

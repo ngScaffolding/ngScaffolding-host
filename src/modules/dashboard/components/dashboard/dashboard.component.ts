@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, ComponentRef, ViewChildren, QueryList, OnChanges, SimpleChanges } from '@angular/core';
-import { DataSourceService, LoggingService, MenuService } from '../../../core/services';
+import { DataSourceService, LoggingService, MenuService } from 'ngscaffolding-core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CoreMenuItem, WidgetModelBase, WidgetDetails } from '@ngscaffolding/models';
 import { Observable } from 'rxjs';
@@ -9,7 +9,8 @@ import { DashboardModel } from '@ngscaffolding/models';
 import { DataGridComponent } from '../../../datagrid/components/dataGrid/dataGrid.component';
 import { ChartComponent } from '../../../chart/chartingModule';
 
-import { CompactType, DisplayGrid, GridsterConfig, GridsterItem, GridType, GridsterItemComponent, GridsterItemComponentInterface } from 'angular-gridster2';
+import { CompactType, DisplayGrid, GridsterConfig, GridsterItem, GridType,
+   GridsterItemComponent, GridsterItemComponentInterface } from 'angular-gridster2';
 
 @Component({
   selector: 'app-dashboard',

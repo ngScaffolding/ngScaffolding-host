@@ -28,6 +28,7 @@ import { Dialog } from 'primeng/dialog';
 import { MessageService } from 'primeng/components/common/messageservice';
 
 import {
+  ActionService
   AppSettingsService,
   DataSourceService,
   MenuService,
@@ -36,12 +37,11 @@ import {
   BroadcastService,
   UserPreferencesService,
   CacheService
-} from '../../../core/coreModule';
+} from 'ngscaffolding-core';
 
 import { FiltersHolderComponent } from '../filtersHolder/filtersHolder.component';
 import { InputBuilderPopupComponent } from '../../../inputbuilder/inputbuilderModule';
 import { ActionsHolderComponent } from '../actionsHolder/actionsHolder.component';
-import { ActionService } from '../../../core/services/action/action.service';
 import {
   ButtonCellComponent,
   ActionClickedData

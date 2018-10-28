@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { trigger, state, style, animate, transition } from '@angular/animations';
-import { AppSettingsService } from '../../../core/services';
+import { AppSettingsService } from 'ngscaffolding-core';
 
 @Component({
   selector: 'app-grid-toolbar',

@@ -32,6 +32,6 @@ export class BroadcastService {
     return this._eventBus.pipe(
         filter(event => event.key === key),
         map(event => <T>event.data)
-    )
+    );
   }
 }

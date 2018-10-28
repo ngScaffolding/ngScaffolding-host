@@ -6,8 +6,7 @@ import { BroadcastService } from '../broadcast/broadcast.service';
 import { AppSettingsService } from '../appSettings/appSettings.service';
 import { LoggingService } from '../logging/logging.service';
 
-import { AuthUser } from '@ngscaffolding/models';
-import { AuthUserResponse } from '../../models/authUserResponse.model';
+import { AuthUser, AuthUserResponse } from '@ngscaffolding/models';
 import { NotificationService } from '../notification/notification.service';
 
 import { JwtHelperService } from '@auth0/angular-jwt';

@@ -11,7 +11,7 @@ import {
 
 import { Chart, Highcharts } from 'angular-highcharts';
 import { ChartDataService } from '../../services/chartData.service';
-import { DataSourceService, LoggingService } from '../../../core/services';
+import { DataSourceService, LoggingService } from 'ngscaffolding-core';
 import { GridsterItem } from 'angular-gridster2';
 import { DataSourceRequest, ChartDetailModel } from '@ngscaffolding/models';
 

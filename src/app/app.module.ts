@@ -31,11 +31,14 @@ import { PRIME_COMPONENTS } from './app.prime.components';
 import { ConfirmationService } from 'primeng/primeng';
 import { APP_COMPONENTS } from './app.component.list';
 import { MessageService } from 'primeng/components/common/messageservice';
+import {  AuthoriseRoleGuard, CoreModule } from '../modules/core/coreModule';
+
 import { ActionService, AppSettingsService,
-  UserAuthorisationBase, UserAuthorisationService,  BroadcastService,  CacheService,
-  CoreErrorHandlerService,  LoggingService,  NotificationService,  MenuService,
-  DataSourceService , ReferenceValuesService, AuthoriseRoleGuard,
-  SpinnerService,  RolesService,  UserPreferencesService,  VersionsService, CoreModule} from '../modules/core/coreModule';
+  UserAuthorisationBase, UserAuthorisationService, CacheService,
+  CoreErrorHandlerService,  LoggingService,  MenuService,
+  DataSourceService , ReferenceValuesService, BroadcastService,
+  SpinnerService,  RolesService,  UserPreferencesService,  VersionsService,
+   NotificationService, DynamicComponentService } from 'ngscaffolding-core';
 
   // Externalise These Modules
   import { DatagridModule } from '../modules/datagrid/datagridModule';
@@ -61,7 +64,6 @@ import { NotificationReceiverService } from './services/notificationReceiver/not
 import { TokenInterceptor } from './interceptors/token.interceptor';
 import { KumulosAuthService } from '../modules/kumulosImplementation/services/kumulosAuth.service';
 import { KumulosDataService } from '../modules/kumulosImplementation/services/kumulosData.service';
-import { DynamicComponentService } from '../modules/core/services/dynamicComponent/dynamicComponent.service';
 
 export function jwtOptionsFactory(appSettings: AppSettingsService) {
   return {

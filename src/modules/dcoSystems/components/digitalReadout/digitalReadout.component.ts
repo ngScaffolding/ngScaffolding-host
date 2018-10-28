@@ -1,6 +1,6 @@
 import { Component, OnInit, AfterViewInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { DataSourceService } from '../../../core/services';
+import { DataSourceService } from 'ngscaffolding-core';
 
 @Component({
   selector: 'app-digital-readout',

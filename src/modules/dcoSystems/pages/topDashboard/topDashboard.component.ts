@@ -1,9 +1,6 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { DataSourceService } from '../../../core/services';
-
-
-
+import { DataSourceService } from 'ngscaffolding-core';
 
 @Component({
   templateUrl: 'topDashboard.component.html',

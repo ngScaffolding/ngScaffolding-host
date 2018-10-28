@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { UserAuthorisationBase, LoggingService } from '../../../modules/core/coreModule';
+import { UserAuthorisationBase, LoggingService } from 'ngscaffolding-core';
 
 @Component({
   templateUrl: 'logoffPage.component.html'

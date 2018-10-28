@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Action } from '@ngscaffolding/models';
-import { ButtonColorPipe } from '../../../core/coreModule';
+import { ButtonColorPipe } from '../ngscaffolding-core';
 
 @Component({
   selector: 'app-actions-holder',
