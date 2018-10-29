@@ -6,7 +6,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 
 import { MenuService, LoggingService, VersionsService,  } from 'ngscaffolding-core';
-import { CoreModule, AuthoriseRoleGuard } from '../core/coreModule';
+import { CoreModule, AuthoriseRoleGuard } from 'ngscaffolding-core';
 
 import { InputBuilderModule } from '../inputbuilder/inputbuilderModule';
 import { HighchartsChartComponent } from './components/chart/highcharts-chart.component';

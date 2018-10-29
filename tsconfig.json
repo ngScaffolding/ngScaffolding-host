@@ -17,6 +17,7 @@
       "es2017",
       "dom"
     ],
+
     "paths": {
       "ngscaffolding-core": [
         "dist/ngscaffolding-core"
@@ -25,5 +26,6 @@
         "dist/ngscaffolding-core/*"
       ]
     }
-  }
+  },
+  "exclude": ["dist"]
 }

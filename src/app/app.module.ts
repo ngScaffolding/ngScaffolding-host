@@ -31,9 +31,8 @@ import { PRIME_COMPONENTS } from './app.prime.components';
 import { ConfirmationService } from 'primeng/primeng';
 import { APP_COMPONENTS } from './app.component.list';
 import { MessageService } from 'primeng/components/common/messageservice';
-import {  AuthoriseRoleGuard, CoreModule } from '../modules/core/coreModule';
 
-import { ActionService, AppSettingsService,
+import { AuthoriseRoleGuard, CoreModule, ActionService, AppSettingsService,
   UserAuthorisationBase, UserAuthorisationService, CacheService,
   CoreErrorHandlerService,  LoggingService,  MenuService,
   DataSourceService , ReferenceValuesService, BroadcastService,

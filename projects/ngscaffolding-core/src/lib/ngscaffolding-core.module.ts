@@ -2,7 +2,6 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 
-import { NgscaffoldingCoreComponent } from './ngscaffolding-core.component';
 import { VERSION } from '../version';
 
 // Pipes
@@ -17,11 +16,13 @@ import { VersionsService } from '../services/versions/versions.service';
 @NgModule({
   imports: [CommonModule, HttpClientModule],
   declarations: [
-    NgscaffoldingCoreComponent,
     FillHeightDirective,
     ButtonColorPipe
   ],
-  exports: [NgscaffoldingCoreComponent, ButtonColorPipe, FillHeightDirective]
+  exports: [
+    ButtonColorPipe,
+    FillHeightDirective
+  ]
 })
 export class CoreModule {
   static forRoot(): ModuleWithProviders {
@@ -33,6 +34,6 @@ export class CoreModule {
     };
   }
   constructor(versions: VersionsService) {
-    versions.addVersion('@ngscaffolding/core', VERSION.version);
+    versions.addVersion('ngscaffolding-core', VERSION.version);
   }
 }
