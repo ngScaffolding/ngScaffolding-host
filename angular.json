@@ -248,6 +248,76 @@
           }
         }
       }
+    },
+    "ngscaffolding-dashboard": {
+      "root": "projects/ngscaffolding-dashboard",
+      "sourceRoot": "projects/ngscaffolding-dashboard/src",
+      "projectType": "library",
+      "prefix": "ng",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/ngscaffolding-dashboard/tsconfig.lib.json",
+            "project": "projects/ngscaffolding-dashboard/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/ngscaffolding-dashboard/src/test.ts",
+            "tsConfig": "projects/ngscaffolding-dashboard/tsconfig.spec.json",
+            "karmaConfig": "projects/ngscaffolding-dashboard/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/ngscaffolding-dashboard/tsconfig.lib.json",
+              "projects/ngscaffolding-dashboard/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "ngscaffolding-datagrid": {
+      "root": "projects/ngscaffolding-datagrid",
+      "sourceRoot": "projects/ngscaffolding-datagrid/src",
+      "projectType": "library",
+      "prefix": "ng",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/ngscaffolding-datagrid/tsconfig.lib.json",
+            "project": "projects/ngscaffolding-datagrid/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/ngscaffolding-datagrid/src/test.ts",
+            "tsConfig": "projects/ngscaffolding-datagrid/tsconfig.spec.json",
+            "karmaConfig": "projects/ngscaffolding-datagrid/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/ngscaffolding-datagrid/tsconfig.lib.json",
+              "projects/ngscaffolding-datagrid/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
   },
   "defaultProject": "ng-host",

@@ -29,9 +29,9 @@
         [gridOptions]="gridOptions" (selectionChanged)='onSelectionChanged($event)' (gridReady)="onGridReady($event)">
       </ag-grid-angular>
 
+    <app-actions-holder #actionsHolder *ngIf="actions && actions.length > 0"
+      (actionClicked)="actionClicked($event, null)" [actions]="actions"></app-actions-holder>
 
-
-    <app-actions-holder #actionsHolder *ngIf="actions && actions.length > 0" (actionClicked)="actionClicked($event)" [actions]="actions"></app-actions-holder>
     <app-input-builder-popup #actionInputPopup [inputBuilderDefinition]="actionInputDefinition" [inputModel]="actionValues" (okClicked)="actionOkClicked($event)"
       (cancelCliecked)="actionCancelClicked()"></app-input-builder-popup>
 

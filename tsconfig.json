@@ -35,6 +35,18 @@
       ],
       "ngscaffolding-chart/*": [
         "dist/ngscaffolding-chart/*"
+      ],
+      "ngscaffolding-dashboard": [
+        "dist/ngscaffolding-dashboard"
+      ],
+      "ngscaffolding-dashboard/*": [
+        "dist/ngscaffolding-dashboard/*"
+      ],
+      "ngscaffolding-datagrid": [
+        "dist/ngscaffolding-datagrid"
+      ],
+      "ngscaffolding-datagrid/*": [
+        "dist/ngscaffolding-datagrid/*"
       ]
     }
   },

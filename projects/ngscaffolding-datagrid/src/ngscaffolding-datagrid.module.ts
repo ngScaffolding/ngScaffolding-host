@@ -59,7 +59,7 @@ const appRoutes: Routes = [
   exports: [
     DataGridComponent,
     DataGridHolderComponent,
-    RouterModule
+    RouterModule,ButtonCellComponent
   ]
 })
 export class DatagridModule {
@@ -70,6 +70,6 @@ export class DatagridModule {
   }
 
   constructor(menuService: MenuService, logger: LoggingService, versions: VersionsService) {
-    versions.addVersion('@ngscaffolding/dataGrid', VERSION.version);
+    versions.addVersion('ngscaffolding-datagrid', VERSION.version);
   }
 }
