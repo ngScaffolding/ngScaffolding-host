@@ -10,7 +10,7 @@ import { AuthoriseRoleGuard, AppSettingsService, MenuService, LoggingService, Ve
 
 import { InputBuilderModule } from 'ngscaffolding-inputbuilder';
 
-import { DatagridModule } from '../datagrid/datagridModule';
+import { DatagridModule } from 'ngscaffolding-datagrid';
 
 import { InputBuilderSimpleComponent } from './pages/inputBuilderSimple/inputBuilderSimple.component';
 

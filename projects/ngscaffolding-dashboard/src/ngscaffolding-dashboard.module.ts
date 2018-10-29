@@ -11,7 +11,7 @@ import { CoreModule, ButtonColorPipe, AuthoriseRoleGuard } from 'ngscaffolding-c
 import { InputBuilderModule } from 'ngscaffolding-inputbuilder';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 
-import { DataGridComponent } from '../datagrid/components/dataGrid/dataGrid.component';
+import { DataGridComponent } from 'ngscaffolding-datagrid';
 import { ChartComponent, } from 'ngscaffolding-chart';
 
 import { DynamicModule } from 'ng-dynamic-component';

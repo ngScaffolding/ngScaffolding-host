@@ -10,7 +10,7 @@ import { AppSettingsService, MenuService, LoggingService, VersionsService } from
 
 import { InputBuilderModule } from 'ngscaffolding-inputbuilder';
 
-import { DatagridModule } from '../datagrid/datagridModule';
+import { DatagridModule } from 'ngscaffolding-datagrid';
 
 export * from './pages';
 

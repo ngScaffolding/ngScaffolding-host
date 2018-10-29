@@ -18,7 +18,7 @@ import {
 
 import { InputBuilderModule } from 'ngscaffolding-inputbuilder';
 
-import { DatagridModule } from '../datagrid/datagridModule';
+import { DatagridModule } from 'ngscaffolding-datagrid';
 import { MachineDetailsComponent } from './pages/Finder/MachineDetails/machineDetails.component';
 import { DetailsListComponent } from './components/detailsList/detailsList.component';
 import { UpgradeCalcComponent } from './components/upgradeCalc/upgradeCalc.component';

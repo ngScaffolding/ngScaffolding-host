@@ -15,7 +15,7 @@ import {
 
 import { InputBuilderModule } from 'ngscaffolding-inputbuilder';
 
-import { DatagridModule } from '../datagrid/datagridModule';
+import { DatagridModule } from 'ngscaffolding-datagrid';
 import { TopDashboardComponent } from './pages/topDashboard/topDashboard.component';
 import { DigitalReadoutComponent } from './components/digitalReadout/digitalReadout.component';
 
