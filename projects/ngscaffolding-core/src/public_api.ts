@@ -3,7 +3,7 @@
  */
 
 
-export * from './lib/ngscaffolding-core.module';
+export * from './ngscaffolding-core.module';
 
 export * from './services';
 

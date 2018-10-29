@@ -8,7 +8,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { MenuService, LoggingService, VersionsService,  } from 'ngscaffolding-core';
 import { CoreModule, AuthoriseRoleGuard } from 'ngscaffolding-core';
 
-import { InputBuilderModule } from '../inputbuilder/inputbuilderModule';
+import { InputBuilderModule } from 'ngscaffolding-inputbuilder';
 import { HighchartsChartComponent } from './components/chart/highcharts-chart.component';
 import { ChartComponent } from './components/chart/chart.component';
 import { ChartHolderComponent } from './components/chartHolder/chartHolder.component';

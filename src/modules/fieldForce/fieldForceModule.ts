@@ -16,7 +16,7 @@ import {
   DynamicComponentService
 } from 'ngscaffolding-core';
 
-import { InputBuilderModule } from '../inputbuilder/inputbuilderModule';
+import { InputBuilderModule } from 'ngscaffolding-inputbuilder';
 
 import { DatagridModule } from '../datagrid/datagridModule';
 import { MachineDetailsComponent } from './pages/Finder/MachineDetails/machineDetails.component';

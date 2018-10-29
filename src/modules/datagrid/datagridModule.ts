@@ -6,7 +6,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { MenuService, LoggingService, VersionsService, CoreModule, AuthoriseRoleGuard } from 'ngscaffolding-core';
 
-import { InputBuilderModule } from '../inputbuilder/inputbuilderModule';
+import { InputBuilderModule } from 'ngscaffolding-inputbuilder';
 
 import { FiltersHolderComponent } from './components/filtersHolder/filtersHolder.component';
 import { ActionsHolderComponent } from './components/actionsHolder/actionsHolder.component';

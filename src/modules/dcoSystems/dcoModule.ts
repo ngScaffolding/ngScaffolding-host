@@ -6,8 +6,6 @@ import { RouterModule, Routes, Router, Route } from '@angular/router';
 
 import { AppSettings } from '@ngscaffolding/models';
 
-
-
 import {
   AppSettingsService,
   MenuService,
@@ -15,7 +13,7 @@ import {
   VersionsService, DynamicComponentService
 } from 'ngscaffolding-core';
 
-import { InputBuilderModule } from '../inputbuilder/inputbuilderModule';
+import { InputBuilderModule } from 'ngscaffolding-inputbuilder';
 
 import { DatagridModule } from '../datagrid/datagridModule';
 import { TopDashboardComponent } from './pages/topDashboard/topDashboard.component';

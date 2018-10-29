@@ -95,7 +95,7 @@
               "styles.css"
             ],
             "assets": [
-			  "src/favicon.ico",
+              "src/favicon.ico",
               "src/assets",
               "src/upload.php"
             ]
@@ -171,6 +171,41 @@
             "tsConfig": [
               "projects/ngscaffolding-core/tsconfig.lib.json",
               "projects/ngscaffolding-core/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "ngscaffolding-inputbuilder": {
+      "root": "projects/ngscaffolding-inputbuilder",
+      "sourceRoot": "projects/ngscaffolding-inputbuilder/src",
+      "projectType": "library",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/ngscaffolding-inputbuilder/tsconfig.lib.json",
+            "project": "projects/ngscaffolding-inputbuilder/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/ngscaffolding-inputbuilder/src/test.ts",
+            "tsConfig": "projects/ngscaffolding-inputbuilder/tsconfig.spec.json",
+            "karmaConfig": "projects/ngscaffolding-inputbuilder/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/ngscaffolding-inputbuilder/tsconfig.lib.json",
+              "projects/ngscaffolding-inputbuilder/tsconfig.spec.json"
             ],
             "exclude": [
               "**/node_modules/**"

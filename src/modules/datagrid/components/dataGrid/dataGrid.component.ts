@@ -40,7 +40,7 @@ import {
 } from 'ngscaffolding-core';
 
 import { FiltersHolderComponent } from '../filtersHolder/filtersHolder.component';
-import { InputBuilderPopupComponent } from '../../../inputbuilder/inputbuilderModule';
+import { InputBuilderPopupComponent } from 'ngscaffolding-inputbuilder';
 import { ActionsHolderComponent } from '../actionsHolder/actionsHolder.component';
 import {
   ButtonCellComponent,

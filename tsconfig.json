@@ -17,15 +17,22 @@
       "es2017",
       "dom"
     ],
-
     "paths": {
       "ngscaffolding-core": [
         "dist/ngscaffolding-core"
       ],
       "ngscaffolding-core/*": [
         "dist/ngscaffolding-core/*"
+      ],
+      "ngscaffolding-inputbuilder": [
+        "dist/ngscaffolding-inputbuilder"
+      ],
+      "ngscaffolding-inputbuilder/*": [
+        "dist/ngscaffolding-inputbuilder/*"
       ]
     }
   },
-  "exclude": ["dist"]
+  "exclude": [
+    "dist"
+  ]
 }

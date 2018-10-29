@@ -86,6 +86,6 @@ export class InputBuilderModule {
     };
   }
   constructor(versions: VersionsService) {
-    versions.addVersion('@ngscaffolding/inputbuilder', VERSION.version);
+    versions.addVersion('ngscaffolding-inputbuilder', VERSION.version);
   }
 }

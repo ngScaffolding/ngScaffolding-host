@@ -6,9 +6,9 @@
     <div class="card ui-g-12">
       <div class="ui-g-12">
         <app-input-builder *ngIf="isShown" (modelUpdated)="notifyChanged($event)"
-          (okClicked)="onOkClicked()" (cancelClicked)="onCancelClicked()"
+          (okClicked)="onOkClicked($event)" (cancelClicked)="onCancelClicked()"
           (modelUpdated)="onModelUpdated($event)"
-          (valueUpdated)="onValueUpdated($event)"
+          (valueUpdated)="onValueUpdated()"
           [inputBuilderDefinition]="inputBuilderDefinition"
           [inputModel]="inputModel"></app-input-builder>
       </div>
