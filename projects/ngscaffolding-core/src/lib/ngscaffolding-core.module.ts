@@ -1,9 +1,38 @@
-import { NgModule } from '@angular/core';
+import { NgModule, ModuleWithProviders } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
+
 import { NgscaffoldingCoreComponent } from './ngscaffolding-core.component';
+import { VERSION } from '../version';
+
+// Pipes
+import { ButtonColorPipe } from '../pipes/buttonColor.pipe';
+
+// Directives
+import { FillHeightDirective } from '../directives/fill-height.directive';
+import { AuthoriseRoleGuard } from '../routeGuards/authoriseRoleGuard';
+
+import { VersionsService } from '../services/versions/versions.service';
 
 @NgModule({
-  imports: [],
-  declarations: [NgscaffoldingCoreComponent],
-  exports: [NgscaffoldingCoreComponent]
+  imports: [CommonModule, HttpClientModule],
+  declarations: [
+    NgscaffoldingCoreComponent,
+    FillHeightDirective,
+    ButtonColorPipe
+  ],
+  exports: [NgscaffoldingCoreComponent, ButtonColorPipe, FillHeightDirective]
 })
-export class NgscaffoldingCoreModule { }
+export class CoreModule {
+  static forRoot(): ModuleWithProviders {
+    return {
+      ngModule: CoreModule,
+      providers: [
+        AuthoriseRoleGuard
+      ]
+    };
+  }
+  constructor(versions: VersionsService) {
+    versions.addVersion('@ngscaffolding/core', VERSION.version);
+  }
+}

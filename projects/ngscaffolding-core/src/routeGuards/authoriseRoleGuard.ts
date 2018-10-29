@@ -1,5 +1,5 @@
 import { CanActivate, Router } from '@angular/router';
-import { UserAuthorisationBase } from 'ngscaffolding-core';
+import { UserAuthorisationBase } from '../services/userAuthorisation/UserAuthorisationBase';
 import { Injectable } from '@angular/core';
 
 @Injectable()
