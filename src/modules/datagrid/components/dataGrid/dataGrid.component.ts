@@ -28,7 +28,7 @@ import { Dialog } from 'primeng/dialog';
 import { MessageService } from 'primeng/components/common/messageservice';
 
 import {
-  ActionService
+  ActionService,
   AppSettingsService,
   DataSourceService,
   MenuService,

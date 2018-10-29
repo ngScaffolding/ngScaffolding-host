@@ -13,13 +13,12 @@ import {
   MenuService,
   LoggingService,
   VersionsService,
-  AuthoriseRoleGuard
+  DynamicComponentService
 } from 'ngscaffolding-core';
 
 import { InputBuilderModule } from '../inputbuilder/inputbuilderModule';
 
 import { DatagridModule } from '../datagrid/datagridModule';
-import { DynamicComponentService } from '../core/services/dynamicComponent/dynamicComponent.service';
 import { MachineDetailsComponent } from './pages/Finder/MachineDetails/machineDetails.component';
 import { DetailsListComponent } from './components/detailsList/detailsList.component';
 import { UpgradeCalcComponent } from './components/upgradeCalc/upgradeCalc.component';

@@ -6,7 +6,8 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { AppSettings } from '@ngscaffolding/models';
 
-import { AppSettingsService, MenuService, LoggingService, VersionsService, AuthoriseRoleGuard } from 'ngscaffolding-core';
+import { AppSettingsService, MenuService, LoggingService, VersionsService } from 'ngscaffolding-core';
+import { AuthoriseRoleGuard } from '../../modules/core/coreModule;'
 
 import { InputBuilderModule } from '../inputbuilder/inputbuilderModule';
 

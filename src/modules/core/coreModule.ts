@@ -12,7 +12,6 @@ import { AuthoriseRoleGuard } from './routeGuards/authoriseRoleGuard';
 
 import { VersionsService } from 'ngscaffolding-core';
 
-export * from './models/index';
 export * from './pipes/index';
 export * from './routeGuards/authoriseRoleGuard';
 
