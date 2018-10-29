@@ -3,7 +3,7 @@ import {
   VersionsService,
   SoftwareVersion,
   UserPreferencesService
-} from '../../../modules/core/coreModule';
+} from 'ngscaffolding-core';
 import { Subscription } from 'rxjs';
 import { InputBuilderDefinition, OrientationValues } from '@ngscaffolding/models';
 

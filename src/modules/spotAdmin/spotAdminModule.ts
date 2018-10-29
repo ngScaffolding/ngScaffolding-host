@@ -6,11 +6,11 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { AppSettings } from '@ngscaffolding/models';
 
-import { AppSettingsService, MenuService, LoggingService, VersionsService, AuthoriseRoleGuard } from '../core/coreModule';
+import { AppSettingsService, MenuService, LoggingService, VersionsService } from 'ngscaffolding-core';
 
-import { InputBuilderModule } from '../inputbuilder/inputbuilderModule';
+import { InputBuilderModule } from 'ngscaffolding-inputbuilder';
 
-import { DatagridModule } from '../datagrid/datagridModule';
+import { DatagridModule } from 'ngscaffolding-datagrid';
 
 export * from './pages';
 

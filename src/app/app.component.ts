@@ -6,9 +6,9 @@ import { Router } from '@angular/router';
 import { NgScaffoldingComponent } from './app.ngscaffolding.component';
 import { Title } from '@angular/platform-browser';
 
-import { LoggingService, AppSettingsService, SpinnerService } from '../modules/core/coreModule';
-import { UserAuthorisationBase, UserPreferencesService } from '../modules/core/coreModule';
-import { BroadcastService, BroadcastTypes, MenuService } from '../modules/core/coreModule';
+import { LoggingService, AppSettingsService, SpinnerService } from 'ngscaffolding-core';
+import { UserAuthorisationBase, UserPreferencesService } from 'ngscaffolding-core';
+import { BroadcastService, BroadcastTypes, MenuService } from 'ngscaffolding-core';
 import { NotificationReceiverService } from './services/notificationReceiver/notificationReceiver.service';
 
 enum MenuOrientation {

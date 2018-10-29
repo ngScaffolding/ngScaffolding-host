@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BroadcastService, BroadcastTypes } from '../../../modules/core/coreModule';
+import { BroadcastService, BroadcastTypes } from 'ngscaffolding-core';
 import { Message } from 'primeng/primeng';
 import { MessageService } from 'primeng/components/common/messageservice';
 

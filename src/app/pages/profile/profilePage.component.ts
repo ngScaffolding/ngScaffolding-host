@@ -4,7 +4,7 @@ import {
   SoftwareVersion,
   UserPreferencesService,
   NotificationService
-} from '../../../modules/core/coreModule';
+} from 'ngscaffolding-core';
 import { Subscription } from 'rxjs';
 import {
   InputBuilderDefinition,

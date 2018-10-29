@@ -5,7 +5,7 @@ import {
   NotificationService,
   SpinnerService,
   UserAuthorisationBase
-} from '../../../modules/core/coreModule';
+} from 'ngscaffolding-core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 // import {MessageService} from 'primeng/components/common/messageservice';

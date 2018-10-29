@@ -1,18 +1,13 @@
-import { UserAuthorisationBase } from '../../core/coreModule';
+import { UserAuthorisationBase } from 'ngscaffolding-core';
 import { BehaviorSubject } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 
-import { BroadcastService } from '../../core/services/broadcast/broadcast.service';
-import { AppSettingsService } from '../../core/services/appSettings/appSettings.service';
-import { LoggingService } from '../../core/services/logging/logging.service';
+import { BroadcastService, AppSettingsService, LoggingService, NotificationService, SpinnerService } from 'ngscaffolding-core';
 
 import { AuthUser } from '@ngscaffolding/models';
-import { AuthUserResponse } from '../../core/models/authUserResponse.model';
-import { NotificationService } from '../../core/services/notification/notification.service';
 
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { SpinnerService } from '../../core/services/spinnerService/spinner.service';
 import { KumulosDataService } from './kumulosData.service';
 
 @Injectable()

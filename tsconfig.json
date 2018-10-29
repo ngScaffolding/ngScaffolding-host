@@ -1,11 +1,11 @@
 {
-
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "./",
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
     "declaration": false,
+    "module": "es2015",
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
@@ -16,11 +16,41 @@
     "lib": [
       "es2017",
       "dom"
-    ]
-  }
-  ,
-  "angularCompilerOptions": {
-    "fullTemplateTypeCheck": true,
-    "preserveWhiteSpaces": false
-  }
+    ],
+    "paths": {
+      "ngscaffolding-core": [
+        "dist/ngscaffolding-core"
+      ],
+      "ngscaffolding-core/*": [
+        "dist/ngscaffolding-core/*"
+      ],
+      "ngscaffolding-inputbuilder": [
+        "dist/ngscaffolding-inputbuilder"
+      ],
+      "ngscaffolding-inputbuilder/*": [
+        "dist/ngscaffolding-inputbuilder/*"
+      ],
+      "ngscaffolding-chart": [
+        "dist/ngscaffolding-chart"
+      ],
+      "ngscaffolding-chart/*": [
+        "dist/ngscaffolding-chart/*"
+      ],
+      "ngscaffolding-dashboard": [
+        "dist/ngscaffolding-dashboard"
+      ],
+      "ngscaffolding-dashboard/*": [
+        "dist/ngscaffolding-dashboard/*"
+      ],
+      "ngscaffolding-datagrid": [
+        "dist/ngscaffolding-datagrid"
+      ],
+      "ngscaffolding-datagrid/*": [
+        "dist/ngscaffolding-datagrid/*"
+      ]
+    }
+  },
+  "exclude": [
+    "dist"
+  ]
 }

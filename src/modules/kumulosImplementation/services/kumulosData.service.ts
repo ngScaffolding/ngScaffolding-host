@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { LoggingService } from '../../core/coreModule';
+import { LoggingService } from 'ngscaffolding-core';
 
 import { Observable } from 'rxjs';
 

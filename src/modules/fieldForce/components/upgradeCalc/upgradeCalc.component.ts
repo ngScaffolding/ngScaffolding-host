@@ -7,7 +7,7 @@ import {
   InputTypes,
   InputDetailSlider
 } from '@ngscaffolding/models';
-import { DataSourceService } from '../../../core/services';
+import { DataSourceService } from 'ngscaffolding-core';
 
 class UpgradeModel {
   minimumMemory: number;

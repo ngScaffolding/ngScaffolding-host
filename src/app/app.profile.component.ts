@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {AppComponent} from './app.component';
-import { AppSettingsService, UserAuthorisationBase } from '../modules/core/services';
+import { AppSettingsService, UserAuthorisationBase } from 'ngscaffolding-core';
 import {trigger, state, transition, style, animate} from '@angular/animations';
 
 @Component({

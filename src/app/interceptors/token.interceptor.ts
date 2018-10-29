@@ -10,7 +10,7 @@ import {
 import {
   UserAuthorisationBase,
   LoggingService
-} from '../../modules/core/coreModule';
+} from 'ngscaffolding-core';
 import { Observable } from 'rxjs';
 import { finalize, tap } from 'rxjs/operators';
 

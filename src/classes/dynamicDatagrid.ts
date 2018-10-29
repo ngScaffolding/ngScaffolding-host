@@ -1,5 +1,5 @@
 import { Route, Router } from '@angular/router';
-import { DynamicComponentService } from '../modules/core/services/dynamicComponent/dynamicComponent.service';
+import { DynamicComponentService } from 'ngscaffolding-core';
 
 export function addDynamicDatagridComponents(config: Array<Route>, dynamicComponentService: DynamicComponentService) {
 

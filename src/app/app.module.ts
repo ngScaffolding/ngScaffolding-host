@@ -31,17 +31,19 @@ import { PRIME_COMPONENTS } from './app.prime.components';
 import { ConfirmationService } from 'primeng/primeng';
 import { APP_COMPONENTS } from './app.component.list';
 import { MessageService } from 'primeng/components/common/messageservice';
-import { ActionService, AppSettingsService,
-  UserAuthorisationBase, UserAuthorisationService,  BroadcastService,  CacheService,
-  CoreErrorHandlerService,  LoggingService,  NotificationService,  MenuService,
-  DataSourceService , ReferenceValuesService, AuthoriseRoleGuard,
-  SpinnerService,  RolesService,  UserPreferencesService,  VersionsService, CoreModule} from '../modules/core/coreModule';
+
+import { AuthoriseRoleGuard, CoreModule, ActionService, AppSettingsService,
+  UserAuthorisationBase, UserAuthorisationService, CacheService,
+  CoreErrorHandlerService,  LoggingService,  MenuService,
+  DataSourceService , ReferenceValuesService, BroadcastService,
+  SpinnerService,  RolesService,  UserPreferencesService,  VersionsService,
+   NotificationService, DynamicComponentService } from 'ngscaffolding-core';
 
   // Externalise These Modules
-  import { DatagridModule } from '../modules/datagrid/datagridModule';
-  import { InputBuilderModule } from '../modules/inputbuilder/inputbuilderModule';
-  import { ChartingModule } from '../modules/chart/chartingModule';
-  import { DashboardModule } from '../modules/dashboard/dashboardModule';
+  import { DatagridModule } from 'ngscaffolding-datagrid';
+  import { InputBuilderModule } from 'ngscaffolding-inputbuilder';
+  import { ChartingModule } from 'ngscaffolding-chart';
+  import { DashboardModule } from 'ngscaffolding-dashboard';
   import { CUSTOM_IMPORTS } from '../../custom/custom.app';
 
 // Pages
@@ -61,7 +63,6 @@ import { NotificationReceiverService } from './services/notificationReceiver/not
 import { TokenInterceptor } from './interceptors/token.interceptor';
 import { KumulosAuthService } from '../modules/kumulosImplementation/services/kumulosAuth.service';
 import { KumulosDataService } from '../modules/kumulosImplementation/services/kumulosData.service';
-import { DynamicComponentService } from '../modules/core/services/dynamicComponent/dynamicComponent.service';
 
 export function jwtOptionsFactory(appSettings: AppSettingsService) {
   return {
