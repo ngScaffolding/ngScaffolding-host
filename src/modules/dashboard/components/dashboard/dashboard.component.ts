@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 import { DashboardModel } from '@ngscaffolding/models';
 
 import { DataGridComponent } from '../../../datagrid/components/dataGrid/dataGrid.component';
-import { ChartComponent } from '../../../chart/chartingModule';
+import { ChartComponent } from 'ngscaffolding-chart';
 
 import { CompactType, DisplayGrid, GridsterConfig, GridsterItem, GridType,
    GridsterItemComponent, GridsterItemComponentInterface } from 'angular-gridster2';

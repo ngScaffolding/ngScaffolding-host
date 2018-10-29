@@ -213,6 +213,41 @@
           }
         }
       }
+    },
+    "ngscaffolding-chart": {
+      "root": "projects/ngscaffolding-chart",
+      "sourceRoot": "projects/ngscaffolding-chart/src",
+      "projectType": "library",
+      "prefix": "ng",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/ngscaffolding-chart/tsconfig.lib.json",
+            "project": "projects/ngscaffolding-chart/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/ngscaffolding-chart/src/test.ts",
+            "tsConfig": "projects/ngscaffolding-chart/tsconfig.spec.json",
+            "karmaConfig": "projects/ngscaffolding-chart/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/ngscaffolding-chart/tsconfig.lib.json",
+              "projects/ngscaffolding-chart/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
   },
   "defaultProject": "ng-host",

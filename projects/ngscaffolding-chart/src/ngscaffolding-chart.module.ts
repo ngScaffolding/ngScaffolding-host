@@ -1,4 +1,5 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
+
 import { FormsModule } from '@angular/forms';
 import { VERSION } from './version';
 import { CommonModule } from '@angular/common';
@@ -64,6 +65,6 @@ export class ChartingModule {
   }
 
   constructor(menuService: MenuService, logger: LoggingService, versions: VersionsService) {
-    versions.addVersion('@ngscaffolding/chart', VERSION.version);
+    versions.addVersion('ngscaffolding-chart', VERSION.version);
   }
 }

@@ -29,6 +29,12 @@
       ],
       "ngscaffolding-inputbuilder/*": [
         "dist/ngscaffolding-inputbuilder/*"
+      ],
+      "ngscaffolding-chart": [
+        "dist/ngscaffolding-chart"
+      ],
+      "ngscaffolding-chart/*": [
+        "dist/ngscaffolding-chart/*"
       ]
     }
   },

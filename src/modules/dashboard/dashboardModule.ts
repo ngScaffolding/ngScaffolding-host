@@ -12,7 +12,7 @@ import { InputBuilderModule } from 'ngscaffolding-inputbuilder';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 import { DataGridComponent } from '../datagrid/components/dataGrid/dataGrid.component';
-import { ChartComponent, } from '../chart/components/chart/chart.component';
+import { ChartComponent, } from 'ngscaffolding-chart';
 
 import { DynamicModule } from 'ng-dynamic-component';
 
