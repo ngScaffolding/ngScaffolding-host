@@ -20,6 +20,7 @@ export class UserAuthorisationService implements UserAuthorisationBase {
   public authenticatedSubject: BehaviorSubject<boolean>;
 
   private refreshToken: string;
+  private jwtHelper: JwtHelperService;
 
   currentUser: AuthUser;
 
@@ -29,10 +30,10 @@ export class UserAuthorisationService implements UserAuthorisationBase {
     private http: HttpClient,
     private appSettingsService: AppSettingsService,
     private notificationService: NotificationService,
-    private broadcastService: BroadcastService,
-    private jwtHelper: JwtHelperService
+    private broadcastService: BroadcastService
   ) {
     this.authenticatedSubject = new BehaviorSubject<boolean>(null);
+    this.jwtHelper = new JwtHelperService({});
 
     appSettingsService.settingsSubject.subscribe(settings => {
       if (settings && settings.authSaveinLocalStorage) {

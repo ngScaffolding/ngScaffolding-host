@@ -6,7 +6,6 @@ import { HttpClient } from '@angular/common/http';
 
 import { LoggingService } from '../logging/logging.service';
 import { CoreMenuItem } from '@ngscaffolding/models';
-import { MenuItem } from 'primeng/primeng';
 import { AppSettingsService } from '../appSettings/appSettings.service';
 import { UserAuthorisationBase } from '../userAuthorisation/UserAuthorisationBase';
 
@@ -49,7 +48,7 @@ export class MenuService {
     this.menuSubject.next(this.menuItems);
   }
 
-  public getMenuItemByName(name: string): MenuItem {
+  public getMenuItemByName(name: string): CoreMenuItem {
     this.menuItem = null;
 
     if (this.menuItems && this.menuItems.length > 0) {
