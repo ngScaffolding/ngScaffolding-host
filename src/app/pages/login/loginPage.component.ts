@@ -32,7 +32,7 @@ export class LoginPageComponent implements OnInit {
     private logger: LoggingService,
     private notificationService: NotificationService,
     private route: ActivatedRoute,
-    private router: Router,
+    private spinnerService: SpinnerService,
     private userAuthService: UserAuthorisationBase
   ) {}
 
@@ -62,10 +62,17 @@ export class LoginPageComponent implements OnInit {
       this.cookieService.delete(this.userNameCookie);
     }
 
-    this.userAuthService.logon(
-      this.inputModel.username,
-      this.inputModel.password
-    );
+    this.userAuthService.logon(this.inputModel.username,this.inputModel.password)
+    .subscribe(authUser => {
+
+    }, err =>{
+      this.notificationService.showMessage({
+        summary: 'Logon Failed',
+        detail: 'Check you User Name and Password and try again',
+        severity: 'error'
+      });
+      this.spinnerService.hideSpinner();
+    });
   }
 
   rememberChanged(isChecked: boolean) {

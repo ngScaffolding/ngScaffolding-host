@@ -1,21 +1,28 @@
-import { CanActivate, Router } from '@angular/router';
+import {
+  CanActivate,
+  Router,
+  ActivatedRouteSnapshot,
+  RouterStateSnapshot
+} from '@angular/router';
 import { UserAuthorisationBase } from '../services/userAuthorisation/UserAuthorisationBase';
 import { Injectable } from '@angular/core';
+import { RolesService } from 'ngscaffolding-core/services';
 
 @Injectable()
 export class AuthoriseRoleGuard implements CanActivate {
   constructor(
     private authService: UserAuthorisationBase,
-    private router: Router
+    private router: Router,
+    private rolesService: RolesService
   ) {}
 
-  canActivate() {
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     if (this.authService.isAuthenticated()) {
       return true;
     }
 
     // No authority, bye bye.
-    this.router.navigate(['login']);
+    this.router.navigate(['login'], { queryParams: { returnUrl: state.url } });
     return false;
   }
 }

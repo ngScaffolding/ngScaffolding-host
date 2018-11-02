@@ -1,4 +1,4 @@
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 
@@ -118,45 +118,45 @@ export class UserAuthorisationService implements UserAuthorisationBase {
       );
   }
 
-  public logon(userName: string, password: string) {
-    let body = new HttpParams();
-    body = body
-      .append('username', userName)
-      .append('password', password)
-      .append('grant_type', 'password')
-      .append('client_id', this.appSettingsService.authClientId)
-      .append('client_secret', this.appSettingsService.authClientSecret)
-      .append(
-        'scope',
-        this.appSettingsService.authScope + ' offline_access openid'
-      );
+  public logon(userName: string, password: string): Observable<AuthUser> {
+    return new Observable<AuthUser>(observer =>{
 
-    this.http
-      .post(this.appSettingsService.apiAuth + this.appSettingsService.authTokenEndpoint, body, {
-        headers: new HttpHeaders().set(
-          'Content-Type',
-          'application/x-www-form-urlencoded'
-        )
-      })
-      .subscribe(
-        response => {
-          this.setToken(response['access_token']);
-          if (response['refresh_token']) {
-            this.refreshToken = response['refresh_token'];
+      let body = new HttpParams();
+      body = body
+        .append('username', userName)
+        .append('password', password)
+        .append('grant_type', 'password')
+        .append('client_id', this.appSettingsService.authClientId)
+        .append('client_secret', this.appSettingsService.authClientSecret)
+        .append(
+          'scope',
+          this.appSettingsService.authScope + ' offline_access openid'
+        );
+
+      this.http
+        .post(this.appSettingsService.apiAuth + this.appSettingsService.authTokenEndpoint, body, {
+          headers: new HttpHeaders().set(
+            'Content-Type',
+            'application/x-www-form-urlencoded'
+          )
+        })
+        .subscribe(
+          response => {
+            this.setToken(response['access_token']);
+            if (response['refresh_token']) {
+              this.refreshToken = response['refresh_token'];
+            }
+
+            // Get Additional Details
+            // this.getUserDetails();
+            observer.next(null);
+            observer.complete();
+          },
+          err => {
+            observer.error(err);
           }
-
-          // Get Additional Details
-          // this.getUserDetails();
-        },
-        err => {
-          this.notificationService.showMessage({
-            summary: 'Logon Failed',
-            detail: 'Check you User Name and Password and try again',
-            severity: 'error'
-          });
-          this.spinnerService.hideSpinner();
-        }
-      );
+        );
+    });
   }
 
   public logoff(): void {
