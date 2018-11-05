@@ -6,7 +6,7 @@ import {
 } from '@angular/router';
 import { UserAuthorisationBase } from '../services/userAuthorisation/UserAuthorisationBase';
 import { Injectable } from '@angular/core';
-import { RolesService } from 'ngscaffolding-core/services';
+import { RolesService } from '../services/rolesService/roles.service';
 
 @Injectable()
 export class AuthoriseRoleGuard implements CanActivate {
