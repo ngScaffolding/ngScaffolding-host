@@ -1,5 +1,5 @@
 import { UserAuthorisationBase } from 'ngscaffolding-core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 
@@ -95,25 +95,26 @@ export class KumulosAuthService implements UserAuthorisationBase {
     this.currentUser.userId = decodedToken['sub'];
   }
 
-  public logon(userName: string, password: string) {
-    this.kumulos.callFunction('loginUser', null, { email: userName, password: password }).subscribe(
-      result => {
-        this.setToken(result);
+  public logon(userName: string, password: string): Observable<AuthUser> {
+    return null;
+    // this.kumulos.callFunction('loginUser', null, { email: userName, password: password }).subscribe(
+    //   result => {
+    //     this.setToken(result);
 
-        this.currentUser.email = userName;
+    //     this.currentUser.email = userName;
 
-        // Get Additional Details
-        this.getUserDetails();
-      },
-      err => {
-        this.notificationService.showMessage({
-          summary: 'Logon Failed',
-          detail: 'Check you User Name and Password and try again',
-          severity: 'error'
-        });
-        this.spinnerService.hideSpinner();
-      }
-    );
+    //     // Get Additional Details
+    //     this.getUserDetails();
+    //   },
+    //   err => {
+    //     this.notificationService.showMessage({
+    //       summary: 'Logon Failed',
+    //       detail: 'Check you User Name and Password and try again',
+    //       severity: 'error'
+    //     });
+    //     this.spinnerService.hideSpinner();
+    //   }
+    // );
   }
 
   public logoff(): void {

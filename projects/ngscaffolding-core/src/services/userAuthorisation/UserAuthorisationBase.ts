@@ -1,4 +1,4 @@
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { AuthUser } from '@ngscaffolding/models';
 
@@ -8,7 +8,7 @@ export abstract class UserAuthorisationBase {
   currentUser: AuthUser;
   isAuthenticated(): boolean { return null; }
   setToken(token: any) { }
-  getToken(): string { return null; }
-  logon(userName: string, password: string) { }
-  logoff() { }
+  abstract getToken(): string;
+  abstract logon(userName: string, password: string): Observable<AuthUser>;
+  abstract logoff();
 }

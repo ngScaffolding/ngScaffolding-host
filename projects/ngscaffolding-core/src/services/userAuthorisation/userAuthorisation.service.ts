@@ -2,15 +2,12 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 
-import { BroadcastService } from '../broadcast/broadcast.service';
 import { AppSettingsService } from '../appSettings/appSettings.service';
 import { LoggingService } from '../logging/logging.service';
 
 import { AuthUser, AuthUserResponse } from '@ngscaffolding/models';
-import { NotificationService } from '../notification/notification.service';
 
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { SpinnerService } from '../spinnerService/spinner.service';
 import { UserAuthorisationBase } from './UserAuthorisationBase';
 
 @Injectable()
@@ -26,11 +23,8 @@ export class UserAuthorisationService implements UserAuthorisationBase {
 
   constructor(
     private logger: LoggingService,
-    private spinnerService: SpinnerService,
     private http: HttpClient,
-    private appSettingsService: AppSettingsService,
-    private notificationService: NotificationService,
-    private broadcastService: BroadcastService
+    private appSettingsService: AppSettingsService
   ) {
     this.authenticatedSubject = new BehaviorSubject<boolean>(null);
     this.jwtHelper = new JwtHelperService({});
@@ -85,7 +79,7 @@ export class UserAuthorisationService implements UserAuthorisationBase {
     this.appSettingsService.authToken = token;
     this.authenticatedSubject.next(this.isAuthenticated());
 
-    this.spinnerService.hideSpinner();
+    // this.spinnerService.hideSpinner();
   }
 
   public getToken(): string {
@@ -119,7 +113,7 @@ export class UserAuthorisationService implements UserAuthorisationBase {
   }
 
   public logon(userName: string, password: string): Observable<AuthUser> {
-    return new Observable<AuthUser>(observer =>{
+    return new Observable<AuthUser>(observer => {
 
       let body = new HttpParams();
       body = body
