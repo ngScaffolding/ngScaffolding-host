@@ -16,7 +16,7 @@ import { GridsterItem } from 'angular-gridster2';
 import { DataSourceRequest, ChartDetailModel } from '@ngscaffolding/models';
 
 @Component({
-  selector: 'app-chart',
+  selector: 'ng-chart',
   templateUrl: 'chart.component.html',
   styles: ['chart.component.scss']
 })
