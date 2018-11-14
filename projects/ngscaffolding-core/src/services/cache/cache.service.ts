@@ -3,7 +3,9 @@ import { Injectable } from '@angular/core';
 import { AppSettingsService } from '../appSettings/appSettings.service';
 import { CacheEntry } from '@ngscaffolding/models';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class CacheService {
 
     private allValues: Array<CacheEntry>;

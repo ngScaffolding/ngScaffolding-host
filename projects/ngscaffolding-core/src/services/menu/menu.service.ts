@@ -9,7 +9,9 @@ import { CoreMenuItem } from '@ngscaffolding/models';
 import { AppSettingsService } from '../appSettings/appSettings.service';
 import { UserAuthorisationBase } from '../userAuthorisation/UserAuthorisationBase';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class MenuService {
   private className = 'core.MenuService';
 

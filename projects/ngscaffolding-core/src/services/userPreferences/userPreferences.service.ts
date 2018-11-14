@@ -8,7 +8,9 @@ import { AppSettingsService } from '../appSettings/appSettings.service';
 // Models
 import { UserPreferenceDefinition, UserPreferenceValue } from '@ngscaffolding/models';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class UserPreferencesService {
   private readonly prefix = 'preference_';
   private readonly storageKey = 'UserPreferences';

@@ -7,7 +7,9 @@ import { ReferenceValue } from '@ngscaffolding/models';
 import { LoggingService } from '../logging/logging.service';
 import { CacheService } from '../cache/cache.service';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class ReferenceValuesService {
   private className = 'ReferenceValuesService';
 

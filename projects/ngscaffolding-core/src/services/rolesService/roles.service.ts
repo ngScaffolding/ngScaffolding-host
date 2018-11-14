@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { UserAuthorisationBase } from '../userAuthorisation/UserAuthorisationBase';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class RolesService {
   private routeRoles = new Map<string, string[]>();
 

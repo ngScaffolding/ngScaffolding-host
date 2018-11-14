@@ -10,7 +10,9 @@ import { AuthUser, AuthUserResponse } from '@ngscaffolding/models';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { UserAuthorisationBase } from './UserAuthorisationBase';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class UserAuthorisationService implements UserAuthorisationBase {
   private readonly tokenStorageKey = 'USER_TOKEN';
 

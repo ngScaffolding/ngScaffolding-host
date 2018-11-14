@@ -5,7 +5,9 @@ import {
   BroadcastTypes
 } from '../broadcast/broadcast.service';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class SpinnerService {
   constructor(private broadcastService: BroadcastService) {}
 

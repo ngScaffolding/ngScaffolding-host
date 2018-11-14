@@ -7,7 +7,9 @@ import { LoggingService } from '../logging/logging.service';
 import { Action } from '@ngscaffolding/models';
 import { ActionResultModel, ActionRequestModel } from '@ngscaffolding/models';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class ActionService {
   constructor(
     private http: HttpClient,

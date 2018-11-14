@@ -4,7 +4,9 @@ import { AppSettings } from '@ngscaffolding/models';
 import { LoggingService } from '../logging/logging.service';
 import { HttpClient } from '@angular/common/http';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class AppSettingsService extends AppSettings {
   private className = 'AppSettingsService';
 

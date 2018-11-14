@@ -16,7 +16,9 @@ export const enum BroadcastTypes {
   HIDE_SPINNER = 'HIDE_SPINNER'
 }
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class BroadcastService {
   private _eventBus: Subject<BroadcastEvent>;
 

@@ -10,7 +10,9 @@ import { UserAuthorisationBase } from '../userAuthorisation/UserAuthorisationBas
 import { AppSettingsService } from '../appSettings/appSettings.service';
 import { NotificationService } from '../notification/notification.service';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class CoreErrorHandlerService extends ErrorHandler {
     constructor(private appSettingsService: AppSettingsService,
         private notificationService: NotificationService,

@@ -8,7 +8,9 @@ export class SoftwareVersion {
 }
 
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class VersionsService {
   private versions: SoftwareVersion[];
 
