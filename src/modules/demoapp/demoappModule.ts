@@ -6,19 +6,28 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { AppSettings } from '@ngscaffolding/models';
 
-import { AuthoriseRoleGuard, AppSettingsService, MenuService, LoggingService, VersionsService } from 'ngscaffolding-core';
+import {
+  AuthoriseRoleGuard,
+  AppSettingsService,
+  MenuService,
+  LoggingService,
+  VersionsService
+} from 'ngscaffolding-core';
 
 import { InputBuilderModule } from 'ngscaffolding-inputbuilder';
 
 import { DatagridModule } from 'ngscaffolding-datagrid';
+import { ChartingModule } from 'ngscaffolding-chart';
 
 import { InputBuilderSimpleComponent } from './pages/inputBuilderSimple/inputBuilderSimple.component';
+import { ChartSampleComponent } from './pages/chartSample/chartSample.component';
 
 export * from './pages/inputBuilderSimple/inputBuilderSimple.component';
 
 const appRoutes: Routes = [
-  { path: 'inputbuildersimple', component: InputBuilderSimpleComponent, canActivate: [AuthoriseRoleGuard]  },
-  { path: 'inputbuildersimpletest', component: InputBuilderSimpleComponent, canActivate: [AuthoriseRoleGuard]  }
+  { path: 'inputbuildersimple', component: InputBuilderSimpleComponent, canActivate: [AuthoriseRoleGuard] },
+  { path: 'inputbuildersimpletest', component: InputBuilderSimpleComponent, canActivate: [AuthoriseRoleGuard] },
+  { path: 'charttest', component: ChartSampleComponent, canActivate: [AuthoriseRoleGuard] }
 ];
 
 @NgModule({
@@ -26,15 +35,11 @@ const appRoutes: Routes = [
     CommonModule,
     InputBuilderModule,
     DatagridModule,
+    ChartingModule,
     RouterModule.forChild(appRoutes)
   ],
-  declarations: [
-    InputBuilderSimpleComponent
-  ],
-  exports: [
-    InputBuilderSimpleComponent,
-    RouterModule
-  ]
+  declarations: [InputBuilderSimpleComponent, ChartSampleComponent],
+  exports: [InputBuilderSimpleComponent, RouterModule]
 })
 export class DemoAppModule {
   static forRoot(): ModuleWithProviders {
@@ -46,7 +51,8 @@ export class DemoAppModule {
   constructor(
     appSettingsService: AppSettingsService,
     menuService: MenuService,
-    logger: LoggingService, versions: VersionsService
+    logger: LoggingService,
+    versions: VersionsService
   ) {
     logger.info('Setting Values', 'demoApp.startup');
 
@@ -56,7 +62,7 @@ export class DemoAppModule {
     settings.title = 'ngScaffolding Demo';
     settings.iconUrl = '';
     settings.apiHome = 'http://essoft-vm.cloudapp.net:3000';
-    settings.apiAuth = 'http://essoft-vm.cloudapp.net:3010';
+    settings.apiAuth = 'http://localhost:3010';
     settings.authTokenEndpoint = '/auth/token';
     settings.errorLogConsole = true;
     settings.errorLogServer = true;
@@ -70,7 +76,7 @@ export class DemoAppModule {
     settings.showProfileSetting = true;
     settings.showProfilePicture = true;
 
-    settings.authClientId = 'ngscaffolding_client';
+    settings.authClientId = 'democlient';
     settings.authClientSecret = 'secret';
     settings.authScope = 'ngscaffoldingAPI';
     settings.authShowForgotPassword = true;
@@ -83,14 +89,21 @@ export class DemoAppModule {
     appSettingsService.setValues(settings);
 
     menuService.addMenuItems([
-      {label: 'DataGrid Samples',
-    items: [
       {
-        label: 'Data Grid Test',
+        label: 'Chart Sample',
         icon: 'grid',
-        routerLink: 'datagridtest'
+            routerLink: 'charttest'
       }
-    ]},
+      {
+        label: 'DataGrid Samples',
+        items: [
+          {
+            label: 'Data Grid Test',
+            icon: 'grid',
+            routerLink: 'datagridtest'
+          }
+        ]
+      },
       {
         label: 'Input Builder (Simple)',
         items: [

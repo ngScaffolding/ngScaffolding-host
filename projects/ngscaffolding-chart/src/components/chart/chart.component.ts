@@ -77,6 +77,7 @@ export class ChartComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    console.log('Chart: Input changed. loading');
     this.loadChart();
     // this.resizeChart();
   }
