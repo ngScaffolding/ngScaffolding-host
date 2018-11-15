@@ -55,7 +55,9 @@ export class DemoAppModule {
     const settings: AppSettings = new AppSettings();
     settings.title = 'ngScaffolding Demo';
     settings.iconUrl = '';
-    settings.apiAuth = 'http://localhost:50020';
+    settings.apiHome = 'http://essoft-vm.cloudapp.net:3000';
+    settings.apiAuth = 'http://essoft-vm.cloudapp.net:3010';
+    settings.authTokenEndpoint = '/auth/token';
     settings.errorLogConsole = true;
     settings.errorLogServer = true;
     settings.errorShowUser = true;

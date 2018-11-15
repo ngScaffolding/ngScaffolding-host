@@ -61,15 +61,6 @@ export class ChartComponent implements OnInit, OnDestroy, OnChanges {
             false
           )
           .subscribe(response => {
-            // const parsedChartOptions = JSON.parse(this.itemDetails.chartOptions);
-
-            // switch (parsedChartOptions.chart.type) {
-            //   case 'bar': {
-            //     this.chartDataService.convertToBarChart(this.itemDetails, parsedChartOptions, JSON.parse(response.jsonData));
-            //     break;
-            //   }
-            // }
-
             this.chart = new Chart(this.itemDetails.chartOptions);
           });
       }
@@ -86,22 +77,13 @@ export class ChartComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.resizeChart();
+    this.loadChart();
+    // this.resizeChart();
   }
 
   ngOnInit(): void {
-    // Get Menu Id
-    // this.paramSubscription = this.route.params.subscribe(params => {
-    //   this.menuName = params['id'];
-    //   this.menuItem = this.menuService.getMenuItemByName(this.menuName);
-    // get Menu Items
-    this.loadChart();
-    // });
   }
 
   ngOnDestroy(): void {
-    // if (this.paramSubscription) {
-    //   this.paramSubscription.unsubscribe();
-    // }
   }
 }
