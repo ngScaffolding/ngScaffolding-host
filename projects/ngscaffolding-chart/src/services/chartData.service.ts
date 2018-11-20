@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { ChartDetailModel } from '@ngscaffolding/models';
-import { Chart } from 'angular-highcharts';
 
 @Injectable()
 export class ChartDataService {
@@ -10,7 +9,7 @@ export class ChartDataService {
     const xAxis: string[] = [];
 
     const newSeries = new Map<string, string[]>();
-    //let firstTime = true;
+    // let firstTime = true;
 
     data.forEach(row => {
       // if (chartDetail.xAxisName) {

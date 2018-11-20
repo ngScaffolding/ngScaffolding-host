@@ -9,11 +9,11 @@ import {
   SimpleChanges
 } from '@angular/core';
 
-import { Chart, Highcharts } from 'angular-highcharts';
 import { ChartDataService } from '../../services/chartData.service';
 import { DataSourceService, LoggingService } from 'ngscaffolding-core';
 import { GridsterItem } from 'angular-gridster2';
 import { DataSourceRequest, ChartDetailModel } from '@ngscaffolding/models';
+import * as Highcharts from 'highcharts';
 
 @Component({
   selector: 'ng-chart',
@@ -24,6 +24,7 @@ export class ChartComponent implements OnInit, OnDestroy, OnChanges {
   @Input() unitHeight: number;
   @Input() unitWidth: number;
   @Input() unitUpdate: number;
+  @Input() chartStyle: any;
 
   @Input() isWidget: boolean;
 
@@ -31,7 +32,8 @@ export class ChartComponent implements OnInit, OnDestroy, OnChanges {
   @Input() inputModel: any;
   @Input() gridsterItem: GridsterItem;
 
-  public chart: Chart;
+  public chart: Highcharts.ChartObject;
+  Highcharts = Highcharts; // required
   public highChartsOptions: Highcharts.Options;
 
   constructor(
@@ -49,7 +51,7 @@ export class ChartComponent implements OnInit, OnDestroy, OnChanges {
     if (this.itemDetails) {
       if (!this.itemDetails.dataSourceName) {
         // No DataSource - Just do the Chart
-        this.chart = new Chart(this.itemDetails.chartOptions);
+        this.chart = new Highcharts.Chart(this.itemDetails.chartOptions);
       } else {
         // Get Data from Server
         this.dataSourceService
@@ -61,25 +63,27 @@ export class ChartComponent implements OnInit, OnDestroy, OnChanges {
             false
           )
           .subscribe(response => {
-            this.chart = new Chart(this.itemDetails.chartOptions);
+            this.chart = new Highcharts.Chart(this.itemDetails.chartOptions);
           });
       }
     }
   }
 
   public resizeChart(): void {
-    if (this.gridsterItem && this.chart && this.chart.ref) {
-      const height = this.gridsterItem.rows * (this.unitHeight - 10);
-      const width = this.gridsterItem.cols * (this.unitWidth - 10);
+    // if (this.gridsterItem && this.chart && this.chart.ref) {
+    //   const height = this.gridsterItem.rows * (this.unitHeight - 10);
+    //   const width = this.gridsterItem.cols * (this.unitWidth - 10);
 
-      this.chart.ref.setSize(height, width);
-    }
+    //   this.chart.ref.setSize(height, width);
+    // }
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     console.log('Chart: Input changed. loading');
-    this.loadChart();
-    // this.resizeChart();
+    if (changes['itemDetails'].currentValue) {
+      this.loadChart();
+
+    }
   }
 
   ngOnInit(): void {

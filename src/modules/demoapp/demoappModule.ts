@@ -61,7 +61,7 @@ export class DemoAppModule {
     const settings: AppSettings = new AppSettings();
     settings.title = 'ngScaffolding Demo';
     settings.iconUrl = '';
-    settings.apiHome = 'http://essoft-vm.cloudapp.net:3000';
+    settings.apiHome = 'http://localhost:3000';
     settings.apiAuth = 'http://localhost:3010';
     settings.authTokenEndpoint = '/auth/token';
     settings.errorLogConsole = true;
@@ -93,7 +93,7 @@ export class DemoAppModule {
         label: 'Chart Sample',
         icon: 'grid',
             routerLink: 'charttest'
-      }
+      },
       {
         label: 'DataGrid Samples',
         items: [

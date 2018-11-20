@@ -1,3 +1,12 @@
 
-    <div style="display: block;" [chart]="chart"></div>
+    <highcharts-chart
+      [Highcharts]="Highcharts"
+      [constructorType]="chartConstructor"
+      [options]="highChartsOptions"
+      [callbackFunction]="chartCallback"
+
+      [(update)]="updateFlag"
+      [oneToOne]="oneToOneFlag"
+      [runOutsideAngular]="runOutsideAngularFlag"
+      style="width: 100%; display: block;"></highcharts-chart>
 

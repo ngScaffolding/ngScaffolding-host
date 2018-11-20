@@ -10,12 +10,10 @@ import { MenuService, LoggingService, VersionsService,  } from 'ngscaffolding-co
 import { CoreModule, AuthoriseRoleGuard } from 'ngscaffolding-core';
 
 import { InputBuilderModule } from 'ngscaffolding-inputbuilder';
-import { HighchartsChartComponent } from './components/chart/highcharts-chart.component';
 import { ChartComponent } from './components/chart/chart.component';
 import { ChartHolderComponent } from './components/chartHolder/chartHolder.component';
 
-import { ChartModule, HIGHCHARTS_MODULES } from 'angular-highcharts';
-import more from 'highcharts/highcharts-more.src';
+import { HighchartsChartModule } from 'highcharts-angular';
 
 // Services
 import { ChartDataService } from './services/chartData.service';
@@ -28,24 +26,18 @@ const appRoutes: Routes = [
   { path: 'chart', component: ChartHolderComponent, canActivate: [AuthoriseRoleGuard]  }
 ];
 
-export function highchartsModules() {
-  // apply Highcharts Modules to this array
-  return [more];
-}
-
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     InputBuilderModule,
     CoreModule,
-    ChartModule,
+    HighchartsChartModule,
     RouterModule.forChild(appRoutes)
   ],
   declarations: [
     ChartComponent,
-    ChartHolderComponent,
-    HighchartsChartComponent
+    ChartHolderComponent
   ],
   exports: [
     ChartComponent,
@@ -53,9 +45,7 @@ export function highchartsModules() {
     RouterModule
   ],
   providers: [
-    ChartDataService,
-    { provide: HIGHCHARTS_MODULES, useFactory: highchartsModules } // add as factory to your providers
-  ]
+    ChartDataService ]
 })
 export class ChartingModule {
   static forRoot(): ModuleWithProviders {
