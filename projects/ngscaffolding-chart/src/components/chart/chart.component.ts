@@ -51,7 +51,8 @@ export class ChartComponent implements OnInit, OnDestroy, OnChanges {
     if (this.itemDetails) {
       if (!this.itemDetails.dataSourceName) {
         // No DataSource - Just do the Chart
-        this.chart = new Highcharts.Chart(this.itemDetails.chartOptions);
+        this.highChartsOptions = this.itemDetails.chartOptions;
+        // this.chart = new Highcharts.Chart(this.itemDetails.chartOptions);
       } else {
         // Get Data from Server
         this.dataSourceService
@@ -63,7 +64,7 @@ export class ChartComponent implements OnInit, OnDestroy, OnChanges {
             false
           )
           .subscribe(response => {
-            this.chart = new Highcharts.Chart(this.itemDetails.chartOptions);
+            // this.chart = new Highcharts.Chart(this.itemDetails.chartOptions);
           });
       }
     }

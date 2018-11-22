@@ -1,4 +1,4 @@
-
+<!--
     <highcharts-chart
       [Highcharts]="Highcharts"
       [constructorType]="chartConstructor"
@@ -8,5 +8,13 @@
       [(update)]="updateFlag"
       [oneToOne]="oneToOneFlag"
       [runOutsideAngular]="runOutsideAngularFlag"
-      style="width: 100%; display: block;"></highcharts-chart>
+      style="width: 100%; display: block;">
+    </highcharts-chart> -->
+
+    <highcharts-chart
+      [Highcharts]="Highcharts"
+      [options]="highChartsOptions"
+
+      style="width: 100%; display: block;">
+    </highcharts-chart>
 
