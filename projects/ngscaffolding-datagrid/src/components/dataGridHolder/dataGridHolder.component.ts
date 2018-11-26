@@ -1,10 +1,8 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 
-import { Chart, Highcharts } from 'angular-highcharts';
 import { ActivatedRoute } from '@angular/router';
 import { MenuService , LoggingService } from 'ngscaffolding-core';
 import { CoreMenuItem, GridViewDetail } from '@ngscaffolding/models';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-datagrid-holder',
