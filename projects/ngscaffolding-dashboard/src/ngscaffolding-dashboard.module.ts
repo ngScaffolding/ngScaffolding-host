@@ -12,7 +12,7 @@ import { InputBuilderModule } from 'ngscaffolding-inputbuilder';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 import { DataGridComponent } from 'ngscaffolding-datagrid';
-import { ChartComponent, } from 'ngscaffolding-chart';
+// import { ChartComponent } from '../../../src/modules/chartModule/chartModule.module';
 
 import { DynamicModule } from 'ng-dynamic-component';
 
@@ -34,7 +34,8 @@ const appRoutes: Routes = [
     CoreModule,
     GridsterModule,
     CardModule,
-    DynamicModule.withComponents([DataGridComponent, ChartComponent]),
+    DynamicModule.withComponents([DataGridComponent]),
+    // DynamicModule.withComponents([DataGridComponent, ChartComponent]),
     RouterModule.forChild(appRoutes)
   ],
   declarations: [

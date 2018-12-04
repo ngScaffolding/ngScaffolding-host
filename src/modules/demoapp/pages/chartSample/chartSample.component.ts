@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import {
   InputBuilderDefinition,
   InputTypes,
@@ -9,17 +9,20 @@ import {
   InputDetailTextBox,
   ChartDetailModel
 } from '@ngscaffolding/models';
+import { ChartComponent } from 'src/modules/chartModule/chartModule.module';
 
 @Component({
   templateUrl: 'chartSample.component.html',
   styleUrls: ['chartSample.component.scss']
 })
 export class ChartSampleComponent implements OnInit {
+  @ViewChild(ChartComponent) chart1: ChartComponent;
+
   constructor() {}
 
-  chartDetail: ChartDetailModel = null;
+  chartDetail2: ChartDetailModel = null;
 
-  swapDetail: ChartDetailModel = {
+  chartDetail: ChartDetailModel = {
     title: '24hr Temperature',
     chartOptions: {
       panning: true,
@@ -63,7 +66,18 @@ export class ChartSampleComponent implements OnInit {
   ngOnInit() {
     setTimeout(() => {
       console.log('Swapping');
-      this.chartDetail = this.swapDetail;
-    }, 2000);
+      this.chartDetail.chartOptions.series[0].data = [
+        143934,
+        12503,
+        157177,
+        19658,
+        197031,
+        19931,
+        37133,
+        54175
+      ];
+      this.chartDetail.chartOptions.series[0].name = 'New Installation';
+      this.chart1.reloadChart();
+    }, 5000);
   }
 }

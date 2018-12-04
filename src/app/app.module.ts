@@ -42,7 +42,6 @@ import { AuthoriseRoleGuard, CoreModule, ActionService, AppSettingsService,
   // Externalise These Modules
   import { DatagridModule } from 'ngscaffolding-datagrid';
   import { InputBuilderModule } from 'ngscaffolding-inputbuilder';
-  import { ChartingModule } from 'ngscaffolding-chart';
   import { DashboardModule } from 'ngscaffolding-dashboard';
   import { CUSTOM_IMPORTS } from '../../custom/custom.app';
 
@@ -93,7 +92,6 @@ const appInitializerFn = (appConfig: AppSettingsService) => {
         CoreModule,
         DatagridModule,
         InputBuilderModule,
-        ChartingModule,
         DashboardModule,
 
         JwtModule.forRoot({

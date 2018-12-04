@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 import { DashboardModel } from '@ngscaffolding/models';
 
 import { DataGridComponent } from 'ngscaffolding-datagrid';
-import { ChartComponent } from 'ngscaffolding-chart';
+// import { ChartComponent } from '../../../../../src/modules/chartModule/chartModule.module';
 
 import { CompactType, DisplayGrid, GridsterConfig, GridsterItem, GridType,
    GridsterItemComponent, GridsterItemComponentInterface } from 'angular-gridster2';
@@ -29,7 +29,7 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
 
   private components: any[] = [];
 
-  public component = ChartComponent;
+  // public component = ChartComponent;
   public componentInputs = {};
 
   public unitHeight: number;

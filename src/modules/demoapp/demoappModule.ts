@@ -17,7 +17,7 @@ import {
 import { InputBuilderModule } from 'ngscaffolding-inputbuilder';
 
 import { DatagridModule } from 'ngscaffolding-datagrid';
-import { ChartingModule } from 'ngscaffolding-chart';
+import { ChartingModule } from '../chartModule/chartModule.module';
 
 import { InputBuilderSimpleComponent } from './pages/inputBuilderSimple/inputBuilderSimple.component';
 import { ChartSampleComponent } from './pages/chartSample/chartSample.component';
