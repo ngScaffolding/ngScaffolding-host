@@ -4,6 +4,7 @@
 /dist
 build/*
 /tmp
+*.tgz
 
 # dependencies
 /node_modules

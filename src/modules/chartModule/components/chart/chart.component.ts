@@ -1,17 +1,9 @@
 declare var require: any;
 
-import {
-  Component,
-  OnInit,
-  OnDestroy,
-  Input,
-  OnChanges,
-  SimpleChanges
-} from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, OnChanges, SimpleChanges } from '@angular/core';
 
 import { ChartDataService } from '../../services/chartData.service';
 import { DataSourceService, LoggingService } from 'ngscaffolding-core';
-import { GridsterItem } from 'angular-gridster2';
 import { DataSourceRequest, ChartDetailModel } from '@ngscaffolding/models';
 import * as Highcharts from 'highcharts';
 import { Observable } from 'rxjs';
@@ -31,18 +23,13 @@ export class ChartComponent implements OnInit, OnDestroy, OnChanges {
 
   @Input() itemDetails: ChartDetailModel;
   @Input() inputModel: any;
-  @Input() gridsterItem: GridsterItem;
 
   public chart: Highcharts.Chart;
   Highcharts = Highcharts; // required
   public highChartsOptions: Highcharts.Options;
   private updateChartFlag: boolean;
 
-  constructor(
-    private logger: LoggingService,
-    private chartDataService: ChartDataService,
-    private dataSourceService: DataSourceService
-  ) {}
+  constructor(private logger: LoggingService, private chartDataService: ChartDataService, private dataSourceService: DataSourceService) {}
 
   public reloadChart() {
     this.loadChart().subscribe(next => {

@@ -1,43 +1,87 @@
 import { Injectable } from '@angular/core';
-import { ChartDetailModel } from '@ngscaffolding/models';
+import { ChartDetailModel, DataShapes } from '@ngscaffolding/models';
+
+export class ShapedChartData {
+  xAxisLabels: string[];
+  data: any[];
+}
 
 @Injectable()
 export class ChartDataService {
-  public convertToPieChart() {}
 
-  public convertToBarChart(chartDetail: ChartDetailModel, chartInstance: any, data: any[]): any {
-    const xAxis: string[] = [];
+  public shapeDataForSeries(chartDetail: ChartDetailModel, data: any[]): ShapedChartData {
+    const returnValues: ShapedChartData = { xAxisLabels: [], data: [] };
 
-    const newSeries = new Map<string, string[]>();
-    // let firstTime = true;
+    switch (chartDetail.dataShape) {
+      case DataShapes.ColumToArray: {
+        let rowNumber = 0;
+        data.forEach(dataItem => {
 
-    data.forEach(row => {
-      // if (chartDetail.xAxisName) {
-      //   xAxis.push(row[chartDetail.xAxisName]);
-      // }
+          // first time get the count of cols and create the return arrays
+          if (returnValues.data.length === 0) {
+            const keys = Object.keys(dataItem);
+            let columnCount = keys.length;
+            // if (chartDetail.labelsInFirstValue) {
+            //   columnCount--;
+            // }
+            for (let columnLoop = 0; columnLoop < columnCount; columnLoop++) {
+              returnValues.data.push([]);
+            }
+          }
 
-      // // First Time create arrays
-      // if (firstTime) {
-      //   chartDetail.seriesNames.forEach(seriesName => {
-      //     newSeries[seriesName] = [];
-      //   });
-      //   firstTime = false;
-      // }
+          let loopCount = 0;
+          const shapedObject = [];
 
-      // // Add values into our Series
-      // chartDetail.seriesNames.forEach(seriesName => {
-      //   newSeries[seriesName].push(row[seriesName]);
-      // });
-    });
+          for (const key in dataItem) {
+            if (dataItem.hasOwnProperty(key)) {
+              const dataValue = dataItem[key];
+              if (rowNumber === 0 && chartDetail.labelsInFirstValue) {
+                returnValues.xAxisLabels.push(dataValue);
+              } else {
+                returnValues.data[loopCount].push(dataValue);
+              }
 
-    if (xAxis.length > 0) {
-      chartInstance.xAxis = {};
-      chartInstance.xAxis.categories = xAxis;
+              loopCount++;
+            }
+          }
+
+          rowNumber++;
+          // Finished this row
+          // returnValues.data.push(shapedObject);
+        });
+
+        break;
+      }
+
+      case DataShapes.RowToArray: {
+        data.forEach(dataItem => {
+          let loopCount = 0;
+          const shapedObject = [];
+
+          for (const key in dataItem) {
+            if (dataItem.hasOwnProperty(key)) {
+              const dataValue = dataItem[key];
+              if (loopCount === 0 && chartDetail.labelsInFirstValue) {
+                returnValues.xAxisLabels.push(data[0]);
+              } else {
+                shapedObject.push(dataValue);
+              }
+
+              loopCount++;
+            }
+          }
+
+          // Finished this row
+          returnValues.data.push(shapedObject);
+        });
+        break;
+      }
+
+      case DataShapes.RowToObject:
+        {
+          break;
+        }
     }
-
-    // chartInstance.series = [];
-    // chartDetail.seriesNames.forEach(seriesName => {
-    //   chartInstance.series.push({ name: seriesName, data: newSeries[seriesName] });
-    // });
+    return returnValues;
   }
 }
