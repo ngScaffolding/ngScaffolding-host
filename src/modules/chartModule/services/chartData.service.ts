@@ -20,7 +20,7 @@ export class ChartDataService {
           // first time get the count of cols and create the return arrays
           if (returnValues.data.length === 0) {
             const keys = Object.keys(dataItem);
-            let columnCount = keys.length;
+            const columnCount = keys.length;
             // if (chartDetail.labelsInFirstValue) {
             //   columnCount--;
             // }
@@ -46,23 +46,24 @@ export class ChartDataService {
           }
 
           rowNumber++;
-          // Finished this row
-          // returnValues.data.push(shapedObject);
         });
 
         break;
       }
 
       case DataShapes.RowToArray: {
+
         data.forEach(dataItem => {
+
           let loopCount = 0;
           const shapedObject = [];
 
           for (const key in dataItem) {
             if (dataItem.hasOwnProperty(key)) {
+
               const dataValue = dataItem[key];
               if (loopCount === 0 && chartDetail.labelsInFirstValue) {
-                returnValues.xAxisLabels.push(data[0]);
+                returnValues.xAxisLabels.push(dataValue);
               } else {
                 shapedObject.push(dataValue);
               }
@@ -70,15 +71,35 @@ export class ChartDataService {
               loopCount++;
             }
           }
-
-          // Finished this row
           returnValues.data.push(shapedObject);
         });
+
         break;
       }
 
       case DataShapes.RowToObject:
         {
+          data.forEach(dataItem => {
+
+            let loopCount = 0;
+            const shapedObject = {};
+
+            for (const key in dataItem) {
+              if (dataItem.hasOwnProperty(key)) {
+
+                const dataValue = dataItem[key];
+                if (loopCount === 0 && chartDetail.labelsInFirstValue) {
+                  returnValues.xAxisLabels.push(dataValue);
+                } else {
+                  shapedObject[key] = dataValue;
+                }
+
+                loopCount++;
+              }
+            }
+            returnValues.data.push(shapedObject);
+          });
+
           break;
         }
     }

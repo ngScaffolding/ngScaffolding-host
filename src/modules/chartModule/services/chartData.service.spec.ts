@@ -55,4 +55,90 @@ describe('ChartDataService', () => {
     };
     expect(service.shapeDataForSeries(chartDetail, data)).toEqual(expected);
   }));
+
+  it('should return correct RowToArray with Labels', inject([ChartDataService], (service: ChartDataService) => {
+    const chartDetail: ChartDetailModel = {
+      title: 'Hello',
+      chartOptions: {},
+      dataShape: DataShapes.RowToArray,
+      labelsInFirstValue: true
+    };
+    const data = [
+      { first: 'Label1', val1: 'Value1.1', val2: 'Value1.2' },
+      { first: 'Label2', val1: 'Value2.1', val2: 'Value2.2'}
+    ];
+    const expected: ShapedChartData = {
+      xAxisLabels: ['Label1', 'Label2'],
+      data: [
+        ['Value1.1', 'Value1.2'],
+        ['Value2.1', 'Value2.2']
+      ]
+    };
+    expect(service.shapeDataForSeries(chartDetail, data)).toEqual(expected);
+  }));
+
+  it('should return correct RowToArray without Labels', inject([ChartDataService], (service: ChartDataService) => {
+    const chartDetail: ChartDetailModel = {
+      title: 'Hello',
+      chartOptions: {},
+      dataShape: DataShapes.RowToArray,
+      labelsInFirstValue: false
+    };
+    const data = [
+      { first: 'Label1', val1: 'Value1.1', val2: 'Value1.2' },
+      { first: 'Label2', val1: 'Value2.1', val2: 'Value2.2'}
+    ];
+    const expected: ShapedChartData = {
+      xAxisLabels: [],
+      data: [
+        [ 'Label1', 'Value1.1', 'Value1.2'],
+        [ 'Label2', 'Value2.1', 'Value2.2']
+      ]
+    };
+    expect(service.shapeDataForSeries(chartDetail, data)).toEqual(expected);
+  }));
+
+  it('should return correct RowToObject with Labels', inject([ChartDataService], (service: ChartDataService) => {
+    const chartDetail: ChartDetailModel = {
+      title: 'Hello',
+      chartOptions: {},
+      dataShape: DataShapes.RowToObject,
+      labelsInFirstValue: true
+    };
+    const data = [
+      { first: 'Label1', val1: 'Value1.1', val2: 'Value1.2' },
+      { first: 'Label2', val1: 'Value2.1', val2: 'Value2.2'}
+    ];
+    const expected: ShapedChartData = {
+      xAxisLabels: ['Label1', 'Label2'],
+      data: [
+        { val1: 'Value1.1', val2: 'Value1.2' },
+        { val1: 'Value2.1', val2: 'Value2.2' }
+      ]
+    };
+    expect(service.shapeDataForSeries(chartDetail, data)).toEqual(expected);
+  }));
+
+  it('should return correct RowToObject without Labels', inject([ChartDataService], (service: ChartDataService) => {
+    const chartDetail: ChartDetailModel = {
+      title: 'Hello',
+      chartOptions: {},
+      dataShape: DataShapes.RowToObject,
+      labelsInFirstValue: false
+    };
+    const data = [
+      { first: 'Label1', val1: 'Value1.1', val2: 'Value1.2' },
+      { first: 'Label2', val1: 'Value2.1', val2: 'Value2.2'}
+    ];
+    const expected: ShapedChartData = {
+      xAxisLabels: [],
+      data: [
+        { first: 'Label1', val1: 'Value1.1', val2: 'Value1.2' },
+        { first: 'Label2', val1: 'Value2.1', val2: 'Value2.2'}
+      ]
+    };
+    expect(service.shapeDataForSeries(chartDetail, data)).toEqual(expected);
+  }));
+
+
 });
