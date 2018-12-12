@@ -6,7 +6,16 @@ import { ChartDataService } from '../../services/chartData.service';
 import { DataSourceService, LoggingService } from 'ngscaffolding-core';
 import { DataSourceRequest, ChartDetailModel } from '@ngscaffolding/models';
 import * as Highcharts from 'highcharts';
+// Loading HighCharts More
+const HighchartsMore = require('highcharts/highcharts-more.src');
+HighchartsMore(Highcharts);
+
+// Load Gauge
+import * as HC_solid_gauge from 'highcharts/modules/solid-gauge.src';
+HC_solid_gauge(Highcharts);
+
 import { Observable } from 'rxjs';
+import { RequiredValidator } from '@angular/forms';
 
 @Component({
   selector: 'ng-chart',
@@ -50,7 +59,6 @@ export class ChartComponent implements OnInit, OnDestroy, OnChanges {
           this.highChartsOptions = this.itemDetails.chartOptions;
           observer.next(null);
           observer.complete();
-          // this.chart = new Highcharts.Chart(this.itemDetails.chartOptions);
         } else {
           // Get Data from Server
           this.dataSourceService
@@ -62,7 +70,6 @@ export class ChartComponent implements OnInit, OnDestroy, OnChanges {
               false
             )
             .subscribe(response => {
-              // this.chart = new Highcharts.Chart(this.itemDetails.chartOptions);
               observer.next(null);
               observer.complete();
             });
