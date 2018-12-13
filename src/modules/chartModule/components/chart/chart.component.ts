@@ -70,6 +70,9 @@ export class ChartComponent implements OnInit, OnDestroy, OnChanges {
               false
             )
             .subscribe(response => {
+              const chartDataService = new ChartDataService();
+              this.itemDetails.chartOptions.series[0].data = chartDataService.shapeDataForSeries(this.itemDetails, JSON.parse(response.jsonData)).data;
+              this.highChartsOptions = this.itemDetails.chartOptions;
               observer.next(null);
               observer.complete();
             });

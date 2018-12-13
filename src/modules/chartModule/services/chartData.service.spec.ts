@@ -139,6 +139,26 @@ describe('ChartDataService', () => {
     };
     expect(service.shapeDataForSeries(chartDetail, data)).toEqual(expected);
   }));
-
+  it('should return correct RowToObject with Labels MUNGED', inject([ChartDataService], (service: ChartDataService) => {
+    const chartDetail: ChartDetailModel = {
+      title: 'Hello',
+      chartOptions: {},
+      dataShape: DataShapes.RowToObject,
+      propertyLocations: [['y', 'complex.object.here']],
+      labelsInFirstValue: true
+    };
+    const data = [
+      { first: 'Label1', val1: 'Value1.1', val2: 'Value1.2' , complex: {object: {here: 'Comp1'}} },
+      { first: 'Label2', val1: 'Value2.1', val2: 'Value2.2', complex: {object: {here: 'Comp2'}} }
+    ];
+    const expected: ShapedChartData = {
+      xAxisLabels: ['Label1', 'Label2'],
+      data: [
+        { val1: 'Value1.1', val2: 'Value1.2', y: 'Comp1', complex: {object: {here: 'Comp1'}}  },
+        { val1: 'Value2.1', val2: 'Value2.2', y: 'Comp2', complex: {object: {here: 'Comp2'}} }
+      ]
+    };
+    expect(service.shapeDataForSeries(chartDetail, data)).toEqual(expected);
+  }));
 
 });

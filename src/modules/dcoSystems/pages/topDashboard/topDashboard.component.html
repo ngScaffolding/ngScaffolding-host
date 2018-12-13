@@ -11,10 +11,14 @@
     </p-tabPanel>
     <p-tabPanel header="Gauge Display">
       <div class="ui-g">
-        <div class="ui-g-3"><ng-chart [itemDetails]="chartDetail"></ng-chart></div>
-        <!-- <div class="ui-g-3"><ng-chart [itemDetails]="chartDetail"></ng-chart></div>
-        <div class="ui-g-3"><ng-chart [itemDetails]="chartDetail"></ng-chart></div>
-        <div class="ui-g-3"><ng-chart [itemDetails]="chartDetail"></ng-chart></div> -->
+        <div class="ui-g-3 ui-sm-6"><ng-chart [itemDetails]="chartDetail"></ng-chart></div>
+         <div class="ui-g-3 ui-sm-6"><ng-chart [itemDetails]="chartDetailWetAirInlet"></ng-chart></div>
+        <div class="ui-g-3 ui-sm-6"><ng-chart [itemDetails]="chartDetailMidAirInlet"></ng-chart></div>
+       <div class="ui-g-3 ui-sm-6"><ng-chart [itemDetails]="chartDetailDryAirInlet"></ng-chart></div>
+        <div class="ui-g-3 ui-sm-6"><ng-chart [itemDetails]="chartDetail"></ng-chart></div>
+         <div class="ui-g-3 ui-sm-6"><ng-chart [itemDetails]="chartDetailWetAirInlet"></ng-chart></div>
+        <div class="ui-g-3 ui-sm-6"><ng-chart [itemDetails]="chartDetailMidAirInlet"></ng-chart></div>
+       <div class="ui-g-3 ui-sm-6"><ng-chart [itemDetails]="chartDetailDryAirInlet"></ng-chart></div>
     </div>
     </p-tabPanel>
     <p-tabPanel header="Header 3"> Content 3 </p-tabPanel>
