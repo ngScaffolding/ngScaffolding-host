@@ -33,7 +33,7 @@ export class ProfilePageComponent implements OnInit, OnDestroy {
           const profile = defs.find(def => def.name === 'UserPrefs_Profile');
 
           if (profile) {
-            this.inputBuilderDefinition = JSON.parse(profile.inputDetails);
+            // this.inputBuilderDefinition = profile.inputDetails;
           }
         }
       }

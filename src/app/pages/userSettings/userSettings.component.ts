@@ -38,7 +38,7 @@ export class UserSettingsComponent implements OnInit, OnDestroy {
           const newInputDefinition = Object.assign({}, this.baseInputDefinition);
 
           defs.forEach((value, key) => {
-            const inputDef = JSON.parse(value.inputDetails);
+            const inputDef = value.inputDetails;
             if (inputDef) {
               newInputDefinition.inputDetails.push(inputDef);
             }
