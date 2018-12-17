@@ -42,7 +42,7 @@ import { AuthoriseRoleGuard, CoreModule, ActionService, AppSettingsService,
   // Externalise These Modules
   import { DatagridModule } from 'ngscaffolding-datagrid';
   import { InputBuilderModule } from 'ngscaffolding-inputbuilder';
-  import { DashboardModule } from 'ngscaffolding-dashboard';
+  import { DashboardModule } from '../modules/dashboardModule/ngscaffolding-dashboard.module';
   import { CUSTOM_IMPORTS } from '../../custom/custom.app';
 
 // Pages
