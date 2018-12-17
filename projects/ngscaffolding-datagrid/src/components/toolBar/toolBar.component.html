@@ -6,7 +6,7 @@
   <button pButton class="ui-button-info toolbarButton" *ngIf="!hideRefresh" type="button" icon="ui-icon-refresh" tooltipPosition="bottom"
     (click)="this.refreshClicked.emit(null)" pTooltip="Refresh Data" [label]="showLabel('Refresh')"></button>
 
-  <button pButton class="ui-button-warning toolbarButton" *ngIf="!hideColumns && appSettingsService.gataGridAllowConfigureColumns" type="button" icon="ui-icon-view-compact" tooltipPosition="bottom"
+  <button pButton class="ui-button-warning toolbarButton" *ngIf="!hideColumns && appSettingsService.dataGridAllowConfigureColumns" type="button" icon="ui-icon-view-compact" tooltipPosition="bottom"
     (click)="this.columnsClicked.emit(null)" pTooltip="Configure Columns" [label]="showLabel('Columns')"></button>
 
   <button pButton class="ui-button-success toolbarButton" *ngIf="!hideExport && appSettingsService.dataGridAllowExport" type="button" icon="ui-icon-cloud-download" tooltipPosition="bottom"
@@ -32,7 +32,7 @@
     <button pButton class="ui-button-info toolbarButton" *ngIf="!hideRefresh" type="button" icon="ui-icon-refresh" tooltipPosition="bottom"
       (click)="buttonClicked(); this.refreshClicked.emit(null);" pTooltip="Refresh Data" [label]="showLabel('Refresh')"></button>
 
-    <button pButton class="ui-button-warning toolbarButton" *ngIf="!hideColumns && appSettingsService.gataGridAllowConfigureColumns" type="button" icon="ui-icon-view-compact" tooltipPosition="bottom"
+    <button pButton class="ui-button-warning toolbarButton" *ngIf="!hideColumns && appSettingsService.dataGridAllowConfigureColumns" type="button" icon="ui-icon-view-compact" tooltipPosition="bottom"
       (click)="buttonClicked(); this.columnsClicked.emit(null);" pTooltip="Configure Columns" [label]="showLabel('Columns')"></button>
 
     <button pButton class="ui-button-success toolbarButton" *ngIf="!hideExport && appSettingsService.dataGridAllowExport" type="button" icon="ui-icon-cloud-download" tooltipPosition="bottom"

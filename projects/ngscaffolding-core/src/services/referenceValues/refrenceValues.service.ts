@@ -21,9 +21,7 @@ export class ReferenceValuesService {
     private cacheService: CacheService,
     private logger: LoggingService
   ) {
-    setTimeout(() => {
-      this.getAppSettingsFromServer();
-    }, 50);
+
   }
 
   //
@@ -38,18 +36,6 @@ export class ReferenceValuesService {
           observer.next(null);
         }
         observer.complete();
-      });
-    });
-  }
-
-  getAppSettingsFromServer() {
-    this.logger.info('Loading AppSettings From Server', this.className);
-
-    this.getReferenceGroup('appSettings').subscribe(values => {
-      values.forEach(element => {
-        this.logger.info(`Setting ${element.name} = ${element.value}`, this.className);
-
-        this.appSettingsService[element.name] = element.value;
       });
     });
   }

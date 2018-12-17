@@ -35,6 +35,10 @@ export class UserPreferencesService {
         // Load User Prefs from Localstorage
         this.loadFromLocal();
 
+        // Load Pref Defs from server
+        this.getDefinitions();
+
+        // Load User Prefs from Server
         this.getValues();
       } else {
         // Clear Here as we logoff
@@ -42,8 +46,7 @@ export class UserPreferencesService {
       }
     });
 
-    // Load Pref Defs from server
-    this.getDefinitions();
+
   }
 
   private clearValues() {
