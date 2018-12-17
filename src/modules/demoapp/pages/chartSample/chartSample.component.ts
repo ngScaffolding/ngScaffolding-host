@@ -77,7 +77,6 @@ export class ChartSampleComponent implements OnInit {
         54175
       ];
       this.chartDetail.chartOptions.series[0].name = 'New Installation';
-      this.chart1.reloadChart();
     }, 5000);
   }
 }

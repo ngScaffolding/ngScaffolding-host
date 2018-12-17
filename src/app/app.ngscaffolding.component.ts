@@ -56,17 +56,6 @@ export class NgScaffoldingComponent implements AfterViewInit {
     // Set the window title
     this.titleService.setTitle(this.appSettingsService.title);
 
-    // Check for logoff
-    this.userAuthService.authenticatedSubject.subscribe(authenticated => {
-      if (!authenticated) {
-        this.logger.info('Logged off Redirecting to Logon');
-        this.router.navigate(['/login']);
-      } else {
-        this.logger.info('Logged on Redirecting to Home Page');
-        this.router.navigate(['/']);
-      }
-    });
-
     // Router Events capture here
     this.router.events.pipe(
         filter(event => event instanceof NavigationEnd)

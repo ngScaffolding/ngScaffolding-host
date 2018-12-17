@@ -30,7 +30,7 @@ export class UserPreferencesService {
       this.apiRootDefinitions = `${settings.apiHome}/api/v1/UserPreferenceDefinition`;
     });
 
-    auth.authenticatedSubject.subscribe(isAuthorised => {
+    auth.authenticated$.subscribe(isAuthorised => {
       if (isAuthorised) {
         // Load User Prefs from Localstorage
         this.loadFromLocal();

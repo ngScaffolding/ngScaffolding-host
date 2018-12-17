@@ -31,7 +31,7 @@ export class MenuService {
     public rolesService: RolesService
   ) {
     // Wait for settings, then load from server
-    authService.authenticatedSubject.subscribe(authorised => {
+    authService.authenticated$.subscribe(authorised => {
       if (authorised) {
         this.downloadMenuItems();
       } else {

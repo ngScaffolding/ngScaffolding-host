@@ -12,6 +12,7 @@ import { KumulosDataService } from './kumulosData.service';
 
 @Injectable()
 export class KumulosAuthService implements UserAuthorisationBase {
+  authenticated$: Observable<boolean>;
   private readonly tokenStorageKey = 'USER_TOKEN';
 
   public authenticatedSubject: BehaviorSubject<boolean>;

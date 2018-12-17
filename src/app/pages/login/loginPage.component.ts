@@ -32,6 +32,7 @@ export class LoginPageComponent implements OnInit {
     private logger: LoggingService,
     private notificationService: NotificationService,
     private route: ActivatedRoute,
+    private router: Router,
     private spinnerService: SpinnerService,
     private userAuthService: UserAuthorisationBase
   ) {}
@@ -64,7 +65,7 @@ export class LoginPageComponent implements OnInit {
 
     this.userAuthService.logon(this.inputModel.username,this.inputModel.password)
     .subscribe(authUser => {
-
+      this.router.navigate([this.returnUrl]);
     }, err =>{
       this.notificationService.showMessage({
         summary: 'Logon Failed',

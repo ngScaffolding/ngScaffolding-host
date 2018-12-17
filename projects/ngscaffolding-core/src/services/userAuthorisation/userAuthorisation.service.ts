@@ -16,7 +16,8 @@ import { UserAuthorisationBase } from './UserAuthorisationBase';
 export class UserAuthorisationService implements UserAuthorisationBase {
   private readonly tokenStorageKey = 'USER_TOKEN';
 
-  public authenticatedSubject: BehaviorSubject<boolean>;
+  public authenticated$: Observable<boolean>;
+  private authenticatedSubject: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   private refreshToken: string;
   private jwtHelper: JwtHelperService;
@@ -28,7 +29,8 @@ export class UserAuthorisationService implements UserAuthorisationBase {
     private http: HttpClient,
     private appSettingsService: AppSettingsService
   ) {
-    this.authenticatedSubject = new BehaviorSubject<boolean>(null);
+    this.authenticated$ = this.authenticatedSubject.asObservable();
+
     this.jwtHelper = new JwtHelperService({});
 
     appSettingsService.settingsSubject.subscribe(settings => {
@@ -163,7 +165,7 @@ export class UserAuthorisationService implements UserAuthorisationBase {
     this.appSettingsService.authToken = null;
 
     // Tell the world
-    this.authenticatedSubject.next(this.isAuthenticated());
+    this.authenticatedSubject.next(false);
   }
 
   private tokenExpired() {}
