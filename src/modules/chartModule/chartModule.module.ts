@@ -13,6 +13,7 @@ import { ChartComponent } from './components/chart/chart.component';
 import { ChartHolderComponent } from './components/chartHolder/chartHolder.component';
 
 import { HighchartsChartModule } from 'highcharts-angular';
+import { ProgressSpinnerModule } from 'primeng/primeng';
 
 // Services
 import { ChartDataService } from './services/chartData.service';
@@ -32,6 +33,7 @@ const appRoutes: Routes = [
     InputBuilderModule,
     CoreModule,
     HighchartsChartModule,
+    ProgressSpinnerModule,
     RouterModule.forChild(appRoutes)
   ],
   declarations: [

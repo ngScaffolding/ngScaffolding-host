@@ -34,6 +34,8 @@ export class ChartComponent implements OnInit, OnDestroy, OnChanges {
   @Input() inputModel: any;
 
   public chart: Highcharts.Chart;
+  public loadingData = false;
+
   Highcharts = Highcharts; // required
   public highChartsOptions: Highcharts.Options;
   private updateChartFlag: boolean;
@@ -56,10 +58,12 @@ export class ChartComponent implements OnInit, OnDestroy, OnChanges {
       if (this.itemDetails) {
         if (!this.itemDetails.dataSourceName) {
           // No DataSource - Just do the Chart
+          this.loadingData = false;
           this.highChartsOptions = this.itemDetails.chartOptions;
           observer.next(null);
           observer.complete();
         } else {
+          this.loadingData = true;
           // Get Data from Server
           this.dataSourceService
             .getData(
@@ -73,8 +77,13 @@ export class ChartComponent implements OnInit, OnDestroy, OnChanges {
               const chartDataService = new ChartDataService();
               this.itemDetails.chartOptions.series[0].data = chartDataService.shapeDataForSeries(this.itemDetails, JSON.parse(response.jsonData)).data;
               this.highChartsOptions = this.itemDetails.chartOptions;
-              observer.next(null);
-              observer.complete();
+
+                this.loadingData = false;
+                observer.next(null);
+                observer.complete();
+
+            }, err => {
+                this.loadingData = false;
             });
         }
       }
