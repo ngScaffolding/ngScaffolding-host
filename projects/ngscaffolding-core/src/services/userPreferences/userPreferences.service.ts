@@ -15,7 +15,7 @@ export class UserPreferencesService {
   private readonly prefix = 'preference_';
   private readonly storageKey = 'UserPreferences';
 
-  private apiRootValues: string;
+  private apiHome: string;
   private apiRootDefinitions: string;
 
   private preferenceValues = new Array<UserPreferenceValue>();
@@ -25,8 +25,8 @@ export class UserPreferencesService {
   public preferenceValuesSubject = new BehaviorSubject<Array<UserPreferenceValue>>(null);
 
   constructor(private http: HttpClient, private auth: UserAuthorisationBase, private appSettings: AppSettingsService) {
-    appSettings.settingsSubject.subscribe(settings => {
-      this.apiRootValues = `${settings.apiHome}/api/v1/userPreferencevalue`;
+    appSettings.settingsValues$.subscribe(settings => {
+      this.apiHome = `${settings.apiHome}/api/v1/userPreferencevalue`;
       this.apiRootDefinitions = `${settings.apiHome}/api/v1/UserPreferenceDefinition`;
     });
 
@@ -58,7 +58,7 @@ export class UserPreferencesService {
 
   public deleteValue(key: string) {
     return new Observable<any>(observer => {
-      this.http.delete(`${this.apiRootValues}/${key}`).subscribe(
+      this.http.delete(`${this.apiHome}/${key}`).subscribe(
         () => {
           // Save and tell the world
           this.preferenceValues = this.preferenceValues.filter(p => p.name !== key);
@@ -80,7 +80,7 @@ export class UserPreferencesService {
 
   public getValues() {
     // Load values from Server
-    this.http.get<Array<UserPreferenceValue>>(`${this.apiRootValues}`).subscribe(prefValues => {
+    this.http.get<Array<UserPreferenceValue>>(`${this.apiHome}`).subscribe(prefValues => {
       if (prefValues) {
         prefValues.forEach(prefValue => {
           this.newValue(prefValue.name, prefValue.value);
@@ -94,7 +94,7 @@ export class UserPreferencesService {
 
   public setValue(key: string, value: any): Observable<any> {
     return new Observable<any>(observer => {
-      this.http.post(`${this.apiRootValues}`, { name: key, value: value }).subscribe(
+      this.http.post(`${this.apiHome}`, { name: key, value: value }).subscribe(
         () => {
           // Save and tell the world
           this.newValue(key, value);

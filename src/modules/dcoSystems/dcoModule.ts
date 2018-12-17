@@ -10,7 +10,7 @@ import {
   AppSettingsService,
   MenuService,
   LoggingService,
-  VersionsService, DynamicComponentService
+  VersionsService, DynamicComponentService, AuthoriseRoleGuard
 } from 'ngscaffolding-core';
 
 import { InputBuilderModule } from 'ngscaffolding-inputbuilder';
@@ -37,7 +37,7 @@ import { TabViewModule } from 'primeng/primeng';
 
 // export * from './pages';
 
-const dashboardRoute: Route =  { path: 'dcodashboard', component: TopDashboardComponent };
+const dashboardRoute: Route =  { path: 'dcodashboard', component: TopDashboardComponent, canActivate: [AuthoriseRoleGuard] };
 
 const appRoutes: Routes = [
   dashboardRoute

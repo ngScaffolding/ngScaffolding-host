@@ -33,7 +33,7 @@ export class UserAuthorisationService implements UserAuthorisationBase {
 
     this.jwtHelper = new JwtHelperService({});
 
-    appSettingsService.settingsSubject.subscribe(settings => {
+    appSettingsService.settingsValues$.subscribe(settings => {
       if (settings && settings.authSaveinLocalStorage) {
         const savedToken = localStorage.getItem(this.tokenStorageKey); // Loaded from Saved Storage
         if (savedToken !== null) {

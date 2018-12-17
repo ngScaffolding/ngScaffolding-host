@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import { AppSettings } from '@ngscaffolding/models';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { AppSettings, AppSettingsValue } from '@ngscaffolding/models';
 import { LoggingService } from '../logging/logging.service';
 import { HttpClient } from '@angular/common/http';
+import { stringify } from '@angular/compiler/src/util';
+
 
 @Injectable({
   providedIn: 'root',
@@ -10,10 +12,28 @@ import { HttpClient } from '@angular/common/http';
 export class AppSettingsService extends AppSettings {
   private className = 'AppSettingsService';
 
-  public settingsSubject = new BehaviorSubject<AppSettings>(null);
+  public settingsValues$: Observable<AppSettings>;
+  private settingsSubject = new BehaviorSubject<AppSettings>(null);
 
   constructor(private logger: LoggingService, private http: HttpClient) {
     super();
+
+    this.settingsValues$ = this.settingsSubject.asObservable();
+  }
+
+  private loadFromServer() {
+    // Load values from Server
+    this.http.get<Array<AppSettingsValue>>(`${this.apiHome}/api/v1/appSettings`).subscribe(appValues => {
+
+      if (appValues) {
+        appValues.forEach(appValue => {
+          this[appValue.name] = appValue.value;
+        });
+
+        // Tell the world the values
+        this.settingsSubject.next(this);
+      }
+    });
   }
 
   public setValues(settings: AppSettings) {
@@ -26,6 +46,9 @@ export class AppSettingsService extends AppSettings {
       });
     }
     this.settingsSubject.next(this);
+
+    // Load from server last as the values take precedent
+    this.loadFromServer();
   }
 
   public loadFromJSON() {
