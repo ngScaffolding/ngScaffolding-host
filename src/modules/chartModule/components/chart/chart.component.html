@@ -7,7 +7,7 @@
   *ngIf="!loadingData"
   [Highcharts]="Highcharts"
   [options]="highChartsOptions"
-  [callbackFunction]="chartCallback"
+  (chartInstance)="logChartInstance($event)"
   [(update)]="updateChartFlag"
-  style="width: 100%; display: block;">
+  style="width: 100%; height: 100%; display: block;">
 </highcharts-chart>

@@ -4,7 +4,7 @@ import { Component, OnInit, OnDestroy, Input, OnChanges, SimpleChanges } from '@
 
 import { ChartDataService } from '../../services/chartData.service';
 import { DataSourceService, LoggingService } from 'ngscaffolding-core';
-import { DataSourceRequest, ChartDetailModel } from '@ngscaffolding/models';
+import { ChartDetailModel } from '@ngscaffolding/models';
 import * as Highcharts from 'highcharts';
 // Loading HighCharts More
 const HighchartsMore = require('highcharts/highcharts-more.src');
@@ -14,18 +14,12 @@ HighchartsMore(Highcharts);
 import * as HC_solid_gauge from 'highcharts/modules/solid-gauge.src';
 HC_solid_gauge(Highcharts);
 
-import { Observable } from 'rxjs';
-import { RequiredValidator } from '@angular/forms';
-
 @Component({
   selector: 'ng-chart',
   templateUrl: 'chart.component.html',
   styles: ['chart.component.scss']
 })
 export class ChartComponent implements OnInit, OnDestroy, OnChanges {
-  @Input() unitHeight: number;
-  @Input() unitWidth: number;
-  @Input() unitUpdate: number;
   @Input() chartStyle: any;
 
   @Input() isWidget: boolean;
@@ -33,16 +27,17 @@ export class ChartComponent implements OnInit, OnDestroy, OnChanges {
   @Input() itemDetails: ChartDetailModel;
   @Input() inputModel: any;
 
-  public chart: Highcharts.Chart;
+  public chart: any;
   public loadingData = false;
 
   Highcharts = Highcharts; // required
   public highChartsOptions: Highcharts.Options;
-  private updateChartFlag: boolean;
+  public updateChartFlag: boolean;
 
   constructor(private logger: LoggingService, private chartDataService: ChartDataService, private dataSourceService: DataSourceService) {}
 
-  private chartCallback(chart: Highcharts.Chart) {
+  public logChartInstance(chart: any) {
+    console.log('Chart instance: ', chart);
     this.chart = chart;
   }
 
@@ -53,7 +48,6 @@ export class ChartComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   private loadChart() {
-
     if (this.itemDetails) {
       if (!this.itemDetails.dataSourceName) {
         // No DataSource - Just do the Chart
@@ -71,27 +65,26 @@ export class ChartComponent implements OnInit, OnDestroy, OnChanges {
             },
             false
           )
-          .subscribe(response => {
-            const chartDataService = new ChartDataService();
-            this.itemDetails.chartOptions.series[0].data = chartDataService.shapeDataForSeries(this.itemDetails, JSON.parse(response.jsonData)).data;
-            this.highChartsOptions = this.itemDetails.chartOptions;
+          .subscribe(
+            response => {
+              const chartDataService = new ChartDataService();
+              this.itemDetails.chartOptions.series[0].data = chartDataService.shapeDataForSeries(this.itemDetails, JSON.parse(response.jsonData)).data;
+              this.highChartsOptions = this.itemDetails.chartOptions;
 
-            this.loadingComplete();
-          }, err => {
-            // TODO: Show Error to User?
-            this.loadingComplete();
-          });
+              this.loadingComplete();
+            },
+            err => {
+              // TODO: Show Error to User?
+              this.loadingComplete();
+            }
+          );
       }
     }
   }
 
-  public resizeChart(): void {}
-
   ngOnChanges(changes: SimpleChanges): void {
-    console.log('Chart: Input changed. loading');
-    if (changes['itemDetails'].currentValue) {
+      console.log('Chart: Input changed. loading');
       this.loadChart();
-    }
   }
 
   ngOnInit(): void {}

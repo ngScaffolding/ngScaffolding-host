@@ -1,16 +1,17 @@
 import { Component, OnInit, OnDestroy, ComponentRef, ViewChildren, QueryList, OnChanges, SimpleChanges } from '@angular/core';
 import { DataSourceService, LoggingService, MenuService } from 'ngscaffolding-core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { CoreMenuItem, WidgetModelBase, WidgetDetails } from '@ngscaffolding/models';
+import { CoreMenuItem, WidgetModelBase, WidgetDetails, WidgetTypes, ChartDetailModel } from '@ngscaffolding/models';
 import { Observable } from 'rxjs';
 
 import { DashboardModel } from '@ngscaffolding/models';
 
 import { DataGridComponent } from 'ngscaffolding-datagrid';
-// import { ChartComponent } from '../../../../../src/modules/chartModule/chartModule.module';
+import { ChartComponent } from '../../../../../src/modules/chartModule/chartModule.module';
 
 import { CompactType, DisplayGrid, GridsterConfig, GridsterItem, GridType,
    GridsterItemComponent, GridsterItemComponentInterface } from 'angular-gridster2';
+import { ChartDataService } from 'src/modules/chartModule/services/chartData.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -33,20 +34,38 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
   public componentInputs = {};
 
   public unitHeight: number;
+  public loadingData = false;
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private logger: LoggingService,
     private menuService: MenuService,
+    private chartDataService: ChartDataService,
     private dataSourceService: DataSourceService
   ) {}
 
+  public widgetContentDetails: any;
   public getComponent(widgetDetails: WidgetDetails) {
-    return widgetDetails.widget.itemDetails;
+
+    switch (widgetDetails.widget.type) {
+      case WidgetTypes.GridView: {
+        break;
+      }
+      case WidgetTypes.Chart: {
+        const chart = new ChartComponent(this.logger, this.chartDataService, this.dataSourceService);
+        this.widgetContentDetails = widgetDetails.widget.itemDetails as ChartDetailModel;
+
+        return ChartComponent;
+      }
+      case WidgetTypes.Html: {
+        break;
+      }
+    }
   }
 
   loadDashboard() {
+    this.loadingData = true;
     this.menuItem = this.menuService.getMenuItemByName(this.menuName);
 
     if (this.menuItem && this.menuItem.menuDetails) {
@@ -54,31 +73,24 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
     }
 
     // Set unitheight for later resize
-    this.dashboard.widgets.forEach(widget => {
-      widget['unitHeight'] = 0;
-      widget['unitWidth'] = 0;
-      widget['unitUpdate'] = 0;
+    this.dashboard.widgets.forEach(widgetDetail => {
+      widgetDetail['unitHeight'] = 0;
+      widgetDetail['unitWidth'] = 0;
+      widgetDetail['unitUpdate'] = 0;
 
-      widget['isWidget'] = true;
+      widgetDetail['isWidget'] = true;
 
-      // Prepare our details
-      // if(widget.gridViewDetail)      {
-      //   widget['itemDetail'] = widget.gridViewDetail;
-      // } else if (widget.chartDetail) {
-      //   widget['itemDetail'] = widget.chartDetail;
-      // } else if (widget.htmlContent) {
-      //   widget['itemDetail'] = widget.htmlContent;
-      // }
     });
+    this.loadingData = false;
   }
 
-  private itemChange(item, itemComponent) {}
+  private itemChange(item, itemComponent) {
+    window.dispatchEvent(new Event('resize'));
+  }
 
   public itemResize(item: GridsterItem, itemComponent: GridsterItemComponentInterface): void {
     if (itemComponent.gridster.curRowHeight > 1) {
-      item['unitHeight'] = itemComponent.gridster.curRowHeight;
-      item['unitWidth'] = itemComponent.gridster.curColWidth;
-      item['unitUpdate']++; // This forces the update if the values above haven't changed;
+      window.dispatchEvent(new Event('resize'));
     }
   }
 

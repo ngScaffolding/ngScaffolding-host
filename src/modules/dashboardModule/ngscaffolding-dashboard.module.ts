@@ -11,13 +11,15 @@ import { CoreModule, ButtonColorPipe, AuthoriseRoleGuard } from 'ngscaffolding-c
 import { InputBuilderModule } from 'ngscaffolding-inputbuilder';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 
-import { DataGridComponent } from 'ngscaffolding-datagrid';
-// import { ChartComponent } from '../../../src/modules/chartModule/chartModule.module';
+import {  DataGridComponent } from 'ngscaffolding-datagrid';
+import { ChartComponent } from '../../../src/modules/chartModule/chartModule.module';
 
 import { DynamicModule } from 'ng-dynamic-component';
 
 import { GridsterModule } from 'angular-gridster2';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { CardModule } from 'primeng/card';
+import { DataGridModule } from 'primeng/primeng';
 
 // Services
 
@@ -34,8 +36,9 @@ const appRoutes: Routes = [
     CoreModule,
     GridsterModule,
     CardModule,
-    DynamicModule.withComponents([DataGridComponent]),
-    // DynamicModule.withComponents([DataGridComponent, ChartComponent]),
+    ProgressSpinnerModule,
+    //DynamicModule.withComponents([DataGridComponent]),
+    DynamicModule.withComponents([DataGridComponent, ChartComponent]),
     RouterModule.forChild(appRoutes)
   ],
   declarations: [
