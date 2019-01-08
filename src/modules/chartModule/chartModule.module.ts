@@ -6,7 +6,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 
 import { MenuService, LoggingService, VersionsService,  } from 'ngscaffolding-core';
-import { CoreModule, AuthoriseRoleGuard } from 'ngscaffolding-core';
+import { AuthoriseRoleGuard } from 'ngscaffolding-core';
 
 import { InputBuilderModule } from 'ngscaffolding-inputbuilder';
 import { ChartComponent } from './components/chart/chart.component';
@@ -31,7 +31,6 @@ const appRoutes: Routes = [
     CommonModule,
     FormsModule,
     InputBuilderModule,
-    CoreModule,
     HighchartsChartModule,
     ProgressSpinnerModule,
     RouterModule.forChild(appRoutes)

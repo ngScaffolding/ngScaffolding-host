@@ -13,11 +13,5 @@ export class AppSettingsQuery extends QueryEntity<AppSettingsState, AppSettingsV
     super(store);
   }
 
-  public getBoolean(name: string): Observable<boolean> {
-    return this.selectEntity(name, entity => entity.value);
-  }
 
-  public getString(name: string): Observable<string> {
-    return this.selectEntity(name, entity => entity.value);
-  }
 }

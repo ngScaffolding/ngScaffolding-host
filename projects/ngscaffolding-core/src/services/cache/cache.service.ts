@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { AppSettingsService } from '../appSettings/appSettings.service';
+import { AppSettingsService } from '../appSettings';
 import { CacheEntry, AppSettings } from '@ngscaffolding/models';
 
 @Injectable({

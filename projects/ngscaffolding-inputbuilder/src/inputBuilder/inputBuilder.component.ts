@@ -21,6 +21,7 @@ import { JsonEditorComponent, JsonEditorOptions } from 'ang-jsoneditor';
 
 import {
   AppSettingsService,
+  AppSettingsQuery,
   ReferenceValuesService
 } from 'ngscaffolding-core';
 import { InputDetailReferenceValues } from '@ngscaffolding/models';
@@ -49,6 +50,7 @@ export class InputBuilderComponent implements OnInit, OnChanges {
 
   constructor(
     public appSettings: AppSettingsService,
+    public appSettingsQuery: AppSettingsQuery,
     public refValuesService: ReferenceValuesService
   ) {
     this.editorOptions = new JsonEditorOptions();

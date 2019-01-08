@@ -4,6 +4,7 @@ import { LoggingService } from '../logging/logging.service';
 import { HttpClient } from '@angular/common/http';
 import { AppSettingsStore } from './appSettings.store';
 import { AppSettingsQuery } from './appSettings.query';
+import { Observable } from 'rxjs/internal/Observable';
 
 @Injectable({
   providedIn: 'root'
@@ -26,10 +27,10 @@ export class AppSettingsService {
     } else {
       this.appSettingsStore.add({ Id: null, name: name, value: value });
     }
-    // this.appSettingsStore.createOrReplace(name, { Id: null, name, value });
-    // if (name === AppSettings.apiHome) {
-    //   this.loadFromServer(value.toString());
-    // }
+    this.appSettingsStore.createOrReplace(name, { Id: null, name, value });
+    if (name === AppSettings.apiHome) {
+      setTimeout(() => { this.loadFromServer(value.toString()); }, 200);
+    }
   }
 
   public getValue(name: string): any {
@@ -67,7 +68,15 @@ export class AppSettingsService {
       .get('/assets/data/appConfig.json')
       .toPromise()
       .then(data => {
-        this.setValues(data as AppSettings);
+        // this.setValues(data as AppSettings);
       });
+  }
+
+  public getBoolean(name: string): Observable<boolean> {
+    return this.appSettingsQuery.selectEntity(name, entity => entity.value);
+  }
+
+  public getString(name: string): Observable<string> {
+    return this.appSettingsQuery.selectEntity(name, entity => entity.value);
   }
 }

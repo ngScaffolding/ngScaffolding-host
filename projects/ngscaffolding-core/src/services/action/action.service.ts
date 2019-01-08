@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AppSettingsService } from '../appSettings/appSettings.service';
+import { AppSettingsService } from '../appSettings';
 import { LoggingService } from '../logging/logging.service';
 
 import { Action, AppSettings } from '@ngscaffolding/models';

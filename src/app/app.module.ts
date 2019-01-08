@@ -89,7 +89,7 @@ const appInitializerFn = (appConfig: AppSettingsService) => {
         PRIME_COMPONENTS,
         CUSTOM_IMPORTS,
         // To be External
-        CoreModule,
+        // CoreModule.forRoot(),
         DatagridModule,
         InputBuilderModule,
         DashboardModule,
@@ -101,7 +101,7 @@ const appInitializerFn = (appConfig: AppSettingsService) => {
           deps: [AppSettingsService]
         }}),
 
-        environment.production ? [] : AkitaNgDevtools.forRoot()
+        environment.production ? [] : AkitaNgDevtools.forRoot({ logTrace: true })
     ],
     declarations: [
         AppComponent,

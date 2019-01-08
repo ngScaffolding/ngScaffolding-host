@@ -20,19 +20,19 @@
                 </div>
 
                 <div class="ui-g-12"></div>
-                <div *ngIf="appSettingsQuery.getBoolean('authShowRememberMe') | async" class="ui-g-12">
+                <div *ngIf="appSettings.getBoolean('authShowRememberMe') | async" class="ui-g-12">
                         <p-checkbox name="rememberMe" binary="true" label="Remember Me?" (onChange)="rememberChanged($event)" [(ngModel)]="rememberMe"></p-checkbox>
                 </div>
 
                 <div class="ui-g-12"></div>
                 <div class="ui-g-12">
-                    <span>{{appSettingsQuery.getString('authTermsAndConditions') | async}}</span>
+                    <span>{{appSettings.getString('authTermsAndConditions') | async}}</span>
                 </div>
 
                 <div class="ui-g-12"></div>
                 <div class="ui-g-12">
                     <div class="ui-g-6 ui-sm-12">
-                        <button pButton class="ui-button-info" type="button" *ngIf="appSettingsQuery.getBoolean('authShowRegister') | async" label="Register"></button>
+                        <button pButton class="ui-button-info" type="button" *ngIf="appSettings.getBoolean('authShowRegister') | async" label="Register"></button>
                     </div>
                     <div class="ui-g-6 ui-sm-12">
                         <button pButton class="ui-button-success" type="submit" [disabled]="!loginForm.form.valid" label="Logon"></button>

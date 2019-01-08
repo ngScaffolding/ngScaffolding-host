@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Action } from '@ngscaffolding/models';
+import { ButtonColorPipe } from 'ngscaffolding-core';
 
 @Component({
   selector: 'app-actions-holder',
@@ -13,7 +14,7 @@ export class ActionsHolderComponent implements OnInit {
 
   @Output() actionClicked = new EventEmitter<Action>();
 
-  constructor() {}
+  constructor(public buttonColor: ButtonColorPipe) {}
 
   ngOnInit() {}
 

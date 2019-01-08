@@ -1,6 +1,6 @@
 <div class="topbar clearfix">
     <div class="topbar-left">
-        <img class="logo-custom" [src]="appSettings.iconUrl">
+        <img class="logo-custom" [src]="appSettings.getString('iconUrl') | async">
     </div>
 
     <div class="topbar-right">
@@ -24,7 +24,7 @@
                 </a>
 
                 <ul class="ultima-menu animated fadeInDown">
-                    <li role="menuitem" *ngIf="appSettings.showProfileSetting">
+                    <li role="menuitem" *ngIf="appSettings.getBoolean('showProfileSetting') | async">
                         <a href="#" routerLink="/profile" >
                             <i class="material-icons">person</i>
                             <span>Profile</span>
@@ -67,11 +67,11 @@
                 </ul>
             </li>
 
-            <li notifications *ngIf="appSettings.showTopNotifications && userAuthService.isAuthenticated()"
+            <li notifications *ngIf="userAuthService.isAuthenticated() && appSettings.getBoolean('showTopNotifications') | async"
             [ngClass]="{'active-top-menu':app.activeTopbarItem === 'notifications'}">
             </li>
 
-            <li #search *ngIf="appSettings.showTopSearch && userAuthService.isAuthenticated()" class="search-item"
+            <li #search *ngIf="userAuthService.isAuthenticated() && appSettings.getBoolean('appSettings.showTopSearch') | async" class="search-item"
                 [ngClass]="{'active-top-menu':app.activeTopbarItem === search}"
                 (click)="app.onTopbarItemClick($event,search)">
                 <span class="md-inputfield">
