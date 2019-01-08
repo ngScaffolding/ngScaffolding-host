@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { AppSettingsService } from '../appSettings/appSettings.service';
-import { CacheEntry } from '@ngscaffolding/models';
+import { CacheEntry, AppSettings } from '@ngscaffolding/models';
 
 @Injectable({
   providedIn: 'root',
@@ -19,7 +19,7 @@ export class CacheService {
 
         // Do we already have one?
         let currentEntry: CacheEntry;
-        for (let entry of this.allValues) {
+        for (const entry of this.allValues) {
             if (entry.key === key.toLowerCase()) {
                 currentEntry = entry;
                 break;
@@ -48,16 +48,16 @@ export class CacheService {
 
         // Work out Expiry
         if (expires === null) {
-            expires = this.appSettingsService.cacheDefaultSeconds || 300;
+            expires = this.appSettingsService.getValue(AppSettings.cacheDefaultSeconds) || 300;
         }
 
         // work out when this value expires
-        let newExpires = new Date();
+        const newExpires = new Date();
         newExpires.setSeconds(newExpires.getSeconds() + expires);
 
         // Do we already have one?
         let currentEntry: CacheEntry;
-        for (let entry of this.allValues) {
+        for (const entry of this.allValues) {
             if (entry.key === key.toLowerCase()) {
                 currentEntry = entry;
                 break;
@@ -82,7 +82,7 @@ export class CacheService {
         if (this.allValues) {
             // Do we already have one?
             let currentEntry: CacheEntry;
-            for (let entry of this.allValues) {
+            for (const entry of this.allValues) {
                 if (entry.key === key.toLowerCase()) {
                     currentEntry = entry;
                     break;

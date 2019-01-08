@@ -5,7 +5,7 @@ import { HttpClient } from '@angular/common/http';
 
 
 
-import { ErrorModel } from '@ngscaffolding/models';
+import { ErrorModel, AppSettings } from '@ngscaffolding/models';
 import { UserAuthorisationBase } from '../userAuthorisation/UserAuthorisationBase';
 import { AppSettingsService } from '../appSettings/appSettings.service';
 import { NotificationService } from '../notification/notification.service';
@@ -32,10 +32,10 @@ export class CoreErrorHandlerService extends ErrorHandler {
     handleError(error, source: string = null) {
         super.handleError(error);
 
-        if (this.appSettingsService.errorLogConsole) {
+        if (this.appSettingsService.getValue(AppSettings.errorLogConsole)) {
             console.error(error.message);
         }
-        if (this.appSettingsService.errorLogServer) {
+        if (this.appSettingsService.getValue(AppSettings.errorLogServer)) {
             const errorModel = new ErrorModel(error);
 
             if (source) {
@@ -53,7 +53,7 @@ export class CoreErrorHandlerService extends ErrorHandler {
             // Consume any errors here. Otherwise we will just get stuck
             try {
                 // This post is a fire and forget. Don't have to authorise either
-                this.http.post(this.appSettingsService.apiHome + '/api/v1/error', errorModel)
+                this.http.post(this.appSettingsService.getValue(AppSettings.apiHome) + '/api/v1/error', errorModel)
                     .subscribe((data) => {
                         // alert('ID: ' + data.id);
                     },
@@ -64,8 +64,8 @@ export class CoreErrorHandlerService extends ErrorHandler {
                 console.log('Unable to send Error to Server, offline?');
             }
         }
-        if (this.appSettingsService.errorShowUser) {
-
+        if (this.appSettingsService.getValue(AppSettings.errorShowUser)) {
+          // TODO: Show User Error
         }
     }
 }

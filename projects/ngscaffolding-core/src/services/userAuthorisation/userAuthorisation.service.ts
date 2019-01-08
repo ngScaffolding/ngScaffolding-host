@@ -5,10 +5,11 @@ import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { AppSettingsService } from '../appSettings/appSettings.service';
 import { LoggingService } from '../logging/logging.service';
 
-import { AuthUser, AuthUserResponse } from '@ngscaffolding/models';
+import { AuthUser, AuthUserResponse, AppSettings } from '@ngscaffolding/models';
 
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { UserAuthorisationBase } from './UserAuthorisationBase';
+import { AppSettingsQuery } from '../appSettings';
 
 @Injectable({
   providedIn: 'root',
@@ -27,14 +28,14 @@ export class UserAuthorisationService implements UserAuthorisationBase {
   constructor(
     private logger: LoggingService,
     private http: HttpClient,
-    private appSettingsService: AppSettingsService
+    private appSettingsService: AppSettingsService, private appSettingsQuery: AppSettingsQuery
   ) {
     this.authenticated$ = this.authenticatedSubject.asObservable();
 
     this.jwtHelper = new JwtHelperService({});
 
-    appSettingsService.settingsValues$.subscribe(settings => {
-      if (settings && settings.authSaveinLocalStorage) {
+    appSettingsQuery.selectEntity(AppSettings.authSaveinLocalStorage).subscribe(authSaveinLocalStorage => {
+      if (authSaveinLocalStorage) {
         const savedToken = localStorage.getItem(this.tokenStorageKey); // Loaded from Saved Storage
         if (savedToken !== null) {
           // New AuthUser Based on Token
@@ -67,7 +68,7 @@ export class UserAuthorisationService implements UserAuthorisationBase {
       this.tokenExpired();
     }
 
-    if (this.appSettingsService.authSaveinLocalStorage) {
+    if (this.appSettingsService.getValue(AppSettings.authSaveinLocalStorage)) {
       // Save token to local storage
       localStorage.setItem(this.tokenStorageKey, token);
     }
@@ -80,24 +81,24 @@ export class UserAuthorisationService implements UserAuthorisationBase {
       this.currentUser.roles = tokenDetails['roles'];
     }
 
-    this.appSettingsService.authToken = token;
+    this.appSettingsService.setValue(AppSettings.authToken, token);
     this.authenticatedSubject.next(this.isAuthenticated());
 
     // this.spinnerService.hideSpinner();
   }
 
   public getToken(): string {
-    return this.appSettingsService.authToken;
+    return this.appSettingsService.getValue(AppSettings.authToken);
   }
 
   private getUserDetails() {
     this.http
       .get<AuthUserResponse>(
-        this.appSettingsService.apiAuth + '/connect/userinfo',
+        this.appSettingsService.getValue(AppSettings.apiAuth) + '/connect/userinfo',
         {
           headers: new HttpHeaders().set(
             'Authorization',
-            'Bearer ' + this.appSettingsService.authToken
+            'Bearer ' + this.appSettingsService.getValue(AppSettings.authToken)
           )
         }
       )
@@ -124,15 +125,15 @@ export class UserAuthorisationService implements UserAuthorisationBase {
         .append('username', userName)
         .append('password', password)
         .append('grant_type', 'password')
-        .append('client_id', this.appSettingsService.authClientId)
-        .append('client_secret', this.appSettingsService.authClientSecret)
+        .append('client_id', this.appSettingsService.getValue(AppSettings.authClientId))
+        .append('client_secret', this.appSettingsService.getValue(AppSettings.authClientSecret))
         .append(
           'scope',
-          this.appSettingsService.authScope + ' offline_access openid'
+          this.appSettingsService.getValue(AppSettings.authScope) + ' offline_access openid'
         );
 
       this.http
-        .post(this.appSettingsService.apiAuth + this.appSettingsService.authTokenEndpoint, body, {
+        .post(this.appSettingsService.getValue(AppSettings.apiAuth) + this.appSettingsService.getValue(AppSettings.authTokenEndpoint), body, {
           headers: new HttpHeaders().set(
             'Content-Type',
             'application/x-www-form-urlencoded'
@@ -158,11 +159,11 @@ export class UserAuthorisationService implements UserAuthorisationBase {
   }
 
   public logoff(): void {
-    if (this.appSettingsService.authSaveinLocalStorage) {
+    if (this.appSettingsService.getValue(AppSettings.authSaveinLocalStorage)) {
       // Remove token from Local Storage
       localStorage.removeItem(this.tokenStorageKey);
     }
-    this.appSettingsService.authToken = null;
+    this.appSettingsService.setValue(AppSettings.authToken, null);
 
     // Tell the world
     this.authenticatedSubject.next(false);

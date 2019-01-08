@@ -58,35 +58,32 @@ export class DemoAppModule {
 
     versions.addVersion('@ngscaffolding/demoapp', VERSION.version, true);
 
-    const settings: AppSettings = new AppSettings();
-    settings.title = 'ngScaffolding Demo';
-    settings.iconUrl = '';
-    settings.apiHome = 'http://localhost:3000';
-    settings.apiAuth = 'http://localhost:3010';
-    settings.authTokenEndpoint = '/auth/token';
-    settings.errorLogConsole = true;
-    settings.errorLogServer = true;
-    settings.errorShowUser = true;
+    appSettingsService.setValue(AppSettings.title , 'ngScaffolding Demo');
+    appSettingsService.setValue(AppSettings.iconUrl , '');
+    appSettingsService.setValue(AppSettings.apiHome , 'http://localhost:3000');
+    appSettingsService.setValue(AppSettings.apiAuth , 'http://localhost:3010');
+    appSettingsService.setValue(AppSettings.authTokenEndpoint , '/auth/token');
+    appSettingsService.setValue(AppSettings.errorLogConsole , true);
+    appSettingsService.setValue(AppSettings.errorLogServer , true);
+    appSettingsService.setValue(AppSettings.errorShowUser , true);
 
-    settings.inputShowCalendarIcon = true;
+    appSettingsService.setValue(AppSettings.inputShowCalendarIcon , true);
 
-    settings.showFullMessages = false;
-    settings.showToastMessages = true;
+    appSettingsService.setValue(AppSettings.showFullMessages , false);
+    appSettingsService.setValue(AppSettings.showToastMessages , true);
 
-    settings.showProfileSetting = true;
-    settings.showProfilePicture = true;
+    appSettingsService.setValue(AppSettings.showProfileSetting , true);
+    appSettingsService.setValue(AppSettings.showProfilePicture , true);
 
-    settings.authClientId = 'democlient';
-    settings.authClientSecret = 'secret';
-    settings.authScope = 'ngscaffoldingAPI';
-    settings.authShowForgotPassword = true;
-    settings.authShowRegister = true;
-    settings.authShowRememberMe = true;
-    settings.authSaveinLocalStorage = true;
-    settings.authTermsAndConditions =
-      'Demo Application Your Terms and Conditions Here. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Odio pellentesque diam volutpat commodo sed egestas.';
-
-    appSettingsService.setValues(settings);
+    appSettingsService.setValue(AppSettings.authClientId , 'democlient');
+    appSettingsService.setValue(AppSettings.authClientSecret , 'secret');
+    appSettingsService.setValue(AppSettings.authScope , 'ngscaffoldingAPI');
+    appSettingsService.setValue(AppSettings.authShowForgotPassword , true);
+    appSettingsService.setValue(AppSettings.authShowRegister , true);
+    appSettingsService.setValue(AppSettings.authShowRememberMe , true);
+    appSettingsService.setValue(AppSettings.authSaveinLocalStorage , true);
+    appSettingsService.setValue(AppSettings.authTermsAndConditions ,
+      'Demo Application Your Terms and Conditions Here. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Odio pellentesque diam volutpat commodo sed egestas.');
 
     menuService.addMenuItems([
       {

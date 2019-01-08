@@ -12,7 +12,7 @@
             <i class="material-icons">menu</i>
         </a>
 
-        <span class="application-title">{{appSettings.title}}</span>
+        <span class="application-title">{{title$ | async}}</span>
 
         <ul class="topbar-items animated fadeInDown" [ngClass]="{'topbar-items-visible': app.topbarMenuActive}">
             <li #profile class="profile-item" *ngIf="userAuthService.isAuthenticated() && (app.profileMode==='top'||app.isHorizontal())"

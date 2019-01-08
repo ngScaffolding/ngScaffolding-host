@@ -10,6 +10,9 @@ import { LoggingService, AppSettingsService, SpinnerService } from 'ngscaffoldin
 import { UserAuthorisationBase, UserPreferencesService } from 'ngscaffolding-core';
 import { BroadcastService, BroadcastTypes, MenuService } from 'ngscaffolding-core';
 import { NotificationReceiverService } from './services/notificationReceiver/notificationReceiver.service';
+import { AppSettingsQuery } from 'ngscaffolding-core';
+import { Observable } from 'rxjs/internal/Observable';
+import { AppSettings } from '@ngscaffolding/models';
 
 enum MenuOrientation {
     STATIC,
@@ -69,6 +72,11 @@ export class AppComponent extends NgScaffoldingComponent
 
   rippleMouseDownListener: any;
 
+  // ngScaffolding
+  public showFullMessages$: Observable<boolean>;
+  public showToastMessages$: Observable<boolean>;
+  public showFooter$: Observable<boolean>;
+
   constructor(
     public router: Router,
     public renderer: Renderer,
@@ -76,7 +84,7 @@ export class AppComponent extends NgScaffoldingComponent
     public logger: LoggingService,
     public userAuthService: UserAuthorisationBase,
     public titleService: Title,
-    public appSettingsService: AppSettingsService,
+    public appSettingsQuery: AppSettingsQuery,
     public notificationReceiverService: NotificationReceiverService,
     public spinnerService: SpinnerService,
     public menuService: MenuService,
@@ -88,13 +96,17 @@ export class AppComponent extends NgScaffoldingComponent
       logger,
       userAuthService,
       titleService,
-      appSettingsService,
+      appSettingsQuery,
       notificationReceiverService,
       spinnerService,
       menuService,
       broadcastService,
       userPreferencesService
     );
+
+    this.showFullMessages$ = this.appSettingsQuery.selectEntity(AppSettings.showFullMessages, entity => entity.value);
+    this.showToastMessages$ = this.appSettingsQuery.selectEntity(AppSettings.showToastMessages, entity => entity.value);
+    this.showFooter$ = this.appSettingsQuery.selectEntity(AppSettings.showFooter, entity => entity.value);
   }
 
   ngOnInit() {

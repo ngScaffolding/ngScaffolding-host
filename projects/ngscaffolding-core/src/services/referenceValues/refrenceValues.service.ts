@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { AppSettingsService } from '../appSettings/appSettings.service';
-import { ReferenceValue } from '@ngscaffolding/models';
+import { ReferenceValue, AppSettings } from '@ngscaffolding/models';
 import { LoggingService } from '../logging/logging.service';
 import { CacheService } from '../cache/cache.service';
 
@@ -45,7 +45,7 @@ export class ReferenceValuesService {
       this.http
         .get<Array<ReferenceValue>>(
           `${this.appSettingsService
-            .apiHome}/api/v1/referencevalues?group=${group}`
+            .getValue(AppSettings.apiHome)}/api/v1/referencevalues?group=${group}`
         )
         .subscribe(values => {
           // Save each returned value to our cache
@@ -87,7 +87,7 @@ export class ReferenceValuesService {
           // Call HTTP Here
           const httpRequest = this.http.get<ReferenceValue>(
             `${this.appSettingsService
-              .apiHome}/api/v1/referencevalues?name=${name}&seed=${seed}`
+              .getValue(AppSettings.apiHome)}/api/v1/referencevalues?name=${name}&seed=${seed}`
           );
           httpRequest.subscribe(value => {
             this.cacheService.setValue(this.getKey(name, seed), value);

@@ -58,22 +58,22 @@ import { UserSettingsComponent } from './pages/userSettings/userSettings.compone
 import { ProfilePageComponent } from './pages/profile/profilePage.component';
 
 // Services
-import { NotificationReceiverService } from './services/notificationReceiver/notificationReceiver.service';
 import { TokenInterceptor } from './interceptors/token.interceptor';
-import { KumulosAuthService } from '../modules/kumulosImplementation/services/kumulosAuth.service';
-import { KumulosDataService } from '../modules/kumulosImplementation/services/kumulosData.service';
+import { AkitaNgDevtools } from '@datorama/akita-ngdevtools';
+import { environment } from '../environments/environment';
+import { AppSettings } from '@ngscaffolding/models';
 
 export function jwtOptionsFactory(appSettings: AppSettingsService) {
   return {
     tokenGetter: () => {
-      return appSettings.authToken;
+      return appSettings.getValue(AppSettings.authToken);
     }
   };
 }
 
 const appInitializerFn = (appConfig: AppSettingsService) => {
   return () => {
-    return appConfig.loadFromJSON();
+    return null; // appConfig.loadFromJSON();
   };
 };
 
@@ -99,7 +99,9 @@ const appInitializerFn = (appConfig: AppSettingsService) => {
           provide: JWT_OPTIONS,
           useFactory: jwtOptionsFactory,
           deps: [AppSettingsService]
-        }})
+        }}),
+
+        environment.production ? [] : AkitaNgDevtools.forRoot()
     ],
     declarations: [
         AppComponent,
@@ -135,8 +137,6 @@ const appInitializerFn = (appConfig: AppSettingsService) => {
         { provide: ErrorHandler, useClass: CoreErrorHandlerService },
         // HTTP Token Interceptor
         { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true},
-        ActionService,
-        AppSettingsService,
         {
           provide: APP_INITIALIZER,
           useFactory: appInitializerFn,
@@ -145,20 +145,7 @@ const appInitializerFn = (appConfig: AppSettingsService) => {
         },
         AuthoriseRoleGuard,
         { provide: UserAuthorisationBase, useClass: UserAuthorisationService},
-        KumulosDataService,
-        DynamicComponentService,
-        BroadcastService,
-        CacheService,
-        LoggingService,
-        NotificationService,
-        NotificationReceiverService,
-        MenuService,
         MessageService,
-        ReferenceValuesService,
-        DataSourceService,
-        RolesService,
-        SpinnerService,
-        UserPreferencesService, VersionsService
         // ngScaffolding
     ],
     bootstrap: [AppComponent]

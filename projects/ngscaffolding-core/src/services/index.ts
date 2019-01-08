@@ -1,6 +1,6 @@
 
 export * from './action/action.service';
-export * from './appSettings/appSettings.service';
+export * from './appSettings';
 export * from './broadcast/broadcast.service';
 export * from './cache/cache.service';
 export * from './coreErrorHandler/coreErrorHandler.service';

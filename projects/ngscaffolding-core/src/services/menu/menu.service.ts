@@ -5,7 +5,7 @@ import { BehaviorSubject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
 import { LoggingService } from '../logging/logging.service';
-import { CoreMenuItem } from '@ngscaffolding/models';
+import { CoreMenuItem, AppSettings } from '@ngscaffolding/models';
 import { AppSettingsService } from '../appSettings/appSettings.service';
 import { UserAuthorisationBase } from '../userAuthorisation/UserAuthorisationBase';
 
@@ -60,7 +60,7 @@ export class MenuService {
   }
 
   public downloadMenuItems() {
-    this.http.get<Array<CoreMenuItem>>(this.appSettings.apiHome + '/api/v1/menuitems').subscribe(menuItems => {
+    this.http.get<Array<CoreMenuItem>>(this.appSettings.getValue(AppSettings.apiHome) + '/api/v1/menuitems').subscribe(menuItems => {
       menuItems.forEach(loopMenuItem => {
         this.addDownloadedMenuItem(this.menuItems, loopMenuItem);
       });

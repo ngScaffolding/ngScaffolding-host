@@ -3,35 +3,46 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { AppSettings, AppSettingsValue } from '@ngscaffolding/models';
 import { LoggingService } from '../logging/logging.service';
 import { HttpClient } from '@angular/common/http';
-import { stringify } from '@angular/compiler/src/util';
+import { AppSettingsStore } from './appSettings.store';
+import { AppSettingsQuery } from './appSettings.query';
 
 
 @Injectable({
   providedIn: 'root',
 })
-export class AppSettingsService extends AppSettings {
+export class AppSettingsService {
   private className = 'AppSettingsService';
 
-  public settingsValues$: Observable<AppSettings>;
-  private settingsSubject = new BehaviorSubject<AppSettings>(null);
+  constructor(private appSettingsStore: AppSettingsStore,
+    private appSettingsQuery: AppSettingsQuery,
+    private logger: LoggingService, private http: HttpClient) {
+      console.log('AppSettingsService Constructor');
 
-  constructor(private logger: LoggingService, private http: HttpClient) {
-    super();
-
-    this.settingsValues$ = this.settingsSubject.asObservable();
   }
 
-  private loadFromServer() {
+  public setValue(name: string, value: any) {
+    this.appSettingsStore.createOrReplace(name, { Id: null, name, value });
+    if (name === AppSettings.apiHome) {
+      this.loadFromServer(value.toString());
+    }
+  }
+
+  public getValue(name: string): any {
+    // if (this.appSettingsQuery.hasEntity(name)) {
+      return this.appSettingsQuery.getEntity(name).value;
+    // } else {
+    // }
+  }
+
+  private loadFromServer(apiHome: string) {
     // Load values from Server
-    this.http.get<Array<AppSettingsValue>>(`${this.apiHome}/api/v1/appSettings`).subscribe(appValues => {
+    this.http.get<Array<AppSettingsValue>>(`${apiHome}/api/v1/appSettings`).subscribe(appValues => {
 
       if (appValues) {
         appValues.forEach(appValue => {
-          this[appValue.name] = appValue.value;
+          this.setValue(appValue.name, appValue.value);
         });
 
-        // Tell the world the values
-        this.settingsSubject.next(this);
       }
     });
   }
@@ -42,13 +53,9 @@ export class AppSettingsService extends AppSettings {
       Object.keys(settings).forEach(key => {
         // Setting Value Here
         this.logger.info(`Setting Value ${key} = ${settings[key]}`, this.className + '.loadSettings');
-        this[key] = settings[key];
+        this.setValue(key, settings[key]);
       });
     }
-    this.settingsSubject.next(this);
-
-    // Load from server last as the values take precedent
-    this.loadFromServer();
   }
 
   public loadFromJSON() {
