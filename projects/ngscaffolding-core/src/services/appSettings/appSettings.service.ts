@@ -1,48 +1,52 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
 import { AppSettings, AppSettingsValue } from '@ngscaffolding/models';
 import { LoggingService } from '../logging/logging.service';
 import { HttpClient } from '@angular/common/http';
 import { AppSettingsStore } from './appSettings.store';
 import { AppSettingsQuery } from './appSettings.query';
 
-
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class AppSettingsService {
   private className = 'AppSettingsService';
 
-  constructor(private appSettingsStore: AppSettingsStore,
+  constructor(
+    private appSettingsStore: AppSettingsStore,
     private appSettingsQuery: AppSettingsQuery,
-    private logger: LoggingService, private http: HttpClient) {
-      console.log('AppSettingsService Constructor');
-
+    private logger: LoggingService,
+    private http: HttpClient
+  ) {
+    console.log('AppSettingsService Constructor');
   }
 
   public setValue(name: string, value: any) {
-    this.appSettingsStore.createOrReplace(name, { Id: null, name, value });
-    if (name === AppSettings.apiHome) {
-      this.loadFromServer(value.toString());
+    if (this.appSettingsQuery.hasEntity(name)) {
+      this.appSettingsStore.update(name, { name: name, value: value });
+    } else {
+      this.appSettingsStore.add({ Id: null, name: name, value: value });
     }
+    // this.appSettingsStore.createOrReplace(name, { Id: null, name, value });
+    // if (name === AppSettings.apiHome) {
+    //   this.loadFromServer(value.toString());
+    // }
   }
 
   public getValue(name: string): any {
-    // if (this.appSettingsQuery.hasEntity(name)) {
+    if (this.appSettingsQuery.hasEntity(name)) {
       return this.appSettingsQuery.getEntity(name).value;
-    // } else {
-    // }
+    } else {
+      return null;
+    }
   }
 
   private loadFromServer(apiHome: string) {
     // Load values from Server
     this.http.get<Array<AppSettingsValue>>(`${apiHome}/api/v1/appSettings`).subscribe(appValues => {
-
       if (appValues) {
         appValues.forEach(appValue => {
           this.setValue(appValue.name, appValue.value);
         });
-
       }
     });
   }
@@ -59,7 +63,8 @@ export class AppSettingsService {
   }
 
   public loadFromJSON() {
-    return this.http.get('/assets/data/appConfig.json')
+    return this.http
+      .get('/assets/data/appConfig.json')
       .toPromise()
       .then(data => {
         this.setValues(data as AppSettings);
