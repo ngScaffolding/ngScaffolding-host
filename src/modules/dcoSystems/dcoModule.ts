@@ -8,6 +8,7 @@ import { AppSettings } from '@ngscaffolding/models';
 
 import {
   AppSettingsService,
+  CoreModule,
   MenuService,
   LoggingService,
   VersionsService, DynamicComponentService, AuthoriseRoleGuard
@@ -45,6 +46,7 @@ const appRoutes: Routes = [
 
 @NgModule({
   imports: [
+    CoreModule,
     CommonModule,
     InputBuilderModule,
     DatagridModule,

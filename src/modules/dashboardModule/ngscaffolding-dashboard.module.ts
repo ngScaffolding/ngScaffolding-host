@@ -6,7 +6,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 
 import { MenuService, LoggingService, VersionsService } from 'ngscaffolding-core';
-import { ButtonColorPipe, AuthoriseRoleGuard } from 'ngscaffolding-core';
+import { CoreModule, AuthoriseRoleGuard } from 'ngscaffolding-core';
 
 import { InputBuilderModule } from 'ngscaffolding-inputbuilder';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
@@ -30,6 +30,7 @@ const appRoutes: Routes = [
 
 @NgModule({
   imports: [
+    CoreModule,
     CommonModule,
     FormsModule,
     InputBuilderModule,

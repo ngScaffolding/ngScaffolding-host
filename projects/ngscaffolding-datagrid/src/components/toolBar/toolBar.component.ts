@@ -50,7 +50,7 @@ export class ToolBarComponent implements OnInit {
 
   public expanded = 'false';
 
-  constructor(public appSettingsService: AppSettingsService, public appSettingsQuery: AppSettingsQuery) {}
+  constructor(public appSettings: AppSettingsService, public appSettingsQuery: AppSettingsQuery) {}
 
   public toggleMenu() {
     this.expanded = this.expanded === 'true' ? 'false' : 'true';

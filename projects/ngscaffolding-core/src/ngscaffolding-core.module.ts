@@ -25,14 +25,6 @@ import { VersionsService } from './services/versions/versions.service';
   ]
 })
 export class CoreModule {
-  static forRoot(): ModuleWithProviders {
-    return {
-      ngModule: CoreModule,
-      providers: [
-        AuthoriseRoleGuard
-      ]
-    };
-  }
   constructor(versions: VersionsService) {
     versions.addVersion('ngscaffolding-core', VERSION.version);
   }

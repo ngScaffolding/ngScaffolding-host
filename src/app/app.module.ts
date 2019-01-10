@@ -32,12 +32,9 @@ import { ConfirmationService } from 'primeng/primeng';
 import { APP_COMPONENTS } from './app.component.list';
 import { MessageService } from 'primeng/components/common/messageservice';
 
-import { AuthoriseRoleGuard, CoreModule, ActionService, AppSettingsService,
-  UserAuthorisationBase, UserAuthorisationService, CacheService,
-  CoreErrorHandlerService,  LoggingService,  MenuService,
-  DataSourceService , ReferenceValuesService, BroadcastService,
-  SpinnerService,  RolesService,  UserPreferencesService,  VersionsService,
-   NotificationService, DynamicComponentService } from 'ngscaffolding-core';
+import {
+  CoreModule, AuthoriseRoleGuard, AppSettingsService, UserAuthorisationBase, UserAuthorisationService,
+  CoreErrorHandlerService, VersionsService, DynamicComponentService } from 'ngscaffolding-core';
 
   // Externalise These Modules
   import { DatagridModule } from 'ngscaffolding-datagrid';
@@ -89,7 +86,7 @@ const appInitializerFn = (appConfig: AppSettingsService) => {
         PRIME_COMPONENTS,
         CUSTOM_IMPORTS,
         // To be External
-        // CoreModule.forRoot(),
+        CoreModule,
         DatagridModule,
         InputBuilderModule,
         DashboardModule,
@@ -101,7 +98,7 @@ const appInitializerFn = (appConfig: AppSettingsService) => {
           deps: [AppSettingsService]
         }}),
 
-        environment.production ? [] : AkitaNgDevtools.forRoot({ logTrace: true })
+        environment.production ? [] : AkitaNgDevtools.forRoot({ logTrace: false })
     ],
     declarations: [
         AppComponent,
