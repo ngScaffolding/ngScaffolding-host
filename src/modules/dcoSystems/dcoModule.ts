@@ -46,7 +46,7 @@ const appRoutes: Routes = [
 
 @NgModule({
   imports: [
-    CoreModule,
+    CoreModule.forRoot(),
     CommonModule,
     InputBuilderModule,
     DatagridModule,

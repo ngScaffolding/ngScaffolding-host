@@ -12,6 +12,8 @@ import { Observable } from 'rxjs/internal/Observable';
 export class AppSettingsService {
   private className = 'AppSettingsService';
 
+  public loading$: Observable<boolean>;
+
   constructor(
     private appSettingsStore: AppSettingsStore,
     private appSettingsQuery: AppSettingsQuery,
@@ -29,7 +31,9 @@ export class AppSettingsService {
     }
     this.appSettingsStore.createOrReplace(name, { Id: null, name, value });
     if (name === AppSettings.apiHome) {
-      setTimeout(() => { this.loadFromServer(value.toString()); }, 200);
+      setTimeout(() => {
+        this.loadFromServer(value.toString());
+      }, 200);
     }
   }
 
@@ -42,17 +46,31 @@ export class AppSettingsService {
   }
 
   private loadFromServer(apiHome: string) {
+    // Mark store as loading
+    this.appSettingsStore.setLoading(true);
+
     // Load values from Server
-    this.http.get<Array<AppSettingsValue>>(`${apiHome}/api/v1/appSettings`).subscribe(appValues => {
-      if (appValues) {
-        appValues.forEach(appValue => {
-          this.setValue(appValue.name, appValue.value);
-        });
+    this.http.get<Array<AppSettingsValue>>(`${apiHome}/api/v1/appSettings`).subscribe(
+      appValues => {
+        if (appValues) {
+          appValues.forEach(appValue => {
+            this.setValue(appValue.name, appValue.value);
+          });
+        }
+        this.appSettingsStore.setLoading(false);
+        this.appSettingsStore.updateRoot({ isInitialised: true });
+      },
+      err => {
+        this.appSettingsStore.setLoading(false);
       }
-    });
+    );
   }
 
-  public setValues(settings: AppSettings) {
+  private setValues(settings: AppSettings) {
+    // Mark store as loading
+    this.appSettingsStore.setLoading(true);
+    this.appSettingsStore.updateRoot({ isInitialised: false });
+
     // Load values
     if (settings) {
       Object.keys(settings).forEach(key => {
@@ -61,6 +79,9 @@ export class AppSettingsService {
         this.setValue(key, settings[key]);
       });
     }
+
+    this.appSettingsStore.setLoading(false);
+    this.appSettingsStore.updateRoot({ isInitialised: true });
   }
 
   public loadFromJSON() {

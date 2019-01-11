@@ -9,6 +9,8 @@ import { Observable } from 'rxjs/internal/Observable';
 })
 export class AppSettingsQuery extends QueryEntity<AppSettingsState, AppSettingsValue> {
 
+  isInitialised$ = this.select(state => state.isInitialised);
+
   constructor(protected store: AppSettingsStore) {
     super(store);
   }

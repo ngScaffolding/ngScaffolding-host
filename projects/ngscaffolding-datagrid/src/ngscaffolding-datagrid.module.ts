@@ -56,9 +56,10 @@ const appRoutes: Routes = [
     ActionsPipe
   ],
   exports: [
+    ButtonCellComponent,
     DataGridComponent,
     DataGridHolderComponent,
-    RouterModule,ButtonCellComponent
+    RouterModule,
   ]
 })
 export class DatagridModule {

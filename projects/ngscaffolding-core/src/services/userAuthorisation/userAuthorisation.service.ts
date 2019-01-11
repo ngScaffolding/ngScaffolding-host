@@ -1,11 +1,11 @@
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, combineLatest } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 
 import { AppSettingsService } from '../appSettings/appSettings.service';
 import { LoggingService } from '../logging/logging.service';
 
-import { AuthUser, AuthUserResponse, AppSettings } from '@ngscaffolding/models';
+import { AuthUser, AuthUserResponse, AppSettings, AppSettingsValue } from '@ngscaffolding/models';
 
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { UserAuthorisationBase } from './UserAuthorisationBase';
@@ -34,6 +34,16 @@ export class UserAuthorisationService implements UserAuthorisationBase {
 
     this.jwtHelper = new JwtHelperService({});
 
+    // combineLatest(
+    //   appSettingsQuery.isInitialised$,
+    //   appSettingsQuery.selectEntity(AppSettings.authSaveinLocalStorage),
+    //   appSettingsQuery.selectEntity(AppSettings.apiAuth)).subscribe(
+    //   ([intialised, localStorage, apiAuth]) => {
+    //     if (intialised) {
+    //       let x = 0;
+    //     }
+    //   }
+    // );
     this.loadUserTokenFromStorage();
   }
 
@@ -45,7 +55,7 @@ export class UserAuthorisationService implements UserAuthorisationBase {
         this.logger.info('Token Loaded and not Expired');
         // If all Good
         this.setToken(savedToken);
-        this.getUserDetails();
+        // this.getUserDetails();
       } else {
         this.logger.info('Token Expired - Logging Off');
         this.logoff();
@@ -61,14 +71,14 @@ export class UserAuthorisationService implements UserAuthorisationBase {
     return !this.jwtHelper.isTokenExpired(token);
   }
 
-  public setToken(token: any) {
+  private setToken(token: any) {
     // New AuthUser Based on Token
     const tokenDetails = this.jwtHelper.decodeToken(token);
 
     this.currentUser = new AuthUser();
     this.currentUser.tokenExpires = this.jwtHelper.getTokenExpirationDate(token);
     if (this.jwtHelper.isTokenExpired(token)) {
-      this.tokenExpired();
+      this.logoff();
     }
 
     if (this.appSettingsService.getValue(AppSettings.authSaveinLocalStorage)) {
@@ -86,8 +96,6 @@ export class UserAuthorisationService implements UserAuthorisationBase {
 
     this.appSettingsService.setValue(AppSettings.authToken, token);
     this.authenticatedSubject.next(this.isAuthenticated());
-
-    // this.spinnerService.hideSpinner();
   }
 
   public getToken(): string {
@@ -158,6 +166,4 @@ export class UserAuthorisationService implements UserAuthorisationBase {
     // Tell the world
     this.authenticatedSubject.next(false);
   }
-
-  private tokenExpired() {}
 }

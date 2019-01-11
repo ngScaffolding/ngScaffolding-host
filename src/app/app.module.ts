@@ -86,7 +86,7 @@ const appInitializerFn = (appConfig: AppSettingsService) => {
         PRIME_COMPONENTS,
         CUSTOM_IMPORTS,
         // To be External
-        CoreModule,
+        CoreModule.forRoot(),
         DatagridModule,
         InputBuilderModule,
         DashboardModule,

@@ -7,7 +7,7 @@ export * from './coreErrorHandler/coreErrorHandler.service';
 export * from './dataSource/dataSource.service';
 export * from './dynamicComponent/dynamicComponent.service';
 export * from './logging/logging.service';
-export * from './menu/menu.service';
+export * from './menu';
 export * from './notification/notification.service';
 export * from './referenceValues/refrenceValues.service';
 export * from './rolesService/roles.service';
