@@ -125,8 +125,8 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
       outerMarginBottom: null,
       outerMarginLeft: null,
       mobileBreakpoint: 640,
-      minCols: 1,
-      maxCols: 100,
+      minCols: 12,
+      maxCols: 12,
       minRows: 1,
       maxRows: 100,
       maxItemCols: 100,
@@ -137,8 +137,6 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
       minItemArea: 1,
       defaultItemCols: 1,
       defaultItemRows: 1,
-      fixedColWidth: 105,
-      fixedRowHeight: 105,
       keepFixedHeightInMobile: false,
       keepFixedWidthInMobile: false,
       scrollSensitivity: 10,
@@ -156,15 +154,8 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
       resizable: {
         enabled: true
       },
-      swap: false,
-      pushItems: false,
-      disablePushOnDrag: false,
-      disablePushOnResize: false,
-      pushDirections: { north: true, east: true, south: true, west: true },
-      pushResizeItems: false,
+      pushItems: true,
       displayGrid: DisplayGrid.OnDragAndResize,
-      disableWindowResize: false,
-      disableWarnings: false,
       scrollToNewItems: true
     };
   }

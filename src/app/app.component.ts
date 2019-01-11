@@ -304,6 +304,9 @@ export class AppComponent extends NgScaffoldingComponent
     }
 
     event.preventDefault();
+
+    // Allow components to redraw
+    window.dispatchEvent(new Event('resize'));
   }
 
   onMenuClick($event) {

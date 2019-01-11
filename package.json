@@ -32,7 +32,7 @@
     "@angular/router": "6.1.1",
     "@auth0/angular-jwt": "^2.0.0",
     "@datorama/akita": "^1.15.0",
-    "@ngscaffolding/models": "^1.0.70",
+    "@ngscaffolding/models": "^1.0.71",
     "ag-grid": "15.0.0",
     "ag-grid-angular": "15.0.0",
     "ag-grid-enterprise": "15.0.0",
