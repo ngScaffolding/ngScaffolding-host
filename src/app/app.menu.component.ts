@@ -15,7 +15,7 @@ import { CoreMenuItem } from '@ngscaffolding/models';
     template: `
         <ul app-submenu [item]="menuItems" root="true" class="ultima-menu ultima-main-menu clearfix" [reset]="reset" visible="true"></ul>
 
-        <div class="menu-spinner-continer" *ngIf="isLoading" >
+        <div class="menu-spinner-continer" *ngIf="menuQuery.selectLoading() | async" >
           <p-progressSpinner class="spinner-spinner"></p-progressSpinner>
           <br/>
           <p class="spinner-message">Menu Loading...</p>
@@ -30,10 +30,9 @@ export class AppMenuComponent implements OnInit {
 
 // ngScaffolding
     menuItems: Array<CoreMenuItem>;
-    public isLoading = true;
 
     constructor( @Inject(forwardRef(() => AppComponent)) public app: AppComponent,
-        private menuService: MenuService, private menuQuery: MenuQuery) { }
+        private menuService: MenuService, public menuQuery: MenuQuery) { }
 // ngScaffolding
 
 
@@ -42,9 +41,7 @@ export class AppMenuComponent implements OnInit {
     ngOnInit() {
 // ngScaffolding
       this.menuQuery.selectAll().subscribe(items => {
-          this.menuItems = items;
-          console.log('Menu Loaded');
-          this.isLoading = false;
+        this.menuItems = items;
         });
 
       // this.menuService.menuSubject.subscribe(items => {
