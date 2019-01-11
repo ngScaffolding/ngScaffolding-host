@@ -134,6 +134,6 @@ export class FieldForceAppModule {
 
     dynamicComponentService.registerComponent(machineDetailsRoute);
 
-    menuService.addMenuItems([]);
+    menuService.addMenuItemsFromCode([]);
   }
 }

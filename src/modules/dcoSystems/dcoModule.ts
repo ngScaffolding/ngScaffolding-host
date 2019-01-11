@@ -131,7 +131,7 @@ export class DCOAppModule {
     // Register dynamic components here
     // dynamicComponentService.registerComponent(machineDetailsRoute);
 
-    // menuService.addMenuItems([
+    // menuService.addMenuItemsFromCode([
     //   {
     //     label: 'Maramba Site',
     //     items: [

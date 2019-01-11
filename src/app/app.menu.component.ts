@@ -5,7 +5,8 @@ import {AppComponent} from './app.component';
 
 // ngScaffolding
 import { Inject, forwardRef } from '@angular/core';
-import { MenuService } from 'ngscaffolding-core';
+import { MenuService, MenuQuery } from 'ngscaffolding-core';
+import { CoreMenuItem } from '@ngscaffolding/models';
 // ngScaffolding
 
 @Component({
@@ -28,11 +29,11 @@ export class AppMenuComponent implements OnInit {
     model: any[];
 
 // ngScaffolding
-    menuItems: Array<MenuItem>;
+    menuItems: Array<CoreMenuItem>;
     public isLoading = true;
 
     constructor( @Inject(forwardRef(() => AppComponent)) public app: AppComponent,
-        private menuService: MenuService) { }
+        private menuService: MenuService, private menuQuery: MenuQuery) { }
 // ngScaffolding
 
 
@@ -40,11 +41,17 @@ export class AppMenuComponent implements OnInit {
 
     ngOnInit() {
 // ngScaffolding
-      this.menuService.menuSubject.subscribe(items => {
-        this.menuItems = items;
-        console.log('Menu Loaded');
-        this.isLoading = false;
-      });
+      this.menuQuery.selectAll().subscribe(items => {
+          this.menuItems = items;
+          console.log('Menu Loaded');
+          this.isLoading = false;
+        });
+
+      // this.menuService.menuSubject.subscribe(items => {
+      //   this.menuItems = items;
+      //   console.log('Menu Loaded');
+      //   this.isLoading = false;
+      // });
 // ngScaffolding
 
         this.model = [

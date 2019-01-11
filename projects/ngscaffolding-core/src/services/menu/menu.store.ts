@@ -3,7 +3,7 @@ import { EntityState, EntityStore, StoreConfig } from '@datorama/akita';
 import { CoreMenuItem } from '@ngscaffolding/models';
 
 export interface MenuState extends EntityState<CoreMenuItem> {
-  isInitialised: boolean;
+  menuItems: CoreMenuItem[];
 }
 
 @Injectable({ providedIn: 'root' })

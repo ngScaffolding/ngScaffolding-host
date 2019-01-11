@@ -85,7 +85,7 @@ export class DemoAppModule {
     appSettingsService.setValue(AppSettings.authTermsAndConditions ,
       'Demo Application Your Terms and Conditions Here. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Odio pellentesque diam volutpat commodo sed egestas.');
 
-    menuService.addMenuItems([
+    menuService.addMenuItemsFromCode([
       {
         label: 'Chart Sample',
         icon: 'grid',
