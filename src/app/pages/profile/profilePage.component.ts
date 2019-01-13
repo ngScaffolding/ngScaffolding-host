@@ -8,7 +8,8 @@ import {
 import { Subscription } from 'rxjs';
 import {
   InputBuilderDefinition,
-  OrientationValues
+  OrientationValues,
+  PreferenceTypes
 } from '@ngscaffolding/models';
 
 @Component({
@@ -30,10 +31,10 @@ export class ProfilePageComponent implements OnInit, OnDestroy {
     this.prefDetailsSub = this.userPrefs.preferenceDefinitionsSubject.subscribe(
       defs => {
         if (defs) {
-          const profile = defs.find(def => def.name === 'UserPrefs_Profile');
+          const profile = defs.find(def => def.name === PreferenceTypes.UserPrefs_Profile);
 
           if (profile) {
-            // this.inputBuilderDefinition = profile.inputDetails;
+             this.inputBuilderDefinition = profile.inputDetails as InputBuilderDefinition;
           }
         }
       }
@@ -44,7 +45,7 @@ export class ProfilePageComponent implements OnInit, OnDestroy {
       values => {
         if (values) {
           const userValue = values.find(
-            value => value.name === 'UserPrefs_Profile'
+            value => value.name === PreferenceTypes.UserPrefs_Profile
           );
           if (userValue) {
             this.userPrefsModel = JSON.parse(userValue.value);
@@ -61,12 +62,11 @@ export class ProfilePageComponent implements OnInit, OnDestroy {
   }
 
   okClicked(changedModel: any){
-    this.userPrefs.setValue('UserPrefs_Profile', JSON.stringify(changedModel)).subscribe(
+    this.userPrefs.setValue(PreferenceTypes.UserPrefs_Profile, JSON.stringify(changedModel)).subscribe(
       () => {
         this.notification.showMessage({detail: 'Profile Saved'});
       }
     );
-
   }
 
   ngOnDestroy() {
