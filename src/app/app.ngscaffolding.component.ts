@@ -71,7 +71,7 @@ export class NgScaffoldingComponent implements AfterViewInit {
           if (prefValues) {
 
             if (prefValues.find(p => p.name === 'MenuOrientation')) {
-              this.layoutMode = Number(prefValues.find(p => p.name === 'MenuOrientation').value);
+              this.layoutMode = Number(prefValues.find(p => p.name === ' ').value);
             }
 
             if (prefValues.find(p => p.name === 'CompactMode')) {

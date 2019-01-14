@@ -76,7 +76,7 @@ export class UserPreferencesService {
 
   public getValues() {
     // Load values from Server
-    this.http.get<Array<UserPreferenceValue>>(`${this.appSettings.getValue(AppSettings.apiHome)}`).subscribe(prefValues => {
+    this.http.get<Array<UserPreferenceValue>>(`${this.appSettings.getValue(AppSettings.apiHome)}/api/v1/userpreferencevalue`).subscribe(prefValues => {
       if (prefValues) {
         prefValues.forEach(prefValue => {
           this.newValue(prefValue.name, prefValue.value);
@@ -90,7 +90,7 @@ export class UserPreferencesService {
 
   public setValue(key: string, value: any): Observable<any> {
     return new Observable<any>(observer => {
-      this.http.post(`${this.appSettings.getValue(AppSettings.apiHome)}`, { name: key, value: value }).subscribe(
+      this.http.post(`${this.appSettings.getValue(AppSettings.apiHome)}/api/v1/userpreferencevalue`, { name: key, value: value }).subscribe(
         () => {
           // Save and tell the world
           this.newValue(key, value);
