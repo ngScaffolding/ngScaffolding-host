@@ -131,28 +131,30 @@ export class DCOAppModule {
     // Register dynamic components here
     // dynamicComponentService.registerComponent(machineDetailsRoute);
 
-    // menuService.addMenuItemsFromCode([
-    //   {
-    //     label: 'Maramba Site',
-    //     items: [
-    //       {
-    //         label: 'Maraba Dashboard',
-    //         icon: 'brush',
-    //         routerLink: 'dcodashboard'
-    //       }
-    //     ]
-    //   },
-    //   {
-    //     label: 'System Admin',
-    //     items: [
-    //       {
-    //         label: 'Input Builder (Works)',
-    //         icon: 'brush',
-    //         routerLink: 'fieldforcemachinedetails'
-    //       }
-    //     ]
-    //   },
+    menuService.addMenuItemsFromCode([
+      {
+        name: 'Maramba Site 2',
+        label: 'Maramba Site 2',
+        items: [
+          {
+            label: 'Maraba Dashboard',
+            icon: 'brush',
+            routerLink: 'dcodashboard'
+          }
+        ]
+      },
+      {
+        name: 'System Admin2',
+        label: 'System Admin',
+        items: [
+          {
+            label: 'Input Builder (Works)',
+            icon: 'brush',
+            routerLink: 'fieldforcemachinedetails'
+          }
+        ]
+      },
 
-    // ]);
+    ]);
   }
 }
