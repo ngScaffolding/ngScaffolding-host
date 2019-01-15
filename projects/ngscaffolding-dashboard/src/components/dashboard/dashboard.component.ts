@@ -64,23 +64,25 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
   loadDashboard() {
     this.loadingData = true;
 
-     this.menuQuery.selectEntity(this.menuName).subscribe(menuItem => {
-      this.menuItem = menuItem;
+    this.menuQuery.selectEntity(this.menuName).subscribe(menuItem => {
+      if (menuItem) {
+        this.menuItem = menuItem;
 
-      if (this.menuItem && this.menuItem.menuDetails) {
-        this.dashboard = this.menuItem.menuDetails as DashboardModel;
+        if (this.menuItem && this.menuItem.menuDetails) {
+          this.dashboard = this.menuItem.menuDetails as DashboardModel;
+        }
+
+        // Set unitheight for later resize
+        // this.dashboard.widgets.forEach(widgetDetail => {
+        //   widgetDetail['unitHeight'] = 0;
+        //   widgetDetail['unitWidth'] = 0;
+        //   widgetDetail['unitUpdate'] = 0;
+
+        //   widgetDetail['isWidget'] = true;
+        // });
+        this.loadingData = false;
       }
-
-      // Set unitheight for later resize
-      this.dashboard.widgets.forEach(widgetDetail => {
-        widgetDetail['unitHeight'] = 0;
-        widgetDetail['unitWidth'] = 0;
-        widgetDetail['unitUpdate'] = 0;
-
-        widgetDetail['isWidget'] = true;
-      });
-      this.loadingData = false;
-     });
+    });
   }
 
   private itemChange(item, itemComponent) {

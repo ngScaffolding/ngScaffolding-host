@@ -66,9 +66,9 @@ export class MenuService {
   }
 
   private addMenuItems(menuItems: CoreMenuItem[]) {
-    menuItems.forEach(menuItem => {
-      this.menuItems.push(menuItem);
-    });
+    // menuItems.forEach(menuItem => {
+    //   this.menuItems.push(menuItem);
+    // });
 
     // Add to flat reference List
     this.addMenuItemsToReferenceList(menuItems);
@@ -82,9 +82,8 @@ export class MenuService {
     menuItems.forEach(menuItem => {
       // Add to Entity Store
       this.menuStore.createOrReplace(menuItem.name, menuItem);
-      if (this.menuItem.items && isArray(this.menuItem.items)) {
-        const arrMenu = this.menuItem.items as Array<CoreMenuItem>;
-        arrMenu.forEach(menuLoop => this.addMenuItemsToReferenceList(menuLoop.items as CoreMenuItem[]));
+      if (menuItem.items && isArray(menuItem.items)) {
+        this.addMenuItemsToReferenceList(menuItem.items as Array<CoreMenuItem>);
       }
     });
   }
@@ -107,6 +106,7 @@ export class MenuService {
       .pipe(
         finalize(() => {
           this.menuStore.setLoading(false);
+          this.addMenuItems(this.menuItems);
         })
       )
       .subscribe(menuItems => {
