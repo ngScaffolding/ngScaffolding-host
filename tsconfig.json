@@ -33,17 +33,20 @@
         "dist/ngscaffolding-inputbuilder/*"
       ],
       "ngscaffolding-chart": [
-        "dist/ngscaffolding-chart"
+        "projects/ngscaffolding-chart/src/public_api"
+        // "dist/ngscaffolding-chart"
       ],
       "ngscaffolding-chart/*": [
-        "dist/ngscaffolding-chart/*"
+        "projects/ngscaffolding-core/src/*"
+        // "dist/ngscaffolding-chart/*"
       ],
       "ngscaffolding-dashboard": [
-        "dist/ngscaffolding-dashboard"
+        "projects/ngscaffolding-dashboard/src/public_api"
+        // "dist/ngscaffolding-dashboard"
       ],
-      "ngscaffolding-dashboard/*": [
-        "dist/ngscaffolding-dashboard/*"
-      ],
+      // "ngscaffolding-dashboard/*": [
+      //   // "dist/ngscaffolding-dashboard/*"
+      // ],
       "ngscaffolding-datagrid": [
         "dist/ngscaffolding-datagrid"
       ],

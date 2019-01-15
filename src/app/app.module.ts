@@ -39,7 +39,7 @@ import {
   // Externalise These Modules
   import { DatagridModule } from 'ngscaffolding-datagrid';
   import { InputBuilderModule } from 'ngscaffolding-inputbuilder';
-  import { DashboardModule } from '../modules/dashboardModule/ngscaffolding-dashboard.module';
+  import { DashboardModule } from 'ngscaffolding-dashboard';
   import { CUSTOM_IMPORTS } from '../../custom/custom.app';
 
 // Pages

@@ -9,7 +9,7 @@ import {
   InputDetailTextBox,
   ChartDetailModel
 } from '@ngscaffolding/models';
-import { ChartComponent } from 'src/modules/chartModule/chartModule.module';
+import { ChartComponent } from 'ngscaffolding-chart';
 
 @Component({
   templateUrl: 'chartSample.component.html',
