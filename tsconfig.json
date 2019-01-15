@@ -22,36 +22,22 @@
         // "dist/ngscaffolding-core"
         "projects/ngscaffolding-core/src/public_api"
       ],
-      "ngscaffolding-core/*": [
-        "projects/ngscaffolding-core/src/*"
-        // "dist/ngscaffolding-core/*"
-      ],
       "ngscaffolding-inputbuilder": [
-        "dist/ngscaffolding-inputbuilder"
-      ],
-      "ngscaffolding-inputbuilder/*": [
-        "dist/ngscaffolding-inputbuilder/*"
+        // "dist/ngscaffolding-inputbuilder"
+        "projects/ngscaffolding-inputbuilder/src/public_api"
+
       ],
       "ngscaffolding-chart": [
         "projects/ngscaffolding-chart/src/public_api"
         // "dist/ngscaffolding-chart"
       ],
-      "ngscaffolding-chart/*": [
-        "projects/ngscaffolding-core/src/*"
-        // "dist/ngscaffolding-chart/*"
-      ],
       "ngscaffolding-dashboard": [
         "projects/ngscaffolding-dashboard/src/public_api"
         // "dist/ngscaffolding-dashboard"
       ],
-      // "ngscaffolding-dashboard/*": [
-      //   // "dist/ngscaffolding-dashboard/*"
-      // ],
       "ngscaffolding-datagrid": [
-        "dist/ngscaffolding-datagrid"
-      ],
-      "ngscaffolding-datagrid/*": [
-        "dist/ngscaffolding-datagrid/*"
+        // "dist/ngscaffolding-datagrid"
+        "projects/ngscaffolding-datagrid/src/public_api"
       ]
     }
   },
