@@ -330,5 +330,8 @@
     "@schematics/angular:directive": {
       "prefix": "app"
     }
+  },
+  "cli": {
+    "defaultCollection": "akita-schematics"
   }
 }

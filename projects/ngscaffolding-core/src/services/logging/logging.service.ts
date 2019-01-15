@@ -22,10 +22,12 @@ export class LoggingService {
     }
   }
   public info(message: string, methodName = ''): void {
-    if (!methodName) {
-      console.info(`Method ${methodName}: Info ${message}`);
+    if (methodName) {
+      // tslint:disable-next-line:no-console
+      console.info(`Info : [Method ${methodName}]  ${message}`);
     } else {
-      console.info(`Info ${message}`);
+      // tslint:disable-next-line:no-console
+      console.info(`Info : ${message}`);
     }
   }
 }

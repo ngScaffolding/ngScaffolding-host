@@ -13,11 +13,12 @@ import { Router, NavigationEnd, NavigationError, NavigationStart } from '@angula
 import { Title } from '@angular/platform-browser';
 import { map, filter, scan } from 'rxjs/operators';
 
-import { UserPreferenceValue } from '@ngscaffolding/models';
+import { UserPreferenceValue, AppSettings } from '@ngscaffolding/models';
 import { LoggingService, AppSettingsService, SpinnerService } from 'ngscaffolding-core';
 import { UserAuthorisationBase, UserPreferencesService } from 'ngscaffolding-core';
 import { BroadcastService, BroadcastTypes, MenuService } from 'ngscaffolding-core';
 import { NotificationReceiverService } from './services/notificationReceiver/notificationReceiver.service';
+import { AppSettingsQuery } from 'ngscaffolding-core';
 
 enum MenuOrientation {
   STATIC,
@@ -42,7 +43,7 @@ export class NgScaffoldingComponent implements AfterViewInit {
     public logger: LoggingService,
     public userAuthService: UserAuthorisationBase,
     public titleService: Title,
-    public appSettingsService: AppSettingsService,
+    public appSettingsQuery: AppSettingsQuery,
     public notificationReceiverService: NotificationReceiverService,
     public spinnerService: SpinnerService,
     public menuService: MenuService,
@@ -54,18 +55,9 @@ export class NgScaffoldingComponent implements AfterViewInit {
 
     this.logger.info('Loaded Main View');
     // Set the window title
-    this.titleService.setTitle(this.appSettingsService.title);
-
-    // Check for logoff
-    this.userAuthService.authenticatedSubject.subscribe(authenticated => {
-      if (!authenticated) {
-        this.logger.info('Logged off Redirecting to Logon');
-        this.router.navigate(['/login']);
-      } else {
-        this.logger.info('Logged on Redirecting to Home Page');
-        this.router.navigate(['/']);
-      }
-    });
+    this.appSettingsQuery.selectEntity(AppSettings.title, setting => setting.value).subscribe(value => {
+      this.titleService.setTitle(value);
+     });
 
     // Router Events capture here
     this.router.events.pipe(
@@ -79,7 +71,7 @@ export class NgScaffoldingComponent implements AfterViewInit {
           if (prefValues) {
 
             if (prefValues.find(p => p.name === 'MenuOrientation')) {
-              this.layoutMode = Number(prefValues.find(p => p.name === 'MenuOrientation').value);
+              this.layoutMode = Number(prefValues.find(p => p.name === ' ').value);
             }
 
             if (prefValues.find(p => p.name === 'CompactMode')) {

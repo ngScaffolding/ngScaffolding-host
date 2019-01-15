@@ -6,18 +6,20 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 
 import { MenuService, LoggingService, VersionsService } from 'ngscaffolding-core';
-import { CoreModule, ButtonColorPipe, AuthoriseRoleGuard } from 'ngscaffolding-core';
+import { CoreModule, AuthoriseRoleGuard } from 'ngscaffolding-core';
 
 import { InputBuilderModule } from 'ngscaffolding-inputbuilder';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 import { DataGridComponent } from 'ngscaffolding-datagrid';
-import { ChartComponent, } from 'ngscaffolding-chart';
+import { ChartComponent } from 'ngscaffolding-chart';
 
 import { DynamicModule } from 'ng-dynamic-component';
 
 import { GridsterModule } from 'angular-gridster2';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { CardModule } from 'primeng/card';
+import { DataGridModule } from 'primeng/primeng';
 
 // Services
 
@@ -28,12 +30,14 @@ const appRoutes: Routes = [
 
 @NgModule({
   imports: [
+    CoreModule.forRoot(),
     CommonModule,
     FormsModule,
     InputBuilderModule,
-    CoreModule,
     GridsterModule,
     CardModule,
+    ProgressSpinnerModule,
+    //DynamicModule.withComponents([DataGridComponent]),
     DynamicModule.withComponents([DataGridComponent, ChartComponent]),
     RouterModule.forChild(appRoutes)
   ],

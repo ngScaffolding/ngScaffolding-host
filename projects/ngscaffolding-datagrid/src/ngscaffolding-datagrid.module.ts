@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 
 import { RouterModule, Routes } from '@angular/router';
 
-import { MenuService, LoggingService, VersionsService, CoreModule, AuthoriseRoleGuard } from 'ngscaffolding-core';
+import { MenuService, LoggingService, VersionsService, AuthoriseRoleGuard } from 'ngscaffolding-core';
 
 import { InputBuilderModule } from 'ngscaffolding-inputbuilder';
 
@@ -38,7 +38,6 @@ const appRoutes: Routes = [
     ProgressSpinnerModule,
     SplitButtonModule,
     SidebarModule,
-    CoreModule,
     CardModule,
     AgGridModule.withComponents(
       [
@@ -57,9 +56,10 @@ const appRoutes: Routes = [
     ActionsPipe
   ],
   exports: [
+    ButtonCellComponent,
     DataGridComponent,
     DataGridHolderComponent,
-    RouterModule,ButtonCellComponent
+    RouterModule,
   ]
 })
 export class DatagridModule {

@@ -5,7 +5,7 @@ import {
   UserPreferencesService
 } from 'ngscaffolding-core';
 import { Subscription } from 'rxjs';
-import { InputBuilderDefinition, OrientationValues } from '@ngscaffolding/models';
+import { InputBuilderDefinition, OrientationValues, InputDetail } from '@ngscaffolding/models';
 
 @Component({
   templateUrl: './userSettings.component.html',
@@ -38,9 +38,9 @@ export class UserSettingsComponent implements OnInit, OnDestroy {
           const newInputDefinition = Object.assign({}, this.baseInputDefinition);
 
           defs.forEach((value, key) => {
-            const inputDef = JSON.parse(value.inputDetails);
+            const inputDef = value.inputDetails;
             if (inputDef) {
-              newInputDefinition.inputDetails.push(inputDef);
+              newInputDefinition.inputDetails.push(inputDef as InputDetail);
             }
           });
 

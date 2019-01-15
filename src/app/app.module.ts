@@ -32,17 +32,13 @@ import { ConfirmationService } from 'primeng/primeng';
 import { APP_COMPONENTS } from './app.component.list';
 import { MessageService } from 'primeng/components/common/messageservice';
 
-import { AuthoriseRoleGuard, CoreModule, ActionService, AppSettingsService,
-  UserAuthorisationBase, UserAuthorisationService, CacheService,
-  CoreErrorHandlerService,  LoggingService,  MenuService,
-  DataSourceService , ReferenceValuesService, BroadcastService,
-  SpinnerService,  RolesService,  UserPreferencesService,  VersionsService,
-   NotificationService, DynamicComponentService } from 'ngscaffolding-core';
+import {
+  CoreModule, AuthoriseRoleGuard, AppSettingsService, UserAuthorisationBase, UserAuthorisationService,
+  CoreErrorHandlerService, VersionsService, DynamicComponentService } from 'ngscaffolding-core';
 
   // Externalise These Modules
   import { DatagridModule } from 'ngscaffolding-datagrid';
   import { InputBuilderModule } from 'ngscaffolding-inputbuilder';
-  import { ChartingModule } from 'ngscaffolding-chart';
   import { DashboardModule } from 'ngscaffolding-dashboard';
   import { CUSTOM_IMPORTS } from '../../custom/custom.app';
 
@@ -59,22 +55,22 @@ import { UserSettingsComponent } from './pages/userSettings/userSettings.compone
 import { ProfilePageComponent } from './pages/profile/profilePage.component';
 
 // Services
-import { NotificationReceiverService } from './services/notificationReceiver/notificationReceiver.service';
 import { TokenInterceptor } from './interceptors/token.interceptor';
-import { KumulosAuthService } from '../modules/kumulosImplementation/services/kumulosAuth.service';
-import { KumulosDataService } from '../modules/kumulosImplementation/services/kumulosData.service';
+import { AkitaNgDevtools } from '@datorama/akita-ngdevtools';
+import { environment } from '../environments/environment';
+import { AppSettings } from '@ngscaffolding/models';
 
 export function jwtOptionsFactory(appSettings: AppSettingsService) {
   return {
     tokenGetter: () => {
-      return appSettings.authToken;
+      return appSettings.getValue(AppSettings.authToken);
     }
   };
 }
 
 const appInitializerFn = (appConfig: AppSettingsService) => {
   return () => {
-    return appConfig.loadFromJSON();
+    return null; // appConfig.loadFromJSON();
   };
 };
 
@@ -90,10 +86,9 @@ const appInitializerFn = (appConfig: AppSettingsService) => {
         PRIME_COMPONENTS,
         CUSTOM_IMPORTS,
         // To be External
-        CoreModule,
+        CoreModule.forRoot(),
         DatagridModule,
         InputBuilderModule,
-        ChartingModule,
         DashboardModule,
 
         JwtModule.forRoot({
@@ -101,7 +96,9 @@ const appInitializerFn = (appConfig: AppSettingsService) => {
           provide: JWT_OPTIONS,
           useFactory: jwtOptionsFactory,
           deps: [AppSettingsService]
-        }})
+        }}),
+
+        environment.production ? [] : AkitaNgDevtools.forRoot({ logTrace: false })
     ],
     declarations: [
         AppComponent,
@@ -137,8 +134,6 @@ const appInitializerFn = (appConfig: AppSettingsService) => {
         { provide: ErrorHandler, useClass: CoreErrorHandlerService },
         // HTTP Token Interceptor
         { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true},
-        ActionService,
-        AppSettingsService,
         {
           provide: APP_INITIALIZER,
           useFactory: appInitializerFn,
@@ -147,20 +142,7 @@ const appInitializerFn = (appConfig: AppSettingsService) => {
         },
         AuthoriseRoleGuard,
         { provide: UserAuthorisationBase, useClass: UserAuthorisationService},
-        KumulosDataService,
-        DynamicComponentService,
-        BroadcastService,
-        CacheService,
-        LoggingService,
-        NotificationService,
-        NotificationReceiverService,
-        MenuService,
         MessageService,
-        ReferenceValuesService,
-        DataSourceService,
-        RolesService,
-        SpinnerService,
-        UserPreferencesService, VersionsService
         // ngScaffolding
     ],
     bootstrap: [AppComponent]

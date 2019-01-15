@@ -4,3 +4,5 @@
 
 
 export * from './ngscaffolding-dashboard.module';
+
+export * from './components';

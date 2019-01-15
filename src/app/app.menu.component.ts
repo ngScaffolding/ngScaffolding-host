@@ -5,7 +5,8 @@ import {AppComponent} from './app.component';
 
 // ngScaffolding
 import { Inject, forwardRef } from '@angular/core';
-import { MenuService } from 'ngscaffolding-core';
+import { MenuService, MenuQuery } from 'ngscaffolding-core';
+import { CoreMenuItem } from '@ngscaffolding/models';
 // ngScaffolding
 
 @Component({
@@ -14,7 +15,7 @@ import { MenuService } from 'ngscaffolding-core';
     template: `
         <ul app-submenu [item]="menuItems" root="true" class="ultima-menu ultima-main-menu clearfix" [reset]="reset" visible="true"></ul>
 
-        <div class="menu-spinner-continer" *ngIf="isLoading" >
+        <div class="menu-spinner-continer" *ngIf="menuQuery.selectLoading() | async" >
           <p-progressSpinner class="spinner-spinner"></p-progressSpinner>
           <br/>
           <p class="spinner-message">Menu Loading...</p>
@@ -28,11 +29,10 @@ export class AppMenuComponent implements OnInit {
     model: any[];
 
 // ngScaffolding
-    menuItems: Array<MenuItem>;
-    public isLoading = true;
+    menuItems: Array<CoreMenuItem>;
 
     constructor( @Inject(forwardRef(() => AppComponent)) public app: AppComponent,
-        private menuService: MenuService) { }
+        private menuService: MenuService, public menuQuery: MenuQuery) { }
 // ngScaffolding
 
 
@@ -40,11 +40,15 @@ export class AppMenuComponent implements OnInit {
 
     ngOnInit() {
 // ngScaffolding
-      this.menuService.menuSubject.subscribe(items => {
+      this.menuQuery.selectAll().subscribe(items => {
         this.menuItems = items;
-        console.log('Menu Loaded');
-        this.isLoading = false;
-      });
+        });
+
+      // this.menuService.menuSubject.subscribe(items => {
+      //   this.menuItems = items;
+      //   console.log('Menu Loaded');
+      //   this.isLoading = false;
+      // });
 // ngScaffolding
 
         this.model = [

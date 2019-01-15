@@ -1,10 +1,10 @@
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AppSettingsService } from '../appSettings/appSettings.service';
+import { AppSettingsService } from '../appSettings';
 import { LoggingService } from '../logging/logging.service';
 
-import { Action } from '@ngscaffolding/models';
+import { Action, AppSettings } from '@ngscaffolding/models';
 import { ActionResultModel, ActionRequestModel } from '@ngscaffolding/models';
 
 @Injectable({
@@ -23,6 +23,6 @@ export class ActionService {
       action: action, inputDetails:  JSON.stringify(inputDetails), rows: JSON.stringify(rows)
     };
 
-    return this.http.post<ActionResultModel>(`${this.appSettingsService.apiHome}/api/v1/action`, request);
+    return this.http.post<ActionResultModel>(`${this.appSettingsService.getValue(AppSettings.apiHome)}/api/v1/action`, request);
   }
 }

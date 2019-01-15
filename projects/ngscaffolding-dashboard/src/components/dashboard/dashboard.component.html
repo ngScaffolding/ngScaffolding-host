@@ -1,16 +1,22 @@
-<p-card [title]="dashboard.title">
+<div *ngIf="loadingData">
+  <h2>Loading...</h2>
+  <p-progressSpinner></p-progressSpinner>
+</div>
+
+<p-card *ngIf="!loadingData" [title]="dashboard.title">
   <p-header>
     <span class="text-right">Tool Bar Here</span>
   </p-header>
 
-  <div appFillHeight>
-    <gridster [options]="options" style="width: 100%;height: 100%">
+  <div ngsFillHeight>
+    <div style="width: 100%;" ngsFillHeight>
+    <gridster [options]="options" >
       <gridster-item [item]="widget" *ngFor="let widget of dashboard.widgets" #loopGridster>
         <ndc-dynamic
-        [ndcDynamicInputs]="{itemDetails: widget.itemDetails, isWidget: true, gridsterItem: loopGridster.item, unitHeight: widget.unitHeight, unitWidth: widget.unitWidth, unitUpdate: widget.unitUpdate }"
+        [ndcDynamicInputs]="{itemDetails: widgetContentDetails, isWidget: true, gridsterItem: loopGridster.item, unitHeight: widget.unitHeight, unitWidth: widget.unitWidth, unitUpdate: widget.unitUpdate }"
         (ndcDynamicCreated)="componentCreated($event)"
         [ndcDynamicComponent]="getComponent(widget)"></ndc-dynamic>
       </gridster-item>
     </gridster>
-  </div>
+  </div></div>
 </p-card>

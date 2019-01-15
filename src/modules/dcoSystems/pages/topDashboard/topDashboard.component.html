@@ -1,23 +1,30 @@
 <p-card id="gridContainer">
+  <p-header>
+    <div>
+      <h2 class="breadcrumbs">Maramba / Factory / Drying / Dryer 2</h2>
+      <h3>Live Data</h3>
+    </div>
+  </p-header>
 
-  <div>
-    <h2 class="breadcrumbs">Maramba / Factory / Drying / Dryer 2</h2>
-    <h3>Live Data</h3>
-  </div>
-
-
-  <p-tabView>
-    <p-tabPanel header="Header 1">
+<div ngsFillHeight>
+  <p-tabView [style]="{'height':'100%'}">
+    <p-tabPanel header="Header 1" ngsFillHeight>
       <h4>Dryer Output</h4>
+      <div class="ui-g"><app-digital-readout class="ui-g-4" displayValue="0.00" displayTitle="Tea Moisture Content"></app-digital-readout></div>
+    </p-tabPanel>
+    <p-tabPanel header="Gauge Display">
       <div class="ui-g">
-        <app-digital-readout class="ui-g-4" displayValue="0.00" displayTitle="Tea Moisture Content"></app-digital-readout>
+        <div class="ui-g-3 ui-sm-6"><ng-chart [itemDetails]="chartDetail"></ng-chart></div>
+        <div class="ui-g-3 ui-sm-6"><ng-chart [itemDetails]="chartDetailWetAirInlet"></ng-chart></div>
+        <div class="ui-g-3 ui-sm-6"><ng-chart [itemDetails]="chartDetailMidAirInlet"></ng-chart></div>
+        <div class="ui-g-3 ui-sm-6"><ng-chart [itemDetails]="chartDetailDryAirInlet"></ng-chart></div>
+        <div class="ui-g-3 ui-sm-6"><ng-chart [itemDetails]="chartDetail"></ng-chart></div>
+        <div class="ui-g-3 ui-sm-6"><ng-chart [itemDetails]="chartDetailWetAirInlet"></ng-chart></div>
+        <div class="ui-g-3 ui-sm-6"><ng-chart [itemDetails]="chartDetailMidAirInlet"></ng-chart></div>
+        <div class="ui-g-3 ui-sm-6"><ng-chart [itemDetails]="chartDetailDryAirInlet"></ng-chart></div>
       </div>
     </p-tabPanel>
-    <p-tabPanel header="Header 2">
-      Content 2
-    </p-tabPanel>
-    <p-tabPanel header="Header 3">
-      Content 3
-    </p-tabPanel>
+    <p-tabPanel header="Header 3"> Content 3 </p-tabPanel>
   </p-tabView>
+</div>
 </p-card>

@@ -11,7 +11,7 @@
 
         <app-topbar></app-topbar>
 
-        <div [hidden]="!userAuthService.isAuthenticated()" class="layout-menu" [ngClass]="{'layout-menu-dark':darkMenu}" (click)="onMenuClick($event)">
+        <div *ngIf="userAuthService.authenticated$ | async" class="layout-menu" [ngClass]="{'layout-menu-dark':darkMenu}" (click)="onMenuClick($event)">
             <p-scrollPanel #scrollPanel [style]="{height: '100%'}">
                 <app-inline-profile *ngIf="profileMode=='inline'&&!isHorizontal()"></app-inline-profile>
                 <app-menu [reset]="resetMenu"></app-menu>
@@ -30,13 +30,13 @@
                 <p class="spinner-message">{{ spinMessage }}</p>
             </div>
 
-            <p-messages *ngIf="appSettingsService.showFullMessages"></p-messages>
-            <p-growl *ngIf="appSettingsService.showToastMessages"></p-growl>
+            <p-messages *ngIf="showFullMessages$ | async"></p-messages>
+            <p-growl *ngIf="showToastMessages$ | async"></p-growl>
 
             <div class="layout-content">
                 <router-outlet></router-outlet>
 
-                <app-footer  *ngIf="appSettingsService.showFooter"></app-footer>
+                <app-footer  *ngIf="showFooter$ | async"></app-footer>
             </div>
         </div>
 

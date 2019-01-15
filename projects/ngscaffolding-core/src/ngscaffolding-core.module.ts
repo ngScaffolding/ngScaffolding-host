@@ -27,10 +27,7 @@ import { VersionsService } from './services/versions/versions.service';
 export class CoreModule {
   static forRoot(): ModuleWithProviders {
     return {
-      ngModule: CoreModule,
-      providers: [
-        AuthoriseRoleGuard
-      ]
+      ngModule: CoreModule
     };
   }
   constructor(versions: VersionsService) {

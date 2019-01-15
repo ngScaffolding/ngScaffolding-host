@@ -14,8 +14,8 @@ export class LogoffPageComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.userAuthService.logoff();
     setTimeout(() => {
-      this.userAuthService.logoff();
       this.router.navigateByUrl('/login');
     }, 5000);
   }

@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { AppSettingsService } from '../appSettings/appSettings.service';
-import { ReferenceValue } from '@ngscaffolding/models';
+import { ReferenceValue, AppSettings } from '@ngscaffolding/models';
 import { LoggingService } from '../logging/logging.service';
 import { CacheService } from '../cache/cache.service';
 
@@ -21,9 +21,7 @@ export class ReferenceValuesService {
     private cacheService: CacheService,
     private logger: LoggingService
   ) {
-    setTimeout(() => {
-      this.getAppSettingsFromServer();
-    }, 50);
+
   }
 
   //
@@ -42,24 +40,12 @@ export class ReferenceValuesService {
     });
   }
 
-  getAppSettingsFromServer() {
-    this.logger.info('Loading AppSettings From Server', this.className);
-
-    this.getReferenceGroup('appSettings').subscribe(values => {
-      values.forEach(element => {
-        this.logger.info(`Setting ${element.name} = ${element.value}`, this.className);
-
-        this.appSettingsService[element.name] = element.value;
-      });
-    });
-  }
-
   getReferenceGroup(group: string): Observable<Array<ReferenceValue>> {
     return new Observable<Array<ReferenceValue>>(observer => {
       this.http
         .get<Array<ReferenceValue>>(
           `${this.appSettingsService
-            .apiHome}/api/v1/referencevalues?group=${group}`
+            .getValue(AppSettings.apiHome)}/api/v1/referencevalues?group=${group}`
         )
         .subscribe(values => {
           // Save each returned value to our cache
@@ -101,7 +87,7 @@ export class ReferenceValuesService {
           // Call HTTP Here
           const httpRequest = this.http.get<ReferenceValue>(
             `${this.appSettingsService
-              .apiHome}/api/v1/referencevalues?name=${name}&seed=${seed}`
+              .getValue(AppSettings.apiHome)}/api/v1/referencevalues?name=${name}&seed=${seed}`
           );
           httpRequest.subscribe(value => {
             this.cacheService.setValue(this.getKey(name, seed), value);

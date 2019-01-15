@@ -8,6 +8,9 @@ import {
 } from 'ngscaffolding-core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
+import { AppSettings } from '@ngscaffolding/models';
+import { AppSettingsQuery } from 'projects/ngscaffolding-core/src/services';
+import { Observable } from 'rxjs';
 // import {MessageService} from 'primeng/components/common/messageservice';
 
 @Component({
@@ -17,6 +20,10 @@ export class LoginPageComponent implements OnInit {
   private readonly className = 'LoginPagecomponent';
   private readonly rememberMeCookie = 'authRememberMe';
   private readonly userNameCookie = 'authuserName';
+
+  public authShowRememberMe$: Observable<boolean>;
+  public authTermsAndConditions$: Observable<string>;
+  public authShowRegister$: Observable<boolean>;
 
   inputModel: any = {};
 
@@ -28,20 +35,24 @@ export class LoginPageComponent implements OnInit {
     //   private messageService: MessageService,
     private cookieService: CookieService,
     public appSettings: AppSettingsService,
+    public appSettingsQuery: AppSettingsQuery,
     private spinner: SpinnerService,
     private logger: LoggingService,
     private notificationService: NotificationService,
     private route: ActivatedRoute,
+    private router: Router,
     private spinnerService: SpinnerService,
     private userAuthService: UserAuthorisationBase
-  ) {}
+  ) {
+    this.authShowRememberMe$ = appSettingsQuery.selectEntity(AppSettings.authShowRememberMe, e => e.value);
+  }
 
   ngOnInit() {
     // get return url from route parameters or default to '/'
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
 
     // Are we going to Remember?
-    if (this.appSettings.authShowRememberMe) {
+    if (this.appSettings.getValue(AppSettings.authShowRememberMe)) {
       const cookieValue = this.cookieService.get(this.rememberMeCookie);
       this.rememberMe = cookieValue === 'true';
       if (this.rememberMe) {
@@ -64,7 +75,7 @@ export class LoginPageComponent implements OnInit {
 
     this.userAuthService.logon(this.inputModel.username,this.inputModel.password)
     .subscribe(authUser => {
-
+      this.router.navigate([this.returnUrl]);
     }, err =>{
       this.notificationService.showMessage({
         summary: 'Logon Failed',

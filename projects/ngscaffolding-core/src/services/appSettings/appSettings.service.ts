@@ -1,38 +1,103 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import { AppSettings } from '@ngscaffolding/models';
+import { AppSettings, AppSettingsValue } from '@ngscaffolding/models';
 import { LoggingService } from '../logging/logging.service';
 import { HttpClient } from '@angular/common/http';
+import { AppSettingsStore } from './appSettings.store';
+import { AppSettingsQuery } from './appSettings.query';
+import { Observable } from 'rxjs/internal/Observable';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
-export class AppSettingsService extends AppSettings {
+export class AppSettingsService {
   private className = 'AppSettingsService';
 
-  public settingsSubject = new BehaviorSubject<AppSettings>(null);
+  public loading$: Observable<boolean>;
 
-  constructor(private logger: LoggingService, private http: HttpClient) {
-    super();
+  constructor(
+    private appSettingsStore: AppSettingsStore,
+    private appSettingsQuery: AppSettingsQuery,
+    private logger: LoggingService,
+    private http: HttpClient
+  ) {
+    console.log('AppSettingsService Constructor');
   }
 
-  public setValues(settings: AppSettings) {
+  public setValue(name: string, value: any) {
+    if (this.appSettingsQuery.hasEntity(name)) {
+      this.appSettingsStore.update(name, { name: name, value: value });
+    } else {
+      this.appSettingsStore.add({ Id: null, name: name, value: value });
+    }
+    this.appSettingsStore.createOrReplace(name, { Id: null, name, value });
+    if (name === AppSettings.apiHome) {
+      setTimeout(() => {
+        this.loadFromServer(value.toString());
+      }, 200);
+    }
+  }
+
+  public getValue(name: string): any {
+    if (this.appSettingsQuery.hasEntity(name)) {
+      return this.appSettingsQuery.getEntity(name).value;
+    } else {
+      return null;
+    }
+  }
+
+  private loadFromServer(apiHome: string) {
+    // Mark store as loading
+    this.appSettingsStore.setLoading(true);
+
+    // Load values from Server
+    this.http.get<Array<AppSettingsValue>>(`${apiHome}/api/v1/appSettings`).subscribe(
+      appValues => {
+        if (appValues) {
+          appValues.forEach(appValue => {
+            this.setValue(appValue.name, appValue.value);
+          });
+        }
+        this.appSettingsStore.setLoading(false);
+        this.appSettingsStore.updateRoot({ isInitialised: true });
+      },
+      err => {
+        this.appSettingsStore.setLoading(false);
+      }
+    );
+  }
+
+  private setValues(settings: AppSettings) {
+    // Mark store as loading
+    this.appSettingsStore.setLoading(true);
+    this.appSettingsStore.updateRoot({ isInitialised: false });
+
     // Load values
     if (settings) {
       Object.keys(settings).forEach(key => {
         // Setting Value Here
         this.logger.info(`Setting Value ${key} = ${settings[key]}`, this.className + '.loadSettings');
-        this[key] = settings[key];
+        this.setValue(key, settings[key]);
       });
     }
-    this.settingsSubject.next(this);
+
+    this.appSettingsStore.setLoading(false);
+    this.appSettingsStore.updateRoot({ isInitialised: true });
   }
 
   public loadFromJSON() {
-    return this.http.get('/assets/data/appConfig.json')
+    return this.http
+      .get('/assets/data/appConfig.json')
       .toPromise()
       .then(data => {
-        this.setValues(data as AppSettings);
+        // this.setValues(data as AppSettings);
       });
+  }
+
+  public getBoolean(name: string): Observable<boolean> {
+    return this.appSettingsQuery.selectEntity(name, entity => entity.value);
+  }
+
+  public getString(name: string): Observable<string> {
+    return this.appSettingsQuery.selectEntity(name, entity => entity.value);
   }
 }

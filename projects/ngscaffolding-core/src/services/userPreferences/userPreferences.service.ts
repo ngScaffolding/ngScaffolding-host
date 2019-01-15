@@ -6,7 +6,7 @@ import { UserAuthorisationBase } from '../userAuthorisation/UserAuthorisationBas
 import { AppSettingsService } from '../appSettings/appSettings.service';
 
 // Models
-import { UserPreferenceDefinition, UserPreferenceValue } from '@ngscaffolding/models';
+import { UserPreferenceDefinition, UserPreferenceValue, AppSettings } from '@ngscaffolding/models';
 
 @Injectable({
   providedIn: 'root',
@@ -15,9 +15,6 @@ export class UserPreferencesService {
   private readonly prefix = 'preference_';
   private readonly storageKey = 'UserPreferences';
 
-  private apiRootValues: string;
-  private apiRootDefinitions: string;
-
   private preferenceValues = new Array<UserPreferenceValue>();
   private preferenceDefinitions = new Array<UserPreferenceDefinition>();
 
@@ -25,16 +22,16 @@ export class UserPreferencesService {
   public preferenceValuesSubject = new BehaviorSubject<Array<UserPreferenceValue>>(null);
 
   constructor(private http: HttpClient, private auth: UserAuthorisationBase, private appSettings: AppSettingsService) {
-    appSettings.settingsSubject.subscribe(settings => {
-      this.apiRootValues = `${settings.apiHome}/api/v1/userPreferencevalue`;
-      this.apiRootDefinitions = `${settings.apiHome}/api/v1/UserPreferenceDefinition`;
-    });
 
-    auth.authenticatedSubject.subscribe(isAuthorised => {
+    auth.authenticated$.subscribe(isAuthorised => {
       if (isAuthorised) {
         // Load User Prefs from Localstorage
         this.loadFromLocal();
 
+        // Load Pref Defs from server
+        this.getDefinitions();
+
+        // Load User Prefs from Server
         this.getValues();
       } else {
         // Clear Here as we logoff
@@ -42,8 +39,7 @@ export class UserPreferencesService {
       }
     });
 
-    // Load Pref Defs from server
-    this.getDefinitions();
+
   }
 
   private clearValues() {
@@ -58,7 +54,7 @@ export class UserPreferencesService {
 
   public deleteValue(key: string) {
     return new Observable<any>(observer => {
-      this.http.delete(`${this.apiRootValues}/${key}`).subscribe(
+      this.http.delete(`${this.appSettings.getValue(AppSettings.apiHome)}/${key}`).subscribe(
         () => {
           // Save and tell the world
           this.preferenceValues = this.preferenceValues.filter(p => p.name !== key);
@@ -80,7 +76,7 @@ export class UserPreferencesService {
 
   public getValues() {
     // Load values from Server
-    this.http.get<Array<UserPreferenceValue>>(`${this.apiRootValues}`).subscribe(prefValues => {
+    this.http.get<Array<UserPreferenceValue>>(`${this.appSettings.getValue(AppSettings.apiHome)}/api/v1/userpreferencevalue`).subscribe(prefValues => {
       if (prefValues) {
         prefValues.forEach(prefValue => {
           this.newValue(prefValue.name, prefValue.value);
@@ -94,7 +90,7 @@ export class UserPreferencesService {
 
   public setValue(key: string, value: any): Observable<any> {
     return new Observable<any>(observer => {
-      this.http.post(`${this.apiRootValues}`, { name: key, value: value }).subscribe(
+      this.http.post(`${this.appSettings.getValue(AppSettings.apiHome)}/api/v1/userpreferencevalue`, { name: key, value: value }).subscribe(
         () => {
           // Save and tell the world
           this.newValue(key, value);
@@ -128,7 +124,7 @@ export class UserPreferencesService {
 
   private getDefinitions() {
     this.preferenceDefinitions = new Array<UserPreferenceDefinition>();
-    this.http.get<Array<UserPreferenceDefinition>>(`${this.apiRootDefinitions}`).subscribe(prefDefinitions => {
+    this.http.get<Array<UserPreferenceDefinition>>(`${this.appSettings.getValue(AppSettings.apiHome)}/api/v1/UserPreferenceDefinition`).subscribe(prefDefinitions => {
       if (prefDefinitions && prefDefinitions.length > 0) {
         prefDefinitions.forEach(definition => {
           this.preferenceDefinitions.push(definition);

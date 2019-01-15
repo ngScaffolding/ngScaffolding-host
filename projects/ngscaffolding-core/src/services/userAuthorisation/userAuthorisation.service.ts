@@ -1,22 +1,22 @@
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, combineLatest } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 
 import { AppSettingsService } from '../appSettings/appSettings.service';
 import { LoggingService } from '../logging/logging.service';
 
-import { AuthUser, AuthUserResponse } from '@ngscaffolding/models';
+import { AuthUser, AuthUserResponse, AppSettings, AppSettingsValue } from '@ngscaffolding/models';
 
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { UserAuthorisationBase } from './UserAuthorisationBase';
+import { AppSettingsQuery } from '../appSettings';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable({ providedIn: 'root' })
 export class UserAuthorisationService implements UserAuthorisationBase {
   private readonly tokenStorageKey = 'USER_TOKEN';
 
-  public authenticatedSubject: BehaviorSubject<boolean>;
+  public authenticated$: Observable<boolean>;
+  private authenticatedSubject: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   private refreshToken: string;
   private jwtHelper: JwtHelperService;
@@ -26,79 +26,87 @@ export class UserAuthorisationService implements UserAuthorisationBase {
   constructor(
     private logger: LoggingService,
     private http: HttpClient,
-    private appSettingsService: AppSettingsService
+    private appSettingsService: AppSettingsService,
+    private appSettingsQuery: AppSettingsQuery
   ) {
-    this.authenticatedSubject = new BehaviorSubject<boolean>(null);
+    logger.info('UserAuthorisationService - Constructor');
+    this.authenticated$ = this.authenticatedSubject.asObservable();
+
     this.jwtHelper = new JwtHelperService({});
 
-    appSettingsService.settingsSubject.subscribe(settings => {
-      if (settings && settings.authSaveinLocalStorage) {
-        const savedToken = localStorage.getItem(this.tokenStorageKey); // Loaded from Saved Storage
-        if (savedToken !== null) {
-          // New AuthUser Based on Token
-          if (!this.jwtHelper.isTokenExpired(savedToken)) {
-            // If all Good
-            this.setToken(savedToken);
-            this.getUserDetails();
-          } else {
-            this.logoff();
-          }
-        } else {
-          this.logoff();
-        }
+    // combineLatest(
+    //   appSettingsQuery.isInitialised$,
+    //   appSettingsQuery.selectEntity(AppSettings.authSaveinLocalStorage),
+    //   appSettingsQuery.selectEntity(AppSettings.apiAuth)).subscribe(
+    //   ([intialised, localStorage, apiAuth]) => {
+    //     if (intialised) {
+    //       let x = 0;
+    //     }
+    //   }
+    // );
+    this.loadUserTokenFromStorage();
+  }
+
+  private loadUserTokenFromStorage() {
+    const savedToken = localStorage.getItem(this.tokenStorageKey); // Loaded from Saved Storage
+    if (savedToken !== null) {
+      // New AuthUser Based on Token
+      if (!this.jwtHelper.isTokenExpired(savedToken)) {
+        this.logger.info('Token Loaded and not Expired');
+        // If all Good
+        this.setToken(savedToken);
+        // this.getUserDetails();
+      } else {
+        this.logger.info('Token Expired - Logging Off');
+        this.logoff();
       }
-    });
+    } else {
+      this.logger.info('No Token Available - Logging Off');
+      this.logoff();
+    }
   }
 
   public isAuthenticated(): boolean {
-    const token =  this.getToken();
+    const token = this.getToken();
     return !this.jwtHelper.isTokenExpired(token);
   }
 
-  public setToken(token: any) {
+  private setToken(token: any) {
     // New AuthUser Based on Token
     const tokenDetails = this.jwtHelper.decodeToken(token);
 
     this.currentUser = new AuthUser();
     this.currentUser.tokenExpires = this.jwtHelper.getTokenExpirationDate(token);
     if (this.jwtHelper.isTokenExpired(token)) {
-      this.tokenExpired();
+      this.logoff();
     }
 
-    if (this.appSettingsService.authSaveinLocalStorage) {
+    if (this.appSettingsService.getValue(AppSettings.authSaveinLocalStorage)) {
       // Save token to local storage
       localStorage.setItem(this.tokenStorageKey, token);
     }
 
     if (tokenDetails['firstName'] && tokenDetails['lastName']) {
-            this.currentUser.name = tokenDetails['firstName'] + ' ' + tokenDetails['lastName'];
+      this.currentUser.name = tokenDetails['firstName'] + ' ' + tokenDetails['lastName'];
     }
 
     if (tokenDetails['roles']) {
       this.currentUser.roles = tokenDetails['roles'];
     }
 
-    this.appSettingsService.authToken = token;
+    this.appSettingsService.setValue(AppSettings.authToken, token);
     this.authenticatedSubject.next(this.isAuthenticated());
-
-    // this.spinnerService.hideSpinner();
   }
 
   public getToken(): string {
-    return this.appSettingsService.authToken;
+    return this.appSettingsService.getValue(AppSettings.authToken);
   }
 
   private getUserDetails() {
     this.http
-      .get<AuthUserResponse>(
-        this.appSettingsService.apiAuth + '/connect/userinfo',
-        {
-          headers: new HttpHeaders().set(
-            'Authorization',
-            'Bearer ' + this.appSettingsService.authToken
-          )
-        }
-      )
+      .get<AuthUserResponse>(this.appSettingsService.getValue(AppSettings.apiAuth) + '/connect/userinfo', {
+        headers: new HttpHeaders().set('Authorization', 'Bearer ' + this.appSettingsService.getValue(AppSettings.authToken))
+      })
       .subscribe(
         authResponse => {
           this.currentUser.email = authResponse.email;
@@ -116,25 +124,18 @@ export class UserAuthorisationService implements UserAuthorisationBase {
 
   public logon(userName: string, password: string): Observable<AuthUser> {
     return new Observable<AuthUser>(observer => {
-
       let body = new HttpParams();
       body = body
         .append('username', userName)
         .append('password', password)
         .append('grant_type', 'password')
-        .append('client_id', this.appSettingsService.authClientId)
-        .append('client_secret', this.appSettingsService.authClientSecret)
-        .append(
-          'scope',
-          this.appSettingsService.authScope + ' offline_access openid'
-        );
+        .append('client_id', this.appSettingsService.getValue(AppSettings.authClientId))
+        .append('client_secret', this.appSettingsService.getValue(AppSettings.authClientSecret))
+        .append('scope', this.appSettingsService.getValue(AppSettings.authScope) + ' offline_access openid');
 
       this.http
-        .post(this.appSettingsService.apiAuth + this.appSettingsService.authTokenEndpoint, body, {
-          headers: new HttpHeaders().set(
-            'Content-Type',
-            'application/x-www-form-urlencoded'
-          )
+        .post(this.appSettingsService.getValue(AppSettings.apiAuth) + this.appSettingsService.getValue(AppSettings.authTokenEndpoint), body, {
+          headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
         })
         .subscribe(
           response => {
@@ -156,15 +157,13 @@ export class UserAuthorisationService implements UserAuthorisationBase {
   }
 
   public logoff(): void {
-    if (this.appSettingsService.authSaveinLocalStorage) {
+    if (this.appSettingsService.getValue(AppSettings.authSaveinLocalStorage)) {
       // Remove token from Local Storage
       localStorage.removeItem(this.tokenStorageKey);
     }
-    this.appSettingsService.authToken = null;
+    this.appSettingsService.setValue(AppSettings.authToken, null);
 
     // Tell the world
-    this.authenticatedSubject.next(this.isAuthenticated());
+    this.authenticatedSubject.next(false);
   }
-
-  private tokenExpired() {}
 }
