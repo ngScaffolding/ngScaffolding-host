@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, ComponentRef, ViewChildren, QueryList, OnChanges, SimpleChanges } from '@angular/core';
-import { DataSourceService, LoggingService, MenuService } from 'ngscaffolding-core';
+import { DataSourceService, LoggingService, MenuService, MenuQuery } from 'ngscaffolding-core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CoreMenuItem, WidgetModelBase, WidgetDetails, WidgetTypes, ChartDetailModel } from '@ngscaffolding/models';
 import { Observable } from 'rxjs';
@@ -9,8 +9,7 @@ import { DashboardModel } from '@ngscaffolding/models';
 import { DataGridComponent } from 'ngscaffolding-datagrid';
 import { ChartComponent, ChartDataService } from 'ngscaffolding-chart';
 
-import { CompactType, DisplayGrid, GridsterConfig, GridsterItem, GridType,
-   GridsterItemComponent, GridsterItemComponentInterface } from 'angular-gridster2';
+import { CompactType, DisplayGrid, GridsterConfig, GridsterItem, GridType, GridsterItemComponent, GridsterItemComponentInterface } from 'angular-gridster2';
 
 @Component({
   selector: 'app-dashboard',
@@ -39,14 +38,13 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
     private router: Router,
     private route: ActivatedRoute,
     private logger: LoggingService,
-    private menuService: MenuService,
+    private menuQuery: MenuQuery,
     private chartDataService: ChartDataService,
     private dataSourceService: DataSourceService
   ) {}
 
   public widgetContentDetails: any;
   public getComponent(widgetDetails: WidgetDetails) {
-
     switch (widgetDetails.widget.type) {
       case WidgetTypes.GridView: {
         break;
@@ -65,22 +63,24 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
 
   loadDashboard() {
     this.loadingData = true;
-    this.menuItem = this.menuService.getMenuItemByName(this.menuName);
 
-    if (this.menuItem && this.menuItem.menuDetails) {
-      this.dashboard = this.menuItem.menuDetails as DashboardModel;
-    }
+     this.menuQuery.selectEntity(this.menuName).subscribe(menuItem => {
+      this.menuItem = menuItem;
 
-    // Set unitheight for later resize
-    this.dashboard.widgets.forEach(widgetDetail => {
-      widgetDetail['unitHeight'] = 0;
-      widgetDetail['unitWidth'] = 0;
-      widgetDetail['unitUpdate'] = 0;
+      if (this.menuItem && this.menuItem.menuDetails) {
+        this.dashboard = this.menuItem.menuDetails as DashboardModel;
+      }
 
-      widgetDetail['isWidget'] = true;
+      // Set unitheight for later resize
+      this.dashboard.widgets.forEach(widgetDetail => {
+        widgetDetail['unitHeight'] = 0;
+        widgetDetail['unitWidth'] = 0;
+        widgetDetail['unitUpdate'] = 0;
 
-    });
-    this.loadingData = false;
+        widgetDetail['isWidget'] = true;
+      });
+      this.loadingData = false;
+     });
   }
 
   private itemChange(item, itemComponent) {

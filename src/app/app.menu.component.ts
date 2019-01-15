@@ -35,20 +35,11 @@ export class AppMenuComponent implements OnInit {
         private menuService: MenuService, public menuQuery: MenuQuery) { }
 // ngScaffolding
 
-
-//    constructor(public app: AppComponent) {}
-
     ngOnInit() {
 // ngScaffolding
-      this.menuQuery.selectAll().subscribe(items => {
+      this.menuQuery.select(menuState => menuState.menuItems).subscribe(items => {
         this.menuItems = items;
-        });
-
-      // this.menuService.menuSubject.subscribe(items => {
-      //   this.menuItems = items;
-      //   console.log('Menu Loaded');
-      //   this.isLoading = false;
-      // });
+      });
 // ngScaffolding
 
         this.model = [

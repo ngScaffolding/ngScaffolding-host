@@ -7,10 +7,7 @@ import { MenuStore, MenuState } from './menu.store';
   providedIn: 'root'
 })
 export class MenuQuery extends QueryEntity<MenuState, CoreMenuItem> {
-  public menuItemsList$ = this.select(state => state.menuItems);
-
   constructor(protected store: MenuStore) {
     super(store);
   }
-
 }

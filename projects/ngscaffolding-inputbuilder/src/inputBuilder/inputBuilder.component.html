@@ -9,6 +9,12 @@
                 <label>{{input.label}}</label>
             </span>
 
+            <!-- textbox -->
+            <span *ngSwitchCase="'email'" class="md-inputfield">
+                <input *ngIf="!input.mask" type="email" [formControlName]="input.name" [id]="input.name" pInputText>
+                <label>{{input.label}}</label>
+            </span>
+
             <!-- keyfilter/number -->
             <span *ngSwitchCase="'number'" class="md-inputfield">
                 <input type="text" [formControlName]="input.name" [id]="input.name" pKeyFilter="num"  pInputText>

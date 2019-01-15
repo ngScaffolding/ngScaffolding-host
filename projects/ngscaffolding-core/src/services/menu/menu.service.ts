@@ -1,7 +1,7 @@
 import { RolesService } from '../rolesService/roles.service';
 import { Injectable } from '@angular/core';
 import { Route } from '@angular/router';
-import { BehaviorSubject, combineLatest } from 'rxjs';
+import { BehaviorSubject, combineLatest, forkJoin } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
 import { LoggingService } from '../logging/logging.service';
@@ -11,9 +11,11 @@ import { UserAuthorisationBase } from '../userAuthorisation/UserAuthorisationBas
 import { MenuStore } from './menu.store';
 import { MenuQuery } from './menu.query';
 import { isArray } from 'util';
+import { finalize } from 'rxjs/internal/operators/finalize';
+import { take } from 'rxjs/internal/operators/take';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class MenuService {
   private className = 'core.MenuService';
@@ -21,13 +23,12 @@ export class MenuService {
   private menuItemsFromCode: Array<CoreMenuItem>;
   private routes: Array<Route> = [];
 
-  private menuItems: CoreMenuItem[];
+  private menuItems: CoreMenuItem[] = [];
 
   private menuItem: CoreMenuItem;
 
   private apiHome: string;
 
-  public menuSubject = new BehaviorSubject<Array<CoreMenuItem>>(this.menuItems);
   public routeSubject = new BehaviorSubject<Array<Route>>(this.routes);
 
   constructor(
@@ -39,20 +40,22 @@ export class MenuService {
     private log: LoggingService,
     public rolesService: RolesService
   ) {
-
-    // subscribe to menuItems for flat List
-    menuQuery.menuItemsList$.subscribe(menuItemsList => this.menuItems = menuItemsList);
+    // First Time load away
+    this.menuStore.setLoading(false);
 
     // Wait for settings, then load from server
-    combineLatest(authService.authenticated$, appSettingsQuery.selectEntity(AppSettings.apiHome))
-      .subscribe(([authenticated, apiHome]) => {
-        if (authenticated && apiHome) {
-          this.apiHome = apiHome.value;
-          this.downloadMenuItems();
-        } else {
-          this.menuStore.remove();
-        }
-      });
+    combineLatest(this.authService.authenticated$, this.appSettingsQuery.selectEntity(AppSettings.apiHome)).subscribe(([authenticated, apiHome]) => {
+      if (authenticated && apiHome) {
+        this.apiHome = apiHome.value;
+        this.menuQuery.selectLoading().pipe(take(1)).subscribe(loading => {
+            if (!loading) {
+              this.downloadMenuItems();
+            }
+          });
+      } else if (!authenticated) {
+        this.menuStore.remove();
+      }
+    });
   }
 
   public addMenuItemsFromCode(menuItems: CoreMenuItem[], roles: string[] = null) {
@@ -64,7 +67,7 @@ export class MenuService {
 
   private addMenuItems(menuItems: CoreMenuItem[]) {
     menuItems.forEach(menuItem => {
-      this.menuStore.createOrReplace(menuItem.name, menuItem);
+      this.menuItems.push(menuItem);
     });
 
     // Add to flat reference List
@@ -72,32 +75,24 @@ export class MenuService {
 
     // Save our flat list to State
     this.menuStore.updateRoot({ menuItems: this.menuItems });
-
   }
 
   // Iterative Call
   private addMenuItemsToReferenceList(menuItems: CoreMenuItem[]): void {
     menuItems.forEach(menuItem => {
-      this.menuItems.push(menuItem);
+      // Add to Entity Store
+      this.menuStore.createOrReplace(menuItem.name, menuItem);
       if (this.menuItem.items && isArray(this.menuItem.items)) {
         const arrMenu = this.menuItem.items as Array<CoreMenuItem>;
         arrMenu.forEach(menuLoop => this.addMenuItemsToReferenceList(menuLoop.items as CoreMenuItem[]));
       }
-     });
-  }
-
-  public getMenuItemByName(name: string): CoreMenuItem {
-    this.menuItem = null;
-
-    if (this.menuItems && this.menuItems.length > 0) {
-      this.findMenuItem(name, this.menuItems);
-    }
-    return this.menuItem;
+    });
   }
 
   public downloadMenuItems() {
-
+    // Mark loading status
     this.menuStore.setLoading(true);
+
     const newMenuItems: CoreMenuItem[] = [];
 
     // First Add Menu Items Added from Code
@@ -107,31 +102,25 @@ export class MenuService {
       });
     }
 
-    this.http.get<Array<CoreMenuItem>>(this.apiHome + '/api/v1/menuitems').subscribe(menuItems => {
-      menuItems.forEach(loopMenuItem => {
-        this.addNewMenuItem(newMenuItems, loopMenuItem);
-      });
+    this.http
+      .get<Array<CoreMenuItem>>(this.apiHome + '/api/v1/menuitems')
+      .pipe(
+        finalize(() => {
+          this.menuStore.setLoading(false);
+        })
+      )
+      .subscribe(menuItems => {
+        menuItems.forEach(loopMenuItem => {
+          this.addNewMenuItem(newMenuItems, loopMenuItem);
+        });
 
-      newMenuItems.forEach(newMenuItem => {
-        this.menuStore.createOrReplace(newMenuItem.name, newMenuItem);
+        newMenuItems.forEach(newMenuItem => {
+          this.menuItems.push(newMenuItem);
+        });
+
+        this.menuStore.updateRoot({ menuItems: this.menuItems });
       });
-      this.menuStore.setLoading(false);
-    });
   }
-
-  // public addMenuItem(menuItem: CoreMenuItem, route: Route = null, roles: string[] = null) {
-  //   this.log.info(`Adding Menu ${JSON.stringify(menuItem)}`, this.className);
-  //   this.menuItems.push(menuItem);
-  //   this.menuSubject.next(this.menuItems);
-
-  //   if (route !== null) {
-  //     this.addRoute(route);
-  //   }
-
-  //   if (roles !== null) {
-  //     this.rolesService.addRouteRoles(route.path, roles);
-  //   }
-  // }
 
   public addRoute(route: Route, roles: string[] = null) {
     this.log.info(`Adding Route ${JSON.stringify(route)}`, this.className);
@@ -140,17 +129,6 @@ export class MenuService {
 
     if (roles !== null) {
       this.rolesService.addRouteRoles(route.path, roles);
-    }
-  }
-
-  private findMenuItem(name: string, menuItems: CoreMenuItem[]) {
-    if (menuItems) {
-      menuItems.forEach(menuItem => {
-        this.findMenuItem(name, menuItem.items as CoreMenuItem[]);
-        if (menuItem.name && menuItem.name.toLowerCase() === name.toLowerCase()) {
-          this.menuItem = menuItem;
-        }
-      });
     }
   }
 
@@ -165,7 +143,7 @@ export class MenuService {
         calcRouterLink = newMenuItem.routerLink;
       }
 
-      const createdMenuItem: CoreMenuItem = {...newMenuItem, routerLink: calcRouterLink};
+      const createdMenuItem: CoreMenuItem = { ...newMenuItem, routerLink: calcRouterLink };
 
       targetMenu.push(createdMenuItem);
 

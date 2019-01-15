@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 
 import { ActivatedRoute } from '@angular/router';
-import { MenuService , LoggingService } from 'ngscaffolding-core';
+import { MenuService , LoggingService, MenuQuery } from 'ngscaffolding-core';
 import { CoreMenuItem, GridViewDetail } from '@ngscaffolding/models';
 
 @Component({
@@ -16,7 +16,8 @@ export class DataGridHolderComponent implements OnInit, OnDestroy {
   public itemDetail: GridViewDetail;
   public itemId: string;
 
-  constructor(private route: ActivatedRoute, private logger: LoggingService, private menuService: MenuService) {}
+  constructor(private route: ActivatedRoute, private logger: LoggingService,
+    private menuQuery: MenuQuery) {}
 
   ngOnInit(): void {
     // Get Menu Id
@@ -24,10 +25,13 @@ export class DataGridHolderComponent implements OnInit, OnDestroy {
       const menuName = params['id'];
 
       // get Menu Items
-      this.menuItem = this.menuService.getMenuItemByName(menuName);
-      this.itemId = menuName;
+      this.menuQuery.selectEntity(menuName).subscribe(menuItem => {
+        this.menuItem = menuItem;
+        this.itemId = menuName;
 
-      this.itemDetail = this.menuItem.menuDetails as GridViewDetail;
+        this.itemDetail = this.menuItem.menuDetails as GridViewDetail;
+      });
+
     });
   }
 
