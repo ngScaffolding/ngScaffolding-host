@@ -43,16 +43,12 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
     private dataSourceService: DataSourceService
   ) {}
 
-  public widgetContentDetails: any;
   public getComponent(widgetDetails: WidgetDetails) {
     switch (widgetDetails.widget.type) {
       case WidgetTypes.GridView: {
         break;
       }
       case WidgetTypes.Chart: {
-        const chart = new ChartComponent(this.logger, this.chartDataService, this.dataSourceService);
-        this.widgetContentDetails = widgetDetails.widget.itemDetails as ChartDetailModel;
-
         return ChartComponent;
       }
       case WidgetTypes.Html: {
@@ -66,20 +62,12 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
 
     this.menuQuery.selectEntity(this.menuName).subscribe(menuItem => {
       if (menuItem) {
-        this.menuItem = menuItem;
+        this.menuItem = JSON.parse(JSON.stringify(menuItem));
 
         if (this.menuItem && this.menuItem.menuDetails) {
           this.dashboard = this.menuItem.menuDetails as DashboardModel;
         }
 
-        // Set unitheight for later resize
-        // this.dashboard.widgets.forEach(widgetDetail => {
-        //   widgetDetail['unitHeight'] = 0;
-        //   widgetDetail['unitWidth'] = 0;
-        //   widgetDetail['unitUpdate'] = 0;
-
-        //   widgetDetail['isWidget'] = true;
-        // });
         this.loadingData = false;
       }
     });
@@ -128,7 +116,7 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
       mobileBreakpoint: 640,
       minCols: 12,
       maxCols: 12,
-      minRows: 1,
+      minRows: 6,
       maxRows: 100,
       maxItemCols: 100,
       minItemCols: 1,
