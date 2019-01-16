@@ -18,3 +18,4 @@ export * from './userAuthorisation/userAuthorisation.service';
 export * from './userAuthorisation/UserAuthorisationBase';
 
 export * from './versions/versions.service';
+export * from './widgetsService';

@@ -11,7 +11,7 @@ import { CoreModule, AuthoriseRoleGuard } from 'ngscaffolding-core';
 import { InputBuilderModule } from 'ngscaffolding-inputbuilder';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 
-import { DataGridComponent } from 'ngscaffolding-datagrid';
+import { DataGridComponent, ToolBarComponent } from 'ngscaffolding-datagrid';
 import { ChartComponent } from 'ngscaffolding-chart';
 
 import { DynamicModule } from 'ng-dynamic-component';
@@ -19,7 +19,9 @@ import { DynamicModule } from 'ng-dynamic-component';
 import { GridsterModule } from 'angular-gridster2';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { CardModule } from 'primeng/card';
-import { DataGridModule } from 'primeng/primeng';
+import { DataGridModule, ButtonModule, SidebarModule, DialogModule, ConfirmDialogModule, TooltipModule } from 'primeng/primeng';
+import { DashboardToolBarComponent } from './components';
+import { GalleryComponent } from './components/gallery/gallery.component';
 
 // Services
 
@@ -30,6 +32,11 @@ const appRoutes: Routes = [
 
 @NgModule({
   imports: [
+    ButtonModule,
+    TooltipModule,
+    ConfirmDialogModule,
+    DialogModule,
+    SidebarModule,
     CoreModule.forRoot(),
     CommonModule,
     FormsModule,
@@ -37,15 +44,17 @@ const appRoutes: Routes = [
     GridsterModule,
     CardModule,
     ProgressSpinnerModule,
-    //DynamicModule.withComponents([DataGridComponent]),
     DynamicModule.withComponents([DataGridComponent, ChartComponent]),
     RouterModule.forChild(appRoutes)
   ],
   declarations: [
-    DashboardComponent
+    DashboardComponent,
+    DashboardToolBarComponent,
+    GalleryComponent
   ],
   exports: [
     DashboardComponent,
+    DashboardToolBarComponent,
     RouterModule
   ],
   providers: [

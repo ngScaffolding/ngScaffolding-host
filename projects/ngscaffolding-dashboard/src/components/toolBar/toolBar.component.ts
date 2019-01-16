@@ -3,7 +3,7 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
 import { AppSettingsService, AppSettingsQuery } from 'ngscaffolding-core';
 
 @Component({
-  selector: 'app-grid-toolbar',
+  selector: 'ngs-dashboard-toolbar',
   templateUrl: './toolBar.component.html',
   styleUrls: ['./toolBar.component.scss'],
   animations: [
@@ -28,7 +28,7 @@ import { AppSettingsService, AppSettingsQuery } from 'ngscaffolding-core';
     ])
   ]
 })
-export class ToolBarComponent implements OnInit {
+export class DashboardToolBarComponent implements OnInit {
   @Input() hideFilters: boolean;
   @Input() hideRefresh: boolean;
   @Input() hideColumns: boolean;
@@ -37,8 +37,8 @@ export class ToolBarComponent implements OnInit {
   @Input() hideResetView: boolean;
   @Input() hideShareView: boolean;
 
-  @Input() hideLabels: boolean;
-  @Input() collapsedToolbar: boolean;
+  @Input() hideLabels = true;
+  @Input() collapsedToolbar = true;
 
   @Output() filtersClicked = new EventEmitter<any>();
   @Output() refreshClicked = new EventEmitter<any>();

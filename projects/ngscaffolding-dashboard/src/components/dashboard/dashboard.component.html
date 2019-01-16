@@ -3,9 +3,11 @@
   <p-progressSpinner></p-progressSpinner>
 </div>
 
-<p-card *ngIf="!loadingData" [title]="dashboard.title">
+<p-card *ngIf="!loadingData">
   <p-header>
-    <span class="text-right">Tool Bar Here</span>
+    <span class="dashHeader">{{dashboard.title}}</span>
+    <span class="text-right"><ngs-dashboard-toolbar></ngs-dashboard-toolbar></span>
+    <ngs-gallery [galleryName]="dashboard.galleryName"></ngs-gallery>
   </p-header>
 
   <div ngsFillHeight>

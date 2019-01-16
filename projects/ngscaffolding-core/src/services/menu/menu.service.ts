@@ -25,8 +25,6 @@ export class MenuService {
 
   private menuItems: CoreMenuItem[] = [];
 
-  private menuItem: CoreMenuItem;
-
   private apiHome: string;
 
   public routeSubject = new BehaviorSubject<Array<Route>>(this.routes);
