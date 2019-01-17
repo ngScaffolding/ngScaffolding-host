@@ -4,7 +4,7 @@
 </div>
 
 <p-sidebar [(visible)]="galleryShown" position="right">
-    <ngs-gallery [galleryName]="dashboard.galleryName" (toolbarClicked)="alert('lcicked'); toolbarClicked();" ></ngs-gallery>
+    <ngs-gallery [galleryName]="dashboard.galleryName | async" (toolbarClicked)="toolbarClicked($event);" ></ngs-gallery>
 </p-sidebar>
 
 <p-card *ngIf="!loadingData">

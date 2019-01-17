@@ -73,7 +73,8 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
       }
     });
   }
-  public toolbarClicked(button: string) {
+  public toolbarClicked(button: any) {
+    alert('clicked');
     switch (button) {
       case 'add': {
         this.galleryShown = !this.galleryShown;
