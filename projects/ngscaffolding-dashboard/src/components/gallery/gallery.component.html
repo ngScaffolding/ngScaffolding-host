@@ -1,4 +1,8 @@
-<h2>Gallery</h2>
-<ul>
-  <li *ngFor="let widget of widgets$ | async">{{widget.name}}</li>
-</ul>
+<div class="galleryHeader">Add Widget</div>
+<div *ngFor="let widget of (widgets$ | async)">
+  <div class="ui-g widgetLine">
+    <div class="ui-g-3">+</div>
+
+    <div class="ui-g-9 widgetName">{{ widget.name }}</div>
+  </div>
+</div>

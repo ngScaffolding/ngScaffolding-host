@@ -6,9 +6,10 @@ import { Observable } from 'rxjs';
 @Component({
   selector: 'ngs-gallery',
   templateUrl: 'gallery.component.html',
-  styles: ['gallery.component.scss']
+  styleUrls: ['gallery.component.scss']
 })
-export class GalleryComponent implements OnInit {
+export class GalleryComponent implements OnChanges {
+
 
   @Input() galleryName: string;
 
@@ -17,7 +18,9 @@ export class GalleryComponent implements OnInit {
   constructor(public widgetService: WidgetService, public widgetQuery: WidgetQuery){
   }
 
-  ngOnInit(): void {
-    this.widgets$ = this.widgetQuery.selectAll({ filterBy: widget => widget.galleryName === this.galleryName});
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.galleryName.currentValue) {
+      this.widgets$ = this.widgetQuery.selectAll({ filterBy: widget => widget.galleryName === changes.galleryName.currentValue });
+    }
   }
 }

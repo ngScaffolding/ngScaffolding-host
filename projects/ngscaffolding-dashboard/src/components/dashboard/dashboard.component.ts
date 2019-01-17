@@ -14,7 +14,7 @@ import { CompactType, DisplayGrid, GridsterConfig, GridsterItem, GridType, Grids
 @Component({
   selector: 'ngs-dashboard',
   templateUrl: 'dashboard.component.html',
-  styles: ['./dashboard.component.scss']
+  styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
   @ViewChildren(GridsterItemComponent) gridsterItems: QueryList<GridsterItemComponent>;
@@ -74,7 +74,6 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
     });
   }
   public toolbarClicked(button: any) {
-    alert('clicked');
     switch (button) {
       case 'add': {
         this.galleryShown = !this.galleryShown;
