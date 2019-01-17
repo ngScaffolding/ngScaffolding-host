@@ -3,11 +3,16 @@
   <p-progressSpinner></p-progressSpinner>
 </div>
 
+<p-sidebar [(visible)]="galleryShown" position="right">
+    <ngs-gallery [galleryName]="dashboard.galleryName" (toolbarClicked)="alert('lcicked'); toolbarClicked();" ></ngs-gallery>
+</p-sidebar>
+
 <p-card *ngIf="!loadingData">
-  <p-header>
-    <span class="dashHeader">{{dashboard.title}}</span>
-    <span class="text-right"><ngs-dashboard-toolbar></ngs-dashboard-toolbar></span>
-    <ngs-gallery [galleryName]="dashboard.galleryName"></ngs-gallery>
+  <p-header styleClass="dashHeader">
+    <div>
+      <span class="dashHeader">{{dashboard.title}}</span>
+      <span class="text-right"><ngs-dashboard-toolbar></ngs-dashboard-toolbar></span>
+    </div>
   </p-header>
 
   <div ngsFillHeight>

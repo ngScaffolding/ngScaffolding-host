@@ -1,4 +1,4 @@
-<div *ngIf="!collapsedToolbar" class="ui-g" style="float: right;">
+<div *ngIf="!collapsedToolbar" class="ui-g expandedToolbar" style="float: right;">
   <button pButton class="ui-button-success toolbarButton" *ngIf="!hideFilters" type="button" icon="ui-icon-filter" tooltipPosition="bottom"
     (click)="this.filtersClicked.emit(null)" pTooltip="Show/Hide Filters" [label]="showLabel('Filters')">
   </button>
@@ -23,12 +23,14 @@
 
 </div>
 
- <div class="expand-toolbar" *ngIf="collapsedToolbar">
+<div class="expand-toolbar" *ngIf="collapsedToolbar">
 
   <span [@toolBarExpandedState]="expanded">
-    <button pButton class="ui-button-success toolbarButton" *ngIf="!hideFilters" type="button" icon="ui-icon-filter" tooltipPosition="bottom"
-      (click)="this.filtersClicked.emit(null)" pTooltip="Show/Hide Filters" [label]="showLabel('Filters')">
+    <!-- Add Button -->
+    <button pButton class="ui-button-success toolbarButton" type="button" icon="ui-icon-add" tooltipPosition="bottom"
+      (click)="buttonClicked('add')" pTooltip="Add Widget" [label]="showLabel('Filters')">
     </button>
+
     <button pButton class="ui-button-info toolbarButton" *ngIf="!hideRefresh" type="button" icon="ui-icon-refresh" tooltipPosition="bottom"
       (click)="buttonClicked(); this.refreshClicked.emit(null);" pTooltip="Refresh Data" [label]="showLabel('Refresh')"></button>
 

@@ -1,5 +1,6 @@
 .toolbarButton{
         border-radius: 0x !important;
+        margin-left: 2px;
 }
 .menuContainer{
   position: relative;
@@ -8,6 +9,7 @@
 
 .expand-toolbar {
   position: relative;
+  right: 10px;
   top: 10px;
   float: right;
 }

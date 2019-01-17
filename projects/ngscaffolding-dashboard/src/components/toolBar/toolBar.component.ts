@@ -40,6 +40,8 @@ export class DashboardToolBarComponent implements OnInit {
   @Input() hideLabels = true;
   @Input() collapsedToolbar = true;
 
+  @Output() toolbarClicked = new EventEmitter<string>();
+
   @Output() filtersClicked = new EventEmitter<any>();
   @Output() refreshClicked = new EventEmitter<any>();
   @Output() columnsClicked = new EventEmitter<any>();
@@ -48,7 +50,7 @@ export class DashboardToolBarComponent implements OnInit {
   @Output() resetViewClicked = new EventEmitter<any>();
   @Output() shareViewClicked = new EventEmitter<any>();
 
-  public expanded = 'false';
+  public expanded = 'true';
 
   constructor(public appSettings: AppSettingsService, public appSettingsQuery: AppSettingsQuery) {}
 
@@ -56,7 +58,10 @@ export class DashboardToolBarComponent implements OnInit {
     this.expanded = this.expanded === 'true' ? 'false' : 'true';
   }
 
-  public buttonClicked() {
+  public buttonClicked(name: string) {
+    console.log('Clicked ' + name);
+    this.toolbarClicked.emit(name);
+
     this.expanded = 'false';
   }
 

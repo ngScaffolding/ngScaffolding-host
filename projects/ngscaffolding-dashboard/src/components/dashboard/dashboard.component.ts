@@ -12,9 +12,9 @@ import { ChartComponent, ChartDataService } from 'ngscaffolding-chart';
 import { CompactType, DisplayGrid, GridsterConfig, GridsterItem, GridType, GridsterItemComponent, GridsterItemComponentInterface } from 'angular-gridster2';
 
 @Component({
-  selector: 'app-dashboard',
+  selector: 'ngs-dashboard',
   templateUrl: 'dashboard.component.html',
-  styles: ['dashboard.component.scss']
+  styles: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
   @ViewChildren(GridsterItemComponent) gridsterItems: QueryList<GridsterItemComponent>;
@@ -33,6 +33,7 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
 
   public unitHeight: number;
   public loadingData = false;
+  public galleryShown = false;
 
   constructor(
     private router: Router,
@@ -71,6 +72,14 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
         this.loadingData = false;
       }
     });
+  }
+  public toolbarClicked(button: string) {
+    switch (button) {
+      case 'add': {
+        this.galleryShown = !this.galleryShown;
+        break;
+      }
+    }
   }
 
   private itemChange(item, itemComponent) {
