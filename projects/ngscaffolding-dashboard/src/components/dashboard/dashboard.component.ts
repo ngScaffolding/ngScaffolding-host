@@ -83,7 +83,9 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
   onAddWidget(name: string) {
     this.galleryShown = false;
 
-    const widgetModel = this.widgetQuery.getEntity(name);
+    const readOnlyWidget = this.widgetQuery.getEntity(name);
+    const widgetModel = JSON.parse(JSON.stringify(readOnlyWidget));
+
     if (widgetModel) {
       const widgetDetails: WidgetDetails = {
         widgetName: name,
