@@ -3,20 +3,17 @@
   <p-progressSpinner></p-progressSpinner>
 </div>
 
-<div class="kajsdflk">Hello World</div>
-
 <p-sidebar [(visible)]="galleryShown" position="right">
-    <ngs-gallery [galleryName]="dashboard?.galleryName"></ngs-gallery>
+    <ngs-gallery [galleryName]="dashboard?.galleryName" (addWidget)="onAddWidget($event)"></ngs-gallery>
 </p-sidebar>
 
 <p-card *ngIf="!loadingData">
   <p-header styleClass="dashHeader">
-    <div>
+    <div class="headerLine">
       <span class="dashHeader">{{dashboard.title}}</span>
       <span class="text-right">
         <ngs-dashboard-toolbar (toolbarClicked)="onToolbarClicked($event);"></ngs-dashboard-toolbar></span>
     </div>
-    <input type="button" (click)="onToolbarClicked('add');">
   </p-header>
 
   <div ngsFillHeight>

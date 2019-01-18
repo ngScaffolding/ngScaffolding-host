@@ -15,6 +15,7 @@
     background-color: lighten( $maskBgColor, 40% );
     border: 2px solid lightgray;
   }
+  cursor: pointer;
   border: 1px solid lightgray;
   color: $activeMenuItemBadgeColor;
   background-color: lighten( $maskBgColor, 20% );

@@ -38,11 +38,11 @@ export class DashboardToolBarComponent implements OnInit {
   @Input() hideShareView: boolean;
 
   @Input() hideLabels = true;
-  @Input() collapsedToolbar = false;
+  @Input() collapsedToolbar = true;
 
   @Output() toolbarClicked = new EventEmitter<string>();
 
-  public expanded = true;
+  public expanded = false;
 
   constructor(public appSettings: AppSettingsService, public appSettingsQuery: AppSettingsQuery) {}
 

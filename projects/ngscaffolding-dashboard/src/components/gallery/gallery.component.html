@@ -1,8 +1,14 @@
 <div class="galleryHeader">Add Widget</div>
 <div *ngFor="let widget of (widgets$ | async)">
   <div class="ui-g widgetLine">
-    <div class="ui-g-3">+</div>
+    <div class="ui-g-2">
+      <button pButton class="ui-button-success toolbarButton"
+        type="button" icon="ui-icon-add" tooltipPosition="bottom"
+        (click)="clickWidget(widget.name)" pTooltip="Add Widget">
+    </button></div>
 
-    <div class="ui-g-9 widgetName">{{ widget.name }}</div>
+    <div class="ui-g-8 widgetName">{{ widget.name }}</div>
+    <div class="ui-g-2">
+        <i class="material-icons">{{getIconName(widget)}}</i></div>
   </div>
 </div>

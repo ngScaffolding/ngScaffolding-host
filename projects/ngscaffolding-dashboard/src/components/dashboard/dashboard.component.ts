@@ -1,12 +1,10 @@
 import { Component, OnInit, OnDestroy, ComponentRef, ViewChildren, QueryList, OnChanges, SimpleChanges } from '@angular/core';
-import { DataSourceService, LoggingService, MenuService, MenuQuery } from 'ngscaffolding-core';
+import { DataSourceService, LoggingService, MenuQuery, WidgetQuery } from 'ngscaffolding-core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { CoreMenuItem, WidgetModelBase, WidgetDetails, WidgetTypes, ChartDetailModel } from '@ngscaffolding/models';
-import { Observable } from 'rxjs';
+import { CoreMenuItem, WidgetModelBase, WidgetDetails, WidgetTypes } from '@ngscaffolding/models';
 
 import { DashboardModel } from '@ngscaffolding/models';
 
-import { DataGridComponent } from 'ngscaffolding-datagrid';
 import { ChartComponent, ChartDataService } from 'ngscaffolding-chart';
 
 import { CompactType, DisplayGrid, GridsterConfig, GridsterItem, GridType, GridsterItemComponent, GridsterItemComponentInterface } from 'angular-gridster2';
@@ -36,7 +34,7 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
   public galleryShown = false;
 
   constructor(
-    private router: Router,
+    private widgetQuery: WidgetQuery,
     private route: ActivatedRoute,
     private logger: LoggingService,
     private menuQuery: MenuQuery,
@@ -80,6 +78,20 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
         this.galleryShown = !this.galleryShown;
         break;
       }
+    }
+  }
+  onAddWidget(name: string) {
+    this.galleryShown = false;
+
+    const widgetModel = this.widgetQuery.getEntity(name);
+    if (widgetModel) {
+      const widgetDetails: WidgetDetails = {
+        widgetName: name,
+        cols: widgetModel.initialWidth > 0 ? widgetModel.initialWidth : 2,
+        rows: widgetModel.initialHeight > 0 ? widgetModel.initialHeight : 1,
+        widget: widgetModel
+      };
+      this.dashboard.widgets.push(widgetDetails);
     }
   }
 
