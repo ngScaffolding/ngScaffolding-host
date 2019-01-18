@@ -42,27 +42,20 @@ export class DashboardToolBarComponent implements OnInit {
 
   @Output() toolbarClicked = new EventEmitter<string>();
 
-  @Output() filtersClicked = new EventEmitter<any>();
-  @Output() refreshClicked = new EventEmitter<any>();
-  @Output() columnsClicked = new EventEmitter<any>();
-  @Output() exportClicked = new EventEmitter<any>();
-  @Output() saveViewClicked = new EventEmitter<any>();
-  @Output() resetViewClicked = new EventEmitter<any>();
-  @Output() shareViewClicked = new EventEmitter<any>();
-
-  public expanded = 'true';
+  public expanded = true;
 
   constructor(public appSettings: AppSettingsService, public appSettingsQuery: AppSettingsQuery) {}
 
   public toggleMenu() {
-    this.expanded = this.expanded === 'true' ? 'false' : 'true';
+    this.expanded = !this.expanded;
   }
 
   public buttonClicked(name: string) {
     console.log('Clicked ' + name);
+
     this.toolbarClicked.emit(name);
 
-    this.expanded = 'false';
+    this.expanded = false;
   }
 
   showLabel(label: string) {
