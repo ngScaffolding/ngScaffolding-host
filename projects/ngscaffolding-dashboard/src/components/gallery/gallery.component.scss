@@ -1,15 +1,25 @@
+@import '../../../../../src/assets/sass/variables';
+
 .galleryHeader {
+  height: 24px;
   font-size: 28px;
   text-align: center;
-  padding-bottom: 8px;
+  padding-top: 8px;
+  padding-bottom: 38px;
   margin-bottom: 18px;
   border-bottom: 1px solid grey;
 }
 
 .widgetLine{
+  &:hover {
+    background-color: lighten( $maskBgColor, 40% );
+    border: 2px solid lightgray;
+  }
   border: 1px solid lightgray;
+  color: $activeMenuItemBadgeColor;
+  background-color: lighten( $maskBgColor, 20% );
   border-radius: 8px;
-  margin-bottom: 8px;
+  margin-bottom: 16px;
 }
 
 .widgetName{

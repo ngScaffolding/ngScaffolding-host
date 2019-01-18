@@ -1,4 +1,9 @@
 <div *ngIf="!collapsedToolbar" class="ui-g expandedToolbar" style="float: right;">
+    <!-- Add Button -->
+    <button pButton class="ui-button-success toolbarButton" *ngIf="!hideFilters" type="button" icon="ui-icon-add" tooltipPosition="bottom"
+    (click)="buttonClicked('add')" pTooltip="Add Widget" [label]="showLabel('Add Widget')">
+  </button>
+
   <button pButton class="ui-button-success toolbarButton" *ngIf="!hideFilters" type="button" icon="ui-icon-filter" tooltipPosition="bottom"
     (click)="this.filtersClicked.emit(null)" pTooltip="Show/Hide Filters" [label]="showLabel('Filters')">
   </button>

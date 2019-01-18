@@ -38,7 +38,7 @@ export class DashboardToolBarComponent implements OnInit {
   @Input() hideShareView: boolean;
 
   @Input() hideLabels = true;
-  @Input() collapsedToolbar = true;
+  @Input() collapsedToolbar = false;
 
   @Output() toolbarClicked = new EventEmitter<string>();
 
@@ -51,8 +51,6 @@ export class DashboardToolBarComponent implements OnInit {
   }
 
   public buttonClicked(name: string) {
-    console.log('Clicked ' + name);
-
     this.toolbarClicked.emit(name);
 
     this.expanded = false;
