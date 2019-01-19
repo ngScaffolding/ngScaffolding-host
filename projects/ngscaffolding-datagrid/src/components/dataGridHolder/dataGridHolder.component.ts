@@ -7,7 +7,7 @@ import { CoreMenuItem, GridViewDetail } from '@ngscaffolding/models';
 @Component({
   selector: 'app-datagrid-holder',
   templateUrl: './dataGridHolder.component.html',
-  styles: ['./dataGridHolder.component.scss']
+  styleUrls: ['./dataGridHolder.component.scss']
 })
 export class DataGridHolderComponent implements OnInit, OnDestroy {
   private paramSubscription: any;

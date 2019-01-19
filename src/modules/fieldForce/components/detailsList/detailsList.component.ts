@@ -9,7 +9,7 @@ export class KeyValue{
 @Component({
   selector: 'app-details-list',
   templateUrl: 'detailsList.component.html',
-  styles: ['detailsList.component.scss']
+  styleUrls: ['detailsList.component.scss']
 })
 export class DetailsListComponent implements OnChanges {
   @Input() inputValues: any;

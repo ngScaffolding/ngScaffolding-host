@@ -17,7 +17,7 @@ HC_solid_gauge(Highcharts);
 @Component({
   selector: 'ng-chart',
   templateUrl: 'chart.component.html',
-  styles: ['chart.component.scss']
+  styleUrls: ['chart.component.scss']
 })
 export class ChartComponent implements OnInit, OnDestroy, OnChanges {
   @Input() chartStyle: any;

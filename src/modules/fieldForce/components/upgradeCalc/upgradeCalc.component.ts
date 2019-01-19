@@ -29,7 +29,7 @@ class UpgradeModel {
 
 @Component({
   templateUrl: 'upgradeCalc.component.html',
-  styles: ['upgradeCalc.component.scss']
+  styleUrls: ['upgradeCalc.component.scss']
 })
 export class UpgradeCalcComponent implements OnChanges {
   upgradeValuesModel: UpgradeModel = {

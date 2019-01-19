@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 @Component({
   selector: 'ng-chart-holder',
   templateUrl: 'chartHolder.component.html',
-  styles: ['chartHolder.component.scss']
+  styleUrls: ['chartHolder.component.scss']
 })
 export class ChartHolderComponent implements OnInit, OnDestroy {
   private paramSubscription: any;

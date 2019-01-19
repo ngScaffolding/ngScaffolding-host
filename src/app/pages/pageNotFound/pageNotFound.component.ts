@@ -7,7 +7,7 @@ import { AppSettings } from '@ngscaffolding/models';
 
 @Component({
   templateUrl: 'pageNotFound.component.html',
-  styles: ['pageNotFound.component.scss']
+  styleUrls: ['pageNotFound.component.scss']
 })
 export class PageNotFoundComponent implements OnInit {
 
