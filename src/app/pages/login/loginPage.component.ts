@@ -4,7 +4,7 @@ import {
   AppSettingsService,
   NotificationService,
   SpinnerService,
-  UserAuthorisationBase
+  UserAuthenticationBase
 } from 'ngscaffolding-core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
@@ -42,7 +42,7 @@ export class LoginPageComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private spinnerService: SpinnerService,
-    private userAuthService: UserAuthorisationBase
+    private userAuthService: UserAuthenticationBase
   ) {
     this.authShowRememberMe$ = appSettingsQuery.selectEntity(AppSettings.authShowRememberMe, e => e.value);
   }

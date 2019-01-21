@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { AppComponent } from './app.component';
-import { AppSettingsService, UserAuthorisationBase, AppSettingsQuery } from 'ngscaffolding-core';
+import { AppSettingsService, UserAuthenticationBase, AppSettingsQuery } from 'ngscaffolding-core';
 import { trigger, state, transition, style, animate } from '@angular/animations';
 import { Observable } from 'rxjs';
 import { AppSettings } from '@ngscaffolding/models';
@@ -63,7 +63,7 @@ export class AppInlineProfileComponent {
   showProfileSetting$: Observable<boolean>;
   showUserSetting$: Observable<boolean>;
 
-  constructor(public app: AppComponent, public appSettingsQuery: AppSettingsQuery, public authService: UserAuthorisationBase) {
+  constructor(public app: AppComponent, public appSettingsQuery: AppSettingsQuery, public authService: UserAuthenticationBase) {
     this.showProfilePicture$ = appSettingsQuery.selectEntity(AppSettings.showProfilePicture, e => e.value);
     this.showProfileSetting$ = appSettingsQuery.selectEntity(AppSettings.showProfileSetting, e => e.value);
     this.showUserSetting$ = appSettingsQuery.selectEntity(AppSettings.showUserSetting, e => e.value);

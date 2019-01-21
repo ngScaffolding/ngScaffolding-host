@@ -1,5 +1,5 @@
 import { MenuService } from './menu.service';
-import { UserAuthorisationBase } from '../userAuthorisation/UserAuthorisationBase';
+import { UserAuthenticationBase } from '../userAuthorisation/UserAuthenticationBase';
 import { TestBed, inject } from '@angular/core/testing';
 import { RolesService } from '../rolesService/roles.service';
 
@@ -10,7 +10,7 @@ describe('MenuService', () => {
         MenuService,
         RolesService,
         {
-          provide: UserAuthorisationBase,
+          provide: UserAuthenticationBase,
           useValue: { currentUser: { roles: ['users', 'admin'] } }
         }
       ]
@@ -20,7 +20,7 @@ describe('MenuService', () => {
   it(
     'User NOT in user group When no Groups Defined',
     inject([RolesService], (rolesService: RolesService) => {
-      rolesService.userAuth.currentUser.roles = [];
+      rolesService.authQuery.currentUser.roles = [];
       expect(rolesService.isInRole('users')).toEqual(false);
     })
   );

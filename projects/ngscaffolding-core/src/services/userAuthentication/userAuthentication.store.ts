@@ -1,20 +1,22 @@
 import { Injectable } from '@angular/core';
-import { EntityState, EntityStore, StoreConfig } from '@datorama/akita';
+import { Store, StoreConfig } from '@datorama/akita';
 import { createBasicUser , BasicUser } from '@ngscaffolding/models';
 
 
-export interface AuthorisationState {
+export interface AuthenticationState {
+  authenticated: boolean;
   token: string;
+  refreshToken: string;
   userDetails: BasicUser;
 }
 
 @Injectable({ providedIn: 'root' })
 @StoreConfig({ name: 'authorisation' })
-export class AuthorisationStore extends EntityStore<AuthorisationState, AuthorisationValue> {
+export class AuthenticationStore extends Store<AuthenticationState> {
 
   constructor() {
     super(createBasicUser());
-    console.log('AuthorisationStore Constructor');
+    console.log('AuthenticationStore Constructor');
   }
 }
 

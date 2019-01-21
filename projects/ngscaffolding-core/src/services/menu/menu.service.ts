@@ -7,7 +7,7 @@ import { HttpClient } from '@angular/common/http';
 import { LoggingService } from '../logging/logging.service';
 import { CoreMenuItem, AppSettings } from '@ngscaffolding/models';
 import { AppSettingsQuery } from '../appSettings';
-import { UserAuthorisationBase } from '../userAuthorisation/UserAuthorisationBase';
+import { UserAuthenticationQuery } from '../userAuthentication';
 import { MenuStore } from './menu.store';
 import { MenuQuery } from './menu.query';
 import { isArray } from 'util';
@@ -34,7 +34,7 @@ export class MenuService {
     private menuStore: MenuStore,
     private menuQuery: MenuQuery,
     private appSettingsQuery: AppSettingsQuery,
-    private authService: UserAuthorisationBase,
+    private authQuery: UserAuthenticationQuery,
     private log: LoggingService,
     public rolesService: RolesService
   ) {
@@ -42,7 +42,7 @@ export class MenuService {
     this.menuStore.setLoading(false);
 
     // Wait for settings, then load from server
-    combineLatest(this.authService.authenticated$, this.appSettingsQuery.selectEntity(AppSettings.apiHome)).subscribe(([authenticated, apiHome]) => {
+    combineLatest(this.authQuery.authenticated$, this.appSettingsQuery.selectEntity(AppSettings.apiHome)).subscribe(([authenticated, apiHome]) => {
       if (authenticated && apiHome) {
         this.apiHome = apiHome.value;
         this.menuQuery.selectLoading().pipe(take(1)).subscribe(loading => {

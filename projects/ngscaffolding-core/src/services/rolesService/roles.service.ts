@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { UserAuthorisationBase } from '../userAuthorisation/UserAuthorisationBase';
+import { UserAuthenticationQuery } from '../userAuthentication';
 
 @Injectable({
   providedIn: 'root',
@@ -7,12 +7,13 @@ import { UserAuthorisationBase } from '../userAuthorisation/UserAuthorisationBas
 export class RolesService {
   private routeRoles = new Map<string, string[]>();
 
-  constructor(public userAuth: UserAuthorisationBase) {}
+  constructor(public authQuery: UserAuthenticationQuery) {}
 
   // Checks if the current user is in this role.
   public isInRole(role: string): boolean {
-    if (this.userAuth.currentUser && this.userAuth.currentUser.roles) {
-      return this.userAuth.currentUser.roles.indexOf(role) > -1;
+    const currentUser = this.authQuery.getSnapshot().userDetails;
+    if (currentUser && currentUser.roles) {
+      return currentUser.roles.indexOf(role) > -1;
     } else {
       return false;
     }
@@ -21,9 +22,10 @@ export class RolesService {
   // Checks if the current user is in one of these roles.
   public isInRoles(roles: string[]): boolean {
     let result = false;
-    if (this.userAuth.currentUser && this.userAuth.currentUser.roles) {
+    const currentUser = this.authQuery.getSnapshot().userDetails;
+    if (currentUser && currentUser.roles) {
       roles.forEach(role => {
-        if (this.userAuth.currentUser.roles.indexOf(role) > -1) {
+        if (currentUser.roles.indexOf(role) > -1) {
           result = true;
         }
       });

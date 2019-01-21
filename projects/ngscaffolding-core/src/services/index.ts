@@ -14,8 +14,7 @@ export * from './rolesService/roles.service';
 export * from './spinnerService/spinner.service';
 
 export * from './userPreferences/userPreferences.service';
-export * from './userAuthorisation/userAuthorisation.service';
-export * from './userAuthorisation/UserAuthorisationBase';
+export * from './userAuthentication';
 
 export * from './versions/versions.service';
 export * from './widgetsService';

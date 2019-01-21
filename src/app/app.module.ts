@@ -33,7 +33,8 @@ import { APP_COMPONENTS } from './app.component.list';
 import { MessageService } from 'primeng/components/common/messageservice';
 
 import {
-  CoreModule, AuthoriseRoleGuard, AppSettingsService, UserAuthorisationBase, UserAuthorisationService,
+  CoreModule, AuthoriseRoleGuard, AppSettingsService, UserAuthenticationBase, UserAuthenticationService,
+  UserAuthenticationQuery,
   CoreErrorHandlerService, VersionsService, DynamicComponentService } from 'ngscaffolding-core';
 
   // Externalise These Modules
@@ -60,10 +61,10 @@ import { AkitaNgDevtools } from '@datorama/akita-ngdevtools';
 import { environment } from '../environments/environment';
 import { AppSettings } from '@ngscaffolding/models';
 
-export function jwtOptionsFactory(appSettings: AppSettingsService) {
+export function jwtOptionsFactory(authQuery: UserAuthenticationQuery) {
   return {
     tokenGetter: () => {
-      return appSettings.getValue(AppSettings.authToken);
+      return authQuery.getSnapshot().token;
     }
   };
 }
@@ -95,7 +96,7 @@ const appInitializerFn = (appConfig: AppSettingsService) => {
           jwtOptionsProvider: {
           provide: JWT_OPTIONS,
           useFactory: jwtOptionsFactory,
-          deps: [AppSettingsService]
+          deps: [UserAuthenticationQuery]
         }}),
 
         environment.production ? [] : AkitaNgDevtools.forRoot({ logTrace: false })
@@ -141,7 +142,7 @@ const appInitializerFn = (appConfig: AppSettingsService) => {
           deps: [AppSettingsService]
         },
         AuthoriseRoleGuard,
-        { provide: UserAuthorisationBase, useClass: UserAuthorisationService},
+        { provide: UserAuthenticationBase, useClass: UserAuthenticationService},
         MessageService,
         // ngScaffolding
     ],

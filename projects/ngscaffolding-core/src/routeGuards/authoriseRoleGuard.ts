@@ -4,20 +4,20 @@ import {
   ActivatedRouteSnapshot,
   RouterStateSnapshot
 } from '@angular/router';
-import { UserAuthorisationBase } from '../services/userAuthorisation/UserAuthorisationBase';
+import { UserAuthenticationQuery } from '../services';
 import { Injectable } from '@angular/core';
 import { RolesService } from '../services/rolesService/roles.service';
 
 @Injectable()
 export class AuthoriseRoleGuard implements CanActivate {
   constructor(
-    private authService: UserAuthorisationBase,
+    private authQuery: UserAuthenticationQuery,
     private router: Router,
     private rolesService: RolesService
   ) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    if (this.authService.isAuthenticated()) {
+    if (this.authQuery.isAuthenticated()) {
       return true;
     }
 

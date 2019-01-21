@@ -1,4 +1,4 @@
-import { UserAuthorisationBase } from '../userAuthorisation/UserAuthorisationBase';
+import { UserAuthenticationBase } from '../userAuthorisation/UserAuthenticationBase';
 import { TestBed, inject } from '@angular/core/testing';
 import { RolesService } from '../rolesService/roles.service';
 
@@ -8,7 +8,7 @@ describe('RolesService', () => {
       providers: [
         RolesService,
         {
-          provide: UserAuthorisationBase,
+          provide: UserAuthenticationBase,
           useValue: { currentUser: { roles: ['users', 'admin'] } }
         }
       ]
@@ -17,7 +17,7 @@ describe('RolesService', () => {
 
   it('User NOT in user group When no Groups Defined',
     inject([RolesService], (rolesService: RolesService) => {
-      rolesService.userAuth.currentUser.roles = [];
+      rolesService.authQuery.currentUser.roles = [];
       expect(rolesService.isInRole('users')).toEqual(false);
     })
   );

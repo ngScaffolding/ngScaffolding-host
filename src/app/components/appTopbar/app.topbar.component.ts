@@ -1,6 +1,6 @@
 import { Component, Inject, forwardRef } from '@angular/core';
 import { AppComponent } from '../../app.component';
-import { AppSettingsQuery, AppSettingsService, ReferenceValuesService, UserAuthorisationBase } from 'ngscaffolding-core';
+import { AppSettingsQuery, AppSettingsService, ReferenceValuesService, UserAuthenticationBase, UserAuthenticationQuery } from 'ngscaffolding-core';
 import { Observable } from 'rxjs/internal/Observable';
 
 @Component({
@@ -13,18 +13,20 @@ export class AppTopBarComponent {
 
   public title$: Observable<any>;
 
+
   constructor(
     @Inject(forwardRef(() => AppComponent))
     public app: AppComponent,
     public appSettings: AppSettingsService,
     public appSettingQuery: AppSettingsQuery,
     private referenceValuesService: ReferenceValuesService,
-    public userAuthService: UserAuthorisationBase
+    public authQuery: UserAuthenticationQuery,
+    private authService: UserAuthenticationBase
   ) {
     this.title$ = appSettingQuery.selectEntity('title', entity => entity.value);
   }
 
   public logoff(): void {
-    this.userAuthService.logoff();
+    this.authService.logoff();
   }
 }

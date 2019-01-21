@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject ,  Observable } from 'rxjs';
 
-import { UserAuthorisationBase } from '../userAuthorisation/UserAuthorisationBase';
+import { UserAuthenticationQuery } from '../userAuthentication';
 import { AppSettingsService } from '../appSettings/appSettings.service';
 
 // Models
@@ -21,9 +21,9 @@ export class UserPreferencesService {
   public preferenceDefinitionsSubject = new BehaviorSubject<Array<UserPreferenceDefinition>>(null);
   public preferenceValuesSubject = new BehaviorSubject<Array<UserPreferenceValue>>(null);
 
-  constructor(private http: HttpClient, private auth: UserAuthorisationBase, private appSettings: AppSettingsService) {
+  constructor(private http: HttpClient, private authQuery: UserAuthenticationQuery, private appSettings: AppSettingsService) {
 
-    auth.authenticated$.subscribe(isAuthorised => {
+    authQuery.authenticated$.subscribe(isAuthorised => {
       if (isAuthorised) {
         // Load User Prefs from Localstorage
         this.loadFromLocal();
@@ -110,7 +110,7 @@ export class UserPreferencesService {
 
     if (!currentPref) {
       currentPref = new UserPreferenceValue();
-      currentPref.userId = this.auth.currentUser.userId;
+      currentPref.userId = this.authQuery.getSnapshot().userDetails.userId;
       currentPref.name = key;
       currentPref.value = value;
 

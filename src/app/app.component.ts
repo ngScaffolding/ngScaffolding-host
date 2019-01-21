@@ -7,7 +7,7 @@ import { NgScaffoldingComponent } from './app.ngscaffolding.component';
 import { Title } from '@angular/platform-browser';
 
 import { LoggingService, AppSettingsService, SpinnerService } from 'ngscaffolding-core';
-import { UserAuthorisationBase, UserPreferencesService } from 'ngscaffolding-core';
+import { UserAuthenticationQuery, UserPreferencesService } from 'ngscaffolding-core';
 import { BroadcastService, BroadcastTypes, MenuService } from 'ngscaffolding-core';
 import { NotificationReceiverService } from './services/notificationReceiver/notificationReceiver.service';
 import { AppSettingsQuery } from 'ngscaffolding-core';
@@ -82,7 +82,7 @@ export class AppComponent extends NgScaffoldingComponent
     public renderer: Renderer,
     public zone: NgZone,
     public logger: LoggingService,
-    public userAuthService: UserAuthorisationBase,
+    public authQuery: UserAuthenticationQuery,
     public titleService: Title,
     public appSettingsQuery: AppSettingsQuery,
     public notificationReceiverService: NotificationReceiverService,
@@ -94,7 +94,7 @@ export class AppComponent extends NgScaffoldingComponent
     super(
       router,
       logger,
-      userAuthService,
+      authQuery,
       titleService,
       appSettingsQuery,
       notificationReceiverService,

@@ -8,8 +8,9 @@ import {
   HttpResponse
 } from '@angular/common/http';
 import {
-  UserAuthorisationBase,
-  LoggingService
+  UserAuthenticationBase,
+  LoggingService,
+  UserAuthenticationQuery
 } from 'ngscaffolding-core';
 import { Observable } from 'rxjs';
 import { finalize, tap } from 'rxjs/operators';
@@ -19,19 +20,19 @@ export class TokenInterceptor implements HttpInterceptor {
   constructor(
     private injector: Injector,
     private logger: LoggingService,
-    private authService: UserAuthorisationBase
+    private authService: UserAuthenticationBase
   ) {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler) {
     const started = Date.now();
     let ok: string;
 
-    const auth = this.injector.get(UserAuthorisationBase);
+    const auth = this.injector.get(UserAuthenticationQuery);
 
     if (request.url.indexOf('loginUser') === -1) {
       request = request.clone({
         setHeaders: {
-          Authorization: `Bearer ${auth.getToken()}`
+          Authorization: `Bearer ${auth.getSnapshot().token}`
         }
       });
     }

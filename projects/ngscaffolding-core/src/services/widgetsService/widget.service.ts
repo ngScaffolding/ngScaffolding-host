@@ -7,7 +7,7 @@ import { HttpClient } from '@angular/common/http';
 import { LoggingService } from '../logging/logging.service';
 import { WidgetModelBase, AppSettings } from '@ngscaffolding/models';
 import { AppSettingsQuery } from '../appSettings';
-import { UserAuthorisationBase } from '../userAuthorisation/UserAuthorisationBase';
+import { UserAuthenticationQuery } from '../userAuthentication';
 import { WidgetStore } from './widget.store';
 import { WidgetQuery } from './widget.query';
 import { isArray } from 'util';
@@ -27,7 +27,7 @@ export class WidgetService {
     private widgetStore: WidgetStore,
     private widgetQuery: WidgetQuery,
     private appSettingsQuery: AppSettingsQuery,
-    private authService: UserAuthorisationBase,
+    private authQuery: UserAuthenticationQuery,
     private log: LoggingService,
     public rolesService: RolesService
   ) {
@@ -35,7 +35,7 @@ export class WidgetService {
     this.widgetStore.setLoading(false);
 
     // Wait for settings, then load from server
-    combineLatest(this.authService.authenticated$, this.appSettingsQuery.selectEntity(AppSettings.apiHome)).subscribe(([authenticated, apiHome]) => {
+    combineLatest(this.authQuery.authenticated$, this.appSettingsQuery.selectEntity(AppSettings.apiHome)).subscribe(([authenticated, apiHome]) => {
       if (authenticated && apiHome) {
         this.apiHome = apiHome.value;
         this.widgetQuery

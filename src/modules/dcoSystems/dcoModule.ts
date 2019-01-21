@@ -137,6 +137,7 @@ export class DCOAppModule {
         label: 'Maramba Site 2',
         items: [
           {
+            name: 'MarambeDashboard',
             label: 'Maraba Dashboard',
             icon: 'brush',
             routerLink: 'dcodashboard'
@@ -148,6 +149,7 @@ export class DCOAppModule {
         label: 'System Admin',
         items: [
           {
+            name: 'InputBuilderTest',
             label: 'Input Builder (Works)',
             icon: 'brush',
             routerLink: 'fieldforcemachinedetails'
