@@ -1,5 +1,5 @@
-import { Component, OnInit, OnDestroy, ComponentRef, ViewChildren, QueryList, OnChanges, SimpleChanges } from '@angular/core';
-import { DataSourceService, LoggingService, MenuQuery, WidgetQuery } from 'ngscaffolding-core';
+import { Component, OnInit, OnDestroy, ComponentRef, ViewChildren, QueryList, OnChanges, SimpleChanges, Type } from '@angular/core';
+import { DataSourceService, LoggingService, MenuQuery, WidgetQuery, AppSettingsQuery } from 'ngscaffolding-core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CoreMenuItem, WidgetModelBase, WidgetDetails, WidgetTypes } from '@ngscaffolding/models';
 
@@ -8,6 +8,8 @@ import { DashboardModel } from '@ngscaffolding/models';
 import { ChartComponent, ChartDataService } from 'ngscaffolding-chart';
 
 import { CompactType, DisplayGrid, GridsterConfig, GridsterItem, GridType, GridsterItemComponent, GridsterItemComponentInterface } from 'angular-gridster2';
+import { Type } from '@angular/compiler/src/core';
+import { HtmlContainerComponent } from '../htmlContainer/htmlContainer.component';
 
 @Component({
   selector: 'ngs-dashboard',
@@ -25,6 +27,7 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
   public dashboard: DashboardModel;
 
   private components: any[] = [];
+  private dynmicTypes: Type<any>[];
 
   // public component = ChartComponent;
   public componentInputs = {};
@@ -35,12 +38,19 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
 
   constructor(
     private widgetQuery: WidgetQuery,
+    private appSettingsQuery: AppSettingsQuery,
     private route: ActivatedRoute,
     private logger: LoggingService,
     private menuQuery: MenuQuery,
     private chartDataService: ChartDataService,
     private dataSourceService: DataSourceService
-  ) {}
+  ) {
+    this.appSettingsQuery
+      .select(store => store.dynamicTypes)
+      .subscribe(types => {
+        this.dynmicTypes = types;
+      });
+  }
 
   public getComponent(widgetDetails: WidgetDetails) {
     switch (widgetDetails.widget.type) {
@@ -51,7 +61,12 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
         return ChartComponent;
       }
       case WidgetTypes.Html: {
-        break;
+        return HtmlContainerComponent;
+      }
+      default: {
+        let returnType: Type<any>;
+        returnType = this.dynmicTypes.find(type => type.name.toLowerCase() === widgetDetails.widget.type.toLowerCase());
+        return returnType;
       }
     }
   }

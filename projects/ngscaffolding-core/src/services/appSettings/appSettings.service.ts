@@ -1,10 +1,11 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Type } from '@angular/core';
 import { AppSettings, AppSettingsValue } from '@ngscaffolding/models';
 import { LoggingService } from '../logging/logging.service';
 import { HttpClient } from '@angular/common/http';
 import { AppSettingsStore } from './appSettings.store';
 import { AppSettingsQuery } from './appSettings.query';
 import { Observable } from 'rxjs/internal/Observable';
+import { take } from 'rxjs/internal/operators/take';
 
 @Injectable({
   providedIn: 'root'
@@ -43,6 +44,15 @@ export class AppSettingsService {
     } else {
       return null;
     }
+  }
+
+  public registerDynamicTypes(newTypes: Type<any>[]) {
+    this.appSettingsQuery.select(state => state.dynamicTypes)
+      .pipe(take(1))
+      .subscribe(dynamicTypes => {
+        const newList = dynamicTypes.concat(newTypes);
+        this.appSettingsStore.updateRoot({ dynamicTypes: newList });
+       });
   }
 
   private loadFromServer(apiHome: string) {

@@ -22,6 +22,7 @@ import { CardModule } from 'primeng/card';
 import { DataGridModule, ButtonModule, SidebarModule, DialogModule, ConfirmDialogModule, TooltipModule } from 'primeng/primeng';
 import { DashboardToolBarComponent } from './components';
 import { GalleryComponent } from './components/gallery/gallery.component';
+import { HtmlContainerComponent } from './components/htmlContainer/htmlContainer.component';
 
 // Services
 
@@ -44,17 +45,19 @@ const appRoutes: Routes = [
     GridsterModule,
     CardModule,
     ProgressSpinnerModule,
-    DynamicModule.withComponents([DataGridComponent, ChartComponent]),
+    DynamicModule,
     RouterModule.forChild(appRoutes)
   ],
   declarations: [
     DashboardComponent,
     DashboardToolBarComponent,
+    HtmlContainerComponent,
     GalleryComponent
   ],
   exports: [
     DashboardComponent,
     DashboardToolBarComponent,
+    HtmlContainerComponent,
     RouterModule
   ],
   providers: [

@@ -1,10 +1,11 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Type } from '@angular/core';
 import { EntityState, EntityStore, StoreConfig } from '@datorama/akita';
 import { AppSettingsValue, AppSettings } from '@ngscaffolding/models';
 
 
 export interface AppSettingsState extends EntityState<AppSettingsValue> {
   isInitialised: boolean;
+  dynamicTypes: Type<any>[];
 }
 
 @Injectable({ providedIn: 'root' })
@@ -12,7 +13,7 @@ export interface AppSettingsState extends EntityState<AppSettingsValue> {
 export class AppSettingsStore extends EntityStore<AppSettingsState, AppSettingsValue> {
 
   constructor() {
-    super();
+    super({ isInitialised: false, dynamicTypes: []});
     console.log('AppSettingsStore Constructor');
   }
 }

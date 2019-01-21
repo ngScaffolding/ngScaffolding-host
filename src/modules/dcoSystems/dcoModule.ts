@@ -16,8 +16,8 @@ import {
 
 import { InputBuilderModule } from 'ngscaffolding-inputbuilder';
 
-import { DatagridModule } from 'ngscaffolding-datagrid';
-import { ChartingModule } from 'ngscaffolding-chart';
+import { DatagridModule, DataGridComponent } from 'ngscaffolding-datagrid';
+import { ChartingModule, ChartComponent } from 'ngscaffolding-chart';
 import { TopDashboardComponent } from './pages/topDashboard/topDashboard.component';
 import { DigitalReadoutComponent } from './components/digitalReadout/digitalReadout.component';
 
@@ -35,6 +35,7 @@ import { ProgressSpinnerModule } from 'primeng/primeng';
 import { SpinnerModule } from 'primeng/primeng';
 import { TabMenuModule } from 'primeng/primeng';
 import { TabViewModule } from 'primeng/primeng';
+import { DynamicModule } from 'ng-dynamic-component';
 
 // export * from './pages';
 
@@ -66,6 +67,7 @@ const appRoutes: Routes = [
     SpinnerModule,
     TabMenuModule,
     TabViewModule,
+    DynamicModule.withComponents([DataGridComponent, ChartComponent, DigitalReadoutComponent]),
     RouterModule.forChild(appRoutes)
   ],
   declarations: [
@@ -125,6 +127,8 @@ export class DCOAppModule {
     appSettingsService.setValue(AppSettings.authTokenEndpoint, '/auth/token');
     appSettingsService.setValue(AppSettings.authTermsAndConditions,
       'DCO Systems Terms and Conditions Here. Lorem ipsum dolor sit amet, consectetur adipiscing elit.');
+
+    appSettingsService.registerDynamicTypes([DigitalReadoutComponent]);
 
 
 
