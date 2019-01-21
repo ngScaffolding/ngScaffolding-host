@@ -20,7 +20,8 @@
             "assets": [
               "src/assets",
               "src/assets/data/appConfig.json",
-              "src/upload.php"
+              "src/upload.php",
+              "src/modules/dcoSystems/fonts"
             ],
             "styles": [
               "node_modules/primeng/resources/primeng.min.css",

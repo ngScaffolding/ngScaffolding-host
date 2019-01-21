@@ -60,16 +60,7 @@ $c-lineHeight: 18px;
 
 @import '../../src/assets/sass/ngScaffolding.scss';
 
-/* Digital Style Font */
-@font-face {
-  font-family: 'DSEG7';
-  font-style: normal;
-  font-weight: 400;
-  src: local('DSEG7'), local('DSEG7-Regular'),
-       url("../fonts/DSEG7Classic-Italic.woff2") format('woff2'), /* Super Modern Browsers */
-       url("../fonts/DSEG7Classic-Italic.woff") format('woff'), /* Modern Browsers */
-       url("../fonts/DSEG7Classic-Italic.ttf") format('truetype') /* Safari, Android, iOS */
-}
+
 
 
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {

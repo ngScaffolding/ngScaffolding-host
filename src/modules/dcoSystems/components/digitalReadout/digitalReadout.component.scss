@@ -1,12 +1,16 @@
+@import '../../theme/theme.scss';
+
 .readout-title {
-  font-size: 3em;
+  text-align: left;
+    font-size: 2em;
+    margin-bottom: 18px;
 }
 .readout-col {
   text-align: right;
 }
 .readout-holder {
   border: 2px solid #999;
-  height: 99px;
+  height: 100%;
   color: ghostwhite;
   background-color: black;
 }
