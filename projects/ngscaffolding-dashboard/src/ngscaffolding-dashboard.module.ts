@@ -10,6 +10,7 @@ import { CoreModule, AuthoriseRoleGuard } from 'ngscaffolding-core';
 
 import { InputBuilderModule } from 'ngscaffolding-inputbuilder';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { WidgetContainerComponent } from './components/widgetContainer/widgetContainer.component';
 
 import { DataGridComponent, ToolBarComponent } from 'ngscaffolding-datagrid';
 import { ChartComponent } from 'ngscaffolding-chart';
@@ -52,7 +53,8 @@ const appRoutes: Routes = [
     DashboardComponent,
     DashboardToolBarComponent,
     HtmlContainerComponent,
-    GalleryComponent
+    GalleryComponent,
+    WidgetContainerComponent
   ],
   exports: [
     DashboardComponent,
