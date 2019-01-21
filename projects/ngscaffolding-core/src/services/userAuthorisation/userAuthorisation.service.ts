@@ -5,7 +5,7 @@ import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { AppSettingsService } from '../appSettings/appSettings.service';
 import { LoggingService } from '../logging/logging.service';
 
-import { AuthUser, AuthUserResponse, AppSettings, AppSettingsValue } from '@ngscaffolding/models';
+import { BasicUser, AuthUserResponse, AppSettings, AppSettingsValue } from '@ngscaffolding/models';
 
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { UserAuthorisationBase } from './UserAuthorisationBase';
@@ -21,7 +21,7 @@ export class UserAuthorisationService implements UserAuthorisationBase {
   private refreshToken: string;
   private jwtHelper: JwtHelperService;
 
-  currentUser: AuthUser;
+  currentUser: BasicUser;
 
   constructor(
     private logger: LoggingService,
@@ -75,7 +75,7 @@ export class UserAuthorisationService implements UserAuthorisationBase {
     // New AuthUser Based on Token
     const tokenDetails = this.jwtHelper.decodeToken(token);
 
-    this.currentUser = new AuthUser();
+    this.currentUser = new BasicUser();
     this.currentUser.tokenExpires = this.jwtHelper.getTokenExpirationDate(token);
     if (this.jwtHelper.isTokenExpired(token)) {
       this.logoff();
@@ -122,8 +122,8 @@ export class UserAuthorisationService implements UserAuthorisationBase {
       );
   }
 
-  public logon(userName: string, password: string): Observable<AuthUser> {
-    return new Observable<AuthUser>(observer => {
+  public logon(userName: string, password: string): Observable<BasicUser> {
+    return new Observable<BasicUser>(observer => {
       let body = new HttpParams();
       body = body
         .append('username', userName)
