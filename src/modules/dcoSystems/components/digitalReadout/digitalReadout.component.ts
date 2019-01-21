@@ -11,6 +11,7 @@ export class DigitalReadoutComponent implements OnInit, AfterViewInit {
 
   @Input() displayValue: string;
   @Input() displayTitle: string;
+  @Input() displayUnit: string;
 
   constructor(private route: ActivatedRoute, private dataSource: DataSourceService) {
     this.route.queryParams.subscribe(params => {

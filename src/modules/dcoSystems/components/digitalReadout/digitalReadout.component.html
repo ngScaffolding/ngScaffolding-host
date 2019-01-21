@@ -1,13 +1,9 @@
 <div style="width: 100%">
-  <div class="ui-g readout-title">
-    {{displayTitle}}
-  </div>
+  <div class="ui-g readout-title">Wibble {{ displayTitle }}</div>
   <div class="ui-g readout-holder">
-    <div class="ui-g-9 readout-value">
-      {{displayValue}}
+    <div class="ui-g-9 readout-col">
+      <span class="readout-value"> {{ displayValue }} </span>
     </div>
-    <div class="ui-g-3 readout-indicator">
-      Up/Down
-    </div>
+    <div class="ui-g-3 readout-col"><span class="readout-indicator"> Up/Down </span></div>
   </div>
 </div>

@@ -1,7 +1,9 @@
 .readout-title {
-  font-size: 1em;
+  font-size: 3em;
 }
-
+.readout-col {
+  text-align: right;
+}
 .readout-holder {
   border: 2px solid #999;
   height: 99px;
@@ -10,7 +12,17 @@
 }
 
 .readout-value {
-  border-right: 2px solid #999;
+  color: goldenrod;
+  font-family: 'DSEG7';
+  font-size: 4em;
+  margin-right: 4px;
+}
+
+.readout-unit {
+  color: darkgoldenrod;
+  font-family: 'DSEG7';
+  font-size: 3em;
+  margin-right: 0px;
 }
 
 .readout-indicator {

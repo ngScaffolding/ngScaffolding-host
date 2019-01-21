@@ -8,7 +8,6 @@ import { DashboardModel } from '@ngscaffolding/models';
 import { ChartComponent, ChartDataService } from 'ngscaffolding-chart';
 
 import { CompactType, DisplayGrid, GridsterConfig, GridsterItem, GridType, GridsterItemComponent, GridsterItemComponentInterface } from 'angular-gridster2';
-import { Type } from '@angular/compiler/src/core';
 import { HtmlContainerComponent } from '../htmlContainer/htmlContainer.component';
 
 @Component({
