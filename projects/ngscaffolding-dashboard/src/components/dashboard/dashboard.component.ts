@@ -1,14 +1,15 @@
-import { Component, OnInit, OnDestroy, ComponentRef, ViewChildren, QueryList, OnChanges, SimpleChanges, Type } from '@angular/core';
+import { Component, OnInit, OnDestroy, ComponentRef, ViewChildren, QueryList, OnChanges, SimpleChanges, Type, ViewChild } from '@angular/core';
 import { DataSourceService, LoggingService, MenuQuery, WidgetQuery, AppSettingsQuery } from 'ngscaffolding-core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { CoreMenuItem, WidgetModelBase, WidgetDetails, WidgetTypes } from '@ngscaffolding/models';
+import { CoreMenuItem, WidgetModelBase, WidgetDetails, WidgetTypes, InputBuilderDefinition } from '@ngscaffolding/models';
 
-import { DashboardModel } from '@ngscaffolding/models';
+import { DashboardModel, DialogOptions } from '@ngscaffolding/models';
 
 import { ChartComponent, ChartDataService } from 'ngscaffolding-chart';
 
 import { CompactType, DisplayGrid, GridsterConfig, GridsterItem, GridType, GridsterItemComponent, GridsterItemComponentInterface } from 'angular-gridster2';
 import { HtmlContainerComponent } from '../htmlContainer/htmlContainer.component';
+import { InputBuilderPopupComponent } from 'ngscaffolding-inputbuilder';
 
 @Component({
   selector: 'ngs-dashboard',
@@ -17,7 +18,7 @@ import { HtmlContainerComponent } from '../htmlContainer/htmlContainer.component
 })
 export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
   @ViewChildren(GridsterItemComponent) gridsterItems: QueryList<GridsterItemComponent>;
-
+  @ViewChild(InputBuilderPopupComponent) actionInputPopup: InputBuilderPopupComponent;
   private paramSubscription: any;
   private menuName: string;
   private menuItem: CoreMenuItem;
@@ -27,6 +28,10 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
 
   private components: any[] = [];
   private dynmicTypes: Type<any>[];
+
+  // Input Details
+  actionInputDefinition: InputBuilderDefinition;
+  actionValues: any;
 
   // public component = ChartComponent;
   public componentInputs = {};
@@ -126,6 +131,27 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
     this.components.push(compRef.instance);
   }
 
+  onWidgetEvent(name: string, widgetDetails: WidgetDetails) {
+    switch (name) {
+      case 'properties': {
+        this.actionInputDefinition = widgetDetails.widget.inputBuilderDefinition;
+        this.actionValues = widgetDetails.configuredValues;
+        this.actionInputPopup.showPopup();
+      }
+    }
+  }
+
+  actionOkClicked(model: any) {
+    this.actionValues = model;
+
+    alert('Clicked');
+  }
+
+  // User clicked Cancel
+  actionCancelClicked() {
+    alert('User Cancelled');
+  }
+
   ngOnChanges(changes: SimpleChanges): void {
     if (this.gridsterItems && this.gridsterItems.length > 0 && this.gridsterItems[0].gridster.curRowHeight > 1) {
       this.unitHeight = this.gridsterItems[0].gridster.curRowHeight;
@@ -154,8 +180,8 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
       mobileBreakpoint: 640,
       minCols: 12,
       maxCols: 12,
-      minRows: 6,
-      maxRows: 100,
+      minRows: 8,
+      maxRows: 20,
       maxItemCols: 100,
       minItemCols: 1,
       maxItemRows: 100,

@@ -8,6 +8,25 @@ import { CoreMenuItem, WidgetDetails } from '@ngscaffolding/models';
   templateUrl: './widgetContainer.component.html',
   styleUrls: ['./widgetContainer.component.scss'],
   animations: [
+    trigger('toolBarShown', [
+      state(
+        'false',
+        style({
+          width: '0px',
+          opacity: '0',
+          overflow: 'hidden'
+        })
+      ),
+      state(
+        'true',
+        style({
+          width: '*',
+          opacity: '1'
+        })
+      ),
+      transition('false => true', animate('200ms ease-in')),
+      transition('true => false', animate('200ms ease-out'))
+    ]),
     trigger('toolBarExpandedState', [
       state(
         'false',
@@ -33,9 +52,17 @@ export class WidgetContainerComponent implements OnChanges {
   @Input() widgetDetails: WidgetDetails;
   @Input() IsReadOnly: boolean;
 
+  @Output() widgetEvent = new EventEmitter<string>();
+
   allowClose: boolean;
   allowInputs: boolean;
-  showToolbar: boolean;
+  showToolbar = false;
+
+  public expanded = false;
+
+  public mouseLeave() {
+    this.showToolbar = false;
+  }
 
   public mouseEnter() {
     if (this.IsReadOnly) {
@@ -45,7 +72,21 @@ export class WidgetContainerComponent implements OnChanges {
       return;
     }
 
+    if (this.widgetDetails.widget.inputBuilderDefinition) {
+      this.allowInputs = true;
+    }
 
+    this.allowClose = true;
+
+    this.showToolbar = this.allowClose || this.allowInputs;
+  }
+
+  public toggleMenu() {
+    this.expanded = !this.expanded;
+  }
+
+  public buttonClicked(name: string) {
+    this.widgetEvent.emit(name);
   }
 
   ngOnChanges(changes: SimpleChanges) {}

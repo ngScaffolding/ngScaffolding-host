@@ -49,8 +49,6 @@ export class TokenInterceptor implements HttpInterceptor {
           if (error instanceof HttpErrorResponse) {
             if (error.status === 401) {
               this.authService.logoff();
-              // // Try again, this time will go logon first
-              // location.reload(true);
             }
           }
         }

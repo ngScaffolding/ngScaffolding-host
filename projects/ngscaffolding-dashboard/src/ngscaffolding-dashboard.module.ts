@@ -9,11 +9,9 @@ import { MenuService, LoggingService, VersionsService } from 'ngscaffolding-core
 import { CoreModule, AuthoriseRoleGuard } from 'ngscaffolding-core';
 
 import { InputBuilderModule } from 'ngscaffolding-inputbuilder';
+
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { WidgetContainerComponent } from './components/widgetContainer/widgetContainer.component';
-
-import { DataGridComponent, ToolBarComponent } from 'ngscaffolding-datagrid';
-import { ChartComponent } from 'ngscaffolding-chart';
 
 import { DynamicModule } from 'ng-dynamic-component';
 

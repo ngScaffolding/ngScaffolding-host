@@ -19,7 +19,7 @@
     <div style="width: 100%;" ngsFillHeight>
       <gridster [options]="options">
         <gridster-item [item]="widget" *ngFor="let widget of dashboard.widgets" #loopGridster>
-          <ngs-widget-container [widgetDetails]="widget" [IsReadOnly]="dashboard.readOnly">
+          <ngs-widget-container (widgetEvent)="onWidgetEvent($event, widget)" [widgetDetails]="widget" [IsReadOnly]="dashboard.readOnly">
             <ndc-dynamic
               [ndcDynamicInputs]="{
                 itemDetails: widget.widget.itemDetails,
@@ -38,3 +38,6 @@
     </div>
   </div>
 </p-card>
+
+<app-input-builder-popup #actionInputPopup [inputBuilderDefinition]="actionInputDefinition" [inputModel]="actionValues" (okClicked)="actionOkClicked($event)"
+(cancelCliecked)="actionCancelClicked()"></app-input-builder-popup>
