@@ -6,37 +6,37 @@
             <!-- textbox -->
             <span *ngSwitchCase="'textbox'" class="md-inputfield">
                 <input *ngIf="!input.mask" type="text" [formControlName]="input.name" [id]="input.name" pInputText>
-                <label>{{input.label}}</label>
+                <label>getLabel(input)</label>
             </span>
 
             <!-- textbox -->
             <span *ngSwitchCase="'email'" class="md-inputfield">
                 <input *ngIf="!input.mask" type="email" [formControlName]="input.name" [id]="input.name" pInputText>
-                <label>{{input.label}}</label>
+                <label>getLabel(input)</label>
             </span>
 
             <!-- keyfilter/number -->
             <span *ngSwitchCase="'number'" class="md-inputfield">
                 <input type="text" [formControlName]="input.name" [id]="input.name" pKeyFilter="num"  pInputText>
-                <label>{{input.label}}</label>
+                <label>getLabel(input)</label>
             </span>
 
             <!-- slider -->
             <span *ngSwitchCase="'slider'" class="md-inputfield">
                 <p-slider [formControlName]="input.name" [id]="input.name" [min]="input.min" [max]="input.max" [step]="input.step" ></p-slider>
-                <label>{{input.label}}</label>
+                <label>getLabel(input)</label>
             </span>
 
             <!-- Mask -->
             <span *ngSwitchCase="'mask'">
                 <p-inputMask [mask]="input.mask" [id]="input.name" [formControl]="form.controls[input.name]"></p-inputMask>
-                <label>{{input.label}}</label>
+                <label>getLabel(input)</label>
             </span>
 
             <!-- Spinner -->
             <span *ngSwitchCase="'spinner'">
                 <p-spinner [id]="input.name" [formControl]="form.controls[input.name]"></p-spinner>
-                <label>{{input.label}}</label>
+                <label>getLabel(input)</label>
             </span>
 
             <!-- TextArea -->
@@ -56,7 +56,7 @@
 
             <!-- Simple DropDown -->
             <span *ngSwitchCase="'dropdown'">
-                <label class="small-label" [for]="input.name">{{input.label}}</label>
+                <label class="small-label" [for]="input.name">getLabel(input)</label>
                 <p-dropdown [id]="input.name" [options]="input.datasourceItems" [autoWidth]="false" [filter]="input.selectFilter" dataKey="value"
                     optionLabel="display" [formControlName]="input.name"></p-dropdown>
             </span>
@@ -70,7 +70,7 @@
             <span *ngSwitchCase="'switch'">
                 <p-inputSwitch [id]="input.name" [formControlName]="input.name">
                 </p-inputSwitch>
-                <label>{{input.label}}</label>
+                <label>getLabel(input)</label>
             </span>
 
             <!-- DateTime -->
@@ -78,7 +78,7 @@
                 <p-calendar [showIcon]="appSettings.getBoolean('inputShowCalendarIcon') | async" [dateFormat]="appSettings.getString('inputDateTimeFormat') | async" showTime="true"
                     [formControlName]="input.name" [id]="input.name">
                 </p-calendar>
-                <label>{{input.label}}</label>
+                <label>getLabel(input)</label>
             </span>
 
             <!-- Date -->
@@ -86,7 +86,7 @@
                 <p-calendar [showIcon]="appSettings.getBoolean('inputShowCalendarIcon') | async" [dateFormat]="appSettings.getString('inputDateTimeFormat') | async" [formControlName]="input.name"
                     [id]="input.name">
                 </p-calendar>
-                <label>{{input.label}}</label>
+                <label>getLabel(input)</label>
             </span>
 
             <!-- Time -->
@@ -94,19 +94,19 @@
                 <p-calendar timeOnly="true" showTime="true" [showIcon]="appSettings.getBoolean('inputShowCalendarIcon') | async" [formControlName]="input.name"
                     [id]="input.name">
                 </p-calendar>
-                <label>{{input.label}}</label>
+                <label>getLabel(input)</label>
             </span>
 
             <!-- JSon Edit -->
             <span *ngSwitchCase="'json'" class="md-inputfield">
                 <json-editor [options]="editorOptions" [data]="input.value"></json-editor>
-                <label>{{input.label}}</label>
+                <label>getLabel(input)</label>
             </span>
 
             <!-- DEFUALT textbox -->
             <span *ngSwitchDefault class="md-inputfield">
                 <input type="text" [formControlName]="input.name" [id]="input.name" pInputText>
-                <label>{{input.label}}</label>
+                <label>getLabel(input)</label>
             </span>
 
 
