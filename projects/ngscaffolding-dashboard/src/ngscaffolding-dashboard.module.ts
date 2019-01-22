@@ -60,6 +60,7 @@ const appRoutes: Routes = [
     DashboardComponent,
     DashboardToolBarComponent,
     HtmlContainerComponent,
+    WidgetContainerComponent,
     RouterModule
   ],
   providers: [

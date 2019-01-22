@@ -4,33 +4,37 @@
 </div>
 
 <p-sidebar [(visible)]="galleryShown" position="right">
-    <ngs-gallery [galleryName]="dashboard?.galleryName" (addWidget)="onAddWidget($event)"></ngs-gallery>
+  <ngs-gallery [galleryName]="dashboard?.galleryName" (addWidget)="onAddWidget($event)"></ngs-gallery>
 </p-sidebar>
 
 <p-card *ngIf="!loadingData">
   <p-header styleClass="dashHeader">
     <div class="headerLine">
-      <span class="dashHeader">{{dashboard.title}}</span>
-      <span class="text-right">
-        <ngs-dashboard-toolbar (toolbarClicked)="onToolbarClicked($event);"></ngs-dashboard-toolbar></span>
+      <span class="dashHeader">{{ dashboard.title }}</span>
+      <span class="text-right"> <ngs-dashboard-toolbar (toolbarClicked)="onToolbarClicked($event)"></ngs-dashboard-toolbar></span>
     </div>
   </p-header>
 
   <div ngsFillHeight>
     <div style="width: 100%;" ngsFillHeight>
-    <gridster [options]="options" >
-      <gridster-item [item]="widget" *ngFor="let widget of dashboard.widgets" #loopGridster>
-        <ndc-dynamic
-        [ndcDynamicInputs]="{
-          itemDetails: widget.widget.itemDetails,
-          isWidget: true,
-          gridsterItem: loopGridster.item,
-          unitHeight: widget.unitHeight,
-          unitWidth: widget.unitWidth,
-          unitUpdate: widget.unitUpdate }"
-        (ndcDynamicCreated)="componentCreated($event)"
-        [ndcDynamicComponent]="getComponent(widget)"></ndc-dynamic>
-      </gridster-item>
-    </gridster>
-  </div></div>
+      <gridster [options]="options">
+        <gridster-item [item]="widget" *ngFor="let widget of dashboard.widgets" #loopGridster>
+          <ngs-widget-container [widgetDetails]="widget" [IsReadOnly]="dashboard.readOnly">
+            <ndc-dynamic
+              [ndcDynamicInputs]="{
+                itemDetails: widget.widget.itemDetails,
+                isWidget: true,
+                gridsterItem: loopGridster.item,
+                unitHeight: widget.unitHeight,
+                unitWidth: widget.unitWidth,
+                unitUpdate: widget.unitUpdate
+              }"
+              (ndcDynamicCreated)="componentCreated($event)"
+              [ndcDynamicComponent]="getComponent(widget)"
+            ></ndc-dynamic>
+          </ngs-widget-container>
+        </gridster-item>
+      </gridster>
+    </div>
+  </div>
 </p-card>

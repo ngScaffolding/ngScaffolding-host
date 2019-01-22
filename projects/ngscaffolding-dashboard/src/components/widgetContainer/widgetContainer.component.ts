@@ -1,9 +1,10 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import { AppSettingsService, AppSettingsQuery } from 'ngscaffolding-core';
-import { CoreMenuItem } from '@ngscaffolding/models';
+import { CoreMenuItem, WidgetDetails } from '@ngscaffolding/models';
 
 @Component({
+  selector: 'ngs-widget-container',
   templateUrl: './widgetContainer.component.html',
   styleUrls: ['./widgetContainer.component.scss'],
   animations: [
@@ -29,8 +30,23 @@ import { CoreMenuItem } from '@ngscaffolding/models';
   ]
 })
 export class WidgetContainerComponent implements OnChanges {
-
-  @Input() menuItem: CoreMenuItem;
+  @Input() widgetDetails: WidgetDetails;
   @Input() IsReadOnly: boolean;
 
+  allowClose: boolean;
+  allowInputs: boolean;
+  showToolbar: boolean;
+
+  public mouseEnter() {
+    if (this.IsReadOnly) {
+      this.showToolbar = false;
+      this.allowClose = false;
+      this.allowInputs = false;
+      return;
+    }
+
+
+  }
+
+  ngOnChanges(changes: SimpleChanges) {}
 }
