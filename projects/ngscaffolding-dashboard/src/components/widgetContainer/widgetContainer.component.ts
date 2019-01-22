@@ -54,8 +54,8 @@ export class WidgetContainerComponent implements OnChanges {
 
   @Output() widgetEvent = new EventEmitter<string>();
 
-  allowClose: boolean;
-  allowInputs: boolean;
+  allowClose = false;
+  allowInputs = false;
   showToolbar = false;
 
   public expanded = false;
@@ -72,7 +72,9 @@ export class WidgetContainerComponent implements OnChanges {
       return;
     }
 
-    if (this.widgetDetails.widget.inputBuilderDefinition) {
+    if (this.widgetDetails.widget.inputBuilderDefinition &&
+      this.widgetDetails.widget.inputBuilderDefinition.inputDetails &&
+      this.widgetDetails.widget.inputBuilderDefinition.inputDetails.length > 0) {
       this.allowInputs = true;
     }
 

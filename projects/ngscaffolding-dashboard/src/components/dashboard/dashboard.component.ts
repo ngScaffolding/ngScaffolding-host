@@ -97,6 +97,10 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
         this.galleryShown = !this.galleryShown;
         break;
       }
+      case 'remove': {
+
+        break;
+      }
     }
   }
   onAddWidget(name: string) {
@@ -137,6 +141,11 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
         this.actionInputDefinition = widgetDetails.widget.inputBuilderDefinition;
         this.actionValues = widgetDetails.configuredValues;
         this.actionInputPopup.showPopup();
+        break;
+      }
+      case 'remove': {
+        this.dashboard.widgets.splice(this.dashboard.widgets.indexOf(widgetDetails), 1);
+        break;
       }
     }
   }
