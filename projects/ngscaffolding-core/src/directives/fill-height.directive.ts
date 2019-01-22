@@ -24,13 +24,6 @@ export class FillHeightDirective implements AfterViewInit {
 
     this.el.nativeElement.style.height =
       windowHeight - footerElementMargin - elementOffsetTop - 36 + 'px';
-    console.log([
-      windowHeight,
-      elementOffsetTop,
-      elementMarginBottom,
-      footerElementMargin,
-      this.el.nativeElement.style.height
-    ]);
   }
 
   private getElementOffsetTop() {

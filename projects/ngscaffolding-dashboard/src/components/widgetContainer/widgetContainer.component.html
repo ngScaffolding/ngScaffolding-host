@@ -1,3 +1,20 @@
-<div (mouseenter)="mouseEnter()">
+<div (mouseenter)="mouseEnter()" (mouseleave)="mouseLeave()" class="widgetContainer">
+    <div class="expand-toolbar">
+
+        <span [@toolBarShown]="showToolbar">
+          <!-- Add Button -->
+          <button pButton class="ui-button-success toolbarButton" type="button" icon="ui-icon-settings" tooltipPosition="bottom"
+            (click)="buttonClicked('properties')" pTooltip="Properties">
+          </button>
+
+          <button pButton class="ui-button-info toolbarButton" type="button" icon="ui-icon-refresh" tooltipPosition="bottom"
+            (click)="buttonClicked('refresh')" pTooltip="Refresh">
+          </button>
+
+          <button pButton class="ui-button-danger toolbarButton" *ngIf="!hideRefresh" type="button" icon="ui-icon-close" tooltipPosition="bottom"
+            (click)="buttonClicked('remove')" pTooltip="Remove" ></button>
+        </span>
+
+      </div>
 <ng-content></ng-content>
 </div>
