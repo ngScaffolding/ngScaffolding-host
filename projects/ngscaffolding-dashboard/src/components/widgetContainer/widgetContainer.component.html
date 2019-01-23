@@ -3,7 +3,7 @@
 
         <span [@toolBarShown]="showToolbar">
           <!-- Add Button -->
-          <button pButton class="ui-button-success toolbarButton" type="button" icon="ui-icon-settings" tooltipPosition="bottom"
+          <button *ngIf="allowInputs" pButton class="ui-button-success toolbarButton" type="button" icon="ui-icon-settings" tooltipPosition="bottom"
             (click)="buttonClicked('properties')" pTooltip="Properties">
           </button>
 
@@ -11,7 +11,7 @@
             (click)="buttonClicked('refresh')" pTooltip="Refresh">
           </button>
 
-          <button pButton class="ui-button-danger toolbarButton" *ngIf="!hideRefresh" type="button" icon="ui-icon-close" tooltipPosition="bottom"
+          <button *ngIf="allowClose" pButton class="ui-button-danger toolbarButton" type="button" icon="ui-icon-close" tooltipPosition="bottom"
             (click)="buttonClicked('remove')" pTooltip="Remove" ></button>
         </span>
 
