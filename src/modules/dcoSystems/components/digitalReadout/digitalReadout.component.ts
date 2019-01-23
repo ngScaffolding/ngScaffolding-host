@@ -9,9 +9,7 @@ import { DataSourceService } from 'ngscaffolding-core';
 })
 export class DigitalReadoutComponent implements OnInit, AfterViewInit {
 
-  @Input() displayValue: string;
-  @Input() displayTitle: string;
-  @Input() displayUnit: string;
+  @Input() itemDetails: any;
 
   constructor(private route: ActivatedRoute, private dataSource: DataSourceService) {
     this.route.queryParams.subscribe(params => {
