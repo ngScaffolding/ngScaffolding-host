@@ -16,9 +16,11 @@ export class MachineDetailsComponent implements OnInit, AfterViewInit {
     this.route.queryParams.subscribe(params => {
       this.computerSystemID = params['ComputerSystemID'];
 
-      this.dataSource.getData({name: 'Finder.Device.Details', inputData: JSON.stringify({ComputerSystemID: this.computerSystemID}) })
-      .subscribe(data => {
-        this.topData = JSON.parse(data.jsonData);
+      this.dataSource.getDataSource({name: 'Finder.Device.Details', inputData: JSON.stringify({ComputerSystemID: this.computerSystemID}) })
+        .subscribe(results => {
+          if (!results.inflight) {
+            this.topData = JSON.parse(results.jsonData);
+          }
       });
 
     });

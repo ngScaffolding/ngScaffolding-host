@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, ComponentRef, ViewChildren, QueryList, OnChanges, SimpleChanges, Type, ViewChild } from '@angular/core';
 import { DataSourceService, LoggingService, MenuQuery, WidgetQuery, AppSettingsQuery } from 'ngscaffolding-core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { CoreMenuItem, WidgetModelBase, WidgetDetails, WidgetTypes, InputBuilderDefinition } from '@ngscaffolding/models';
+import { CoreMenuItem, WidgetModelBase, WidgetDetails, WidgetTypes, InputBuilderDefinition, IDashboardItem } from '@ngscaffolding/models';
 
 import { DashboardModel, DialogOptions } from '@ngscaffolding/models';
 
@@ -10,6 +10,7 @@ import { ChartComponent, ChartDataService } from 'ngscaffolding-chart';
 import { CompactType, DisplayGrid, GridsterConfig, GridsterItem, GridType, GridsterItemComponent, GridsterItemComponentInterface } from 'angular-gridster2';
 import { HtmlContainerComponent } from '../htmlContainer/htmlContainer.component';
 import { InputBuilderPopupComponent } from 'ngscaffolding-inputbuilder';
+import { DynamicComponent } from 'ng-dynamic-component';
 
 @Component({
   selector: 'ngs-dashboard',
@@ -18,6 +19,8 @@ import { InputBuilderPopupComponent } from 'ngscaffolding-inputbuilder';
 })
 export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
   @ViewChildren(GridsterItemComponent) gridsterItems: QueryList<GridsterItemComponent>;
+  @ViewChildren(DynamicComponent) component: DynamicComponent;
+
   @ViewChild(InputBuilderPopupComponent) actionInputPopup: InputBuilderPopupComponent;
   private paramSubscription: any;
   private menuName: string;
@@ -97,6 +100,7 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
         this.galleryShown = !this.galleryShown;
         break;
       }
+
       case 'remove': {
 
         break;
@@ -135,7 +139,7 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
     this.components.push(compRef.instance);
   }
 
-  onWidgetEvent(name: string, widgetDetails: WidgetDetails) {
+  onWidgetEvent(name: string, widgetDetails: WidgetDetails, instance: any) {
     switch (name) {
       case 'properties': {
         this.actionInputDefinition = widgetDetails.widget.inputBuilderDefinition;
@@ -143,6 +147,11 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
         this.actionInputPopup.showPopup();
         break;
       }
+      case 'refresh': {
+        const item = instance as IDashboardItem;
+        item.refreshData();
+        break;
+        }
       case 'remove': {
         this.dashboard.widgets.splice(this.dashboard.widgets.indexOf(widgetDetails), 1);
         break;
@@ -231,8 +240,4 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
   changedOptions() {
     this.options.api.optionsChanged();
   }
-
-  removeItem(item) {}
-
-  addItem() {}
 }

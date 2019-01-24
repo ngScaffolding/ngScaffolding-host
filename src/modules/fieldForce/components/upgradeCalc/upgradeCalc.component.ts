@@ -113,34 +113,34 @@ export class UpgradeCalcComponent implements OnChanges {
   calculate() {
   this.resultsAvailable = false;
 
-    forkJoin([
-      this.dataSource.getData({name: 'Finder.CalculatorPassed', inputData: JSON.stringify(this.upgradeValuesModel)}),
-      this.dataSource.getData({name: 'Finder.CalculatorFailed', inputData: JSON.stringify(this.upgradeValuesModel)})
-    ]).subscribe(resultsCol => {
-      const succeeded = JSON.parse(resultsCol[0].jsonData);
-      const failed: Array<any> = JSON.parse(resultsCol[1].jsonData);
+    // forkJoin([
+    //   this.dataSource.getData({name: 'Finder.CalculatorPassed', inputData: JSON.stringify(this.upgradeValuesModel)}),
+    //   this.dataSource.getData({name: 'Finder.CalculatorFailed', inputData: JSON.stringify(this.upgradeValuesModel)})
+    // ]).subscribe(resultsCol => {
+    //   const succeeded = JSON.parse(resultsCol[0].jsonData);
+    //   const failed: Array<any> = JSON.parse(resultsCol[1].jsonData);
 
-      this.upgradeValuesModel.countPassed = succeeded.length;
-      this.upgradeValuesModel.countFailed = failed.length;
+    //   this.upgradeValuesModel.countPassed = succeeded.length;
+    //   this.upgradeValuesModel.countFailed = failed.length;
 
-      this.upgradeValuesModel.countHardDrive = 0;
-      this.upgradeValuesModel.countMemory = 0;
-      this.upgradeValuesModel.countProcessor = 0;
+    //   this.upgradeValuesModel.countHardDrive = 0;
+    //   this.upgradeValuesModel.countMemory = 0;
+    //   this.upgradeValuesModel.countProcessor = 0;
 
-      this.upgradeValuesModel.totalCostHardDrive = 0;
-      this.upgradeValuesModel.totalCostMemory = 0;
-      this.upgradeValuesModel.totalCostProcessor = 0;
+    //   this.upgradeValuesModel.totalCostHardDrive = 0;
+    //   this.upgradeValuesModel.totalCostMemory = 0;
+    //   this.upgradeValuesModel.totalCostProcessor = 0;
 
-      this.upgradeValuesModel.countHardDrive = failed.filter(computer => computer.HDDSize < (this.upgradeValuesModel.minimumHardDrive) * 1000000000).length;
-      this.upgradeValuesModel.countMemory = failed.filter(computer => computer.TotalPhysicalMemory < (this.upgradeValuesModel.minimumMemory) * 1000000000).length;
-      this.upgradeValuesModel.countProcessor = failed.filter(computer => computer.MaxClockSpeed < (this.upgradeValuesModel.minimumProcessor) * 1000).length;
+    //   this.upgradeValuesModel.countHardDrive = failed.filter(computer => computer.HDDSize < (this.upgradeValuesModel.minimumHardDrive) * 1000000000).length;
+    //   this.upgradeValuesModel.countMemory = failed.filter(computer => computer.TotalPhysicalMemory < (this.upgradeValuesModel.minimumMemory) * 1000000000).length;
+    //   this.upgradeValuesModel.countProcessor = failed.filter(computer => computer.MaxClockSpeed < (this.upgradeValuesModel.minimumProcessor) * 1000).length;
 
-      this.upgradeValuesModel.totalCostHardDrive = this.upgradeValuesModel.countHardDrive * this.upgradeValuesModel.costHardDrive;
-      this.upgradeValuesModel.totalCostMemory = this.upgradeValuesModel.countMemory * this.upgradeValuesModel.costMemory;
-      this.upgradeValuesModel.totalCostProcessor = this.upgradeValuesModel.countProcessor * this.upgradeValuesModel.costProcessor;
+    //   this.upgradeValuesModel.totalCostHardDrive = this.upgradeValuesModel.countHardDrive * this.upgradeValuesModel.costHardDrive;
+    //   this.upgradeValuesModel.totalCostMemory = this.upgradeValuesModel.countMemory * this.upgradeValuesModel.costMemory;
+    //   this.upgradeValuesModel.totalCostProcessor = this.upgradeValuesModel.countProcessor * this.upgradeValuesModel.costProcessor;
 
-      this.resultsAvailable = true;
-    });
+    //   this.resultsAvailable = true;
+    // });
 
   }
 

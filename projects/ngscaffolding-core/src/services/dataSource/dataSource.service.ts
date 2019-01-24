@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { AppSettingsService } from '../appSettings/appSettings.service';
-import { DataSourceRequest, DataSetResults, AppSettings } from '@ngscaffolding/models';
+import { DataSourceRequest, DataResults, AppSettings } from '@ngscaffolding/models';
 import { LoggingService } from '../logging/logging.service';
 import { CacheService } from '../cache/cache.service';
 import { DataSourceStore } from './dataSource.store';
@@ -24,24 +24,30 @@ export class DataSourceService {
     private logger: LoggingService
   ) {}
 
-  getDataSource(dataRequest: DataSourceRequest): Observable<DataSetResults> {
+  getDataSource(dataRequest: DataSourceRequest): Observable<DataResults> {
     const key = this.getKey(dataRequest);
 
     const currentRequest = this.dataSourceQuery.getEntity(key);
 
-    if (currentRequest === undefined || currentRequest.expires < new Date()) {
-      const placeHolderResults: DataSetResults = {
+    if (currentRequest === undefined || currentRequest.expiresWhen < new Date()) {
+      const now = new Date();
+      const placeHolderResults: DataResults = {
         inflight: true,
-        expires: new Date()
+        expiresWhen: new Date(now.getTime() + (300 * 10000))
       };
 
       // Save as marker that the request has been sent
       this.dataSourceStore.createOrReplace(key, placeHolderResults);
 
-      this.http.post<DataSetResults>(`${this.appSettingsService.getValue(AppSettings.apiHome)}/api/v1/datasource`, dataRequest).subscribe(values => {
-        const newResults: DataSetResults = {
+      this.http.post<DataResults>(`${this.appSettingsService.getValue(AppSettings.apiHome)}/api/v1/datasource`, dataRequest).subscribe(values => {
+        const expiryNow = new Date();
+
+        // If expires Seconds not provedid set long expiry
+        const expiresSeconds = values.expiresSeconds > 0 ? values.expiresSeconds : 99999999;
+        const expiresWhen = new Date(expiryNow.getTime() + (expiresSeconds * 10000));
+        const newResults: DataResults = {
           inflight: false,
-          expires: new Date(),
+          expiresWhen: expiresWhen,
           rowCount: values.rowCount,
           jsonData: values.jsonData,
           results: values.results
@@ -55,31 +61,31 @@ export class DataSourceService {
     return this.dataSourceQuery.selectEntity(key);
   }
 
-  getData(dataRequest: DataSourceRequest, throwOnError: boolean = false): Observable<DataSetResults> {
-    return new Observable<DataSetResults>(singleObserver => {
-      this.http.post<DataSetResults>(`${this.appSettingsService.getValue(AppSettings.apiHome)}/api/v1/datasource`, dataRequest).subscribe(
-        values => {
-          // If Throw on error passed, loop through results for any failed runs
-          if (throwOnError) {
-            values.results.forEach(result => {
-              if (!result.success) {
-                singleObserver.error(result.message);
-              }
-            });
-            singleObserver.next(values);
-          } else {
-            singleObserver.next(values);
-          }
+  // getData(dataRequest: DataSourceRequest, throwOnError: boolean = false): Observable<DataResults> {
+  //   return new Observable<DataResults>(singleObserver => {
+  //     this.http.post<DataResults>(`${this.appSettingsService.getValue(AppSettings.apiHome)}/api/v1/datasource`, dataRequest).subscribe(
+  //       values => {
+  //         // If Throw on error passed, loop through results for any failed runs
+  //         if (throwOnError) {
+  //           values.results.forEach(result => {
+  //             if (!result.success) {
+  //               singleObserver.error(result.message);
+  //             }
+  //           });
+  //           singleObserver.next(values);
+  //         } else {
+  //           singleObserver.next(values);
+  //         }
 
-          // Finally
-          singleObserver.complete();
-        },
-        err => {
-          singleObserver.error(err);
-        }
-      );
-    });
-  }
+  //         // Finally
+  //         singleObserver.complete();
+  //       },
+  //       err => {
+  //         singleObserver.error(err);
+  //       }
+  //     );
+  //   });
+  // }
 
   private getKey(dataRequest: DataSourceRequest) {
     return `name:${dataRequest.name} seed:${dataRequest.seed}`;

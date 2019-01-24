@@ -19,7 +19,7 @@
     <div style="width: 100%;" ngsFillHeight>
       <gridster [options]="options">
         <gridster-item [item]="widget" *ngFor="let widget of dashboard.widgets" #loopGridster>
-          <ngs-widget-container (widgetEvent)="onWidgetEvent($event, widget)" [widgetDetails]="widget" [IsReadOnly]="dashboard.readOnly">
+          <ngs-widget-container (widgetEvent)="onWidgetEvent($event, widget, component.componentRef.instance)" [widgetDetails]="widget" [IsReadOnly]="dashboard.readOnly">
             <ndc-dynamic
               [ndcDynamicInputs]="{
                 itemDetails: widget.widget.itemDetails,
@@ -30,8 +30,7 @@
                 unitUpdate: widget.unitUpdate
               }"
               (ndcDynamicCreated)="componentCreated($event)"
-              [ndcDynamicComponent]="getComponent(widget)"
-            ></ndc-dynamic>
+              [ndcDynamicComponent]="getComponent(widget)" #component></ndc-dynamic>
           </ngs-widget-container>
         </gridster-item>
       </gridster>

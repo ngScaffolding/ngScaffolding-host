@@ -19,8 +19,9 @@ import {
   CoreMenuItem,
   GridViewDetail,
   InputBuilderDefinition,
-  DataSetResults,
-  DialogOptions
+  DataResults,
+  DialogOptions,
+  IDashboardItem
 } from '@ngscaffolding/models';
 
 import { ConfirmationService } from 'primeng/primeng';
@@ -49,17 +50,17 @@ import {
 import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'app-data-grid',
+  selector: 'ngs-data-grid',
   templateUrl: './datagrid.component.html',
   styleUrls: ['./datagrid.component.scss']
 })
-export class DataGridComponent implements OnInit, OnDestroy, OnChanges {
+export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnChanges {
+
 
   // @ViewChild(HTMLDivElement) gridArea: HTMLDivElement;
   // @ViewChild(HTMLDivElement) gridSection: HTMLDivElement;
   @ViewChild(FiltersHolderComponent) filtersHolder: FiltersHolderComponent;
-  @ViewChild(InputBuilderPopupComponent)
-  actionInputPopup: InputBuilderPopupComponent;
+  @ViewChild(InputBuilderPopupComponent) actionInputPopup: InputBuilderPopupComponent;
   @ViewChild(ActionsHolderComponent) actionsHolder: ActionsHolderComponent;
   @ViewChild(Dialog) dialog;
 
@@ -140,6 +141,10 @@ export class DataGridComponent implements OnInit, OnDestroy, OnChanges {
         const actionClickedData = actionData as ActionClickedData;
         this.actionClicked(actionClickedData.action, actionClickedData.row);
       });
+  }
+
+  public refreshData() {
+    this.loadInitialData();
   }
 
   // Toolbar Operations
@@ -227,33 +232,17 @@ export class DataGridComponent implements OnInit, OnDestroy, OnChanges {
 
     this.dataLoading = true;
 
-    this.dataSourceService
-      .getData(
-        {
-          name: this.itemDetail.selectDataSourceName,
-          filterValues: JSON.stringify(this.filterValues)
-        },
-        true
-      )
-      .subscribe(
-        data => {
-          this.rowData = JSON.parse(data.jsonData);
-          if (data.rowCount) {
-            this.rowCount = data.rowCount;
+    this.dataSourceService.getDataSource({ name: this.itemDetail.selectDataSourceName, filterValues: JSON.stringify(this.filterValues) })
+      .subscribe(results => {
+        if (!results.inflight) {
+
+          this.rowData = JSON.parse(results.jsonData);
+          if (results.rowCount) {
+            this.rowCount = results.rowCount;
           }
           this.dataLoading = false;
-        },
-        error => {
-          // Failed Select
-          this.logger.error(error);
-
-          this.notification.showMessage({
-            detail: 'Unable to get data',
-            severity: 'error'
-          });
-          this.dataLoading = false;
         }
-      );
+      });
   }
 
   private loadMenuItem() {

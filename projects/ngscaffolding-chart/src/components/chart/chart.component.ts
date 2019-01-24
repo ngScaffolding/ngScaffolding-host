@@ -4,7 +4,7 @@ import { Component, OnInit, OnDestroy, Input, OnChanges, SimpleChanges } from '@
 
 import { ChartDataService } from '../../services/chartData.service';
 import { DataSourceService, LoggingService } from 'ngscaffolding-core';
-import { ChartDetailModel } from '@ngscaffolding/models';
+import { ChartDetailModel, IDashboardItem } from '@ngscaffolding/models';
 import * as Highcharts from 'highcharts';
 // Loading HighCharts More
 const HighchartsMore = require('highcharts/highcharts-more.src');
@@ -15,11 +15,12 @@ import * as HC_solid_gauge from 'highcharts/modules/solid-gauge.src';
 HC_solid_gauge(Highcharts);
 
 @Component({
-  selector: 'ng-chart',
+  selector: 'ngs-chart',
   templateUrl: 'chart.component.html',
   styleUrls: ['chart.component.scss']
 })
-export class ChartComponent implements OnInit, OnDestroy, OnChanges {
+export class ChartComponent implements IDashboardItem, OnInit, OnDestroy, OnChanges {
+
   @Input() chartStyle: any;
 
   @Input() isWidget: boolean;
@@ -41,6 +42,10 @@ export class ChartComponent implements OnInit, OnDestroy, OnChanges {
     this.chart = chart;
   }
 
+  public refreshData() {
+    this.loadChart();
+  }
+
   private loadingComplete() {
     this.loadingData = false;
     // this forces the chart to update, resets to false when drawn
@@ -57,27 +62,16 @@ export class ChartComponent implements OnInit, OnDestroy, OnChanges {
       } else {
         this.loadingData = true;
         // Get Data from Server
-        this.dataSourceService
-          .getData(
-            {
-              name: this.itemDetails.dataSourceName.toString(),
-              inputData: this.inputModel
-            },
-            false
-          )
-          .subscribe(
-            response => {
-              const chartDataService = new ChartDataService();
-              this.itemDetails.chartOptions.series[0].data = chartDataService.shapeDataForSeries(this.itemDetails, JSON.parse(response.jsonData)).data;
-              this.highChartsOptions = this.itemDetails.chartOptions;
+        this.dataSourceService.getDataSource({ name: this.itemDetails.dataSourceName.toString(), inputData: this.inputModel }).subscribe(results => {
+          if (!results.inflight) {
 
-              this.loadingComplete();
-            },
-            err => {
-              // TODO: Show Error to User?
-              this.loadingComplete();
-            }
-          );
+            const chartDataService = new ChartDataService();
+            this.itemDetails.chartOptions.series[0].data = chartDataService.shapeDataForSeries(this.itemDetails, JSON.parse(results.jsonData)).data;
+            this.highChartsOptions = this.itemDetails.chartOptions;
+
+            this.loadingComplete();
+          }
+        });
       }
     }
   }
