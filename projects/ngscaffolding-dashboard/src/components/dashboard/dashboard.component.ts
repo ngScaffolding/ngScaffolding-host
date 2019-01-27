@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, ComponentRef, ViewChildren, QueryList, OnChanges, SimpleChanges, Type, ViewChild } from '@angular/core';
-import { DataSourceService, LoggingService, MenuQuery, WidgetQuery, AppSettingsQuery } from 'ngscaffolding-core';
+import { DataSourceService, LoggingService, MenuQuery, WidgetQuery, AppSettingsQuery, MenuService } from 'ngscaffolding-core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CoreMenuItem, WidgetModelBase, WidgetDetails, WidgetTypes, InputBuilderDefinition, IDashboardItem } from '@ngscaffolding/models';
 
@@ -49,6 +49,7 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
     private route: ActivatedRoute,
     private logger: LoggingService,
     private menuQuery: MenuQuery,
+    private menuService: MenuService,
     private chartDataService: ChartDataService,
     private dataSourceService: DataSourceService
   ) {
@@ -101,12 +102,25 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
         break;
       }
 
-      case 'remove': {
-
+      case 'save': {
+        this.saveDashboard();
         break;
       }
     }
   }
+
+  private saveDashboard() {
+    // Create Clone of current Dashboard
+    const clonedMenu: CoreMenuItem = JSON.parse(JSON.stringify(this.menuItem));
+    clonedMenu.name = `dbaines1@hotmail.com::${this.menuItem.name}`;
+
+    clonedMenu.menuDetails = JSON.parse(JSON.stringify(this.dashboard));
+    clonedMenu.parent = 'My Dashboards';
+    clonedMenu.routerLink = `dashboard/${clonedMenu.name}`;
+
+    this.menuService.saveMenuItem(clonedMenu);
+  }
+
   onAddWidget(name: string) {
     this.galleryShown = false;
 

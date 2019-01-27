@@ -63,6 +63,29 @@ export class MenuService {
     this.menuItemsFromCode = menuItems;
   }
 
+  public saveMenuItem(menuItem: CoreMenuItem) {
+    this.http
+      .post<CoreMenuItem>(this.apiHome + '/api/v1/menuitems', menuItem)
+      .subscribe(savedMenuItem => {
+
+        // Add to reference list of menus
+        this.menuStore.add(savedMenuItem);
+        const existingMenus = JSON.parse(JSON.stringify(this.menuQuery.getSnapshot().menuItems));
+        let parentMenu: CoreMenuItem;
+        if (menuItem.parent) {
+          parentMenu = existingMenus.find(menu => menu.name.toLowerCase() === savedMenuItem.parent.toLowerCase());
+        }
+        // Add to treeview for menu rendering
+        if (!Array.isArray(parentMenu.items)) {
+          parentMenu.items = [];
+        }
+        (parentMenu.items as CoreMenuItem[]).push(savedMenuItem);
+
+        // Update tree and tell the world
+        this.menuStore.updateRoot({ menuItems: existingMenus });
+       });
+  }
+
   private addMenuItems(menuItems: CoreMenuItem[]) {
     // menuItems.forEach(menuItem => {
     //   this.menuItems.push(menuItem);
