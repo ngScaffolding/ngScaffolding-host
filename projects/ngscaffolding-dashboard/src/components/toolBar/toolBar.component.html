@@ -1,30 +1,27 @@
-<div class="expand-toolbar" *ngIf="collapsedToolbar">
+<div class="expand-toolbar">
 
   <span [@toolBarExpandedState]="expanded">
     <!-- Add Button -->
-    <button pButton class="ui-button-success toolbarButton" type="button" icon="ui-icon-add" tooltipPosition="bottom"
-      (click)="buttonClicked('add')" pTooltip="Add Widget" [label]="showLabel('Filters')">
+    <button pButton *ngIf="showAdd" class="ui-button-success toolbarButton" type="button" icon="ui-icon-add" tooltipPosition="bottom"
+      (click)="buttonClicked('add')" pTooltip="Add Widget">
     </button>
 
-    <button pButton class="ui-button-info toolbarButton" *ngIf="!hideRefresh" type="button" icon="ui-icon-refresh" tooltipPosition="bottom"
-      (click)="buttonClicked('refresh');" pTooltip="Refresh Data" [label]="showLabel('Refresh')"></button>
+    <button pButton class="ui-button-info toolbarButton" type="button" icon="ui-icon-refresh" tooltipPosition="bottom"
+      (click)="buttonClicked('refresh');" pTooltip="Refresh Data"></button>
 
-    <button pButton class="ui-button-warning toolbarButton" *ngIf="!hideColumns" type="button" icon="ui-icon-save" tooltipPosition="bottom"
-      (click)="buttonClicked('save');" pTooltip="Save As"></button>
+    <button pButton class="ui-button-warning toolbarButton" *ngIf="showSaveAs" type="button" icon="ui-icon-fiber-new" tooltipPosition="bottom"
+      (click)="buttonClicked('saveas');" pTooltip="Save As"></button>
 
-    <button pButton class="ui-button-success toolbarButton" *ngIf="!hideExport && appSettings.getBoolean('dataGridAllowExport') | async" type="button" icon="ui-icon-cloud-download" tooltipPosition="bottom"
-      (click)="buttonClicked(); this.exportClicked.emit(null);" pTooltip="Export/Print Data" [label]="showLabel('Export')"></button>
+      <button pButton class="ui-button-warning toolbarButton" *ngIf="showSave" type="button" icon="ui-icon-save" tooltipPosition="bottom"
+      (click)="buttonClicked('save');" pTooltip="Save"></button>
 
-    <button pButton class="ui-button-info toolbarButton" *ngIf="!hideSaveView  && appSettings.getBoolean('dataGridAllowSaveView') | async" type="button" icon="ui-icon-save" tooltipPosition="bottom"
-      (click)="buttonClicked(); this.saveViewClicked.emit(null);" pTooltip="Save View Configuration" [label]="showLabel('Save View')"></button>
+      <button pButton class="ui-button-warning toolbarButton" *ngIf="showDelete" type="button" icon="ui-icon-delete-forever" tooltipPosition="bottom"
+      (click)="buttonClicked('remove');" pTooltip="Save"></button>
 
-    <button pButton class="ui-button-warning toolbarButton" *ngIf="!hideResetView  && appSettings.getBoolean('dataGridAllowResetView') | async" type="button" icon="ui-icon-restore" tooltipPosition="bottom"
-      (click)="buttonClicked(); this.resetViewClicked.emit(null);" pTooltip="Reset View Configuration" [label]="showLabel('Reset View')"></button>
-
-    <button pButton class="ui-button-success toolbarButton" *ngIf="!hideShareView   && appSettings.getBoolean('dataGridAllowShareView') | async" type="button" icon="ui-icon-share" tooltipPosition="bottom"
-      (click)="buttonClicked(); this.shareViewClicked.emit(null);" pTooltip="Share View" [label]="showLabel('Share View')"></button>
-
+      <button pButton class="ui-button-warning toolbarButton" *ngIf="showShare" type="button" icon="ui-icon-share" tooltipPosition="bottom"
+      (click)="buttonClicked('share');" pTooltip="Share"></button>
   </span>
+
   <button pButton class="ui-button-success toolbarButton mainButton" type="button" icon="ui-icon-menu" tooltipPosition="left"
     (click)="this.toggleMenu()" pTooltip="Show/Hide Toolbar">
   </button>

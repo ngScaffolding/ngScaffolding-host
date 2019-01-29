@@ -4,9 +4,8 @@
 
 
 export * from './ngscaffolding-core.module';
-
+export * from './components';
 export * from './services';
-
-export * from './directives/fill-height.directive';
-export * from './pipes/buttonColor.pipe';
-export * from './routeGuards/authoriseRoleGuard';
+export * from './directives';
+export * from './pipes';
+export * from './routeGuards';

@@ -29,16 +29,12 @@ import { AppSettingsService, AppSettingsQuery } from 'ngscaffolding-core';
   ]
 })
 export class DashboardToolBarComponent implements OnInit {
-  @Input() hideFilters: boolean;
-  @Input() hideRefresh: boolean;
-  @Input() hideColumns: boolean;
-  @Input() hideExport: boolean;
-  @Input() hideSaveView: boolean;
-  @Input() hideResetView: boolean;
-  @Input() hideShareView: boolean;
+  @Input() showSave: boolean;
+  @Input() showSaveAs: boolean;
+  @Input() showAdd: boolean;
+  @Input() showDelete: boolean;
+  @Input() showShare: boolean;
 
-  @Input() hideLabels = true;
-  @Input() collapsedToolbar = true;
 
   @Output() toolbarClicked = new EventEmitter<string>();
 
@@ -54,14 +50,6 @@ export class DashboardToolBarComponent implements OnInit {
     this.toolbarClicked.emit(name);
 
     this.expanded = false;
-  }
-
-  showLabel(label: string) {
-    if (!this.hideLabels) {
-      return label;
-    } else {
-      return null;
-    }
   }
 
   ngOnInit() {}

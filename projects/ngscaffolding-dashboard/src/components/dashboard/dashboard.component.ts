@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, ComponentRef, ViewChildren, QueryList, OnChanges, SimpleChanges, Type, ViewChild } from '@angular/core';
-import { DataSourceService, LoggingService, MenuQuery, WidgetQuery, AppSettingsQuery, MenuService } from 'ngscaffolding-core';
+import { DataSourceService, LoggingService, MenuQuery, WidgetQuery, AppSettingsQuery, MenuService, UserAuthenticationQuery } from 'ngscaffolding-core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CoreMenuItem, WidgetModelBase, WidgetDetails, WidgetTypes, InputBuilderDefinition, IDashboardItem } from '@ngscaffolding/models';
 
@@ -29,6 +29,13 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
   public options: GridsterConfig;
   public dashboard: DashboardModel;
 
+  // toolbar visible
+  public showSave = false;
+  public showSaveAs = false;
+  public showAdd = false;
+  public showDelete = false;
+  public showShare = false;
+
   private components: any[] = [];
   private dynmicTypes: Type<any>[];
 
@@ -43,15 +50,16 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
   public loadingData = false;
   public galleryShown = false;
 
+  private changesMade = false;
+
   constructor(
     private widgetQuery: WidgetQuery,
     private appSettingsQuery: AppSettingsQuery,
+    private authQuery: UserAuthenticationQuery,
     private route: ActivatedRoute,
     private logger: LoggingService,
     private menuQuery: MenuQuery,
-    private menuService: MenuService,
-    private chartDataService: ChartDataService,
-    private dataSourceService: DataSourceService
+    private menuService: MenuService
   ) {
     this.appSettingsQuery
       .select(store => store.dynamicTypes)
@@ -90,9 +98,34 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
           this.dashboard = this.menuItem.menuDetails as DashboardModel;
         }
 
+        this.setButtons();
+
+        this.changesMade = false;
         this.loadingData = false;
       }
     });
+  }
+
+  private setButtons() {
+    if (this.dashboard.readOnly) {
+      this.showAdd = false;
+      this.showDelete = false;
+      this.showSave = false;
+      this.showSaveAs = false;
+      this.showShare = false;
+
+      return;
+    }
+    const userId = this.authQuery.getSnapshot().userDetails.userId;
+    if (this.menuItem.name.startsWith(userId)) {
+      // We are the owner of this menu Item
+      // We can save changes and delete
+      this.showSave = true;
+      this.showDelete = true;
+      this.showShare = true;
+    }
+
+    this.showSaveAs = true;
   }
 
   onToolbarClicked(button: string) {
@@ -101,9 +134,20 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
         this.galleryShown = !this.galleryShown;
         break;
       }
-
+      case 'refresh': {
+        break;
+      }
+      case 'remove': {
+        break;
+      }
+      case 'saveas': {
+        break;
+      }
       case 'save': {
         this.saveDashboard();
+        break;
+      }
+      case 'share': {
         break;
       }
     }
@@ -112,13 +156,21 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
   private saveDashboard() {
     // Create Clone of current Dashboard
     const clonedMenu: CoreMenuItem = JSON.parse(JSON.stringify(this.menuItem));
-    clonedMenu.name = `dbaines1@hotmail.com::${this.menuItem.name}`;
+    clonedMenu.name = `${this.authQuery.getSnapshot().userDetails.userId}::${this.menuItem.name}`;
 
     clonedMenu.menuDetails = JSON.parse(JSON.stringify(this.dashboard));
     clonedMenu.parent = 'My Dashboards';
     clonedMenu.routerLink = `dashboard/${clonedMenu.name}`;
+    clonedMenu.roles = [];
+
+    // Mark as owned by current user
+    clonedMenu.userIds = [this.authQuery.getSnapshot().userDetails.userId];
 
     this.menuService.saveMenuItem(clonedMenu);
+  }
+
+  onTitleChanged(newTitle: string) {
+    this.dashboard.title = newTitle;
   }
 
   onAddWidget(name: string) {
@@ -165,7 +217,7 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
         const item = instance as IDashboardItem;
         item.refreshData();
         break;
-        }
+      }
       case 'remove': {
         this.dashboard.widgets.splice(this.dashboard.widgets.indexOf(widgetDetails), 1);
         break;
