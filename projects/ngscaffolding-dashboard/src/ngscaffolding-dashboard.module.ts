@@ -22,6 +22,7 @@ import { DataGridModule, ButtonModule, SidebarModule, DialogModule, ConfirmDialo
 import { DashboardToolBarComponent } from './components';
 import { GalleryComponent } from './components/gallery/gallery.component';
 import { HtmlContainerComponent } from './components/htmlContainer/htmlContainer.component';
+import { SaveInputComponent } from './components/saveInput/saveInput.component';
 
 // Services
 
@@ -52,6 +53,7 @@ const appRoutes: Routes = [
     DashboardToolBarComponent,
     HtmlContainerComponent,
     GalleryComponent,
+    SaveInputComponent,
     WidgetContainerComponent
   ],
   exports: [

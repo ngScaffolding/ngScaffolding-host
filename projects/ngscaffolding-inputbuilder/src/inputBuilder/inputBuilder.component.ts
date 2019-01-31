@@ -27,7 +27,7 @@ import {
 import { InputDetailReferenceValues } from '@ngscaffolding/models';
 
 @Component({
-  selector: 'app-input-builder',
+  selector: 'ngs-input-builder',
   templateUrl: 'inputBuilder.component.html',
   styleUrls: ['inputBuilder.component.scss']
 })
