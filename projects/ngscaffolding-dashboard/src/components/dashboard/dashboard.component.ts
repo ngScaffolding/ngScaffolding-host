@@ -11,6 +11,7 @@ import { CompactType, DisplayGrid, GridsterConfig, GridsterItem, GridType, Grids
 import { HtmlContainerComponent } from '../htmlContainer/htmlContainer.component';
 import { InputBuilderPopupComponent } from 'ngscaffolding-inputbuilder';
 import { DynamicComponent } from 'ng-dynamic-component';
+import { SaveDetails } from '../saveInput/saveInput.component';
 
 @Component({
   selector: 'ngs-dashboard',
@@ -24,7 +25,7 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
   @ViewChild(InputBuilderPopupComponent) actionInputPopup: InputBuilderPopupComponent;
   private paramSubscription: any;
   private menuName: string;
-  private menuItem: CoreMenuItem;
+  menuItem: CoreMenuItem;
 
   public options: GridsterConfig;
   public dashboard: DashboardModel;
@@ -145,6 +146,7 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
         break;
       }
       case 'saveas': {
+        this.saveShown = true;
         break;
       }
       case 'save': {
@@ -228,6 +230,18 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
       }
     }
   }
+
+  // Save As Bits
+
+  onSaveEvent(saved: boolean) {
+
+  }
+
+  onSaveMenu(savedMenu: SaveDetails) {
+
+  }
+  // Save As Bits
+
 
   actionOkClicked(model: any) {
     this.actionValues = model;

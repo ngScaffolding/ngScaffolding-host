@@ -1,5 +1,5 @@
 <div *ngIf="loadingData">
-  <h2>Loading...</h2>
+  <h2>{{'Loading' | translate }}...</h2>
   <p-progressSpinner></p-progressSpinner>
 </div>
 
@@ -53,7 +53,10 @@
   <div class="ui-fluid">
     <div class="card ui-g-12">
       <div class="ui-g-12">
-        <ngs-save-input></ngs-save-input>
+        <ngs-save-input [menuDetails]="menuItem"
+          (saveEvent)="onSaveEvent($event)"
+          (saveMenu)="onSaveMenu($event)">
+        </ngs-save-input>
       </div>
     </div>
   </div>
