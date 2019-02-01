@@ -41,5 +41,20 @@
   </div>
 </p-card>
 
+<!-- Input Details for Widget -->
 <ngs-input-builder-popup #actionInputPopup [inputBuilderDefinition]="actionInputDefinition" [inputModel]="actionValues" (okClicked)="actionOkClicked($event)"
 (cancelCliecked)="actionCancelClicked()"></ngs-input-builder-popup>
+
+<!-- Save As Dialog -->
+<p-dialog title="Input Details" [(visible)]="saveShown" [contentStyle]="{'overflow':'visible'}">
+    <p-header>
+        {{ 'Save As' | translate }}
+    </p-header>
+  <div class="ui-fluid">
+    <div class="card ui-g-12">
+      <div class="ui-g-12">
+        <ngs-save-input></ngs-save-input>
+      </div>
+    </div>
+  </div>
+</p-dialog>

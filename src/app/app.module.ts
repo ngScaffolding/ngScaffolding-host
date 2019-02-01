@@ -6,6 +6,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {AppRoutes} from './app.routes';
 import { Router, RouteConfigLoadEnd, NavigationStart } from '@angular/router';
 import { addDynamicDatagridComponents } from '../classes/dynamicDatagrid';
+import { TranslateModule } from '@ngx-translate/core';
 
 import {AppComponent} from './app.component';
 import {AppMenuComponent, AppSubMenuComponent} from './app.menu.component';
@@ -90,6 +91,7 @@ const appInitializerFn = (appConfig: AppSettingsService) => {
         DatagridModule,
         InputBuilderModule,
         DashboardModule,
+        TranslateModule.forRoot(),
 
         JwtModule.forRoot({
           jwtOptionsProvider: {

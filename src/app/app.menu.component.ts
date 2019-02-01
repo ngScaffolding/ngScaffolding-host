@@ -18,7 +18,7 @@ import { CoreMenuItem } from '@ngscaffolding/models';
         <div class="menu-spinner-continer" *ngIf="menuQuery.selectLoading() | async" >
           <p-progressSpinner class="spinner-spinner"></p-progressSpinner>
           <br/>
-          <p class="spinner-message">Menu Loading...</p>
+          <p class="spinner-message">{{ 'Menu Loading' | translate}} ...</p>
         </div>
     `
 })
@@ -172,7 +172,7 @@ export class AppMenuComponent implements OnInit {
                    class="ripplelink" *ngIf="!child.routerLink"
                     [attr.tabindex]="!visible ? '-1' : null" [attr.target]="child.target">
                     <i *ngIf="child.icon" class="material-icons">{{child.icon}}</i>
-                    <span>{{child.label}}</span>
+                    <span>{{child.label | translate}}</span>
                     <span class="menuitem-badge" *ngIf="child.badge">{{child.badge}}</span>
                     <i class="material-icons submenu-icon" *ngIf="child.items">keyboard_arrow_down</i>
                 </a>
@@ -181,7 +181,7 @@ export class AppMenuComponent implements OnInit {
                     [routerLink]="child.routerLink" routerLinkActive="active-menuitem-routerlink"
                    [routerLinkActiveOptions]="{exact: true}" [attr.tabindex]="!visible ? '-1' : null" [attr.target]="child.target">
                     <i *ngIf="child.icon" class="material-icons">{{child.icon}}</i>
-                    <span>{{child.label}}</span>
+                    <span>{{child.label | translate}}</span>
                     <span class="menuitem-badge" *ngIf="child.badge">{{child.badge}}</span>
                     <i class="material-icons submenu-icon" *ngIf="child.items">keyboard_arrow_down</i>
                 </a>

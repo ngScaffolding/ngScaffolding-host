@@ -43,6 +43,10 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
   actionInputDefinition: InputBuilderDefinition;
   actionValues: any;
 
+  // Save As Bits
+  saveShown = false;
+
+
   // public component = ChartComponent;
   public componentInputs = {};
 

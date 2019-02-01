@@ -5,6 +5,8 @@ import { CommonModule } from '@angular/common';
 
 import { RouterModule, Routes } from '@angular/router';
 
+import {TranslateModule} from '@ngx-translate/core';
+
 import { MenuService, LoggingService, VersionsService } from 'ngscaffolding-core';
 import { CoreModule, AuthoriseRoleGuard } from 'ngscaffolding-core';
 
@@ -46,7 +48,8 @@ const appRoutes: Routes = [
     CardModule,
     ProgressSpinnerModule,
     DynamicModule,
-    RouterModule.forChild(appRoutes)
+    RouterModule.forChild(appRoutes),
+    TranslateModule.forChild()
   ],
   declarations: [
     DashboardComponent,
