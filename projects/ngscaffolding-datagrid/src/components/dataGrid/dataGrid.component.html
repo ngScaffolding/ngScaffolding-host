@@ -32,8 +32,8 @@
     <app-actions-holder #actionsHolder *ngIf="actions && actions.length > 0"
       (actionClicked)="actionClicked($event, null)" [actions]="actions"></app-actions-holder>
 
-    <app-input-builder-popup #actionInputPopup [inputBuilderDefinition]="actionInputDefinition" [inputModel]="actionValues" (okClicked)="actionOkClicked($event)"
-      (cancelCliecked)="actionCancelClicked()"></app-input-builder-popup>
+    <ngs-input-builder-popup #actionInputPopup [inputBuilderDefinition]="actionInputDefinition" [inputModel]="actionValues" (okClicked)="actionOkClicked($event)"
+      (cancelCliecked)="actionCancelClicked()"></ngs-input-builder-popup>
 
       <p-dialog title="Input Details"
         [width]="dialogOptions.width"

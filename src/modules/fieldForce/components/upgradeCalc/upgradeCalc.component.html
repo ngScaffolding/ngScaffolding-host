@@ -21,8 +21,8 @@
           <div class="ui-g-6">{{upgradeValuesModel.minimumProcessor}} Ghz</div>
         </div>
 
-        <app-input-builder [inputBuilderDefinition]="upgradeInputs" [inputModel]="upgradeValuesModel" (okClicked)="calculate()"
-          (valueUpdated)="upgradeChanged($event)" (modelUpdated)="modelChanged($event)"></app-input-builder>
+        <ngs-input-builder [inputBuilderDefinition]="upgradeInputs" [inputModel]="upgradeValuesModel" (okClicked)="calculate()"
+          (valueUpdated)="upgradeChanged($event)" (modelUpdated)="modelChanged($event)"></ngs-input-builder>
 
       </p-panel>
     </div>

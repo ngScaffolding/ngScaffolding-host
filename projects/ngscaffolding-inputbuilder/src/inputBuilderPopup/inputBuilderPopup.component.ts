@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
 import { InputBuilderDefinition } from '@ngscaffolding/models';
 
 @Component({
-  selector: 'app-input-builder-popup',
+  selector: 'ngs-input-builder-popup',
   templateUrl: 'inputBuilderPopup.component.html',
   styleUrls: ['inputBuilderPopup.component.scss']
 })

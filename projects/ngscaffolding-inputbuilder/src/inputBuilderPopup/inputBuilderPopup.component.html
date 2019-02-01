@@ -5,12 +5,12 @@
   <div class="ui-fluid">
     <div class="card ui-g-12">
       <div class="ui-g-12">
-        <app-input-builder *ngIf="isShown" (modelUpdated)="notifyChanged($event)"
+        <ngs-input-builder *ngIf="isShown" (modelUpdated)="notifyChanged($event)"
           (okClicked)="onOkClicked($event)" (cancelClicked)="onCancelClicked()"
           (modelUpdated)="onModelUpdated($event)"
           (valueUpdated)="onValueUpdated()"
           [inputBuilderDefinition]="inputBuilderDefinition"
-          [inputModel]="inputModel"></app-input-builder>
+          [inputModel]="inputModel"></ngs-input-builder>
       </div>
     </div>
   </div>

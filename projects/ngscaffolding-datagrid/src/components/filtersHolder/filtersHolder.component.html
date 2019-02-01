@@ -1,6 +1,6 @@
 <div class="card" *ngIf="filterDefinition">
-    <app-input-builder
+    <ngs-input-builder
       (modelUpdated)="notifyInputsChanged($event)"
       [inputBuilderDefinition]="filterDefinition"
-      [inputModel]="filterValues"></app-input-builder>
+      [inputModel]="filterValues"></ngs-input-builder>
 </div>
