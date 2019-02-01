@@ -97,6 +97,26 @@ export class ChartDataService {
 
         break;
       }
+      default: {
+        // No Need to make changes to data
+        // if (chartDetail.labelsInFirstValue) {
+        //   data.forEach(dataItem => {
+        //     // Gets first property of the object
+        //     returnValues.xAxisLabels.push(dataItem[Object.keys(dataItem)[0]]);
+        //   });
+        // }
+        // returnValues.data = data;
+
+        returnValues.data = [];
+        data.forEach(dataItem => {
+          const arr = [];
+          arr.push(dataItem['ts']);
+          arr.push(dataItem['wetAirIn']);
+          returnValues.data.push(arr);
+        });
+
+        break;
+      }
     }
     return returnValues;
   }
@@ -104,10 +124,10 @@ export class ChartDataService {
   private extractComplexProperties(row: any, complexProperties: Array<[string, string]>): any {
     if (complexProperties) {
       complexProperties.forEach(property => {
-        let destProp = property[0];
+        const destProp = property[0];
 
         // Get the Path
-        let sourcePaths = property[1].split('.');
+        const sourcePaths = property[1].split('.');
         let pointer = row;
 
         sourcePaths.forEach(path => {
