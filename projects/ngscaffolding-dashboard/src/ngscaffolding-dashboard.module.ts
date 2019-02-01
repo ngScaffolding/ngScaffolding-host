@@ -20,7 +20,7 @@ import { DynamicModule } from 'ng-dynamic-component';
 import { GridsterModule } from 'angular-gridster2';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { CardModule } from 'primeng/card';
-import { DataGridModule, ButtonModule, SidebarModule, DialogModule, ConfirmDialogModule, TooltipModule } from 'primeng/primeng';
+import { ButtonModule, SidebarModule, DialogModule, ConfirmDialogModule, TooltipModule } from 'primeng/primeng';
 import { DashboardToolBarComponent } from './components';
 import { GalleryComponent } from './components/gallery/gallery.component';
 import { HtmlContainerComponent } from './components/htmlContainer/htmlContainer.component';
@@ -78,6 +78,6 @@ export class DashboardModule {
   }
 
   constructor(menuService: MenuService, logger: LoggingService, versions: VersionsService) {
-    versions.addVersion('@ngscaffolding/dashboard', VERSION.version);
+    versions.addVersion('ngscaffolding-dashboard', VERSION.version);
   }
 }

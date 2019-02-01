@@ -1,29 +1,12 @@
-import {
-  Component,
-  Input,
-  Output,
-  EventEmitter,
-  OnInit,
-  OnChanges,
-  SimpleChange
-} from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChange, SimpleChanges } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { InputDetail, InputTypes } from '@ngscaffolding/models';
-import {
-  InputBuilderDefinition,
-  OrientationValues,
-  ReferenceValueItem,
-  ReferenceValue
-} from '@ngscaffolding/models';
+import { InputBuilderDefinition, OrientationValues, ReferenceValue } from '@ngscaffolding/models';
 
 import { JsonEditorComponent, JsonEditorOptions } from 'ang-jsoneditor';
 
-import {
-  AppSettingsService,
-  AppSettingsQuery,
-  ReferenceValuesService
-} from 'ngscaffolding-core';
+import { AppSettingsService, AppSettingsQuery, ReferenceValuesService } from 'ngscaffolding-core';
 import { InputDetailReferenceValues } from '@ngscaffolding/models';
 
 @Component({
@@ -81,12 +64,17 @@ export class InputBuilderComponent implements OnInit, OnChanges {
     }
   }
 
-  ngOnChanges(changes: { [propKey: string]: SimpleChange }) {
+  ngOnChanges(changes: SimpleChanges) {
     // setup the form
-    this.buildForm();
+    if (changes.inputBuilderDefinition && changes.inputBuilderDefinition.currentValue) {
+      this.buildForm();
+    }
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    // setup the form
+    // this.buildForm();
+  }
 
   private buildForm() {
     // Clone our inputModel
