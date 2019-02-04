@@ -1,5 +1,14 @@
 import { Component, OnInit, OnDestroy, ComponentRef, ViewChildren, QueryList, OnChanges, SimpleChanges, Type, ViewChild } from '@angular/core';
-import { DataSourceService, LoggingService, MenuQuery, WidgetQuery, AppSettingsQuery, MenuService, UserAuthenticationQuery } from 'ngscaffolding-core';
+import {
+  DataSourceService,
+  LoggingService,
+  MenuQuery,
+  WidgetQuery,
+  AppSettingsQuery,
+  MenuService,
+  UserAuthenticationQuery,
+  NotificationService
+} from 'ngscaffolding-core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CoreMenuItem, WidgetModelBase, WidgetDetails, WidgetTypes, InputBuilderDefinition, IDashboardItem, BasicUser } from '@ngscaffolding/models';
 
@@ -12,7 +21,8 @@ import { HtmlContainerComponent } from '../htmlContainer/htmlContainer.component
 import { InputBuilderPopupComponent } from 'ngscaffolding-inputbuilder';
 import { DynamicComponent } from 'ng-dynamic-component';
 import { SaveDetails } from '../saveInput/saveInput.component';
-import { isBuffer } from 'util';
+import { TranslateService } from '@ngx-translate/core';
+import { Message } from 'primeng/api';
 
 @Component({
   selector: 'ngs-dashboard',
@@ -48,7 +58,6 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
   // Save As Bits
   saveShown = false;
 
-
   // public component = ChartComponent;
   public componentInputs = {};
 
@@ -63,6 +72,8 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
     private appSettingsQuery: AppSettingsQuery,
     private authQuery: UserAuthenticationQuery,
     private route: ActivatedRoute,
+    private notificationService: NotificationService,
+    private translate: TranslateService,
     private logger: LoggingService,
     private menuQuery: MenuQuery,
     private menuService: MenuService
@@ -174,7 +185,6 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
       clonedMenu.label = saveDetails.label;
     } else {
       // this is the save (existing) function
-
     }
 
     clonedMenu.routerLink = `dashboard/${clonedMenu.name}`;
@@ -183,6 +193,7 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
     clonedMenu.userIds = [this.authQuery.getSnapshot().userDetails.userId];
 
     this.menuService.saveMenuItem(clonedMenu);
+    this.notificationService.showMessage({ severity: 'info', summary: 'Save', detail: this.translate.instant('Dashboard Saved') });
   }
 
   onTitleChanged(newTitle: string) {
@@ -249,7 +260,6 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
     this.saveShown = false;
   }
   // Save As Bits
-
 
   actionOkClicked(model: any) {
     this.actionValues = model;

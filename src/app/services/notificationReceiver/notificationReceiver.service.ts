@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BroadcastService, BroadcastTypes } from 'ngscaffolding-core';
 import { Message } from 'primeng/primeng';
-import { MessageService } from 'primeng/components/common/messageservice';
+import { MessageService } from 'primeng/api';
 
 @Injectable({ providedIn: 'root' })
 export class NotificationReceiverService {
