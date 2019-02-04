@@ -66,6 +66,10 @@ export class UserAuthenticationService implements UserAuthenticationBase {
       newUser.name = tokenDetails['firstName'] + ' ' + tokenDetails['lastName'];
     }
 
+    if (tokenDetails['userId']) {
+      newUser.userId = tokenDetails['userId'];
+    }
+
     if (tokenDetails['roles']) {
       newUser.roles = tokenDetails['roles'];
     }

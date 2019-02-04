@@ -1,10 +1,11 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
-import { AppSettingsService, AppSettingsQuery } from 'ngscaffolding-core';
-import { CoreMenuItem, InputBuilderDefinition, InputTypes } from '@ngscaffolding/models';
+import { AppSettingsService, AppSettingsQuery, MenuQuery } from 'ngscaffolding-core';
+import { CoreMenuItem, InputBuilderDefinition, InputTypes, InputDetailReferenceValues, MenuTypes } from '@ngscaffolding/models';
+import { combineLatest } from 'rxjs';
 
 export interface SaveDetails {
-  name: string;
-  label: string;
+  name?: string;
+  label?: string;
   parentName?: string;
 }
 @Component({
@@ -12,10 +13,10 @@ export interface SaveDetails {
   templateUrl: './saveInput.component.html',
   styleUrls: ['./saveInput.component.scss']
 })
-export class SaveInputComponent implements OnChanges {
+export class SaveInputComponent implements OnChanges, OnInit {
+
   @Input() menuDetails: CoreMenuItem;
 
-  @Output() saveEvent = new EventEmitter<boolean>();
   @Output() saveMenu = new EventEmitter<SaveDetails>();
 
   saveDetails: SaveDetails;
@@ -28,22 +29,43 @@ export class SaveInputComponent implements OnChanges {
     inputDetails: [
       { name: 'name', type: InputTypes.textbox, label: 'Menu Id', required: 'Id is required' },
       { name: 'label', type: InputTypes.textbox, label: 'Menu Label', required: 'Label is required' },
-      { name: 'parentName', type: InputTypes.select, label: 'Menu Id', required: 'Parent Menu is required' }
+      <InputDetailReferenceValues>{ name: 'parentName', type: InputTypes.dropdown, label: 'Parent Menu Id', required: 'Parent Menu is required' }
     ]
   };
 
-  onModelUpdated(newSaveDetails: SaveDetails) {}
+  constructor(private menuQuery: MenuQuery) { }
 
-  onOkClciked(event: any) {
-    alert('ok');
+  ngOnInit(): void {
+    combineLatest([this.menuQuery.selectAll(), this.menuQuery.selectLoading()])
+      .subscribe(([menuItems, loading]) => {
+      if (menuItems && !loading) {
+        const parentItem: InputDetailReferenceValues = this.inputDefinition.inputDetails[2];
+
+        parentItem.datasourceItems = [];
+        menuItems.filter(menu => menu.type === MenuTypes.Folder).forEach(loopMenu => {
+          parentItem.datasourceItems.push({
+            display: loopMenu.label,
+            value: loopMenu.name
+          });
+        });
+      }
+     });
+  }
+
+  onModelUpdated(newSaveDetails: SaveDetails) {
+    this.saveDetails = newSaveDetails;
+  }
+
+  onOkClicked(event: any) {
+    this.saveMenu.emit(this.saveDetails);
   }
 
   onCancelClicked(event: any) {
-    alert('cancel');
+    this.saveMenu.emit(null);
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes.menuDetails) {
+    if (changes.menuDetails && changes.menuDetails.currentValue) {
       this.saveDetails = {
         name: '',
         label: changes.menuDetails.currentValue.name

@@ -45,7 +45,10 @@ export class MenuService {
     combineLatest(this.authQuery.authenticated$, this.appSettingsQuery.selectEntity(AppSettings.apiHome)).subscribe(([authenticated, apiHome]) => {
       if (authenticated && apiHome) {
         this.apiHome = apiHome.value;
-        this.menuQuery.selectLoading().pipe(take(1)).subscribe(loading => {
+        this.menuQuery
+          .selectLoading()
+          .pipe(take(1))
+          .subscribe(loading => {
             if (!loading) {
               this.downloadMenuItems();
             }
@@ -64,26 +67,35 @@ export class MenuService {
   }
 
   public saveMenuItem(menuItem: CoreMenuItem) {
-    this.http
-      .post<CoreMenuItem>(this.apiHome + '/api/v1/menuitems', menuItem)
-      .subscribe(savedMenuItem => {
-
+    this.http.post<CoreMenuItem>(this.apiHome + '/api/v1/menuitems', menuItem).subscribe(savedMenuItem => {
+      // Is this existing?
+      const existing = this.menuQuery.hasEntity(menuItem.name);
+      if (existing) {
+        this.menuStore.createOrReplace(menuItem.name, menuItem);
+      } else {
         // Add to reference list of menus
         this.menuStore.add(savedMenuItem);
-        const existingMenus = JSON.parse(JSON.stringify(this.menuQuery.getSnapshot().menuItems));
-        let parentMenu: CoreMenuItem;
-        if (menuItem.parent) {
-          parentMenu = existingMenus.find(menu => menu.name.toLowerCase() === savedMenuItem.parent.toLowerCase());
-        }
-        // Add to treeview for menu rendering
-        if (!Array.isArray(parentMenu.items)) {
-          parentMenu.items = [];
-        }
-        (parentMenu.items as CoreMenuItem[]).push(savedMenuItem);
+      }
 
-        // Update tree and tell the world
-        this.menuStore.updateRoot({ menuItems: existingMenus });
-       });
+      const existingMenus = JSON.parse(JSON.stringify(this.menuQuery.getSnapshot().menuItems));
+      let parentMenu: CoreMenuItem;
+      if (menuItem.parent) {
+        parentMenu = existingMenus.find(menu => menu.name.toLowerCase() === savedMenuItem.parent.toLowerCase());
+      }
+      // Add to treeview for menu rendering
+      if (!parentMenu.items || !Array.isArray(parentMenu.items)) {
+        parentMenu.items = [];
+      }
+      if (existing) {
+        const foundIndex = (parentMenu.items as CoreMenuItem[]).findIndex(childMenu => childMenu.name === menuItem.name);
+        parentMenu.items[foundIndex] = menuItem;
+      } else {
+        (parentMenu.items as CoreMenuItem[]).push(savedMenuItem);
+      }
+
+      // Update tree and tell the world
+      this.menuStore.updateRoot({ menuItems: existingMenus });
+    });
   }
 
   private addMenuItems(menuItems: CoreMenuItem[]) {

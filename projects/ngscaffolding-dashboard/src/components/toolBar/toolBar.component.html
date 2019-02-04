@@ -9,16 +9,16 @@
     <button pButton class="ui-button-info toolbarButton" type="button" icon="ui-icon-refresh" tooltipPosition="bottom"
       (click)="buttonClicked('refresh');" pTooltip="{{'Refresh Data' | translate}}"></button>
 
-    <button pButton class="ui-button-warning toolbarButton" *ngIf="showSaveAs" type="button" icon="ui-icon-fiber-new" tooltipPosition="bottom"
+    <button pButton class="ui-button-success toolbarButton" *ngIf="showSaveAs" type="button" icon="ui-icon-create-new-folder" tooltipPosition="bottom"
       (click)="buttonClicked('saveas');" pTooltip="{{'Save As' | translate}}"></button>
 
       <button pButton class="ui-button-warning toolbarButton" *ngIf="showSave" type="button" icon="ui-icon-save" tooltipPosition="bottom"
       (click)="buttonClicked('save');" pTooltip="{{'Save' | translate}}"></button>
 
-      <button pButton class="ui-button-warning toolbarButton" *ngIf="showDelete" type="button" icon="ui-icon-delete-forever" tooltipPosition="bottom"
-      (click)="buttonClicked('remove');" pTooltip="{{'Save' | translate}}"></button>
+      <button pButton class="ui-button-danger toolbarButton" *ngIf="showDelete" type="button" icon="ui-icon-delete-forever" tooltipPosition="bottom"
+      (click)="buttonClicked('remove');" pTooltip="{{'Delete' | translate}}"></button>
 
-      <button pButton class="ui-button-warning toolbarButton" *ngIf="showShare" type="button" icon="ui-icon-share" tooltipPosition="bottom"
+      <button pButton class="ui-button-info toolbarButton" *ngIf="showShare" type="button" icon="ui-icon-share" tooltipPosition="bottom"
       (click)="buttonClicked('share');" pTooltip="{{'Share' | translate}}"></button>
   </span>
 

@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, ComponentRef, ViewChildren, QueryList, OnChanges, SimpleChanges, Type, ViewChild } from '@angular/core';
 import { DataSourceService, LoggingService, MenuQuery, WidgetQuery, AppSettingsQuery, MenuService, UserAuthenticationQuery } from 'ngscaffolding-core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { CoreMenuItem, WidgetModelBase, WidgetDetails, WidgetTypes, InputBuilderDefinition, IDashboardItem } from '@ngscaffolding/models';
+import { CoreMenuItem, WidgetModelBase, WidgetDetails, WidgetTypes, InputBuilderDefinition, IDashboardItem, BasicUser } from '@ngscaffolding/models';
 
 import { DashboardModel, DialogOptions } from '@ngscaffolding/models';
 
@@ -12,6 +12,7 @@ import { HtmlContainerComponent } from '../htmlContainer/htmlContainer.component
 import { InputBuilderPopupComponent } from 'ngscaffolding-inputbuilder';
 import { DynamicComponent } from 'ng-dynamic-component';
 import { SaveDetails } from '../saveInput/saveInput.component';
+import { isBuffer } from 'util';
 
 @Component({
   selector: 'ngs-dashboard',
@@ -21,8 +22,8 @@ import { SaveDetails } from '../saveInput/saveInput.component';
 export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
   @ViewChildren(GridsterItemComponent) gridsterItems: QueryList<GridsterItemComponent>;
   @ViewChildren(DynamicComponent) component: DynamicComponent;
-
   @ViewChild(InputBuilderPopupComponent) actionInputPopup: InputBuilderPopupComponent;
+
   private paramSubscription: any;
   private menuName: string;
   menuItem: CoreMenuItem;
@@ -125,6 +126,7 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
     if (this.menuItem.name.startsWith(userId)) {
       // We are the owner of this menu Item
       // We can save changes and delete
+      this.showAdd = true;
       this.showSave = true;
       this.showDelete = true;
       this.showShare = true;
@@ -150,7 +152,7 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
         break;
       }
       case 'save': {
-        this.saveDashboard();
+        this.saveDashboard(null);
         break;
       }
       case 'share': {
@@ -159,15 +161,23 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
     }
   }
 
-  private saveDashboard() {
+  private saveDashboard(saveDetails: SaveDetails) {
     // Create Clone of current Dashboard
     const clonedMenu: CoreMenuItem = JSON.parse(JSON.stringify(this.menuItem));
-    clonedMenu.name = `${this.authQuery.getSnapshot().userDetails.userId}::${this.menuItem.name}`;
 
     clonedMenu.menuDetails = JSON.parse(JSON.stringify(this.dashboard));
-    clonedMenu.parent = 'My Dashboards';
-    clonedMenu.routerLink = `dashboard/${clonedMenu.name}`;
     clonedMenu.roles = [];
+
+    if (saveDetails) {
+      clonedMenu.name = `${this.authQuery.getSnapshot().userDetails.userId}::${saveDetails.name}`;
+      clonedMenu.parent = saveDetails.parentName;
+      clonedMenu.label = saveDetails.label;
+    } else {
+      // this is the save (existing) function
+
+    }
+
+    clonedMenu.routerLink = `dashboard/${clonedMenu.name}`;
 
     // Mark as owned by current user
     clonedMenu.userIds = [this.authQuery.getSnapshot().userDetails.userId];
@@ -232,13 +242,11 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   // Save As Bits
-
-  onSaveEvent(saved: boolean) {
-
-  }
-
   onSaveMenu(savedMenu: SaveDetails) {
-
+    if (savedMenu) {
+      this.saveDashboard(savedMenu);
+    }
+    this.saveShown = false;
   }
   // Save As Bits
 

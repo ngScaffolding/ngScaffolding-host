@@ -89,10 +89,10 @@ export class TopDashboardComponent implements OnInit, AfterViewInit {
             animation: false,
             dataLabels: {
                 style: {
-                    font: "Open Sans",
-                    fontSize: "12pt",
-                    fontWeight: "normal",
-                    textOutline: "none"
+                    font: 'Open Sans',
+                    fontSize: '12pt',
+                    fontWeight: 'normal',
+                    textOutline: 'none'
                 }
             }
         }
@@ -217,10 +217,10 @@ export class TopDashboardComponent implements OnInit, AfterViewInit {
             animation: false,
             dataLabels: {
                 style: {
-                    font: "Open Sans",
-                    fontSize: "12pt",
-                    fontWeight: "normal",
-                    textOutline: "none"
+                    font: 'Open Sans',
+                    fontSize: '12pt',
+                    fontWeight: 'normal',
+                    textOutline: 'none'
                 }
             }
         }
@@ -345,10 +345,10 @@ export class TopDashboardComponent implements OnInit, AfterViewInit {
             animation: false,
             dataLabels: {
                 style: {
-                    font: "Open Sans",
-                    fontSize: "12pt",
-                    fontWeight: "normal",
-                    textOutline: "none"
+                    font: 'Open Sans',
+                    fontSize: '12pt',
+                    fontWeight: 'normal',
+                    textOutline: 'none'
                 }
             }
         }
@@ -472,10 +472,10 @@ export class TopDashboardComponent implements OnInit, AfterViewInit {
             animation: false,
             dataLabels: {
                 style: {
-                    font: "Open Sans",
-                    fontSize: "12pt",
-                    fontWeight: "normal",
-                    textOutline: "none"
+                    font: 'Open Sans',
+                    fontSize: '12pt',
+                    fontWeight: 'normal',
+                    textOutline: 'none'
                 }
             }
         }
