@@ -23,6 +23,7 @@ import { DynamicComponent } from 'ng-dynamic-component';
 import { SaveDetails } from '../saveInput/saveInput.component';
 import { TranslateService } from '@ngx-translate/core';
 import { Message } from 'primeng/api';
+import {ConfirmationService} from 'primeng/primeng';
 
 @Component({
   selector: 'ngs-dashboard',
@@ -71,9 +72,11 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
     private widgetQuery: WidgetQuery,
     private appSettingsQuery: AppSettingsQuery,
     private authQuery: UserAuthenticationQuery,
+    private router: Router,
     private route: ActivatedRoute,
     private notificationService: NotificationService,
     private translate: TranslateService,
+    private confirmationService: ConfirmationService,
     private logger: LoggingService,
     private menuQuery: MenuQuery,
     private menuService: MenuService
@@ -156,6 +159,7 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
         break;
       }
       case 'remove': {
+        this.deleteDashboard();
         break;
       }
       case 'saveas': {
@@ -170,6 +174,18 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
         break;
       }
     }
+  }
+
+  private deleteDashboard() {
+    this.confirmationService.confirm({
+      message: this.translate.instant('Are you sure you wish to delete this Dashboard?'),
+      accept: () => {
+        this.menuService.delete(this.menuItem).subscribe(() => {
+
+          this.router.navigateByUrl('/');
+         });
+       }
+    });
   }
 
   private saveDashboard(saveDetails: SaveDetails) {
@@ -193,7 +209,9 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
     clonedMenu.userIds = [this.authQuery.getSnapshot().userDetails.userId];
 
     this.menuService.saveMenuItem(clonedMenu);
-    this.notificationService.showMessage({ severity: 'info', summary: 'Save', detail: this.translate.instant('Dashboard Saved') });
+    setTimeout(() => {
+      this.notificationService.showMessage({ severity: 'info', summary: 'Save', detail: this.translate.instant('Dashboard Saved') })
+    }, 1000);
   }
 
   onTitleChanged(newTitle: string) {

@@ -1,7 +1,7 @@
 import { RolesService } from '../rolesService/roles.service';
 import { Injectable } from '@angular/core';
 import { Route } from '@angular/router';
-import { BehaviorSubject, combineLatest, forkJoin } from 'rxjs';
+import { BehaviorSubject, combineLatest, forkJoin, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
 import { LoggingService } from '../logging/logging.service';
@@ -64,6 +64,28 @@ export class MenuService {
 
     // Save for later use
     this.menuItemsFromCode = menuItems;
+  }
+
+  public delete(menuItem: CoreMenuItem): Observable<any> {
+    const obs = this.http.delete(`${this.apiHome}/api/v1/menuitems/${menuItem.name}`);
+    obs.subscribe(() => {
+      // Remove from our store
+      this.menuStore.remove(menuItem.name);
+
+      // Remove from Tree
+      const existingMenus = JSON.parse(JSON.stringify(this.menuQuery.getSnapshot().menuItems));
+      let parentMenu: CoreMenuItem;
+      if (menuItem.parent) {
+        parentMenu = existingMenus.find(menu => menu.name.toLowerCase() === menuItem.parent.toLowerCase());
+      }
+
+        const foundIndex = (parentMenu.items as CoreMenuItem[]).findIndex(childMenu => childMenu.name === menuItem.name);
+      parentMenu.items.splice(foundIndex, 1);
+
+      // Update tree and tell the world
+      this.menuStore.updateRoot({ menuItems: existingMenus });
+    });
+    return obs;
   }
 
   public saveMenuItem(menuItem: CoreMenuItem) {

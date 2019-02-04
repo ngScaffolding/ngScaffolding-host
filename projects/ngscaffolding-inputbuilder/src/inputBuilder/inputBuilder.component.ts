@@ -30,6 +30,7 @@ export class InputBuilderComponent implements OnInit, OnChanges {
   controlStyle = 'ui-g-12';
   inputContainerClass = 'ui-g-12'; // This changes to allow the help Icon
   editorOptions: JsonEditorOptions;
+  formSubmitted = false;
 
   constructor(
     public appSettings: AppSettingsService,
@@ -49,6 +50,7 @@ export class InputBuilderComponent implements OnInit, OnChanges {
   }
 
   onSubmit(form: any) {
+    this.formSubmitted = true;
     if (this.form.valid) {
       this.okClicked.emit(this.clonedInputModel);
     }

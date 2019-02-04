@@ -14,7 +14,6 @@ export interface SaveDetails {
   styleUrls: ['./saveInput.component.scss']
 })
 export class SaveInputComponent implements OnChanges, OnInit {
-
   @Input() menuDetails: CoreMenuItem;
 
   @Output() saveMenu = new EventEmitter<SaveDetails>();
@@ -27,29 +26,30 @@ export class SaveInputComponent implements OnChanges, OnInit {
     cancelButtonText: 'Cancel',
 
     inputDetails: [
-      { name: 'name', type: InputTypes.textbox, label: 'Menu Id', required: 'Id is required' },
-      { name: 'label', type: InputTypes.textbox, label: 'Menu Label', required: 'Label is required' },
-      <InputDetailReferenceValues>{ name: 'parentName', type: InputTypes.dropdown, label: 'Parent Menu Id', required: 'Parent Menu is required' }
+      { name: 'name', type: InputTypes.textbox, label: 'Menu Id', validateRequired: 'Id is required' },
+      { name: 'label', type: InputTypes.textbox, label: 'Menu Label', validateRequired: 'Label is required' },
+      <InputDetailReferenceValues>{ name: 'parentName', type: InputTypes.dropdown, label: 'Parent Menu Id', validateRequired: 'Parent Menu is required' }
     ]
   };
 
-  constructor(private menuQuery: MenuQuery) { }
+  constructor(private menuQuery: MenuQuery) {}
 
   ngOnInit(): void {
-    combineLatest([this.menuQuery.selectAll(), this.menuQuery.selectLoading()])
-      .subscribe(([menuItems, loading]) => {
+    combineLatest([this.menuQuery.selectAll(), this.menuQuery.selectLoading()]).subscribe(([menuItems, loading]) => {
       if (menuItems && !loading) {
         const parentItem: InputDetailReferenceValues = this.inputDefinition.inputDetails[2];
 
-        parentItem.datasourceItems = [];
-        menuItems.filter(menu => menu.type === MenuTypes.Folder).forEach(loopMenu => {
-          parentItem.datasourceItems.push({
-            display: loopMenu.label,
-            value: loopMenu.name
+        parentItem.datasourceItems = [{ display: '(None)', value: null }];
+        menuItems
+          .filter(menu => menu.type === MenuTypes.Folder)
+          .forEach(loopMenu => {
+            parentItem.datasourceItems.push({
+              display: loopMenu.label,
+              value: loopMenu.name
+            });
           });
-        });
       }
-     });
+    });
   }
 
   onModelUpdated(newSaveDetails: SaveDetails) {

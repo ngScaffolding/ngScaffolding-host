@@ -118,7 +118,7 @@
             <i class="fa fa-info-circle help-icon" pTooltip="{{input.help}}" tooltipPosition="bottom"></i>
         </span>
 
-        <div class="ui-message ui-messages-error ui-corner-all" *ngIf="form.get(input.name)?.invalid && (form.get(input.name)?.dirty || form.get(input.name)?.touched)">
+        <div class="ui-message ui-messages-error ui-corner-all" *ngIf="form.get(input.name)?.invalid && (form.get(input.name)?.dirty || form.get(input.name)?.touched || formSubmitted)">
             <div *ngIf="form.get(input.name).errors.required">
                 {{input.validateRequired}}
             </div>
