@@ -42,7 +42,7 @@ export class InputBuilderComponent implements OnInit, OnChanges {
   }
 
   public getLabel(input: InputDetail) {
-    if(input.label) {
+    if (input.label) {
       return input.label;
     } else {
       return input.name.replace(/([A-Z]+)/g, ' $1').replace(/([A-Z][a-z])/g, ' $1');

@@ -67,25 +67,30 @@ export class MenuService {
   }
 
   public delete(menuItem: CoreMenuItem): Observable<any> {
-    const obs = this.http.delete(`${this.apiHome}/api/v1/menuitems/${menuItem.name}`);
-    obs.subscribe(() => {
-      // Remove from our store
-      this.menuStore.remove(menuItem.name);
+    return new Observable<any>(observer => {
+      const obs = this.http.delete(`${this.apiHome}/api/v1/menuitems/${menuItem.name}`);
+      obs.subscribe(() => {
+        // Remove from our store
+        this.menuStore.remove(menuItem.name);
 
-      // Remove from Tree
-      const existingMenus = JSON.parse(JSON.stringify(this.menuQuery.getSnapshot().menuItems));
-      let parentMenu: CoreMenuItem;
-      if (menuItem.parent) {
-        parentMenu = existingMenus.find(menu => menu.name.toLowerCase() === menuItem.parent.toLowerCase());
-      }
+        // Remove from Tree
+        const existingMenus = JSON.parse(JSON.stringify(this.menuQuery.getSnapshot().menuItems));
+        let parentMenu: CoreMenuItem;
+        if (menuItem.parent) {
+          parentMenu = existingMenus.find(menu => menu.name.toLowerCase() === menuItem.parent.toLowerCase());
+        }
 
         const foundIndex = (parentMenu.items as CoreMenuItem[]).findIndex(childMenu => childMenu.name === menuItem.name);
-      parentMenu.items.splice(foundIndex, 1);
+        parentMenu.items.splice(foundIndex, 1);
 
-      // Update tree and tell the world
-      this.menuStore.updateRoot({ menuItems: existingMenus });
+        // Update tree and tell the world
+        this.menuStore.updateRoot({ menuItems: existingMenus });
+        observer.next();
+        observer.complete();
+      }, err => {
+          observer.error(err);
+      });
     });
-    return obs;
   }
 
   public saveMenuItem(menuItem: CoreMenuItem) {

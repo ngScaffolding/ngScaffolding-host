@@ -182,6 +182,10 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
       accept: () => {
         this.menuService.delete(this.menuItem).subscribe(() => {
 
+          setTimeout(() => {
+            this.notificationService.showMessage({ severity: 'info', summary: 'Delete', detail: this.translate.instant('Dashboard Deleted') });
+          }, 1000);
+
           this.router.navigateByUrl('/');
          });
        }
@@ -210,7 +214,7 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
 
     this.menuService.saveMenuItem(clonedMenu);
     setTimeout(() => {
-      this.notificationService.showMessage({ severity: 'info', summary: 'Save', detail: this.translate.instant('Dashboard Saved') })
+      this.notificationService.showMessage({ severity: 'info', summary: 'Save', detail: this.translate.instant('Dashboard Saved') });
     }, 1000);
   }
 
