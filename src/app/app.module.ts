@@ -41,7 +41,8 @@ import {
   import { DatagridModule } from 'ngscaffolding-datagrid';
   import { InputBuilderModule } from 'ngscaffolding-inputbuilder';
   import { DashboardModule } from 'ngscaffolding-dashboard';
-  import { CUSTOM_IMPORTS } from '../../custom/custom.app';
+import { CUSTOM_IMPORTS } from '../../custom/custom.app';
+import { UserAdminModule } from '../modules/userAdmin/userAdminModule';
 
 // Pages
 import { NgScaffoldingComponent } from './app.ngscaffolding.component';
@@ -90,7 +91,8 @@ const appInitializerFn = (appConfig: AppSettingsService) => {
         CoreModule.forRoot(),
         DatagridModule,
         InputBuilderModule,
-        DashboardModule,
+    DashboardModule,
+    UserAdminModule,
         TranslateModule.forRoot(),
 
         JwtModule.forRoot({
