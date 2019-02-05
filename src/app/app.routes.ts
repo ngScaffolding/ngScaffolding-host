@@ -12,6 +12,7 @@ import { AboutComponent } from './pages/about/about.component';
 
 import { UserSettingsComponent } from './pages/userSettings/userSettings.component';
 import { ProfilePageComponent } from './pages/profile/profilePage.component';
+import { UserListComponent } from './modules/userAdmin/pages/userList/userList.component';
 
 export const routes: Routes = [
   { path: '', component: LandingPageComponent, canActivate: [AuthoriseRoleGuard] },
@@ -21,8 +22,8 @@ export const routes: Routes = [
   { path: 'usersettings', component: UserSettingsComponent, canActivate: [AuthoriseRoleGuard] },
   { path: 'profile', component: ProfilePageComponent, canActivate: [AuthoriseRoleGuard] },
 
-  // Lazy loaded User Admin Module
-  { path: 'users', loadChildren: '../../../modules/userAdmin/userAdminModule#UserAdminModule' },
+  // TODO: Lazy loaded User Admin Module
+
 
   // Catch all
   { path: '**', component: PageNotFoundComponent, canActivate: [AuthoriseRoleGuard] }
