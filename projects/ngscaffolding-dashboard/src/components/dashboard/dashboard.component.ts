@@ -23,7 +23,7 @@ import { DynamicComponent } from 'ng-dynamic-component';
 import { SaveDetails } from '../saveInput/saveInput.component';
 import { TranslateService } from '@ngx-translate/core';
 import { Message } from 'primeng/api';
-import {ConfirmationService} from 'primeng/primeng';
+import { ConfirmationService } from 'primeng/primeng';
 
 @Component({
   selector: 'ngs-dashboard',
@@ -41,6 +41,7 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
 
   public options: GridsterConfig;
   public dashboard: DashboardModel;
+  public isShareDialog = false;
 
   // toolbar visible
   public showSave = false;
@@ -166,6 +167,7 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
         break;
       }
       case 'saveas': {
+        this.isShareDialog = false;
         this.saveShown = true;
         break;
       }
@@ -174,6 +176,8 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
         break;
       }
       case 'share': {
+        this.isShareDialog = true;
+        this.saveShown = true;
         break;
       }
     }
@@ -184,15 +188,36 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
       message: this.translate.instant('Are you sure you wish to delete this Dashboard?'),
       accept: () => {
         this.menuService.delete(this.menuItem).subscribe(() => {
-
           setTimeout(() => {
             this.notificationService.showMessage({ severity: 'info', summary: 'Delete', detail: this.translate.instant('Dashboard Deleted') });
           }, 1000);
 
           this.router.navigateByUrl('/');
-         });
-       }
+        });
+      }
     });
+  }
+
+  private shareDashboard(saveDetails: SaveDetails) {
+    // Create Clone of current Dashboard
+    const clonedMenu: CoreMenuItem = JSON.parse(JSON.stringify(this.menuItem));
+
+    clonedMenu.menuDetails = JSON.parse(JSON.stringify(this.dashboard));
+    clonedMenu.roles = [saveDetails.shareRole];
+
+    clonedMenu.name = `${saveDetails.label}::${Date.now()}`;
+    clonedMenu.parent = saveDetails.parentName;
+    clonedMenu.label = saveDetails.label;
+
+    clonedMenu.routerLink = `dashboard/${clonedMenu.name}`;
+
+    // Mark as NOT owned by current user
+    clonedMenu.userIds = null;
+
+    this.menuService.saveMenuItem(clonedMenu);
+    setTimeout(() => {
+      this.notificationService.showMessage({ severity: 'info', summary: 'Share', detail: this.translate.instant('Dashboard Shared') });
+    }, 1000);
   }
 
   private saveDashboard(saveDetails: SaveDetails) {
@@ -203,7 +228,7 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
     clonedMenu.roles = [];
 
     if (saveDetails) {
-      clonedMenu.name = `${this.authQuery.getSnapshot().userDetails.userId}::${saveDetails.name}`;
+      clonedMenu.name = `${this.authQuery.getSnapshot().userDetails.userId}::${saveDetails.label}::${Date.now()}`;
       clonedMenu.parent = saveDetails.parentName;
       clonedMenu.label = saveDetails.label;
     } else {
@@ -277,14 +302,18 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
     }
   }
 
-  // Save As Bits
+  // Save As Bits and sharing
   onSaveMenu(savedMenu: SaveDetails) {
     if (savedMenu) {
-      this.saveDashboard(savedMenu);
+      if (this.isShareDialog) {
+        this.shareDashboard(savedMenu);
+      } else {
+        this.saveDashboard(savedMenu);
+      }
     }
     this.saveShown = false;
   }
-  // Save As Bits
+  // Save As Bits and sharing
 
   actionOkClicked(model: any) {
     this.actionValues = model;

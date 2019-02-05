@@ -2,11 +2,12 @@ import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChange
 import { AppSettingsService, AppSettingsQuery, MenuQuery } from 'ngscaffolding-core';
 import { CoreMenuItem, InputBuilderDefinition, InputTypes, InputDetailReferenceValues, MenuTypes } from '@ngscaffolding/models';
 import { combineLatest } from 'rxjs';
+import { RolesQuery } from 'projects/ngscaffolding-core/src/services/rolesService/roles.query';
 
 export interface SaveDetails {
-  name?: string;
   label?: string;
   parentName?: string;
+  shareRole?: string;
 }
 @Component({
   selector: 'ngs-save-input',
@@ -15,29 +16,60 @@ export interface SaveDetails {
 })
 export class SaveInputComponent implements OnChanges, OnInit {
   @Input() menuDetails: CoreMenuItem;
+  @Input() isShareDialog: boolean;
 
   @Output() saveMenu = new EventEmitter<SaveDetails>();
 
   saveDetails: SaveDetails;
 
-  inputDefinition: InputBuilderDefinition = {
-    title: 'Save Menu',
-    okButtonText: 'Save',
-    cancelButtonText: 'Cancel',
+  inputDefinition: InputBuilderDefinition;
 
-    inputDetails: [
-      { name: 'name', type: InputTypes.textbox, label: 'Menu Id', validateRequired: 'Id is required' },
-      { name: 'label', type: InputTypes.textbox, label: 'Menu Label', validateRequired: 'Label is required' },
-      <InputDetailReferenceValues>{ name: 'parentName', type: InputTypes.dropdown, label: 'Parent Menu Id', validateRequired: 'Parent Menu is required' }
-    ]
-  };
-
-  constructor(private menuQuery: MenuQuery) {}
+  constructor(private menuQuery: MenuQuery, private rolesQuery: RolesQuery) {}
 
   ngOnInit(): void {
-    combineLatest([this.menuQuery.selectAll(), this.menuQuery.selectLoading()]).subscribe(([menuItems, loading]) => {
-      if (menuItems && !loading) {
-        const parentItem: InputDetailReferenceValues = this.inputDefinition.inputDetails[2];
+
+    if (this.isShareDialog) {
+      this.inputDefinition = {
+        title: 'Save Menu',
+        okButtonText: 'Save',
+        cancelButtonText: 'Cancel',
+        inputDetails: [
+          { name: 'label', type: InputTypes.textbox, label: 'Menu Label', validateRequired: 'Label is required' },
+          <InputDetailReferenceValues>{ name: 'parentName', type: InputTypes.dropdown, label: 'Parent Menu Id', validateRequired: 'Parent Menu is required' }
+        ]
+      };
+    } else {
+      this.inputDefinition = {
+        title: 'Save Menu',
+        okButtonText: 'Save',
+        cancelButtonText: 'Cancel',
+        inputDetails: [
+          { name: 'label', type: InputTypes.textbox, label: 'Menu Label', validateRequired: 'Label is required' },
+          <InputDetailReferenceValues>{ name: 'parentName', type: InputTypes.dropdown, label: 'Parent Menu Id', validateRequired: 'Parent Menu is required' },
+          <InputDetailReferenceValues>{ name: 'shareRole', type: InputTypes.dropdown, label: 'Shared with Role', validateRequired: 'Shared with Role is required' }
+        ]
+      };
+
+      // Load Roles for sharing diag
+      combineLatest([this.rolesQuery.selectAll(), this.rolesQuery.selectLoading()]).subscribe(([roles, rolesLoading]) => {
+      if (roles && !rolesLoading) {
+        const rolesItem: InputDetailReferenceValues = this.inputDefinition.inputDetails[2];
+
+        rolesItem.datasourceItems = [{ display: '(None)', value: null }];
+        roles
+          .forEach(loopRole => {
+            rolesItem.datasourceItems.push({
+              display: loopRole.name,
+              value: loopRole.name
+            });
+          });
+      }
+    });
+    }
+
+    combineLatest([this.menuQuery.selectAll(), this.menuQuery.selectLoading()]).subscribe(([menuItems, menuLoading]) => {
+      if (menuItems && !menuLoading) {
+        const parentItem: InputDetailReferenceValues = this.inputDefinition.inputDetails[1];
 
         parentItem.datasourceItems = [{ display: '(None)', value: null }];
         menuItems
@@ -67,7 +99,6 @@ export class SaveInputComponent implements OnChanges, OnInit {
   ngOnChanges(changes: SimpleChanges) {
     if (changes.menuDetails && changes.menuDetails.currentValue) {
       this.saveDetails = {
-        name: '',
         label: changes.menuDetails.currentValue.name
       };
     }
