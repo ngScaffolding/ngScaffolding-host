@@ -30,11 +30,9 @@ export class AppSettingsService {
     } else {
       this.appSettingsStore.add({ Id: null, name: name, value: value });
     }
-    this.appSettingsStore.createOrReplace(name, { Id: null, name, value });
+
     if (name === AppSettings.apiHome) {
-      setTimeout(() => {
         this.loadFromServer(value.toString());
-      }, 200);
     }
   }
 

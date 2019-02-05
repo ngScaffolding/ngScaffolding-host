@@ -59,7 +59,6 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
   // Save As Bits
   saveShown = false;
 
-  // public component = ChartComponent;
   public componentInputs = {};
 
   public unitHeight: number;
@@ -156,6 +155,10 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
         break;
       }
       case 'refresh': {
+        this.components.forEach(comp => {
+          const component = comp as IDashboardItem;
+          component.refreshData();
+        });
         break;
       }
       case 'remove': {

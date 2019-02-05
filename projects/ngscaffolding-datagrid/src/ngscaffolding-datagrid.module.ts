@@ -7,6 +7,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { MenuService, LoggingService, VersionsService, AuthoriseRoleGuard } from 'ngscaffolding-core';
 
 import { InputBuilderModule } from 'ngscaffolding-inputbuilder';
+import { TranslateModule } from '@ngx-translate/core';
 
 import { FiltersHolderComponent } from './components/filtersHolder/filtersHolder.component';
 import { ActionsHolderComponent } from './components/actionsHolder/actionsHolder.component';
@@ -39,6 +40,7 @@ const appRoutes: Routes = [
     SplitButtonModule,
     SidebarModule,
     CardModule,
+    TranslateModule,
     AgGridModule.withComponents(
       [
         ButtonCellComponent

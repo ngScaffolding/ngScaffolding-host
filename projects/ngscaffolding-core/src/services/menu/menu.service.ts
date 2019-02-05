@@ -20,7 +20,7 @@ import { take } from 'rxjs/internal/operators/take';
 export class MenuService {
   private className = 'core.MenuService';
 
-  private menuItemsFromCode: Array<CoreMenuItem>;
+  private menuItemsFromCode: Array<CoreMenuItem> = [];
   private routes: Array<Route> = [];
 
   private menuItems: CoreMenuItem[] = [];
@@ -63,7 +63,7 @@ export class MenuService {
     this.log.info(`Adding MenuItems ${JSON.stringify(menuItems)}`, this.className);
 
     // Save for later use
-    this.menuItemsFromCode = menuItems;
+    this.menuItemsFromCode = [...this.menuItemsFromCode, ...menuItems];
   }
 
   public delete(menuItem: CoreMenuItem): Observable<any> {
@@ -133,8 +133,11 @@ export class MenuService {
     // Add to flat reference List
     this.addMenuItemsToReferenceList(menuItems);
 
+    // Clone menuItems
+    const cloned = JSON.parse(JSON.stringify(this.menuItems));
+
     // Save our flat list to State
-    this.menuStore.updateRoot({ menuItems: this.menuItems });
+    this.menuStore.updateRoot({ menuItems: cloned });
   }
 
   // Iterative Call
