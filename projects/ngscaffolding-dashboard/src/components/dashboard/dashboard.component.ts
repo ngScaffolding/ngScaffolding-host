@@ -127,7 +127,11 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
           this.changesMade = false;
           this.loadingData = false;
         } else {
-          alert('Not Found');
+          this.notificationService.showMessage({
+            summary: 'Error',
+            severity: 'error',
+            detail: 'You do not have access to this Dashboard'
+          });
           this.changesMade = false;
           this.loadingData = false;
         }
