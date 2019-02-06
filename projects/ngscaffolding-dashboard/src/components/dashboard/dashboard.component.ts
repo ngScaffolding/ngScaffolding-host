@@ -24,6 +24,7 @@ import { SaveDetails } from '../saveInput/saveInput.component';
 import { TranslateService } from '@ngx-translate/core';
 import { Message } from 'primeng/api';
 import { ConfirmationService } from 'primeng/primeng';
+import { subscribeOn, take } from 'rxjs/operators';
 
 @Component({
   selector: 'ngs-dashboard',
@@ -110,18 +111,26 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
   loadDashboard() {
     this.loadingData = true;
 
-    this.menuQuery.selectEntity(this.menuName).subscribe(menuItem => {
-      if (menuItem) {
-        this.menuItem = JSON.parse(JSON.stringify(menuItem));
+    this.menuQuery.selectLoading()
+    .subscribe(menuLoading => {
+      if (!menuLoading) {
+        const menuItem = this.menuQuery.getEntity(this.menuName);
+        if (menuItem) {
+          this.menuItem = JSON.parse(JSON.stringify(menuItem));
 
-        if (this.menuItem && this.menuItem.menuDetails) {
-          this.dashboard = this.menuItem.menuDetails as DashboardModel;
+          if (this.menuItem && this.menuItem.menuDetails) {
+            this.dashboard = this.menuItem.menuDetails as DashboardModel;
+          }
+
+          this.setButtons();
+
+          this.changesMade = false;
+          this.loadingData = false;
+        } else {
+          alert('Not Found');
+          this.changesMade = false;
+          this.loadingData = false;
         }
-
-        this.setButtons();
-
-        this.changesMade = false;
-        this.loadingData = false;
       }
     });
   }

@@ -29,6 +29,8 @@ export class MenuService {
 
   public routeSubject = new BehaviorSubject<Array<Route>>(this.routes);
 
+  private httpInFlight = false;
+
   constructor(
     private http: HttpClient,
     private menuStore: MenuStore,
@@ -38,21 +40,13 @@ export class MenuService {
     private log: LoggingService,
     public rolesService: RolesService
   ) {
-    // First Time load away
-    this.menuStore.setLoading(false);
-
     // Wait for settings, then load from server
     combineLatest(this.authQuery.authenticated$, this.appSettingsQuery.selectEntity(AppSettings.apiHome)).subscribe(([authenticated, apiHome]) => {
       if (authenticated && apiHome) {
         this.apiHome = apiHome.value;
-        this.menuQuery
-          .selectLoading()
-          .pipe(take(1))
-          .subscribe(loading => {
-            if (!loading) {
+            if (!this.httpInFlight) {
               this.downloadMenuItems();
             }
-          });
       } else if (!authenticated) {
         this.menuStore.remove();
       }
@@ -154,6 +148,7 @@ export class MenuService {
   public downloadMenuItems() {
     // Mark loading status
     this.menuStore.setLoading(true);
+    this.httpInFlight = true;
 
     const newMenuItems: CoreMenuItem[] = [];
 
@@ -168,8 +163,9 @@ export class MenuService {
       .get<Array<CoreMenuItem>>(this.apiHome + '/api/v1/menuitems')
       .pipe(
         finalize(() => {
-          this.menuStore.setLoading(false);
           this.addMenuItems(this.menuItems);
+          this.menuStore.setLoading(false);
+          this.httpInFlight = false;
         })
       )
       .subscribe(menuItems => {
