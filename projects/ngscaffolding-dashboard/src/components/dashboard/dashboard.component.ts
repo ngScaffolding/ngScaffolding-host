@@ -111,8 +111,7 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
   loadDashboard() {
     this.loadingData = true;
 
-    this.menuQuery.selectLoading()
-    .subscribe(menuLoading => {
+    this.menuQuery.selectLoading().subscribe(menuLoading => {
       if (!menuLoading) {
         const menuItem = this.menuQuery.getEntity(this.menuName);
         if (menuItem) {
@@ -140,15 +139,13 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   private setButtons() {
-    if (this.dashboard.readOnly) {
-      this.showAdd = false;
-      this.showDelete = false;
-      this.showSave = false;
-      this.showSaveAs = false;
-      this.showShare = false;
+    // Default = Computer says no
+    this.showAdd = false;
+    this.showDelete = false;
+    this.showSave = false;
+    this.showSaveAs = false;
+    this.showShare = false;
 
-      return;
-    }
     const userId = this.authQuery.getSnapshot().userDetails.userId;
     if (this.menuItem.name.startsWith(userId)) {
       // We are the owner of this menu Item
