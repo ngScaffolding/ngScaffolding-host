@@ -289,20 +289,20 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
 
       this.itemDetail.columns.forEach(column => {
         const colDef: ColDef = {
-          field: column.Field,
-          cellClass: column.CellClass,
-          filter: column.Filter,
-          tooltipField: column.TooltipField,
-          headerName: column.HeaderName,
-          headerTooltip: column.HeaderTooltip,
-          pinned: column.Pinned,
-          suppressMenu: column.SuppressMenu,
-          suppressFilter: column.SuppressFilter,
-          suppressSorting: column.SuppressSorting,
+          field: column.field,
+          cellClass: <string>column.cellClass,
+          filter: column.filter,
+          tooltipField: column.tooltipField,
+          headerName: column.headerName,
+          headerTooltip: column.headerTooltip,
+          pinned: column.pinned,
+          suppressMenu: column.suppressMenu,
+          suppressFilter: column.suppressFilter,
+          suppressSorting: column.suppressSorting,
           enableRowGroup: true,
 
-          type: column.Type,
-          hide: column.Hide
+          type: column.type,
+          hide: column.hide
         };
 
         this.columnDefs.push(colDef);
