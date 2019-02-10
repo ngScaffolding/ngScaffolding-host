@@ -91,5 +91,7 @@ export class WidgetContainerComponent implements OnChanges {
     this.widgetEvent.emit(name);
   }
 
-  ngOnChanges(changes: SimpleChanges) {}
+  ngOnChanges(changes: SimpleChanges) {
+    let x=0;
+  }
 }

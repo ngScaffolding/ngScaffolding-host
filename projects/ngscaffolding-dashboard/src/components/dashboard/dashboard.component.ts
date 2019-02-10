@@ -54,6 +54,9 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
   private components: any[] = [];
   private dynmicTypes: Type<any>[];
 
+  // Hold widget we are configuring when input details clicked
+  private widgetConfigured: IDashboardItem;
+
   // Input Details
   actionInputDefinition: InputBuilderDefinition;
   actionValues: any;
@@ -297,7 +300,11 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
       case 'properties': {
         this.actionInputDefinition = widgetDetails.widget.inputBuilderDefinition;
         this.actionValues = widgetDetails.configuredValues;
+        // this.dashboard.widgets[5].configuredValues = {x: 0};
+        //widgetDetails.configuredValues = {x: 0};
+
         this.actionInputPopup.showPopup();
+        this.widgetConfigured = instance as IDashboardItem;
         break;
       }
       case 'refresh': {
@@ -327,14 +334,13 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
 
   actionOkClicked(model: any) {
     this.actionValues = model;
-
-    alert('Clicked');
+    this.widgetConfigured.widget.configuredValues = model;
+    this.widgetConfigured.refreshData(); //configuredValues = model;
+    this.actionInputPopup.isShown = false;
   }
 
   // User clicked Cancel
-  actionCancelClicked() {
-    alert('User Cancelled');
-  }
+  actionCancelClicked() {}
 
   ngOnChanges(changes: SimpleChanges): void {
     if (this.gridsterItems && this.gridsterItems.length > 0 && this.gridsterItems[0].gridster.curRowHeight > 1) {

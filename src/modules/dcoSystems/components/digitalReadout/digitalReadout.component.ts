@@ -1,7 +1,7 @@
-import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, SimpleChanges, SimpleChange } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DataSourceService } from 'ngscaffolding-core';
-import { IDashboardItem } from '@ngscaffolding/models';
+import { IDashboardItem, WidgetDetails } from '@ngscaffolding/models';
 const jsonQuery = require('json-query');
 
 @Component({
@@ -9,9 +9,10 @@ const jsonQuery = require('json-query');
   templateUrl: 'digitalReadout.component.html',
   styleUrls: ['digitalReadout.component.scss']
 })
-export class DigitalReadoutComponent implements IDashboardItem, OnInit {
+export class DigitalReadoutComponent implements IDashboardItem, OnInit, OnChanges {
   @Input() itemDetails: any;
   @Input() unitUpdate: any;
+  @Input() widget: WidgetDetails;
 
   displayValue: string;
 
@@ -21,6 +22,10 @@ export class DigitalReadoutComponent implements IDashboardItem, OnInit {
 
   refreshData() {
     this.getData();
+  }
+
+  ngOnChanges(changes: {[ propName: string]: SimpleChange}) {
+    let x = 0;
   }
 
   ngOnInit(): void {
