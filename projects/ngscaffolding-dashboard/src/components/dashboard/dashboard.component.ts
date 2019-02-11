@@ -301,7 +301,7 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
         this.actionInputDefinition = widgetDetails.widget.inputBuilderDefinition;
         this.actionValues = widgetDetails.configuredValues;
         // this.dashboard.widgets[5].configuredValues = {x: 0};
-        //widgetDetails.configuredValues = {x: 0};
+        // widgetDetails.configuredValues = {x: 0};
 
         this.actionInputPopup.showPopup();
         this.widgetConfigured = instance as IDashboardItem;
@@ -334,7 +334,7 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
 
   actionOkClicked(model: any) {
     this.actionValues = model;
-    this.widgetConfigured.widget.configuredValues = model;
+    // this.widgetConfigured.configuredValues = model;
     this.widgetConfigured.refreshData(); //configuredValues = model;
     this.actionInputPopup.isShown = false;
   }

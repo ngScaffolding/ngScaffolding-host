@@ -14,7 +14,7 @@ export class ActionsHolderComponent implements OnInit {
 
   @Output() actionClicked = new EventEmitter<Action>();
 
-  constructor(public buttonColor: ButtonColorPipe) {}
+  constructor() {}
 
   ngOnInit() {}
 
