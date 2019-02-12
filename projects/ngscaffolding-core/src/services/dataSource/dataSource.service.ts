@@ -61,7 +61,7 @@ export class DataSourceService {
         this.dataSourceStore.update(key, newResults);
         }, err => {
             // Update the Store to tell the world we failed in every way. Shame.
-            this.dataSourceStore.update(key, { inflight: false });
+            this.dataSourceStore.remove(key);
             this.logger.error(err, 'DataSource.Service.getDataSource', true);
         });
     }

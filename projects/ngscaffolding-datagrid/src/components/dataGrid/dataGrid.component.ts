@@ -1,28 +1,9 @@
-import {
-  HostListener,
-  Component,
-  Input,
-  Output,
-  EventEmitter,
-  OnInit,
-  OnDestroy,
-  ViewChild,
-  OnChanges,
-  SimpleChanges
-} from '@angular/core';
+import { HostListener, Component, Input, Output, EventEmitter, OnInit, OnDestroy, ViewChild, OnChanges, SimpleChanges } from '@angular/core';
 
 import { Router, ActivatedRoute } from '@angular/router';
 import { GridOptions, ColDef, ColDefUtil } from 'ag-grid/main';
 
-import {
-  Action,
-  CoreMenuItem,
-  GridViewDetail,
-  InputBuilderDefinition,
-  DataResults,
-  DialogOptions,
-  IDashboardItem
-} from '@ngscaffolding/models';
+import { Action, CoreMenuItem, GridViewDetail, InputBuilderDefinition, DataResults, DialogOptions, IDashboardItem } from '@ngscaffolding/models';
 
 import { ConfirmationService } from 'primeng/primeng';
 import { Dialog } from 'primeng/dialog';
@@ -43,10 +24,7 @@ import {
 import { FiltersHolderComponent } from '../filtersHolder/filtersHolder.component';
 import { InputBuilderPopupComponent } from 'ngscaffolding-inputbuilder';
 import { ActionsHolderComponent } from '../actionsHolder/actionsHolder.component';
-import {
-  ButtonCellComponent,
-  ActionClickedData
-} from '../../cellTemplates/buttonCell/buttonCell.component';
+import { ButtonCellComponent, ActionClickedData } from '../../cellTemplates/buttonCell/buttonCell.component';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -55,8 +33,6 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./datagrid.component.scss']
 })
 export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnChanges {
-
-
   // @ViewChild(HTMLDivElement) gridArea: HTMLDivElement;
   // @ViewChild(HTMLDivElement) gridSection: HTMLDivElement;
   @ViewChild(FiltersHolderComponent) filtersHolder: FiltersHolderComponent;
@@ -91,7 +67,6 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
   // Dialog Settings
   popupShown = false;
   dialogOptions: DialogOptions = {};
-
 
   private gridviewPrefPrefix = 'GridViewPrefs_';
 
@@ -135,12 +110,10 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
       }
     };
     // Wire up broadcast for action clicked
-    this.broadcastSubscription = this.broadcast
-      .on('ACTION_CLICKED')
-      .subscribe(actionData => {
-        const actionClickedData = actionData as ActionClickedData;
-        this.actionClicked(actionClickedData.action, actionClickedData.row);
-      });
+    this.broadcastSubscription = this.broadcast.on('ACTION_CLICKED').subscribe(actionData => {
+      const actionClickedData = actionData as ActionClickedData;
+      this.actionClicked(actionClickedData.action, actionClickedData.row);
+    });
   }
 
   public refreshData() {
@@ -159,49 +132,42 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
   exportData() {}
   saveView() {
     const savedState = this.gridOptions.columnApi.getColumnState();
-    this.prefService
-      .setValue(
-        this.gridviewPrefPrefix + this.itemId,
-        JSON.stringify(savedState)
-      )
-      .subscribe(
-        () => {
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Success',
-            detail: 'View Saved'
-          });
-        },
-        err => {
-          this.messageService.add({
-            severity: 'error',
-            summary: 'Error',
-            detail: 'View not Saved'
-          });
-        }
-      );
+    this.prefService.setValue(this.gridviewPrefPrefix + this.itemId, JSON.stringify(savedState)).subscribe(
+      () => {
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Success',
+          detail: 'View Saved'
+        });
+      },
+      err => {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: 'View not Saved'
+        });
+      }
+    );
   }
   resetView() {
     // Remove our saved settings
-    this.prefService
-      .deleteValue(this.gridviewPrefPrefix + this.itemId)
-      .subscribe(
-        () => {
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Success',
-            detail: 'View Reset'
-          });
-          this.loadMenuItem();
-        },
-        err => {
-          this.messageService.add({
-            severity: 'error',
-            summary: 'Error',
-            detail: 'View not Reset'
-          });
-        }
-      );
+    this.prefService.deleteValue(this.gridviewPrefPrefix + this.itemId).subscribe(
+      () => {
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Success',
+          detail: 'View Reset'
+        });
+        this.loadMenuItem();
+      },
+      err => {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: 'View not Reset'
+        });
+      }
+    );
   }
   shareView() {}
   // Toolbar Operations
@@ -232,10 +198,9 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
 
     this.dataLoading = true;
 
-    this.dataSourceService.getDataSource({ name: this.itemDetail.selectDataSourceName, filterValues: JSON.stringify(this.filterValues) })
-      .subscribe(results => {
+    this.dataSourceService.getDataSource({ name: this.itemDetail.selectDataSourceName, filterValues: JSON.stringify(this.filterValues) }).subscribe(
+      results => {
         if (!results.inflight) {
-
           if (results.jsonData) {
             this.rowData = JSON.parse(results.jsonData);
             if (results.rowCount) {
@@ -244,9 +209,11 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
           }
           this.dataLoading = false;
         }
-      }, err => {
-          alert('err');
-      });
+      },
+      err => {
+        alert('err');
+      }
+    );
   }
 
   private loadMenuItem() {
@@ -273,10 +240,7 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
       }
 
       // Do We need an Actions button
-      if (
-        this.itemDetail.actions &&
-        this.itemDetail.actions.filter(action => action.columnButton).length > 0
-      ) {
+      if (this.itemDetail.actions && this.itemDetail.actions.filter(action => action.columnButton).length > 0) {
         this.columnDefs.push({
           headerName: 'Actions',
           suppressMenu: true,
@@ -323,7 +287,6 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
   // Action Stuff
   //
   actionClicked(action: Action, row: any) {
-
     // check if we need confirmation
     if (action.confirmationMessage) {
       this.confirmationService.confirm({
@@ -340,10 +303,7 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
   }
 
   private checkForActionInputs(action: Action, row: any) {
-    if (
-      action.inputBuilderDefinition &&
-      action.inputBuilderDefinition.inputDetails.length > 0
-    ) {
+    if (action.inputBuilderDefinition && action.inputBuilderDefinition.inputDetails.length > 0) {
       this.clickedAction = action;
       this.actionInputDefinition = action.inputBuilderDefinition;
       if (row) {
@@ -359,40 +319,38 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
   }
 
   private callAction(action: Action, row: any) {
-
     switch (action.type.toLowerCase()) {
       case 'angularroute': {
-        this.router.navigate([ { outlets: { popup:
-            [ action.angularRoute ] }}
-            ], { queryParams: row , skipLocationChange: true, relativeTo: this.route })
-        .then(res => {
-          // Use the options from our action
-          if (action.dialogOptions) {
-            this.dialogOptions = action.dialogOptions;
-          } else {
-            this.dialogOptions = {};
-          }
-          this.popupShown = true;
+        this.router
+          .navigate([{ outlets: { popup: [action.angularRoute] } }], { queryParams: row, skipLocationChange: true, relativeTo: this.route })
+          .then(res => {
+            // Use the options from our action
+            if (action.dialogOptions) {
+              this.dialogOptions = action.dialogOptions;
+            } else {
+              this.dialogOptions = {};
+            }
+            this.popupShown = true;
 
-          // Center Popup here
-          window.setTimeout(() => { this.dialog.center(); });
-        })
-        .catch(err => {
-          this.confirmationService.confirm({
-            message: `Unable to navigate route: ${action.angularRoute}`,
-            icon: 'fa-close',
-            acceptLabel: 'OK',
-            header: 'Error',
-            rejectVisible: false
+            // Center Popup here
+            window.setTimeout(() => {
+              this.dialog.center();
+            });
+          })
+          .catch(err => {
+            this.confirmationService.confirm({
+              message: `Unable to navigate route: ${action.angularRoute}`,
+              icon: 'fa-close',
+              acceptLabel: 'OK',
+              header: 'Error',
+              rejectVisible: false
+            });
           });
-        });
 
         break;
       }
       default: {
-        this.actionService
-        .callAction(action, this.actionValues, this.selectedRows)
-        .subscribe(
+        this.actionService.callAction(action, this.actionValues, this.selectedRows).subscribe(
           result => {
             if (result.success) {
               if (action.successMessage) {
@@ -466,24 +424,21 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.loadMenuItem();
+    if (changes.itemDetail && changes.itemDetail.currentValue) {
+      this.loadMenuItem();
+    }
   }
 
   ngOnInit(): void {
-
     // watch for Prefs changes
-    this.prefsSubscription = this.prefService.preferenceValuesSubject.subscribe(
-      prefs => {
-        if (prefs) {
-          const pref = prefs.find(
-            loopPref => loopPref.name === this.gridviewPrefPrefix + this.itemId
-          );
-          if (pref) {
-            this.gridSavedState = JSON.parse(pref.value);
-          }
+    this.prefsSubscription = this.prefService.preferenceValuesSubject.subscribe(prefs => {
+      if (prefs) {
+        const pref = prefs.find(loopPref => loopPref.name === this.gridviewPrefPrefix + this.itemId);
+        if (pref) {
+          this.gridSavedState = JSON.parse(pref.value);
         }
       }
-    );
+    });
   }
 
   ngOnDestroy() {

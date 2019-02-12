@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Routes, Router, Route } from '@angular/router';
 
 import { AppSettings } from '@ngscaffolding/models';
-
+import { TranslateModule } from '@ngx-translate/core';
 
 
 import {
@@ -19,6 +19,11 @@ import {
 import { InputBuilderModule } from 'ngscaffolding-inputbuilder';
 
 import { DatagridModule } from 'ngscaffolding-datagrid';
+
+// FieldForce
+import { WorkItemDetailsComponent } from './pages/fieldForce/workItemDetails/workItemDetails.component';
+
+// Finder
 import { MachineDetailsComponent } from './pages/Finder/MachineDetails/machineDetails.component';
 import { DetailsListComponent } from './components/detailsList/detailsList.component';
 import { UpgradeCalcComponent } from './components/upgradeCalc/upgradeCalc.component';
@@ -43,9 +48,11 @@ import { ScrollPanelModule } from 'primeng/primeng';
 // export * from './pages';
 
 const machineDetailsRoute: Route =  { path: 'fieldforcemachinedetails', component: MachineDetailsComponent, outlet: 'popup' };
+const workItemDetailsRoute: Route =  { path: 'fieldforceworkitemdetails', component: WorkItemDetailsComponent, outlet: 'popup' };
 const upgradeCalcRoute: Route =  { path: 'fieldforceupgradeCalc', component: UpgradeCalcComponent };
 
 const appRoutes: Routes = [
+  workItemDetailsRoute,
   machineDetailsRoute,
   upgradeCalcRoute
 ];
@@ -72,16 +79,16 @@ const appRoutes: Routes = [
     TabMenuModule,
     TabViewModule,
     ScrollPanelModule,
-    RouterModule.forChild(appRoutes)
+    RouterModule.forChild(appRoutes),
+    TranslateModule.forChild()
   ],
   declarations: [
     MachineDetailsComponent,
     DetailsListComponent,
-    UpgradeCalcComponent
+    UpgradeCalcComponent,
+    WorkItemDetailsComponent
   ],
-  exports: [
-    // MachineDetailsComponent,
-    RouterModule]
+  exports: [ RouterModule ]
 })
 export class FieldForceAppModule {
   static forRoot(): ModuleWithProviders {
@@ -133,6 +140,7 @@ export class FieldForceAppModule {
       'FieldForce Terms and Conditions Here. Lorem ipsum dolor sit amet, consectetur adipiscing elit.');
 
     dynamicComponentService.registerComponent(machineDetailsRoute);
+    dynamicComponentService.registerComponent(workItemDetailsRoute);
 
     menuService.addMenuItemsFromCode([]);
   }
