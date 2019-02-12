@@ -236,12 +236,16 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
       .subscribe(results => {
         if (!results.inflight) {
 
-          this.rowData = JSON.parse(results.jsonData);
-          if (results.rowCount) {
-            this.rowCount = results.rowCount;
+          if (results.jsonData) {
+            this.rowData = JSON.parse(results.jsonData);
+            if (results.rowCount) {
+              this.rowCount = results.rowCount;
+            }
           }
           this.dataLoading = false;
         }
+      }, err => {
+          alert('err');
       });
   }
 

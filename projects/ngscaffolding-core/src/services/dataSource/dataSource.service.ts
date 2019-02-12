@@ -9,8 +9,7 @@ import { CacheService } from '../cache/cache.service';
 import { DataSourceStore } from './dataSource.store';
 import { DataSourceQuery } from './dataSource.query';
 import { timeout } from 'rxjs/operators';
-import { Logger } from 'ag-grid';
-
+import {  } from '@datorama/akita';
 
 @Injectable({
   providedIn: 'root'
@@ -61,6 +60,8 @@ export class DataSourceService {
         // Update the Store to tell the world we have data
         this.dataSourceStore.update(key, newResults);
         }, err => {
+            // Update the Store to tell the world we failed in every way. Shame.
+            this.dataSourceStore.update(key, { inflight: false });
             this.logger.error(err, 'DataSource.Service.getDataSource', true);
         });
     }
