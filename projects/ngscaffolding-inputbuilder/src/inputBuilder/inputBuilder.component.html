@@ -75,15 +75,18 @@
 
             <!-- DateTime -->
             <span *ngSwitchCase="'datetime'" class="md-inputfield">
-                <p-calendar [showIcon]="appSettings.getBoolean('inputShowCalendarIcon') | async" [dateFormat]="appSettings.getString('inputDateTimeFormat') | async" showTime="true"
-                    [formControlName]="input.name" [id]="input.name">
+                <p-calendar
+                  appendTo="body"
+                  [showIcon]="appSettings.getBoolean('inputShowCalendarIcon') | async" [dateFormat]="appSettings.getString('inputDateTimeFormat') | async" showTime="true"
+                  [formControlName]="input.name" [id]="input.name">
                 </p-calendar>
                 <label>{{getLabel(input)}}</label>
             </span>
 
             <!-- Date -->
             <span *ngSwitchCase="'date'" class="md-inputfield">
-                <p-calendar [showIcon]="appSettings.getBoolean('inputShowCalendarIcon') | async" [dateFormat]="appSettings.getString('inputDateTimeFormat') | async" [formControlName]="input.name"
+                <p-calendar appendTo="body"
+                 [showIcon]="appSettings.getBoolean('inputShowCalendarIcon') | async" [dateFormat]="appSettings.getString('inputDateTimeFormat') | async" [formControlName]="input.name"
                     [id]="input.name">
                 </p-calendar>
                 <label>{{getLabel(input)}}</label>

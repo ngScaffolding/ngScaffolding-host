@@ -31,7 +31,7 @@ export class DataSourceService {
 
     const currentRequest = this.dataSourceQuery.getEntity(key);
 
-    if (currentRequest === undefined || currentRequest.expiresWhen < new Date()) {
+    if (dataRequest.forceRefresh || currentRequest === undefined || currentRequest.expiresWhen < new Date()) {
       const now = new Date();
       const placeHolderResults: DataResults = {
         inflight: true,
@@ -46,7 +46,7 @@ export class DataSourceService {
         .subscribe(values => {
         const expiryNow = new Date();
 
-        // If expires Seconds not provedid set long expiry
+        // If expires Seconds not provided set long expiry
         const expiresSeconds = values.expiresSeconds > 0 ? values.expiresSeconds : 99999999;
         const expiresWhen = new Date(expiryNow.getTime() + (expiresSeconds * 10000));
         const newResults: DataResults = {
@@ -96,6 +96,6 @@ export class DataSourceService {
   // }
 
   private getKey(dataRequest: DataSourceRequest) {
-    return `name:${dataRequest.name} seed:${dataRequest.seed}`;
+    return `name:${dataRequest.name} seed:${dataRequest.seed} inputData:${dataRequest.inputData} `;
   }
 }

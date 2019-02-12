@@ -71,6 +71,10 @@ export class InputBuilderComponent implements OnInit, OnChanges {
     if (changes.inputBuilderDefinition && changes.inputBuilderDefinition.currentValue) {
       this.buildForm();
     }
+
+    if (changes.inputModel && changes.inputModel.currentValue) {
+      this.buildForm();
+    }
   }
 
   ngOnInit(): void {

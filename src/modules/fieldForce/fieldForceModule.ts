@@ -6,6 +6,8 @@ import { RouterModule, Routes, Router, Route } from '@angular/router';
 
 import { AppSettings } from '@ngscaffolding/models';
 import { TranslateModule } from '@ngx-translate/core';
+import { TooltipModule } from 'primeng/primeng';
+
 
 
 import {
@@ -60,6 +62,7 @@ const appRoutes: Routes = [
 @NgModule({
   imports: [
     CommonModule,
+    TooltipModule,
     InputBuilderModule,
     DatagridModule,
     ButtonModule,
@@ -127,6 +130,8 @@ export class FieldForceAppModule {
     appSettingsService.setValue(AppSettings.showProfileSetting, false);
     appSettingsService.setValue(AppSettings.showUserSetting, false);
     appSettingsService.setValue(AppSettings.showProfilePicture, false);
+    appSettingsService.setValue(AppSettings.inputDateTimeFormat, 'dd/mm/yy');
+
 
     appSettingsService.setValue(AppSettings.authClientId, 'democlient');
     appSettingsService.setValue(AppSettings.authClientSecret, 'democlientsecret');
