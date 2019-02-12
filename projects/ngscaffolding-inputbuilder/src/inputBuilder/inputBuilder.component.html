@@ -94,7 +94,7 @@
 
             <!-- Time -->
             <span *ngSwitchCase="'time'" class="md-inputfield">
-                <p-calendar timeOnly="true" showTime="true" [showIcon]="appSettings.getBoolean('inputShowCalendarIcon') | async" [formControlName]="input.name"
+                <p-calendar  appendTo="body" timeOnly="true" showTime="true" [showIcon]="appSettings.getBoolean('inputShowCalendarIcon') | async" [formControlName]="input.name"
                     [id]="input.name">
                 </p-calendar>
                 <label>{{getLabel(input)}}</label>

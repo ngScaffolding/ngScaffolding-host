@@ -68,6 +68,18 @@ export class WorkItemDetailsComponent implements AfterViewInit {
       this.dataSource.getDataSource({ name: 'FieldForce.WorkItems.Details', inputData: JSON.stringify({ _id: this.workItemId }) }).subscribe(results => {
         if (!results.inflight) {
           this.workItem = JSON.parse(results.jsonData)[0];
+          if (this.workItem.dateCompleted) {
+            this.workItem.dateCompleted = new Date(this.workItem.dateCompleted);
+          }
+          if (this.workItem.dateConfirmed) {
+            this.workItem.dateConfirmed = new Date(this.workItem.dateConfirmed);
+          }
+          if (this.workItem.datePlanned) {
+            this.workItem.datePlanned = new Date(this.workItem.datePlanned);
+          }
+          if (this.workItem.dateReceived) {
+            this.workItem.dateReceived = new Date(this.workItem.dateReceived);
+          }
         }
       });
     });
