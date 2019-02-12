@@ -1,7 +1,7 @@
 import { RolesService } from '../rolesService/roles.service';
 import { Injectable } from '@angular/core';
 import { Route } from '@angular/router';
-import { BehaviorSubject, combineLatest, forkJoin, Observable } from 'rxjs';
+import { BehaviorSubject, combineLatest, forkJoin, Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
 import { LoggingService } from '../logging/logging.service';
@@ -13,6 +13,7 @@ import { MenuQuery } from './menu.query';
 import { isArray } from 'util';
 import { finalize } from 'rxjs/internal/operators/finalize';
 import { take } from 'rxjs/internal/operators/take';
+import { catchError, timeout } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -44,9 +45,9 @@ export class MenuService {
     combineLatest(this.authQuery.authenticated$, this.appSettingsQuery.selectEntity(AppSettings.apiHome)).subscribe(([authenticated, apiHome]) => {
       if (authenticated && apiHome) {
         this.apiHome = apiHome.value;
-            if (!this.httpInFlight) {
-              this.downloadMenuItems();
-            }
+        if (!this.httpInFlight) {
+          this.downloadMenuItems();
+        }
       } else if (!authenticated) {
         this.menuStore.remove();
       }
@@ -63,27 +64,30 @@ export class MenuService {
   public delete(menuItem: CoreMenuItem): Observable<any> {
     return new Observable<any>(observer => {
       const obs = this.http.delete(`${this.apiHome}/api/v1/menuitems/${menuItem.name}`);
-      obs.subscribe(() => {
-        // Remove from our store
-        this.menuStore.remove(menuItem.name);
+      obs.subscribe(
+        () => {
+          // Remove from our store
+          this.menuStore.remove(menuItem.name);
 
-        // Remove from Tree
-        const existingMenus = JSON.parse(JSON.stringify(this.menuQuery.getSnapshot().menuItems));
-        let parentMenu: CoreMenuItem;
-        if (menuItem.parent) {
-          parentMenu = existingMenus.find(menu => menu.name.toLowerCase() === menuItem.parent.toLowerCase());
-        }
+          // Remove from Tree
+          const existingMenus = JSON.parse(JSON.stringify(this.menuQuery.getSnapshot().menuItems));
+          let parentMenu: CoreMenuItem;
+          if (menuItem.parent) {
+            parentMenu = existingMenus.find(menu => menu.name.toLowerCase() === menuItem.parent.toLowerCase());
+          }
 
-        const foundIndex = (parentMenu.items as CoreMenuItem[]).findIndex(childMenu => childMenu.name === menuItem.name);
-        parentMenu.items.splice(foundIndex, 1);
+          const foundIndex = (parentMenu.items as CoreMenuItem[]).findIndex(childMenu => childMenu.name === menuItem.name);
+          parentMenu.items.splice(foundIndex, 1);
 
-        // Update tree and tell the world
-        this.menuStore.updateRoot({ menuItems: existingMenus });
-        observer.next();
-        observer.complete();
-      }, err => {
+          // Update tree and tell the world
+          this.menuStore.updateRoot({ menuItems: existingMenus });
+          observer.next();
+          observer.complete();
+        },
+        err => {
           observer.error(err);
-      });
+        }
+      );
     });
   }
 
@@ -162,23 +166,29 @@ export class MenuService {
     this.http
       .get<Array<CoreMenuItem>>(this.apiHome + '/api/v1/menuitems')
       .pipe(
+        timeout(20000),
         finalize(() => {
           this.addMenuItems(this.menuItems);
           this.menuStore.setLoading(false);
           this.httpInFlight = false;
         })
       )
-      .subscribe(menuItems => {
-        menuItems.forEach(loopMenuItem => {
-          this.addNewMenuItem(newMenuItems, loopMenuItem);
-        });
+      .subscribe(
+        menuItems => {
+          menuItems.forEach(loopMenuItem => {
+            this.addNewMenuItem(newMenuItems, loopMenuItem);
+          });
 
-        newMenuItems.forEach(newMenuItem => {
-          this.menuItems.push(newMenuItem);
-        });
+          newMenuItems.forEach(newMenuItem => {
+            this.menuItems.push(newMenuItem);
+          });
 
-        this.menuStore.updateRoot({ menuItems: this.menuItems });
-      });
+          this.menuStore.updateRoot({ menuItems: this.menuItems });
+        },
+        err => {
+          this.menuStore.setError('Failed to download Menu');
+        }
+      );
   }
 
   public addRoute(route: Route, roles: string[] = null) {
