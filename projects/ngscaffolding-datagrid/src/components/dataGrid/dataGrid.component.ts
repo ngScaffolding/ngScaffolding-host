@@ -470,11 +470,13 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
     // watch for Prefs changes
     this.prefsSubscription = this.prefService.preferenceValuesSubject.subscribe(
       prefs => {
-        const pref = prefs.find(
-          loopPref => loopPref.name === this.gridviewPrefPrefix + this.itemId
-        );
-        if (pref) {
-          this.gridSavedState = JSON.parse(pref.value);
+        if (prefs) {
+          const pref = prefs.find(
+            loopPref => loopPref.name === this.gridviewPrefPrefix + this.itemId
+          );
+          if (pref) {
+            this.gridSavedState = JSON.parse(pref.value);
+          }
         }
       }
     );

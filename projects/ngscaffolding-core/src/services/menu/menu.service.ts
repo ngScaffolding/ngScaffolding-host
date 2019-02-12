@@ -1,7 +1,7 @@
 import { RolesService } from '../rolesService/roles.service';
 import { Injectable } from '@angular/core';
 import { Route } from '@angular/router';
-import { BehaviorSubject, combineLatest, forkJoin, Observable, of } from 'rxjs';
+import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
 import { LoggingService } from '../logging/logging.service';
@@ -12,8 +12,7 @@ import { MenuStore } from './menu.store';
 import { MenuQuery } from './menu.query';
 import { isArray } from 'util';
 import { finalize } from 'rxjs/internal/operators/finalize';
-import { take } from 'rxjs/internal/operators/take';
-import { catchError, timeout } from 'rxjs/operators';
+import { timeout } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'

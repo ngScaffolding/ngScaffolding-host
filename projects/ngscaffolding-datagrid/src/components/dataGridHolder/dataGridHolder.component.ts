@@ -27,10 +27,12 @@ export class DataGridHolderComponent implements OnInit, OnDestroy {
         if (!menuLoading) {
           // get Menu Items
           this.menuQuery.selectEntity(menuName).subscribe(menuItem => {
-            this.menuItem = menuItem;
-            this.itemId = menuName;
+            if (menuItem) {
+              this.menuItem = menuItem;
+              this.itemId = menuName;
 
-            this.itemDetail = this.menuItem.menuDetails as GridViewDetail;
+              this.itemDetail = this.menuItem.menuDetails as GridViewDetail;
+            }
           });
         }
       });

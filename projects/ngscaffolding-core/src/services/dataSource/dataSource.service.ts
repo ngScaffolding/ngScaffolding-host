@@ -8,6 +8,9 @@ import { LoggingService } from '../logging/logging.service';
 import { CacheService } from '../cache/cache.service';
 import { DataSourceStore } from './dataSource.store';
 import { DataSourceQuery } from './dataSource.query';
+import { timeout } from 'rxjs/operators';
+import { Logger } from 'ag-grid';
+
 
 @Injectable({
   providedIn: 'root'
@@ -39,7 +42,9 @@ export class DataSourceService {
       // Save as marker that the request has been sent
       this.dataSourceStore.createOrReplace(key, placeHolderResults);
 
-      this.http.post<DataResults>(`${this.appSettingsService.getValue(AppSettings.apiHome)}/api/v1/datasource`, dataRequest).subscribe(values => {
+      this.http.post<DataResults>(`${this.appSettingsService.getValue(AppSettings.apiHome)}/api/v1/datasource`, dataRequest)
+        .pipe(timeout(60000))
+        .subscribe(values => {
         const expiryNow = new Date();
 
         // If expires Seconds not provedid set long expiry
@@ -55,7 +60,9 @@ export class DataSourceService {
 
         // Update the Store to tell the world we have data
         this.dataSourceStore.update(key, newResults);
-      });
+        }, err => {
+            this.logger.error(err, 'DataSource.Service.getDataSource', true);
+        });
     }
 
     return this.dataSourceQuery.selectEntity(key);

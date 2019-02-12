@@ -1,16 +1,25 @@
 import { Injectable } from '@angular/core';
+import { NotificationService } from '../notification/notification.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LoggingService {
-  constructor() {}
+  constructor(private notification: NotificationService) {}
 
-  public error(message: string, methodName = ''): void {
+  public error(err: any, methodName = '', showToast = false): void {
     if (!methodName) {
-      console.error(`Method ${methodName}: Error ${message}`);
+      console.error(`Method ${methodName}: Error ${err}`);
     } else {
-      console.error(`Error ${message}`);
+      console.error(`Error ${err}`);
+    }
+
+    if (showToast) {
+      this.notification.showMessage({
+        severity: 'error',
+        summary: 'Error',
+        detail: err.message
+      });
     }
   }
 
