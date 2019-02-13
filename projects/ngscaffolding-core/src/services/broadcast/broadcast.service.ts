@@ -13,7 +13,8 @@ export const enum BroadcastTypes {
   SHOW_MESSAGE = 'SHOW_MESSAGE',
 
   SHOW_SPINNER = 'SHOW_SPINNER',
-  HIDE_SPINNER = 'HIDE_SPINNER'
+  HIDE_SPINNER = 'HIDE_SPINNER',
+  CLOSE_POPUP = 'CLOSE_POPUP'
 }
 
 @Injectable({

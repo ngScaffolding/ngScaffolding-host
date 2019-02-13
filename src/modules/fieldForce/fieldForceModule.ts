@@ -33,6 +33,7 @@ import { UpgradeCalcComponent } from './components/upgradeCalc/upgradeCalc.compo
 import { ButtonModule } from 'primeng/primeng';
 import { CheckboxModule } from 'primeng/primeng';
 import { CardModule } from 'primeng/primeng';
+import { ConfirmDialogModule } from 'primeng/primeng';
 import { SharedModule } from 'primeng/primeng';
 import { DialogModule } from 'primeng/primeng';
 import { DropdownModule } from 'primeng/primeng';
@@ -67,6 +68,7 @@ const appRoutes: Routes = [
     DatagridModule,
     ButtonModule,
     CardModule,
+    ConfirmDialogModule,
     CheckboxModule,
     SharedModule,
     DialogModule,

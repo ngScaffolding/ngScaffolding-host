@@ -39,6 +39,8 @@
         [width]="dialogOptions.width"
         [height]="dialogOptions.height"
         [(visible)]="popupShown"
+        (onHide)="popupHidden($event)"
+        [closable]="dialogOptions.closable"
         [maximizable]="dialogOptions.maximizable" [contentStyle]="{'overflow':'auto'}"  #dialog>
         <router-outlet name="popup"></router-outlet>
       </p-dialog>

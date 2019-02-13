@@ -133,6 +133,14 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
       const actionClickedData = actionData as ActionClickedData;
       this.actionClicked(actionClickedData.action, actionClickedData.row);
     });
+
+    this.broadcastSubscription = this.broadcast.on('CLOSE_POPUP').subscribe(saved => {
+      this.popupShown = false;
+      if (saved) {
+        this.refreshData();
+      }
+    });
+
   }
 
   public refreshData() {
@@ -343,6 +351,8 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
     }
   }
 
+  public popupHidden(event: any) {
+  }
   private callAction(action: Action, row: any) {
     switch (action.type.toLowerCase()) {
       case 'angularroute': {
@@ -363,13 +373,7 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
             });
           })
           .catch(err => {
-            this.confirmationService.confirm({
-              message: `Unable to navigate route: ${action.angularRoute}`,
-              icon: 'fa-close',
-              acceptLabel: 'OK',
-              header: 'Error',
-              rejectVisible: false
-            });
+            this.logger.error(`Unable to navigate route: ${action.angularRoute}`, 'GridView Action', true);
           });
 
         break;

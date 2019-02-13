@@ -1,7 +1,9 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { DataSourceService } from 'ngscaffolding-core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { DataSourceService, BroadcastService, BroadcastTypes, NotificationService } from 'ngscaffolding-core';
 import { InputBuilderDefinition, InputDetail, InputDetailTextBox, InputTypes, OrientationValues, InputDetailTextArea, Action } from '@ngscaffolding/models';
+import { ConfirmationService } from 'primeng/api';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-workitem-details',
@@ -11,6 +13,8 @@ import { InputBuilderDefinition, InputDetail, InputDetailTextBox, InputTypes, Or
 export class WorkItemDetailsComponent implements AfterViewInit {
   private workItemId: string;
   public workItem: any;
+
+  private dirtyData = false;
 
   public mainInput: InputBuilderDefinition = {
     orientation: OrientationValues.Horizontal,
@@ -41,7 +45,12 @@ export class WorkItemDetailsComponent implements AfterViewInit {
     ]
   };
 
-  constructor(private route: ActivatedRoute, private dataSource: DataSourceService) {}
+  constructor(private route: ActivatedRoute, private dataSource: DataSourceService,
+    private translate: TranslateService,
+    private confirmationService: ConfirmationService,
+    private notification: NotificationService,
+    private broadcast: BroadcastService) { }
+
   saveWorkItem() {
     this.dataSource
       .getDataSource({
@@ -51,14 +60,34 @@ export class WorkItemDetailsComponent implements AfterViewInit {
       })
       .subscribe(result => {
         if (!result.inflight) {
-          let x = 0;
+          this.notification.showMessage({
+            severity: 'success',
+            summary: 'Saved',
+            detail: 'Work Item Saved'
+          });
+          setTimeout(() => {
+            this.broadcast.broadcast(BroadcastTypes.CLOSE_POPUP, { saved: true });
+          }, 500);
         }
       });
   }
-  cancelWorkItem() {}
+  cancelWorkItem() {
+    if (this.dirtyData) {
+      this.confirmationService.confirm({
+        message: this.translate.instant('You have unsaved changes, do you wish to close?'),
+        accept: () => {
+          this.broadcast.broadcast(BroadcastTypes.CLOSE_POPUP, { saved: false });
+        }
+      });
+    } else {
+      this.broadcast.broadcast(BroadcastTypes.CLOSE_POPUP, { saved: false });
+    }
+  }
+
   valueUpdated(value: any) {}
   modelUpdated(value: any) {
     this.workItem = value;
+    this.dirtyData = true;
   }
 
   ngAfterViewInit(): void {
