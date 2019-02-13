@@ -130,7 +130,12 @@ export class FieldForceAppModule {
     appSettingsService.setValue(AppSettings.showProfileSetting, false);
     appSettingsService.setValue(AppSettings.showUserSetting, false);
     appSettingsService.setValue(AppSettings.showProfilePicture, false);
-    appSettingsService.setValue(AppSettings.inputDateTimeFormat, 'dd/mm/yy');
+
+    appSettingsService.setValue(AppSettings.inputDateTimeFormat, 'dd/mm/yy hh:mm');
+    appSettingsService.setValue(AppSettings.inputDateFormat, 'dd/mm/yy');
+
+    appSettingsService.setValue(AppSettings.momentDateTimeFormat, 'DD/MM/YY HH:mm');
+    appSettingsService.setValue(AppSettings.momentDateFormat, 'DD/MM/YY');
 
 
     appSettingsService.setValue(AppSettings.authClientId, 'democlient');

@@ -34,7 +34,7 @@
     "@angular/router": "^7.2.0",
     "@auth0/angular-jwt": "^2.0.0",
     "@datorama/akita": "^1.15.0",
-    "@ngscaffolding/models": "^1.0.109",
+    "@ngscaffolding/models": "^1.0.112",
     "@ngx-translate/core": "^11.0.1",
     "ag-grid": "15.0.0",
     "ag-grid-angular": "15.0.0",

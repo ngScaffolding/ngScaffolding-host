@@ -9,6 +9,8 @@ import { ConfirmationService } from 'primeng/primeng';
 import { Dialog } from 'primeng/dialog';
 import { MessageService } from 'primeng/components/common/messageservice';
 
+import * as moment from 'moment';
+
 import {
   ActionService,
   AppSettingsService,
@@ -18,7 +20,9 @@ import {
   NotificationService,
   BroadcastService,
   UserPreferencesService,
-  CacheService
+  CacheService,
+  NgsDatePipe,
+  NgsDateTimePipe
 } from 'ngscaffolding-core';
 
 import { FiltersHolderComponent } from '../filtersHolder/filtersHolder.component';
@@ -26,6 +30,7 @@ import { InputBuilderPopupComponent } from 'ngscaffolding-inputbuilder';
 import { ActionsHolderComponent } from '../actionsHolder/actionsHolder.component';
 import { ButtonCellComponent, ActionClickedData } from '../../cellTemplates/buttonCell/buttonCell.component';
 import { Subscription } from 'rxjs';
+import { ValueGetterParams } from 'ag-grid/dist/lib/entities/colDef';
 
 @Component({
   selector: 'ngs-data-grid',
@@ -79,6 +84,8 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
   private gridSavedState: any;
 
   constructor(
+    private ngsDatePipe: NgsDatePipe,
+    private ngsDateTimePipe: NgsDateTimePipe,
     private router: Router,
     private logger: LoggingService,
     private route: ActivatedRoute,
@@ -102,6 +109,18 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
 
       rowSelection: 'multiple',
       suppressCellSelection: true,
+
+      columnTypes: {
+        dateColumn: {
+          filter: 'agDateColumnFilter', cellFormatter: (data) => {
+            return this.ngsDatePipe.transform(data.value);
+          }, suppressMenu: true
+        },
+        dateTimeColumn: {
+          filter: 'agDateColumnFilter', cellFormatter: (data) => {
+            return this.ngsDateTimePipe.transform(data.value);
+          }, suppressMenu: true }
+      },
 
       onGridReady: () => {
         if (this.gridSavedState) {
@@ -198,22 +217,28 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
 
     this.dataLoading = true;
 
-    this.dataSourceService.getDataSource({ name: this.itemDetail.selectDataSourceName, filterValues: JSON.stringify(this.filterValues) }).subscribe(
-      results => {
-        if (!results.inflight) {
-          if (results.jsonData) {
-            this.rowData = JSON.parse(results.jsonData);
-            if (results.rowCount) {
-              this.rowCount = results.rowCount;
+    this.dataSourceService
+      .getDataSource({
+        forceRefresh: true,
+        name: this.itemDetail.selectDataSourceName,
+        filterValues: JSON.stringify(this.filterValues)
+      })
+      .subscribe(
+        results => {
+          if (!results.inflight) {
+            if (results.jsonData) {
+              this.rowData = JSON.parse(results.jsonData);
+              if (results.rowCount) {
+                this.rowCount = results.rowCount;
+              }
             }
+            this.dataLoading = false;
           }
-          this.dataLoading = false;
+        },
+        err => {
+          alert('err');
         }
-      },
-      err => {
-        alert('err');
-      }
-    );
+      );
   }
 
   private loadMenuItem() {
