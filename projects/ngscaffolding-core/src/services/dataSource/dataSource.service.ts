@@ -61,39 +61,19 @@ export class DataSourceService {
         this.dataSourceStore.update(key, newResults);
         }, err => {
             // Update the Store to tell the world we failed in every way. Shame.
-            this.dataSourceStore.remove(key);
+            const errorResults: DataResults = {
+              inflight: false,
+              expiresWhen: new Date,
+              error: err.message
+            };
+
+            this.dataSourceStore.update(key, errorResults);
             this.logger.error(err, 'DataSource.Service.getDataSource', true);
         });
     }
 
     return this.dataSourceQuery.selectEntity(key);
   }
-
-  // getData(dataRequest: DataSourceRequest, throwOnError: boolean = false): Observable<DataResults> {
-  //   return new Observable<DataResults>(singleObserver => {
-  //     this.http.post<DataResults>(`${this.appSettingsService.getValue(AppSettings.apiHome)}/api/v1/datasource`, dataRequest).subscribe(
-  //       values => {
-  //         // If Throw on error passed, loop through results for any failed runs
-  //         if (throwOnError) {
-  //           values.results.forEach(result => {
-  //             if (!result.success) {
-  //               singleObserver.error(result.message);
-  //             }
-  //           });
-  //           singleObserver.next(values);
-  //         } else {
-  //           singleObserver.next(values);
-  //         }
-
-  //         // Finally
-  //         singleObserver.complete();
-  //       },
-  //       err => {
-  //         singleObserver.error(err);
-  //       }
-  //     );
-  //   });
-  // }
 
   private getKey(dataRequest: DataSourceRequest) {
     return `name:${dataRequest.name} seed:${dataRequest.seed} inputData:${dataRequest.inputData} `;
