@@ -1,7 +1,7 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DataSourceService, BroadcastService, BroadcastTypes, NotificationService } from 'ngscaffolding-core';
-import { InputBuilderDefinition, InputDetail, InputDetailTextBox, InputTypes, OrientationValues, InputDetailTextArea, Action } from '@ngscaffolding/models';
+import { InputBuilderDefinition, InputDetail, InputDetailTextBox, InputTypes, OrientationValues, InputDetailTextArea, Action, InputDetailReferenceValues } from '@ngscaffolding/models';
 import { ConfirmationService } from 'primeng/api';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -24,7 +24,7 @@ export class WorkItemDetailsComponent implements AfterViewInit {
       { name: 'title', type: InputTypes.textbox, label: 'Item Title' },
       { name: 'workOrderNo', type: InputTypes.textbox, label: 'Work Order No' },
       <InputDetailTextArea>{ name: 'surveyDetails', type: InputTypes.textarea, rows: 2, label: 'Survey Description' },
-
+      <InputDetailReferenceValues>{name: 'client', type: InputTypes.dropdown, referenceValueName: 'FieldForce.Clients', label: 'Client'},
       // { name: 'client.name', type: InputTypes.textbox, label: 'Client Name' },
       { name: 'dateReceived', type: InputTypes.datetime, label: 'Date Received' },
       { name: 'dateConfirmed', type: InputTypes.datetime, label: 'Date Confirmed' },
