@@ -35,7 +35,7 @@
     <ngs-input-builder-popup #actionInputPopup [inputBuilderDefinition]="actionInputDefinition" [inputModel]="actionValues" (okClicked)="actionOkClicked($event)"
       (cancelCliecked)="actionCancelClicked()"></ngs-input-builder-popup>
 
-      <p-dialog title="Input Details"
+      <p-dialog
         [width]="dialogOptions.width"
         [height]="dialogOptions.height"
         [(visible)]="popupShown"

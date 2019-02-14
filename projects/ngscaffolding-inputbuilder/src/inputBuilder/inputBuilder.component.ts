@@ -28,7 +28,7 @@ export class InputBuilderComponent implements OnInit, OnChanges {
 
   form: FormGroup;
   controlStyle = 'ui-g-12';
-  inputContainerClass = 'ui-g-12'; // This changes to allow the help Icon
+  containerClass = 'ui-g-12'; // This changes to allow the help Icon
   editorOptions: JsonEditorOptions;
   formSubmitted = false;
 
@@ -87,7 +87,7 @@ export class InputBuilderComponent implements OnInit, OnChanges {
     this.clonedInputModel = Object.assign({}, this.inputModel);
 
     // Default to full width (changes if help found)
-    this.inputContainerClass = 'ui-g-12';
+    this.containerClass = 'ui-g-12';
 
     if (
       this.inputBuilderDefinition.orientation === OrientationValues.Horizontal

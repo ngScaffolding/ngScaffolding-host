@@ -5,19 +5,19 @@
 
             <!-- textbox -->
             <span *ngSwitchCase="'textbox'" class="md-inputfield">
-                <input *ngIf="!input.mask" type="text" [formControlName]="input.name" [id]="input.name" pInputText>
+                <input class="textInput" *ngIf="!input.mask" type="text" [formControlName]="input.name" [id]="input.name" pInputText>
                 <label>{{getLabel(input)}}</label>
             </span>
 
-            <!-- textbox -->
+            <!-- email -->
             <span *ngSwitchCase="'email'" class="md-inputfield">
-                <input *ngIf="!input.mask" type="email" [formControlName]="input.name" [id]="input.name" pInputText>
+                <input class="textInput" *ngIf="!input.mask" type="email" [formControlName]="input.name" [id]="input.name" pInputText>
                 <label>{{getLabel(input)}}</label>
             </span>
 
             <!-- keyfilter/number -->
             <span *ngSwitchCase="'number'" class="md-inputfield">
-                <input type="text" [formControlName]="input.name" [id]="input.name" pKeyFilter="num"  pInputText>
+                <input class="textInput" type="text" [formControlName]="input.name" [id]="input.name" pKeyFilter="num"  pInputText>
                 <label>{{getLabel(input)}}</label>
             </span>
 
@@ -41,7 +41,7 @@
 
             <!-- TextArea -->
             <span *ngSwitchCase="'textarea'" class="md-inputfield">
-                <textarea [rows]="input.rows" [placeholder]="input.label" pInputTextarea [formControlName]="input.name" autoResize="true"></textarea>
+                <textarea class="textInput" [rows]="input.rows" [placeholder]="input.label" pInputTextarea [formControlName]="input.name" autoResize="true"></textarea>
             </span>
 
             <!-- Checkbox -->
@@ -57,7 +57,7 @@
             <!-- Simple DropDown -->
             <span *ngSwitchCase="'dropdown'">
                 <label class="small-label" [for]="input.name">{{getLabel(input)}}</label>
-                <p-dropdown [id]="input.name" [options]="input.datasourceItems" [autoWidth]="false" [filter]="input.selectFilter" dataKey="value"
+                <p-dropdown class="dropdownInput" [id]="input.name" [options]="input.datasourceItems" [autoWidth]="false" [filter]="input.selectFilter" dataKey="value"
                     optionLabel="display" [formControlName]="input.name"></p-dropdown>
             </span>
 
@@ -118,7 +118,7 @@
 
         <!-- Help text here -->
         <span *ngIf="input.help" class="ui-g-1">
-            <i class="fa fa-info-circle help-icon" pTooltip="{{input.help}}" tooltipPosition="bottom"></i>
+            <i class="fa ui-icon-info helpIcon" pTooltip="{{input.help}}" tooltipPosition="bottom"></i>
         </span>
 
         <div class="ui-message ui-messages-error ui-corner-all" *ngIf="form.get(input.name)?.invalid && (form.get(input.name)?.dirty || form.get(input.name)?.touched || formSubmitted)">

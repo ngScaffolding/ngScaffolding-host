@@ -21,12 +21,12 @@ export class WorkItemDetailsComponent implements AfterViewInit {
     columnCount: 3,
 
     inputDetails: [
-      { name: 'title', type: InputTypes.textbox, label: 'Item Title' },
-      { name: 'workOrderNo', type: InputTypes.textbox, label: 'Work Order No' },
+      { name: 'title', type: InputTypes.textbox, label: 'Item Title', help: 'Title or Work Item' },
+      { name: 'workOrderNo', type: InputTypes.textbox, label: 'Work Order No' , help: 'Title or Work Item' },
       <InputDetailTextArea>{ name: 'surveyDetails', type: InputTypes.textarea, rows: 2, label: 'Survey Description' },
-      <InputDetailReferenceValues>{name: 'client', type: InputTypes.dropdown, referenceValueName: 'FieldForce.Clients', label: 'Client'},
+      <InputDetailReferenceValues>{name: 'client', type: InputTypes.dropdown, referenceValueName: 'FieldForce.Clients', label: 'Client', help: 'Title or Work Item' },
       // { name: 'client.name', type: InputTypes.textbox, label: 'Client Name' },
-      { name: 'dateReceived', type: InputTypes.datetime, label: 'Date Received' },
+      { name: 'dateReceived', type: InputTypes.datetime, label: 'Date Received', help: 'Title or Work Item'  },
       { name: 'dateConfirmed', type: InputTypes.datetime, label: 'Date Confirmed' },
       { name: 'datePlanned', type: InputTypes.datetime, label: 'Date Planned' },
       { name: 'dateCompleted', type: InputTypes.datetime, label: 'Date Completed' }
