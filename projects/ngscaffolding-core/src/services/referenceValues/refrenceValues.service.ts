@@ -5,7 +5,6 @@ import { Injectable } from '@angular/core';
 import { AppSettingsService } from '../appSettings/appSettings.service';
 import { ReferenceValue, AppSettings } from '@ngscaffolding/models';
 import { LoggingService } from '../logging/logging.service';
-import { CacheService } from '../cache/cache.service';
 import { ReferenceValuesQuery } from './referenceValues.query';
 import { ReferenceValuesStore } from './referenceValues.store';
 
@@ -22,7 +21,6 @@ export class ReferenceValuesService {
     private appSettingsService: AppSettingsService,
     private refValuesQueue: ReferenceValuesQuery,
     private refValuesStore: ReferenceValuesStore,
-    private cacheService: CacheService,
     private logger: LoggingService
   ) {
 
@@ -44,35 +42,13 @@ export class ReferenceValuesService {
     });
   }
 
-  getReferenceGroup(group: string): Observable<Array<ReferenceValue>> {
-    return new Observable<Array<ReferenceValue>>(observer => {
-      this.http
-        .get<Array<ReferenceValue>>(
-          `${this.appSettingsService
-            .getValue(AppSettings.apiHome)}/api/v1/referencevalues?group=${group}`
-        )
-        .subscribe(values => {
-          // Save each returned value to our cache
-          values.forEach(value =>
-            this.cacheService.setValue(
-              this.getKey(value.name, value.groupName),
-              value.value
-            )
-          );
-
-          observer.next(values);
-          observer.complete();
-        });
-    });
-  }
-
   //
   // Get a complex ReferenceValue (May include multiple values)
   //
   getReferenceValue(name: string, seed = ''): Observable<ReferenceValue> {
     let retVal: ReferenceValue = null;
 
-    retVal = this.cacheService.getValue(this.getKey(name, seed));
+    retVal = this.refValuesQueue.getEntity(this.getKey(name, seed));
 
     if (retVal) {
       // If we get one from Cache, thats handy to use

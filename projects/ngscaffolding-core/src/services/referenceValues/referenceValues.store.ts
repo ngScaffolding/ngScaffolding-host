@@ -9,7 +9,7 @@ export interface ReferenceValuesState extends EntityState<ReferenceValue> {
 }
 
 @Injectable({ providedIn: 'root' })
-@StoreConfig({ name: 'referenceValues', idKey: 'storedKey' })
+@StoreConfig({ name: 'referenceValues', idKey: 'name' })
 export class ReferenceValuesStore extends EntityStore<ReferenceValuesState, ReferenceValue> {
 
   constructor() {
