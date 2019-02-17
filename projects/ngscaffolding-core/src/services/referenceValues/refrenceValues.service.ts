@@ -6,6 +6,8 @@ import { AppSettingsService } from '../appSettings/appSettings.service';
 import { ReferenceValue, AppSettings } from '@ngscaffolding/models';
 import { LoggingService } from '../logging/logging.service';
 import { CacheService } from '../cache/cache.service';
+import { ReferenceValuesQuery } from './referenceValues.query';
+import { ReferenceValuesStore } from './referenceValues.store';
 
 @Injectable({
   providedIn: 'root',
@@ -18,6 +20,8 @@ export class ReferenceValuesService {
   constructor(
     private http: HttpClient,
     private appSettingsService: AppSettingsService,
+    private refValuesQueue: ReferenceValuesQuery,
+    private refValuesStore: ReferenceValuesStore,
     private cacheService: CacheService,
     private logger: LoggingService
   ) {
