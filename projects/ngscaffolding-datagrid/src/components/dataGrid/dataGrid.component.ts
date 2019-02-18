@@ -20,7 +20,6 @@ import {
   NotificationService,
   BroadcastService,
   UserPreferencesService,
-  CacheService,
   NgsDatePipe,
   NgsDateTimePipe
 } from 'ngscaffolding-core';
@@ -93,7 +92,6 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
     private actionService: ActionService,
     private appSettingsService: AppSettingsService,
     private dataSourceService: DataSourceService,
-    private cacheService: CacheService,
     private menuService: MenuService,
     private broadcast: BroadcastService,
     private confirmationService: ConfirmationService,
@@ -390,7 +388,8 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
                     detail: action.successMessage
                   });
                   if (action.flushReferenceValues) {
-                    this.cacheService.resetValue('referenceValue::' + action.flushReferenceValues + '::');
+                    // TODO: Flush values from Reference Store
+                    // this.cacheService.resetValue('referenceValue::' + action.flushReferenceValues + '::');
                   }
                 } else {
                   this.confirmationService.confirm({

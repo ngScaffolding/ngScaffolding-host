@@ -5,7 +5,6 @@ import { Injectable } from '@angular/core';
 import { AppSettingsService } from '../appSettings/appSettings.service';
 import { DataSourceRequest, DataResults, AppSettings } from '@ngscaffolding/models';
 import { LoggingService } from '../logging/logging.service';
-import { CacheService } from '../cache/cache.service';
 import { DataSourceStore } from './dataSource.store';
 import { DataSourceQuery } from './dataSource.query';
 import { timeout } from 'rxjs/operators';
@@ -22,7 +21,6 @@ export class DataSourceService {
     private dataSourceStore: DataSourceStore,
     private dataSourceQuery: DataSourceQuery,
     private appSettingsService: AppSettingsService,
-    private cacheService: CacheService,
     private logger: LoggingService
   ) {}
 
