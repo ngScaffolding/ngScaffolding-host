@@ -25,6 +25,7 @@ export class WorkItemDetailsComponent implements AfterViewInit {
       { name: 'workOrderNo', type: InputTypes.textbox, label: 'Work Order No' , help: 'Title or Work Item' },
       <InputDetailTextArea>{ name: 'surveyDetails', type: InputTypes.textarea, rows: 2, label: 'Survey Description' },
       <InputDetailReferenceValues>{name: 'client', type: InputTypes.dropdown, referenceValueName: 'FieldForce.Clients', label: 'Client', help: 'Title or Work Item' },
+      <InputDetailReferenceValues>{name: 'location', type: InputTypes.dropdown, referenceValueSeedDependency: 'client', referenceValueName: 'FieldForce.Locations.ForClient', label: 'Location', help: 'Title or Work Item' },
       // { name: 'client.name', type: InputTypes.textbox, label: 'Client Name' },
       { name: 'dateReceived', type: InputTypes.datetime, label: 'Date Received', help: 'Title or Work Item'  },
       { name: 'dateConfirmed', type: InputTypes.datetime, label: 'Date Confirmed' },
