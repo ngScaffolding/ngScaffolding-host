@@ -13,6 +13,7 @@ import { AuthenticationStore } from './userAuthentication.store';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { UserAuthenticationBase } from './UserAuthenticationBase';
 import { AppSettingsQuery } from '../appSettings';
+import { timeout } from 'rxjs/internal/operators/timeout';
 
 @Injectable({ providedIn: 'root' })
 export class UserAuthenticationService implements UserAuthenticationBase {
@@ -92,6 +93,7 @@ export class UserAuthenticationService implements UserAuthenticationBase {
         .post(this.appSettingsService.getValue(AppSettings.apiAuth) + this.appSettingsService.getValue(AppSettings.authTokenEndpoint), body, {
           headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
         })
+        .pipe(timeout(30000))
         .subscribe(
           response => {
 
