@@ -17,6 +17,7 @@ import { ProgressSpinnerModule } from 'primeng/primeng';
 
 // Services
 import { ChartDataService } from './services/chartData.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 // Exports
 export { ChartComponent } from './components/chart/chart.component';
@@ -29,6 +30,7 @@ const appRoutes: Routes = [
 @NgModule({
   imports: [
     CommonModule,
+    TranslateModule,
     FormsModule,
     InputBuilderModule,
     HighchartsChartModule,

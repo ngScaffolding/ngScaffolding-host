@@ -24,8 +24,7 @@ export class DigitalReadoutComponent implements IDashboardItem, OnInit, OnChange
     this.getData();
   }
 
-  ngOnChanges(changes: {[ propName: string]: SimpleChange}) {
-    let x = 0;
+  ngOnChanges(changes: { [propName: string]: SimpleChange }) {
   }
 
   ngOnInit(): void {
@@ -33,13 +32,13 @@ export class DigitalReadoutComponent implements IDashboardItem, OnInit, OnChange
   }
 
   private getData() {
-    this.dataSource.getDataSource({ name: this.itemDetails.dataSourceName }).subscribe(results => {
-      if (!results.inflight) {
-        const data = JSON.parse(results.jsonData);
+    this.dataSource.getDataSource({ name: this.itemDetails.dataSourceName }).subscribe(
+      results => {
+        if (!results.inflight && !results.error) {
+          const data = JSON.parse(results.jsonData);
 
-        this.displayValue = jsonQuery(this.itemDetails.jsonQuery, { data: data }).value;
-      }
-    });
+          this.displayValue = jsonQuery(this.itemDetails.jsonQuery, { data: data }).value;
+        }
+      });
   }
-
 }

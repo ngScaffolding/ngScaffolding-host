@@ -142,7 +142,7 @@ export class MenuService {
     menuItems.forEach(menuItem => {
       // Add to Entity Store
       this.menuStore.createOrReplace(menuItem.name, menuItem);
-      if (menuItem.items && isArray(menuItem.items)) {
+      if (menuItem.items && Array.isArray(menuItem.items)) {
         this.addMenuItemsToReferenceList(menuItem.items as Array<CoreMenuItem>);
       }
     });

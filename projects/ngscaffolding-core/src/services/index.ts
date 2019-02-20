@@ -2,7 +2,6 @@
 export * from './action/action.service';
 export * from './appSettings';
 export * from './broadcast/broadcast.service';
-export * from './cache/cache.service';
 export * from './coreErrorHandler/coreErrorHandler.service';
 export * from './dataSource/dataSource.service';
 export * from './dynamicComponent/dynamicComponent.service';

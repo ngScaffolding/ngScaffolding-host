@@ -70,7 +70,7 @@ export class ReferenceValuesService {
               .getValue(AppSettings.apiHome)}/api/v1/referencevalues?name=${name}&seed=${seed}`
           );
           httpRequest.subscribe(value => {
-            this.cacheService.setValue(this.getKey(name, seed), value);
+            // this.cacheService.setValue(this.getKey(name, seed), value);
             this.requestsInFlight.delete(this.getKey(name, seed));
 
             observer.next(value);

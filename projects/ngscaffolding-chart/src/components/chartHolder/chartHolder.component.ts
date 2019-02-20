@@ -6,7 +6,7 @@ import { CoreMenuItem, ChartDetailModel } from '@ngscaffolding/models';
 import { Observable } from 'rxjs';
 
 @Component({
-  selector: 'ng-chart-holder',
+  selector: 'ngs-chart-holder',
   templateUrl: 'chartHolder.component.html',
   styleUrls: ['chartHolder.component.scss']
 })
