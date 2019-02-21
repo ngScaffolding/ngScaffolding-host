@@ -157,7 +157,7 @@ export class MenuService {
     // First Add Menu Items Added from Code
     if (this.menuItemsFromCode) {
       this.menuItemsFromCode.forEach(menuItemFromCode => {
-        this.addNewMenuItem(newMenuItems, menuItemFromCode);
+        this.addNewMenuItemToEntities(newMenuItems, menuItemFromCode);
       });
     }
 
@@ -166,7 +166,7 @@ export class MenuService {
       .pipe(
         timeout(20000),
         finalize(() => {
-          this.addMenuItems(this.menuItemsFromCode);
+          // this.addMenuItems(this.menuItemsFromCode);
           // this.addMenuItems(this.menuItems);
           this.menuStore.setLoading(false);
           this.httpInFlight = false;
@@ -174,8 +174,12 @@ export class MenuService {
       )
       .subscribe(
         downloadedMenuItems => {
+
+          // Add to flat reference List
+          this.addMenuItemsToReferenceList(downloadedMenuItems);
+
           downloadedMenuItems.forEach(loopMenuItem => {
-            this.addNewMenuItem(newMenuItems, loopMenuItem);
+            this.addNewMenuItemToEntities(newMenuItems, loopMenuItem);
           });
 
           newMenuItems.forEach(newMenuItem => {
@@ -200,11 +204,13 @@ export class MenuService {
     }
   }
 
-  private addNewMenuItem(targetMenu: CoreMenuItem[], newMenuItem: CoreMenuItem) {
+  private addNewMenuItemToEntities(targetMenu: CoreMenuItem[], newMenuItem: CoreMenuItem) {
     let calcRouterLink: string | string[];
 
     // Don't add if we already know about this
     if (targetMenu && !targetMenu.find(menu => menu.name === newMenuItem.name)) {
+
+      // Router bits
       if (newMenuItem.routerLink && (<string>newMenuItem.routerLink).indexOf(',') > -1) {
         calcRouterLink = (<string>newMenuItem.routerLink).split(',');
       } else {
@@ -215,11 +221,12 @@ export class MenuService {
 
       targetMenu.push(createdMenuItem);
 
+
       if (newMenuItem.items && newMenuItem.items.length > 0) {
         createdMenuItem.items = [];
         const castItems = newMenuItem.items as CoreMenuItem[];
         castItems.forEach(menuItem => {
-          this.addNewMenuItem(createdMenuItem.items as CoreMenuItem[], menuItem);
+          this.addNewMenuItemToEntities(createdMenuItem.items as CoreMenuItem[], menuItem);
         });
       }
     }
