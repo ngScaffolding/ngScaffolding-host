@@ -18,12 +18,12 @@ export class UserAdminModule {
         label: 'User Administration',
         type: MenuTypes.Folder,
         icon: 'person_add',
-        roles: ['user_admin'],
+        roles: ['user_admin', 'admin'],
         items: [
           {
             name: 'user.admin.list',
             routerLink: 'datagrid/user.admin.list',
-            roles: ['user_admin'],
+            roles: ['user_admin', 'admin'],
             label: 'User List',
             icon: 'people',
             type: MenuTypes.Datagrid,

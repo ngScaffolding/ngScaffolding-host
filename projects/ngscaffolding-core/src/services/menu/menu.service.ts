@@ -133,6 +133,31 @@ export class MenuService {
     });
   }
 
+  private removeUnauthorisedMenuItems(menuItems: CoreMenuItem[]) {
+
+    const userRoles = this.authQuery.getSnapshot().userDetails.roles;
+    const removingMenus: number[] = [];
+
+    menuItems.forEach(menuItem => {
+      let removingThis = false;
+
+      // Is this role protected
+      if (menuItem.roles && menuItem.roles.length > 0) {
+        if (userRoles && menuItem.roles.filter(allowedRole => userRoles.includes(allowedRole)).length === 0){
+          // No Authority. Remove
+          removingThis = true;
+          removingMenus.push(menuItems.indexOf(menuItem));
+        }
+      }
+      if (!removingThis && menuItem.items) {
+        this.removeUnauthorisedMenuItems(menuItem.items as CoreMenuItem[]);
+      }
+    });
+    removingMenus.forEach(removeMenu => {
+      menuItems.splice(removeMenu, 1);
+     });
+  }
+
   public downloadMenuItems() {
     // Mark loading status
     this.menuStore.setLoading(true);
@@ -161,11 +186,13 @@ export class MenuService {
 
           this.log.info(`Downloaded MenuItems`, this.className);
 
+          const clonedFromCode = JSON.parse(JSON.stringify(this.menuItemsFromCode));
+          this.removeUnauthorisedMenuItems(clonedFromCode);
 
           // Add to flat reference List
-          this.addMenuItemsToReferenceList(this.menuItemsFromCode);
+          this.addMenuItemsToReferenceList(clonedFromCode);
 
-          this.menuItemsFromCode.forEach(loopMenuItem => {
+          clonedFromCode.forEach(loopMenuItem => {
             this.addNewMenuItemToEntities(newMenuItems, loopMenuItem);
           });
 
