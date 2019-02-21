@@ -123,16 +123,15 @@ export class MenuService {
   }
 
   private addMenuItems(menuItems: CoreMenuItem[]) {
-    // menuItems.forEach(menuItem => {
-    //   this.menuItems.push(menuItem);
-    // });
 
     // Add to flat reference List
     this.addMenuItemsToReferenceList(menuItems);
 
     // Clone menuItems
-    const cloned = JSON.parse(JSON.stringify(this.menuItems));
+    let cloned = JSON.parse(JSON.stringify(this.menuItems));
 
+    cloned =  [...cloned, ...menuItems];
+    this.menuItems = cloned;
     // Save our flat list to State
     this.menuStore.updateRoot({ menuItems: cloned });
   }
@@ -167,14 +166,15 @@ export class MenuService {
       .pipe(
         timeout(20000),
         finalize(() => {
-          this.addMenuItems(this.menuItems);
+          this.addMenuItems(this.menuItemsFromCode);
+          // this.addMenuItems(this.menuItems);
           this.menuStore.setLoading(false);
           this.httpInFlight = false;
         })
       )
       .subscribe(
-        menuItems => {
-          menuItems.forEach(loopMenuItem => {
+        downloadedMenuItems => {
+          downloadedMenuItems.forEach(loopMenuItem => {
             this.addNewMenuItem(newMenuItems, loopMenuItem);
           });
 
