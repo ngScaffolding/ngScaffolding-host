@@ -122,20 +122,6 @@ export class MenuService {
     });
   }
 
-  private addMenuItems(menuItems: CoreMenuItem[]) {
-
-    // Add to flat reference List
-    this.addMenuItemsToReferenceList(menuItems);
-
-    // Clone menuItems
-    let cloned = JSON.parse(JSON.stringify(this.menuItems));
-
-    cloned =  [...cloned, ...menuItems];
-    this.menuItems = cloned;
-    // Save our flat list to State
-    this.menuStore.updateRoot({ menuItems: cloned });
-  }
-
   // Iterative Call
   private addMenuItemsToReferenceList(menuItems: CoreMenuItem[]): void {
     menuItems.forEach(menuItem => {
@@ -166,14 +152,22 @@ export class MenuService {
       .pipe(
         timeout(20000),
         finalize(() => {
-          // this.addMenuItems(this.menuItemsFromCode);
-          // this.addMenuItems(this.menuItems);
           this.menuStore.setLoading(false);
           this.httpInFlight = false;
         })
       )
       .subscribe(
         downloadedMenuItems => {
+
+          this.log.info(`Downloaded MenuItems`, this.className);
+
+
+          // Add to flat reference List
+          this.addMenuItemsToReferenceList(this.menuItemsFromCode);
+
+          this.menuItemsFromCode.forEach(loopMenuItem => {
+            this.addNewMenuItemToEntities(newMenuItems, loopMenuItem);
+          });
 
           // Add to flat reference List
           this.addMenuItemsToReferenceList(downloadedMenuItems);
