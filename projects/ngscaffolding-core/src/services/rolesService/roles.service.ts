@@ -4,13 +4,13 @@ import { RolesQuery } from './roles.query';
 import { RolesStore } from './roles.store';
 import { AppSettingsQuery } from '../appSettings';
 import { combineLatest } from 'rxjs';
-import { AppSettings, Role } from '@ngscaffolding/models';
+import { AppSettings, Role, SystemDataSourceNames } from '@ngscaffolding/models';
 import { take, finalize } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
-
+import { DataSourceService } from '../dataSource/dataSource.service';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class RolesService {
   private routeRoles = new Map<string, string[]>();
@@ -20,7 +20,10 @@ export class RolesService {
     private http: HttpClient,
     private rolesQuery: RolesQuery,
     private appSettingsQuery: AppSettingsQuery,
-     private rolesStore: RolesStore, public authQuery: UserAuthenticationQuery) {
+    private dataSourceService: DataSourceService,
+    private rolesStore: RolesStore,
+    public authQuery: UserAuthenticationQuery
+  ) {
     // First Time load away
     this.rolesStore.setLoading(false);
 
@@ -46,15 +49,18 @@ export class RolesService {
     // Mark loading status
     this.rolesStore.setLoading(true);
 
-    this.http
-      .get<Array<Role>>(this.apiHome + '/api/v1/roles')
+    this.dataSourceService
+      .getDataSource({ name: SystemDataSourceNames.ROLES_SELECT })
       .pipe(
         finalize(() => {
           this.rolesStore.setLoading(false);
         })
       )
-      .subscribe(roles => {
-        this.rolesStore.add(roles);
+      .subscribe(results => {
+        if (!results.inflight && !results.error) {
+          this.rolesStore.add(JSON.parse(results.jsonData));
+          this.rolesStore.setLoading(false);
+        }
       });
   }
 
