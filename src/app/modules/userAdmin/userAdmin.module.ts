@@ -5,7 +5,7 @@ import { MenuService } from 'ngscaffolding-core';
 
 import { UserAdminRoutingModule } from './userAdmin-routing.module';
 import { UserListComponent } from './pages/userList/userList.component';
-import { MenuTypes, GridViewDetail, ColumnModel } from '@ngscaffolding/models';
+import { MenuTypes, GridViewDetail, ColumnModel, SystemDataSourceNames } from '@ngscaffolding/models';
 
 @NgModule({
   declarations: [UserListComponent],
@@ -29,6 +29,7 @@ export class UserAdminModule {
             type: MenuTypes.Datagrid,
             menuDetails: <GridViewDetail>{
               title: 'User List',
+              selectDataSourceName: SystemDataSourceNames.USERS_SELECT,
               columns: [<ColumnModel>{ field: 'userId', headerName: 'User ID' }]
             }
           }
