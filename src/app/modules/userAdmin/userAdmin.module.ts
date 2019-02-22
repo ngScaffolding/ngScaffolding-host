@@ -35,6 +35,18 @@ export class UserAdminModule {
                 <ColumnModel>{ field: 'email', headerName: 'Email Address' },
                 <ColumnModel>{ field: 'firstName', headerName: 'First Name' },
                 <ColumnModel>{ field: 'lastName', headerName: 'Last Name' }
+              ],
+              actions: [
+                {
+                  columnButton: true, title: 'Edit User', icon: 'ui-icon-assignment', color: 'green', type: 'angularroute',
+                  angularRoute: 'userdetails',
+                  dialogOptions: {
+                    header : 'Device Details',
+                    width : 900,
+                    height : 800,
+                    maximizable : true
+                }
+                }
               ]
             }
           }
