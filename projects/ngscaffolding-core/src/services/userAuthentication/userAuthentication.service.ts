@@ -67,12 +67,16 @@ export class UserAuthenticationService implements UserAuthenticationBase {
       newUser.name = tokenDetails['firstName'] + ' ' + tokenDetails['lastName'];
     }
 
-    if (tokenDetails['userId']) {
-      newUser.userId = tokenDetails['userId'];
+    if (tokenDetails['sub']) {
+      newUser.userId = tokenDetails['sub'];
     }
 
     if (tokenDetails['roles']) {
       newUser.roles = tokenDetails['roles'];
+    }
+
+    if (tokenDetails['email']) {
+      newUser.email = tokenDetails['email'];
     }
 
     this.authStore.update({ token: token, userDetails: newUser, authenticated: true });

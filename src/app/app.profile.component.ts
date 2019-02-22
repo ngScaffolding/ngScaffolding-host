@@ -10,7 +10,12 @@ import { AppSettings } from '@ngscaffolding/models';
   template: `
     <div class="profile" [ngClass]="{ 'profile-expanded': active }">
       <a href="#" (click)="onClick($event)">
-        <img *ngIf="(showProfilePicture$ | async)" class="profile-image" src="assets/layout/images/avatar.png" />
+        <img *ngIf="(showProfilePicture$ | async);else plainImage" class="profile-image" src="assets/layout/images/avatar.png" />
+        <ng-template #plainImage>
+          <i class="person-outline">settings_application</i> <span>Profile</span>
+          <!--<img class="profile-image" src="assets/layout/images/avatar1.png" />-->
+        </ng-template>
+
         <span class="profile-name">{{ authService.currentUser?.name }}</span> <i class="material-icons">keyboard_arrow_down</i>
       </a>
     </div>
