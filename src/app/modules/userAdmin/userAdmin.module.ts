@@ -30,7 +30,12 @@ export class UserAdminModule {
             menuDetails: <GridViewDetail>{
               title: 'User List',
               selectDataSourceName: SystemDataSourceNames.USERS_SELECT,
-              columns: [<ColumnModel>{ field: 'userId', headerName: 'User ID' }]
+              columns: [
+                <ColumnModel>{ field: 'userId', headerName: 'User ID' },
+                <ColumnModel>{ field: 'email', headerName: 'Email Address' },
+                <ColumnModel>{ field: 'firstName', headerName: 'First Name' },
+                <ColumnModel>{ field: 'lastName', headerName: 'Last Name' }
+              ]
             }
           }
         ]
