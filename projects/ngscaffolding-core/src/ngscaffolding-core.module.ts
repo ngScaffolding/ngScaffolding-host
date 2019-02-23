@@ -10,7 +10,7 @@ import { VERSION } from './version';
 import { EditableTitleComponent } from './components';
 
 // Pipes
-import { ButtonColorPipe, NgsDateTimePipe } from './pipes';
+import { ButtonColourPipe, NgsDateTimePipe } from './pipes';
 import { NgsDatePipe } from './pipes/ngsDate.pipe';
 
 // Directives
@@ -28,12 +28,12 @@ import { VersionsService } from './services/versions/versions.service';
   declarations: [
     EditableTitleComponent,
     FillHeightDirective,
-    ButtonColorPipe,
+    ButtonColourPipe,
     NgsDatePipe, NgsDateTimePipe
   ],
   exports: [
     EditableTitleComponent,
-    ButtonColorPipe,
+    ButtonColourPipe,
     NgsDatePipe, NgsDateTimePipe,
     FillHeightDirective
   ]
