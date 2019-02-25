@@ -11,7 +11,7 @@ import { combineLatest, Observable, Subscription } from 'rxjs';
 export class UserSettingsComponent implements OnInit {
   private baseInputDefinition: InputBuilderDefinition = {
     inputDetails: [],
-    columnCount: 2,
+    columnCount: 3,
     orientation: OrientationValues.Horizontal
   };
 

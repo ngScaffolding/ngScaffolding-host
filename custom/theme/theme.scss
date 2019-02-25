@@ -1,67 +1,4 @@
-$primaryColor: #3e464c;
-$primaryDarkColor: #2b3135;
-$primaryLightColor: #777d81;
-$accentColor: #5180ce;
-$accentDarkColor: #274d8d;
-$accentLightColor: #86b0f5;
-$accentTextColor: #ffffff;
-
-$darkMenuBgColor: #424242;
-$darkMenuHoverColor: #676767;
-$darkMenuRouterLinkActiveColor: #FF5722;
-$lightMenuRouterLinkActiveColor: #FF5722;
-$horizontalLightMenuRouterLinkActiveColor: #FF5722;
-
-$textColor: #212121;
-$textSecondaryColor: #757575;
-$fontSize: 16px;
-$lineHeight: 1.5em;
-$borderRadius: 3px;
-$headerFontSize: 1em;
-$headerPadding: .625em 1em;
-$contentFontSize: 1em;
-$contentPadding: .625em 1em;
-$inputHeaderFontSize: 1em;
-$inputHeaderPadding: .625em 1em;
-$inputFontSize: 1em;
-$buttonFontSize: 1em;
-$inputOptionFontSize: 1em;
-$inputOptionPadding: .625em .875em;
-$hoverBgColor: #e8e8e8;
-$hoverTextColor: #000000;
-$dividerColor: #bdbdbd;
-$dividerLightColor: #cacaca;
-$grayBgColor: #757575;
-$iconFontSize: 1.5em;
-$invalidInputLabelColor: #e62a10;
-$invalidInputBorderColor: #e62a10;
-$activeMenuItemBadgeColor: #ffffff;
-$activeMenuItemBadgeTextColor: #212121;
-
-$fontFamily: 'Roboto';
-
-/* Compact */
-$c-fontSize: 14px;
-$c-lineHeight: 18px;
-
-
-@import '../../src/assets/sass/_mixins';
-@import '../../src/assets/sass/_fonts';
-@import '../../src/assets/sass/theme/_theme.scss';
-
-// Layouts Here
-@import '../../src/assets/sass/layout/_utils';
-@import '../../src/assets/sass/layout/_splash.scss';
-@import '../../src/assets/sass/layout/_login.scss';
-@import '../../src/assets/sass/layout/_exception.scss';
-@import '../../src/assets/sass/layout/_landing.scss';
-@import '../../src/assets/sass/layout/_main.scss';
-@import '../../src/assets/sass/layout/_compact.scss';
-
 @import '../../src/assets/sass/ngScaffolding.scss';
-
-
-
 
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
     .landing-wrapper {
@@ -74,6 +11,14 @@ $c-lineHeight: 18px;
             }
         }
     }
+}
+
+.logo-custom {
+  display: inline-block;
+    vertical-align: middle;
+    height: 50px;
+    margin-top: -5px;
+    background-size: 200px 30px;
 }
 
 .widgetHeader{ background-color: yellow}
