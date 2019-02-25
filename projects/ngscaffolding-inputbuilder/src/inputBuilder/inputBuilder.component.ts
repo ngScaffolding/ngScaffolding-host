@@ -175,7 +175,7 @@ export class InputBuilderComponent implements OnInit, OnChanges {
     switch (inputDetail.type) {
       case InputTypes.checkbox:
       case InputTypes.switch: {
-        return value === 'true';
+        return value.toString() === 'true';
       }
     }
 
