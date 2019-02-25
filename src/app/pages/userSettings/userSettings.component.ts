@@ -1,79 +1,67 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import {
-  VersionsService,
-  SoftwareVersion,
-  UserPreferencesService
-} from 'ngscaffolding-core';
-import { Subscription } from 'rxjs';
-import { InputBuilderDefinition, OrientationValues, InputDetail } from '@ngscaffolding/models';
+import { UserPreferencesService, UserPreferencesQuery } from 'ngscaffolding-core';
+import { InputBuilderDefinition, OrientationValues, InputDetail, UserPreferenceValue } from '@ngscaffolding/models';
+import { take } from 'rxjs/internal/operators/take';
+import { combineLatest, Observable, Subscription } from 'rxjs';
 
 @Component({
   templateUrl: './userSettings.component.html',
   styleUrls: ['./userSettings.component.scss']
 })
-export class UserSettingsComponent implements OnInit, OnDestroy {
-  private prefDetailsSub: Subscription;
-  private prefValuesSub: Subscription;
-
+export class UserSettingsComponent implements OnInit {
   private baseInputDefinition: InputBuilderDefinition = {
     inputDetails: [],
     columnCount: 2,
-    orientation: OrientationValues.Horizontal,
-    okButtonText: null,
-    cancelButtonText: null
+    orientation: OrientationValues.Horizontal
   };
 
-  constructor(private userPrefs: UserPreferencesService) {}
+  constructor(private userPrefs: UserPreferencesService, private userPrefsQuery: UserPreferencesQuery) {}
 
   inputBuilderDefinition = new InputBuilderDefinition();
 
-  userPrefsModel: Array<any> = [];
+  obsLoading: Observable<[UserPreferenceValue[], boolean]>;
+  obsSubscription: Subscription;
+
+  userPrefsModel: {};
 
   ngOnInit() {
     // Load Preference Definitions Here
-    this.prefDetailsSub = this.userPrefs.preferenceDefinitionsSubject.subscribe(
-      defs => {
+    this.userPrefsQuery
+      .select(prefsState => prefsState.preferenceDefinitions)
+      .subscribe(defs => {
         if (defs) {
           // Build our Input Definition from this input
           const newInputDefinition = Object.assign({}, this.baseInputDefinition);
 
           defs.forEach((value, key) => {
-            const inputDef = value.inputDetails;
-            if (inputDef) {
+            const inputDef = JSON.parse(JSON.stringify(value.inputDetails));
+            if (inputDef && inputDef.name) {
               newInputDefinition.inputDetails.push(inputDef as InputDetail);
             }
           });
 
           this.inputBuilderDefinition = newInputDefinition;
         }
-      }
-    );
+      });
 
     // Load User Values Here
-    this.prefValuesSub = this.userPrefs.preferenceValuesSubject.subscribe(
-      values => {
-        if (values) {
-          values.forEach((value, key) => {
-            this.userPrefsModel[value.name] = value.value;
-          });
-        }
+    this.obsLoading = combineLatest(this.userPrefsQuery.selectAll(), this.userPrefsQuery.selectLoading());
+    this.obsSubscription = this.obsLoading.subscribe(([values, loading]) => {
+      if (values && !loading) {
+        const newValues = {};
+        values.forEach((prefValue, key) => {
+          newValues[prefValue.name] = prefValue.value;
+        });
+        this.userPrefsModel = newValues;
+        this.obsSubscription.unsubscribe();
       }
-    );
+    });
   }
 
   valueChanged(changedValue: [string, any]) {
+    // Save updates
     this.userPrefs.setValue(changedValue[0], changedValue[1]).subscribe();
   }
 
-  notifyChanged(changedValue: any) {
-  }
-
-  ngOnDestroy() {
-    if (this.prefDetailsSub) {
-      this.prefDetailsSub.unsubscribe();
-    }
-    if (this.prefValuesSub) {
-      this.prefValuesSub.unsubscribe();
-    }
-  }
+  notifyChanged(changedValue: any) {}
 }

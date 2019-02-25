@@ -8,11 +8,11 @@ export * from './dynamicComponent/dynamicComponent.service';
 export * from './logging/logging.service';
 export * from './menu';
 export * from './notification/notification.service';
-export * from './referenceValues/refrenceValues.service';
+export * from './referenceValues';
 export * from './rolesService/roles.service';
 export * from './spinnerService/spinner.service';
 
-export * from './userPreferences/userPreferences.service';
+export * from './userPreferences';
 export * from './userAuthentication';
 
 export * from './versions/versions.service';

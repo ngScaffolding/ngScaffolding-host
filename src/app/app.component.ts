@@ -7,12 +7,13 @@ import { NgScaffoldingComponent } from './app.ngscaffolding.component';
 import { Title } from '@angular/platform-browser';
 
 import { LoggingService, AppSettingsService, SpinnerService } from 'ngscaffolding-core';
-import { UserAuthenticationQuery, UserPreferencesService } from 'ngscaffolding-core';
+import { UserAuthenticationQuery } from 'ngscaffolding-core';
 import { BroadcastService, BroadcastTypes, MenuService } from 'ngscaffolding-core';
 import { NotificationReceiverService } from './services/notificationReceiver/notificationReceiver.service';
 import { AppSettingsQuery } from 'ngscaffolding-core';
 import { Observable } from 'rxjs/internal/Observable';
 import { AppSettings } from '@ngscaffolding/models';
+import { UserPreferencesQuery } from 'projects/ngscaffolding-core/src/services/userPreferences/appSettings.query';
 
 enum MenuOrientation {
     STATIC,
@@ -89,7 +90,7 @@ export class AppComponent extends NgScaffoldingComponent
     public spinnerService: SpinnerService,
     public menuService: MenuService,
     public broadcastService: BroadcastService,
-    public userPreferencesService: UserPreferencesService
+    public userPrefsQuery: UserPreferencesQuery
   ) {
     super(
       router,
@@ -101,7 +102,7 @@ export class AppComponent extends NgScaffoldingComponent
       spinnerService,
       menuService,
       broadcastService,
-      userPreferencesService
+      userPrefsQuery
     );
 
     this.showFullMessages$ = this.appSettingsQuery.selectEntity(AppSettings.showFullMessages, entity => entity.value);

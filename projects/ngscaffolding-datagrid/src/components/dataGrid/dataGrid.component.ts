@@ -30,6 +30,7 @@ import { ActionsHolderComponent } from '../actionsHolder/actionsHolder.component
 import { ButtonCellComponent, ActionClickedData } from '../../cellTemplates/buttonCell/buttonCell.component';
 import { Subscription } from 'rxjs';
 import { ValueGetterParams } from 'ag-grid/dist/lib/entities/colDef';
+import { UserPreferencesQuery } from 'projects/ngscaffolding-core/src/services/userPreferences/appSettings.query';
 
 @Component({
   selector: 'ngs-data-grid',
@@ -74,8 +75,6 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
 
   private gridviewPrefPrefix = 'GridViewPrefs_';
 
-  private prefsSubscription: any;
-
   private clickedAction: Action;
 
   private broadcastSubscription: Subscription;
@@ -96,7 +95,8 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
     private broadcast: BroadcastService,
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
-    private prefService: UserPreferencesService
+    private prefService: UserPreferencesService,
+    private prefsQuery: UserPreferencesQuery
   ) {
     this.gridOptions = <GridOptions>{
       enableColResize: true,
@@ -110,14 +110,19 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
 
       columnTypes: {
         dateColumn: {
-          filter: 'agDateColumnFilter', cellFormatter: (data) => {
+          filter: 'agDateColumnFilter',
+          cellFormatter: data => {
             return this.ngsDatePipe.transform(data.value);
-          }, suppressMenu: true
+          },
+          suppressMenu: true
         },
         dateTimeColumn: {
-          filter: 'agDateColumnFilter', cellFormatter: (data) => {
+          filter: 'agDateColumnFilter',
+          cellFormatter: data => {
             return this.ngsDateTimePipe.transform(data.value);
-          }, suppressMenu: true }
+          },
+          suppressMenu: true
+        }
       },
 
       onGridReady: () => {
@@ -138,7 +143,6 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
         this.refreshData();
       }
     });
-
   }
 
   public refreshData() {
@@ -349,8 +353,7 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
     }
   }
 
-  public popupHidden(event: any) {
-  }
+  public popupHidden(event: any) {}
   private callAction(action: Action, row: any) {
     switch (action.type.toLowerCase()) {
       case 'angularroute': {
@@ -459,12 +462,9 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
 
   ngOnInit(): void {
     // watch for Prefs changes
-    this.prefsSubscription = this.prefService.preferenceValuesSubject.subscribe(prefs => {
-      if (prefs) {
-        const pref = prefs.find(loopPref => loopPref.name === this.gridviewPrefPrefix + this.itemId);
-        if (pref) {
-          this.gridSavedState = JSON.parse(pref.value);
-        }
+    this.prefsQuery.selectEntity(this.gridviewPrefPrefix + this.itemId).subscribe(pref => {
+      if (pref) {
+        this.gridSavedState = JSON.parse(pref.value);
       }
     });
   }
@@ -472,9 +472,6 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
   ngOnDestroy() {
     if (this.broadcastSubscription) {
       this.broadcastSubscription.unsubscribe();
-    }
-    if (this.prefsSubscription) {
-      this.prefsSubscription.unsubscribe();
     }
   }
 }

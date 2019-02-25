@@ -44,7 +44,7 @@ export class InputBuilderComponent implements OnInit, OnChanges {
   public getLabel(input: InputDetail) {
     if (input.label) {
       return input.label;
-    } else {
+    } else if (input.name) {
       return input.name.replace(/([A-Z]+)/g, ' $1').replace(/([A-Z][a-z])/g, ' $1');
     }
   }
@@ -150,8 +150,7 @@ export class InputBuilderComponent implements OnInit, OnChanges {
               const foundInputValue = (<InputDetailReferenceValues>(
                 inputDetail
               ))// tslint:disable-next-line:triple-equals
-              .datasourceItems
-                .find(ds => ds.value == inputValue);
+              .datasourceItems.find(ds => ds.value == inputValue);
 
               if (foundInputValue) {
                 formControl.setValue(foundInputValue, {

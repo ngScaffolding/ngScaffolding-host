@@ -114,7 +114,7 @@ export class DCOAppModule {
     appSettingsService.setValue(AppSettings.showToastMessages, true);
 
     appSettingsService.setValue(AppSettings.showProfileSetting, true);
-    appSettingsService.setValue(AppSettings.showUserSetting, false);
+    appSettingsService.setValue(AppSettings.showUserSetting, true);
     appSettingsService.setValue(AppSettings.showProfilePicture, false);
 
     appSettingsService.setValue(AppSettings.authClientId, 'democlient');

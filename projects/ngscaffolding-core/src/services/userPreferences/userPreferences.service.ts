@@ -7,24 +7,28 @@ import { AppSettingsService } from '../appSettings/appSettings.service';
 
 // Models
 import { UserPreferenceDefinition, UserPreferenceValue, AppSettings } from '@ngscaffolding/models';
+import { UserPreferencesStore } from './appSettings.store';
+import { UserPreferencesQuery } from './appSettings.query';
+import { LoggingService } from '../logging/logging.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserPreferencesService {
+  private readonly className = 'UserPreferencesService';
   private readonly prefix = 'preference_';
   private readonly storageKey = 'UserPreferences';
 
-  private preferenceValues = new Array<UserPreferenceValue>();
-  private preferenceDefinitions = new Array<UserPreferenceDefinition>();
-
-  public preferenceDefinitionsSubject = new BehaviorSubject<Array<UserPreferenceDefinition>>(null);
-  public preferenceValuesSubject = new BehaviorSubject<Array<UserPreferenceValue>>(null);
-
-  constructor(private http: HttpClient, private authQuery: UserAuthenticationQuery, private appSettings: AppSettingsService) {
+  constructor(private http: HttpClient, private authQuery: UserAuthenticationQuery,
+    private logger: LoggingService,
+    private userPrefsStore: UserPreferencesStore,
+    private userPrefsQuery: UserPreferencesQuery,
+    private appSettings: AppSettingsService) {
 
     authQuery.authenticated$.subscribe(isAuthorised => {
       if (isAuthorised) {
+        this.userPrefsStore.setLoading(true);
+
         // Load User Prefs from Localstorage
         this.loadFromLocal();
 
@@ -38,31 +42,24 @@ export class UserPreferencesService {
         this.clearValues();
       }
     });
-
-
   }
 
   private clearValues() {
-    this.preferenceValues = new Array<UserPreferenceValue>();
+    this.userPrefsStore.remove();
 
     // Save to LocalStorage
     localStorage.removeItem(this.storageKey);
-
-    // Tell the world about the updates
-    this.preferenceValuesSubject.next(this.preferenceValues);
   }
 
   public deleteValue(key: string) {
     return new Observable<any>(observer => {
       this.http.delete(`${this.appSettings.getValue(AppSettings.apiHome)}/${key}`).subscribe(
         () => {
-          // Save and tell the world
-          this.preferenceValues = this.preferenceValues.filter(p => p.name !== key);
+          // Remove and tell the world
+          this.userPrefsStore.remove(key);
 
           localStorage.removeItem(this.storageKey);
-
-          // Tell the world about the updates
-          this.preferenceValuesSubject.next(this.preferenceValues);
+          this.saveToLocal();
 
           observer.next();
           observer.complete();
@@ -79,12 +76,12 @@ export class UserPreferencesService {
     this.http.get<Array<UserPreferenceValue>>(`${this.appSettings.getValue(AppSettings.apiHome)}/api/v1/userpreferencevalue`).subscribe(prefValues => {
       if (prefValues) {
         prefValues.forEach(prefValue => {
-          this.newValue(prefValue.name, prefValue.value);
+          this.userPrefsStore.createOrReplace(prefValue.name, prefValue);
         });
-
-        // Tell the world the values
-        this.preferenceValuesSubject.next(this.preferenceValues);
+        this.userPrefsStore.setLoading(false);
       }
+    }, err => {
+        this.logger.error(err, this.className , true);
     });
   }
 
@@ -92,8 +89,18 @@ export class UserPreferencesService {
     return new Observable<any>(observer => {
       this.http.post(`${this.appSettings.getValue(AppSettings.apiHome)}/api/v1/userpreferencevalue`, { name: key, value: value }).subscribe(
         () => {
-          // Save and tell the world
-          this.newValue(key, value);
+          const existingEntity = this.userPrefsQuery.getEntity(key);
+          let newEntity = new UserPreferenceValue();
+
+          if (existingEntity) {
+            newEntity = JSON.parse(JSON.stringify(existingEntity));
+          } else {
+            newEntity.name = key;
+            newEntity.userId = this.authQuery.getSnapshot().userDetails.userId;
+          }
+
+          newEntity.value = value;
+          this.userPrefsStore.createOrReplace(key, newEntity);
 
           observer.next();
           observer.complete();
@@ -105,33 +112,15 @@ export class UserPreferencesService {
     });
   }
 
-  private newValue(key: string, value: any) {
-    let currentPref = this.preferenceValues.find(p => p.name === key);
-
-    if (!currentPref) {
-      currentPref = new UserPreferenceValue();
-      currentPref.userId = this.authQuery.getSnapshot().userDetails.userId;
-      currentPref.name = key;
-      currentPref.value = value;
-
-      this.preferenceValues.push(currentPref);
-    } else {
-      currentPref.value = value;
-    }
-
-    this.storeValue(key, currentPref);
-  }
-
   private getDefinitions() {
-    this.preferenceDefinitions = new Array<UserPreferenceDefinition>();
     this.http.get<Array<UserPreferenceDefinition>>(`${this.appSettings.getValue(AppSettings.apiHome)}/api/v1/UserPreferenceDefinition`).subscribe(prefDefinitions => {
       if (prefDefinitions && prefDefinitions.length > 0) {
+        let defns = [];
         prefDefinitions.forEach(definition => {
-          this.preferenceDefinitions.push(definition);
+          defns.push(definition);
         });
+        this.userPrefsStore.updateRoot({ preferenceDefinitions:  defns });
       }
-      // Tell the world the value
-      this.preferenceDefinitionsSubject.next(this.preferenceDefinitions);
     });
   }
 
@@ -141,19 +130,16 @@ export class UserPreferencesService {
       const map: Array<UserPreferenceValue> = JSON.parse(stored);
       if (map && map.length > 0) {
         map.forEach(value => {
-          this.newValue(value.name, value.value);
+          // this.userPrefsStore.createOrReplace(value.name, value.value);
         });
       }
     }
   }
 
-  private storeValue(key: string, pref: UserPreferenceValue): void {
+  private saveToLocal(): void {
     // Save to LocalStorage
-    const serial = JSON.stringify(this.preferenceValues);
+    const serial = JSON.stringify(this.userPrefsQuery.getSnapshot().entities);
 
     localStorage.setItem(this.storageKey, serial);
-
-    // Tell the world about the updates
-    this.preferenceValuesSubject.next(this.preferenceValues);
   }
 }
