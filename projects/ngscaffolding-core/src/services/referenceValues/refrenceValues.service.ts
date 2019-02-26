@@ -9,7 +9,7 @@ import { ReferenceValuesQuery } from './referenceValues.query';
 import { ReferenceValuesStore } from './referenceValues.store';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class ReferenceValuesService {
   private className = 'ReferenceValuesService';
@@ -19,12 +19,10 @@ export class ReferenceValuesService {
   constructor(
     private http: HttpClient,
     private appSettingsService: AppSettingsService,
-    private refValuesQueue: ReferenceValuesQuery,
+    private refValuesQuery: ReferenceValuesQuery,
     private refValuesStore: ReferenceValuesStore,
     private logger: LoggingService
-  ) {
-
-  }
+  ) {}
 
   //
   // Get a single string value from References
@@ -46,14 +44,11 @@ export class ReferenceValuesService {
   // Get a complex ReferenceValue (May include multiple values)
   //
   getReferenceValue(name: string, seed = ''): Observable<ReferenceValue> {
-    let retVal: ReferenceValue = null;
 
-    retVal = this.refValuesQueue.getEntity(this.getKey(name, seed));
-
-    if (retVal) {
+    if (this.refValuesQuery.hasEntity(this.getKey(name, seed))) {
       // If we get one from Cache, thats handy to use
       return new Observable<ReferenceValue>(observer => {
-        observer.next(retVal);
+        observer.next(this.refValuesQuery.getEntity(this.getKey(name, seed)));
         observer.complete();
       });
     } else {
@@ -63,30 +58,26 @@ export class ReferenceValuesService {
         return this.requestsInFlight.get(this.getKey(name, seed));
       } else {
         const wrapper = new Observable<ReferenceValue>(observer => {
-
           // Call HTTP Here
           const httpRequest = this.http.get<ReferenceValue>(
-            `${this.appSettingsService
-              .getValue(AppSettings.apiHome)}/api/v1/referencevalues?name=${name}&seed=${seed}`
+            `${this.appSettingsService.getValue(AppSettings.apiHome)}/api/v1/referencevalues?name=${name}&seed=${seed}`
           );
           httpRequest.subscribe(value => {
-            // this.cacheService.setValue(this.getKey(name, seed), value);
+            this.refValuesStore.createOrReplace(this.getKey(name, seed), value);
             this.requestsInFlight.delete(this.getKey(name, seed));
 
             observer.next(value);
             observer.complete();
           });
-
-          this.requestsInFlight.set(this.getKey(name, seed), wrapper);
         });
 
-      return wrapper;
+        this.requestsInFlight.set(this.getKey(name, seed), wrapper);
+        return wrapper;
+      }
     }
   }
-}
 
-
-  private getKey(name: string, group: string): string {
-    return `referenceValue::${name}::${group}`;
+  private getKey(name: string, seed: string): string {
+    return `${name}::${seed}`;
   }
 }

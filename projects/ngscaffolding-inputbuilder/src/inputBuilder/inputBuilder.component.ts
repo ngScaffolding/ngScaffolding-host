@@ -32,11 +32,7 @@ export class InputBuilderComponent implements OnInit, OnChanges {
   editorOptions: JsonEditorOptions;
   formSubmitted = false;
 
-  constructor(
-    public appSettings: AppSettingsService,
-    public appSettingsQuery: AppSettingsQuery,
-    public refValuesService: ReferenceValuesService
-  ) {
+  constructor(public appSettings: AppSettingsService, public appSettingsQuery: AppSettingsQuery, public refValuesService: ReferenceValuesService) {
     this.editorOptions = new JsonEditorOptions();
     this.editorOptions.modes = ['code', 'text', 'tree', 'view']; // set all allowed modes
   }
@@ -89,13 +85,8 @@ export class InputBuilderComponent implements OnInit, OnChanges {
     // Default to full width (changes if help found)
     this.containerClass = 'ui-g-12';
 
-    if (
-      this.inputBuilderDefinition.orientation === OrientationValues.Horizontal
-    ) {
-      if (
-        this.inputBuilderDefinition.columnCount > 0 &&
-        this.inputBuilderDefinition.columnCount < 5
-      ) {
+    if (this.inputBuilderDefinition.orientation === OrientationValues.Horizontal) {
+      if (this.inputBuilderDefinition.columnCount > 0 && this.inputBuilderDefinition.columnCount < 5) {
         const colSize = 12 / this.inputBuilderDefinition.columnCount;
         this.controlStyle = `ui-g-${colSize}`;
       }
@@ -112,10 +103,7 @@ export class InputBuilderComponent implements OnInit, OnChanges {
         let inputValue: any = null;
         if (this.clonedInputModel[inputDetail.name]) {
           // If we have a passed value in the model, set the control value to this
-          inputValue = this.parseValue(
-            inputDetail,
-            this.clonedInputModel[inputDetail.name]
-          );
+          inputValue = this.parseValue(inputDetail, this.clonedInputModel[inputDetail.name]);
         } else if (inputDetail.value) {
           // If we have a value passed in the Input definition set the control value to this.
           inputValue = inputDetail.value;
@@ -125,10 +113,7 @@ export class InputBuilderComponent implements OnInit, OnChanges {
           this.clonedInputModel[inputDetail.name] = null;
         }
 
-        const formControl = new FormControl(
-          inputValue,
-          this.mapValidators(inputDetail)
-        ); // Validators passed here too
+        const formControl = new FormControl(inputValue, this.mapValidators(inputDetail)); // Validators passed here too
 
         formControl.valueChanges.subscribe(changes => {
           this.fieldChanged(inputDetail, changes);
@@ -137,20 +122,12 @@ export class InputBuilderComponent implements OnInit, OnChanges {
         formGroup[inputDetail.name] = formControl;
 
         // If Datasource, get the values
-        if (
-          inputDetail.hasOwnProperty('referenceValueName') &&
-          (<InputDetailReferenceValues>inputDetail).referenceValueName
-        ) {
+        if (inputDetail.hasOwnProperty('referenceValueName') && (<InputDetailReferenceValues>inputDetail).referenceValueName) {
           this.loadDataSource(inputDetail).subscribe(_ => {
             // Now we have the values, find the ReferenceValue that matches the inputValue from above
-            if (
-              this.clonedInputModel[inputDetail.name] &&
-              (<InputDetailReferenceValues>inputDetail).datasourceItems
-            ) {
-              const foundInputValue = (<InputDetailReferenceValues>(
-                inputDetail
-              ))// tslint:disable-next-line:triple-equals
-              .datasourceItems.find(ds => ds.value == inputValue);
+            if (this.clonedInputModel[inputDetail.name] && (<InputDetailReferenceValues>inputDetail).datasourceItems) {
+              const foundInputValue = (<InputDetailReferenceValues>inputDetail).datasourceItems // tslint:disable-next-line:triple-equals
+                .find(ds => ds.value == inputValue);
 
               if (foundInputValue) {
                 formControl.setValue(foundInputValue, {
@@ -198,26 +175,18 @@ export class InputBuilderComponent implements OnInit, OnChanges {
       if (
         input.hasOwnProperty('referenceValueSeedDependency') &&
         (<InputDetailReferenceValues>input).referenceValueSeedDependency &&
-        (<InputDetailReferenceValues>input).referenceValueSeedDependency ===
-          inputDetail.name
+        (<InputDetailReferenceValues>input).referenceValueSeedDependency === inputDetail.name
       ) {
         this.loadDataSource(input, strValue);
       }
     });
   }
 
-  private loadDataSource(
-    inputDetail: InputDetail,
-    seed: string = ''
-  ): Observable<ReferenceValue> {
-    const obs = this.refValuesService.getReferenceValue(
-      (<InputDetailReferenceValues>inputDetail).referenceValueName,
-      seed
-    );
+  private loadDataSource(inputDetail: InputDetail, seed: string = ''): Observable<ReferenceValue> {
+    const obs = this.refValuesService.getReferenceValue((<InputDetailReferenceValues>inputDetail).referenceValueName, seed);
 
     obs.subscribe(refValue => {
-      (<InputDetailReferenceValues>inputDetail).datasourceItems =
-        refValue.referenceValueItems;
+      (<InputDetailReferenceValues>inputDetail).datasourceItems = refValue.referenceValueItems;
     });
     return obs;
   }
@@ -284,25 +253,17 @@ export class InputBuilderComponent implements OnInit, OnChanges {
 
       // Min Length
       if (inputDetail.validateMinLength) {
-        formValidators.push(
-          Validators.minLength(inputDetail.validateMinLength)
-        );
+        formValidators.push(Validators.minLength(inputDetail.validateMinLength));
         if (!inputDetail.validateMinLengthMessage) {
-          inputDetail.validateMinLengthMessage = `${
-            inputDetail.label
-          } must be a minimum length of ${inputDetail.validateMinLength}`;
+          inputDetail.validateMinLengthMessage = `${inputDetail.label} must be a minimum length of ${inputDetail.validateMinLength}`;
         }
       }
 
       // Max Length
       if (inputDetail.validateMaxLength) {
-        formValidators.push(
-          Validators.maxLength(inputDetail.validateMaxLength)
-        );
+        formValidators.push(Validators.maxLength(inputDetail.validateMaxLength));
         if (!inputDetail.validateMaxLengthMessage) {
-          inputDetail.validateMaxLengthMessage = `${
-            inputDetail.label
-          } must be a max length of ${inputDetail.validateMinLength}`;
+          inputDetail.validateMaxLengthMessage = `${inputDetail.label} must be a max length of ${inputDetail.validateMinLength}`;
         }
       }
     }
