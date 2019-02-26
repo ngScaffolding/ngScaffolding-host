@@ -12,7 +12,7 @@ export interface DataSourceState extends EntityState<DataResults> {
 export class DataSourceStore extends EntityStore<DataSourceState, DataResults> {
 
   constructor() {
-    super({ isInitialised: false, dynamicTypes: []});
+    super({ isInitialised: false});
     console.log('DataSourceStore Constructor');
   }
 }

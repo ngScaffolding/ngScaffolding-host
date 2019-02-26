@@ -63,6 +63,7 @@ export class ReferenceValuesService {
             `${this.appSettingsService.getValue(AppSettings.apiHome)}/api/v1/referencevalues?name=${name}&seed=${seed}`
           );
           httpRequest.subscribe(value => {
+            value.compositeKey = this.getKey(name, seed);
             this.refValuesStore.createOrReplace(this.getKey(name, seed), value);
             this.requestsInFlight.delete(this.getKey(name, seed));
 

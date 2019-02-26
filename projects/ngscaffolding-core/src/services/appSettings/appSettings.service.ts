@@ -28,7 +28,7 @@ export class AppSettingsService {
     if (this.appSettingsQuery.hasEntity(name)) {
       this.appSettingsStore.update(name, { name: name, value: value });
     } else {
-      this.appSettingsStore.add({ Id: null, name: name, value: value });
+      this.appSettingsStore.add({ name: name, value: value });
     }
 
     if (name === AppSettings.apiHome) {

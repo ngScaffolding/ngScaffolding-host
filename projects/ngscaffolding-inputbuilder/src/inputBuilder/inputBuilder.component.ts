@@ -132,7 +132,7 @@ export class InputBuilderComponent implements OnInit, OnChanges {
               if (foundInputValue) {
                 formControl.setValue(foundInputValue, {
                   onlySelf: true,
-                  emitEvent: true
+                  emitEvent: false
                 });
               }
             }
