@@ -12,7 +12,8 @@ import { AppSettings } from '@ngscaffolding/models';
       <a href="#" (click)="onClick($event)">
         <img *ngIf="(showProfilePicture$ | async);else plainImage" class="profile-image" src="assets/layout/images/avatar.png" />
         <ng-template #plainImage>
-          <i class="person-outline">settings_application</i> <span>Profile</span>
+        <!-- <i class="material-icons">person_outline</i> -->
+          <span>Profile</span>
           <!--<img class="profile-image" src="assets/layout/images/avatar1.png" />-->
         </ng-template>
 

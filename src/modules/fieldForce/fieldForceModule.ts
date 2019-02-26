@@ -129,8 +129,8 @@ export class FieldForceAppModule {
     appSettingsService.setValue(AppSettings.showFullMessages, false);
     appSettingsService.setValue(AppSettings.showToastMessages, true);
 
-    appSettingsService.setValue(AppSettings.showProfileSetting, false);
-    appSettingsService.setValue(AppSettings.showUserSetting, false);
+    appSettingsService.setValue(AppSettings.showProfileSetting, true);
+    appSettingsService.setValue(AppSettings.showUserSetting, true);
     appSettingsService.setValue(AppSettings.showProfilePicture, false);
 
     appSettingsService.setValue(AppSettings.inputDateTimeFormat, 'dd/mm/yy hh:mm');

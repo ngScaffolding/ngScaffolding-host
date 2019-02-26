@@ -7,7 +7,6 @@ import { AppComponent } from './app.component';
 import { Inject, forwardRef } from '@angular/core';
 import { MenuService, MenuQuery, LoggingService } from 'ngscaffolding-core';
 import { CoreMenuItem } from '@ngscaffolding/models';
-import { Logger } from 'ag-grid';
 // ngScaffolding
 
 @Component({
