@@ -16,12 +16,19 @@ export class DigitalReadoutComponent implements IDashboardItem, OnInit, OnChange
 
   displayValue: string;
 
+  widgetTitle: string;
+
   constructor(private route: ActivatedRoute, private dataSource: DataSourceService) {
     this.route.queryParams.subscribe(params => {});
   }
 
   refreshData() {
     this.getData();
+  }
+
+  updateData(newData: any) {
+    this.itemDetails.jsonQuery = newData['source'].value;
+    this.widgetTitle = newData['source'].display;
   }
 
   ngOnChanges(changes: { [propName: string]: SimpleChange }) {

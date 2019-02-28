@@ -61,6 +61,13 @@
                     optionLabel="display" [formControlName]="input.name"></p-dropdown>
             </span>
 
+            <!-- DropDown Returns Object -->
+            <span *ngSwitchCase="'dropdownobject'">
+              <label class="small-label" [for]="input.name">{{getLabel(input)}}</label>
+              <p-dropdown class="dropdownInput" [id]="input.name" [options]="input.datasourceItems" [autoWidth]="false" [filter]="input.selectFilter"
+                  optionLabel="display" [formControlName]="input.name"></p-dropdown>
+            </span>
+
             <!-- Chips -->
             <span *ngSwitchCase="'chips'" class="md-inputfield">
                 <p-chips [id]="input.name" [placeholder]="input.label" [formControlName]="input.name"></p-chips>

@@ -142,10 +142,6 @@ export class InputBuilderComponent implements OnInit, OnChanges {
     }
 
     this.form = new FormGroup(formGroup);
-
-    this.form.valueChanges.subscribe(changes => {
-      this.formChanges(changes);
-    });
   }
 
   private parseValue(inputDetail: InputDetail, value: string): any {
@@ -161,13 +157,21 @@ export class InputBuilderComponent implements OnInit, OnChanges {
   }
 
   private fieldChanged(inputDetail: InputDetail, value: any) {
-    let strValue = value.toString();
+    let returnedValue: any;
 
-    if (value.hasOwnProperty('value')) {
-      strValue = value.value;
-      this.valueUpdated.emit([inputDetail.name, strValue]);
-    } else {
+    // If we are any 'Object' type input just return the object. Simples.
+    if (inputDetail.type.endsWith('object')) {
       this.valueUpdated.emit([inputDetail.name, value]);
+      returnedValue = value;
+    } else {
+      returnedValue = value.toString();
+
+      if (value.hasOwnProperty('value')) {
+        returnedValue = value.value;
+        this.valueUpdated.emit([inputDetail.name, returnedValue]);
+      } else {
+        this.valueUpdated.emit([inputDetail.name, value]);
+      }
     }
 
     // Do We need to notify another input of this change?
@@ -177,9 +181,18 @@ export class InputBuilderComponent implements OnInit, OnChanges {
         (<InputDetailReferenceValues>input).referenceValueSeedDependency &&
         (<InputDetailReferenceValues>input).referenceValueSeedDependency === inputDetail.name
       ) {
-        this.loadDataSource(input, strValue);
+        this.loadDataSource(input, returnedValue);
       }
     });
+
+    // Flatten out Objects to value
+    const updatedModel = Object.assign({}, this.clonedInputModel);
+
+    updatedModel[inputDetail.name] = returnedValue;
+
+    // Tell subscribers we have changes
+    this.modelUpdated.emit(updatedModel);
+    this.clonedInputModel = updatedModel;
   }
 
   private loadDataSource(inputDetail: InputDetail, seed: string = ''): Observable<ReferenceValue> {
@@ -192,39 +205,7 @@ export class InputBuilderComponent implements OnInit, OnChanges {
   }
 
   private formChanges(changes: any) {
-    // Find out What has Changed
-    // Object.keys(changes).forEach(key => {
-    //   let extractedValue: any;
-    //   const property = changes[key];
-    //   if (property && property.hasOwnProperty('value')) {
-    //     extractedValue = property.value;
-    //   } else {
-    //     extractedValue = property;
-    //   }
 
-    //   if(this.clonedInputModel[key] !== extractedValue) {
-    //     // Value has Changed, tell the world
-    //     this.valueUpdated.emit(property);
-    //   }
-    // });
-
-    // this.clonedInputModel = changes;
-
-    // Flatten out Objects to value
-    const returnValue = Object.assign({}, this.clonedInputModel);
-    const localFlat = Object.assign({}, changes);
-
-    for (const property in localFlat) {
-      if (localFlat[property] && localFlat[property].hasOwnProperty('value')) {
-        returnValue[property] = localFlat[property].value;
-      } else {
-        returnValue[property] = localFlat[property];
-      }
-    }
-
-    // Tell subscribers we have changes
-    this.modelUpdated.emit(returnValue);
-    this.clonedInputModel = returnValue;
   }
 
   private mapValidators(inputDetail: InputDetail) {

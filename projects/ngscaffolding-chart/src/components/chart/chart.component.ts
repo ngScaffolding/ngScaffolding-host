@@ -21,6 +21,7 @@ HC_solid_gauge(Highcharts);
   styleUrls: ['chart.component.scss']
 })
 export class ChartComponent implements IDashboardItem, OnChanges {
+
   @Input() chartStyle: any;
 
   @Input() isWidget: boolean;
@@ -45,6 +46,10 @@ export class ChartComponent implements IDashboardItem, OnChanges {
 
   public refreshData() {
     this.loadChart();
+  }
+
+  updateData(newData: any) {
+    throw new Error('Method not implemented.');
   }
 
   private loadingComplete() {

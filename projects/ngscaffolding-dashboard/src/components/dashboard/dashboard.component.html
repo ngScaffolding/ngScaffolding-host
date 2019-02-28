@@ -43,8 +43,10 @@
 </p-card>
 
 <!-- Input Details for Widget -->
-<ngs-input-builder-popup #actionInputPopup [inputBuilderDefinition]="actionInputDefinition" [inputModel]="actionValues" (okClicked)="actionOkClicked($event)"
-(cancelCliecked)="actionCancelClicked()"></ngs-input-builder-popup>
+<ngs-input-builder-popup #actionInputPopup [inputBuilderDefinition]="actionInputDefinition"
+  [inputModel]="actionValues"
+  (okClicked)="actionOkClicked($event)"
+  (cancelCliecked)="actionCancelClicked()"></ngs-input-builder-popup>
 
 <!-- Save As Dialog -->
 <p-dialog title="Input Details" [(visible)]="saveShown" [contentStyle]="{'overflow':'visible'}">

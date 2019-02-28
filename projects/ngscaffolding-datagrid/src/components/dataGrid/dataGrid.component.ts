@@ -149,6 +149,10 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
     this.loadInitialData();
   }
 
+  public updateData(newData: any) {
+    throw new Error('Method not implemented.');
+  }
+
   // Toolbar Operations
   showHideFilters() {
     this.showFilters = !this.showFilters;

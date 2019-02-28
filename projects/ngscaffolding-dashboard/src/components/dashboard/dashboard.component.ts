@@ -55,7 +55,8 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
   private dynmicTypes: Type<any>[];
 
   // Hold widget we are configuring when input details clicked
-  private widgetConfigured: IDashboardItem;
+  private widgetInstanceConfigured: IDashboardItem;
+  private widgetDetailsConfigured: WidgetDetails;
 
   // Input Details
   actionInputDefinition: InputBuilderDefinition;
@@ -304,7 +305,8 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
         // widgetDetails.configuredValues = {x: 0};
 
         this.actionInputPopup.showPopup();
-        this.widgetConfigured = instance as IDashboardItem;
+        this.widgetInstanceConfigured = instance as IDashboardItem;
+        this.widgetDetailsConfigured = widgetDetails;
         break;
       }
       case 'refresh': {
@@ -335,8 +337,15 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
   actionOkClicked(model: any) {
     this.actionValues = model;
     // this.widgetConfigured.configuredValues = model;
-    this.widgetConfigured.refreshData(); //configuredValues = model;
+
+    this.widgetDetailsConfigured.configuredValues = model;
+    this.widgetInstanceConfigured.updateData(model);
+    this.widgetInstanceConfigured.refreshData(); //configuredValues = model;
     this.actionInputPopup.isShown = false;
+
+    // Resel widget selection
+    this.widgetInstanceConfigured = null;
+    this.widgetDetailsConfigured = null;
   }
 
   // User clicked Cancel
