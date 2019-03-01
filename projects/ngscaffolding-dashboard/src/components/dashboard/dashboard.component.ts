@@ -23,7 +23,7 @@ import { DynamicComponent } from 'ng-dynamic-component';
 import { SaveDetails } from '../saveInput/saveInput.component';
 import { TranslateService } from '@ngx-translate/core';
 import { Message } from 'primeng/api';
-import { ConfirmationService } from 'primeng/primeng';
+import { ConfirmationService, ColumnHeaders } from 'primeng/primeng';
 import { subscribeOn, take } from 'rxjs/operators';
 
 @Component({
@@ -231,7 +231,7 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
     this.menuService.saveMenuItem(clonedMenu);
     setTimeout(() => {
       this.notificationService.showMessage({ severity: 'info', summary: 'Share', detail: this.translate.instant('Dashboard Shared') });
-    }, 1000);
+    }, 300);
   }
 
   private saveDashboard(saveDetails: SaveDetails) {
@@ -239,25 +239,27 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
     const clonedMenu: CoreMenuItem = JSON.parse(JSON.stringify(this.menuItem));
 
     clonedMenu.menuDetails = JSON.parse(JSON.stringify(this.dashboard));
+    const dashboardModel = clonedMenu.menuDetails as DashboardModel;
     clonedMenu.roles = [];
 
+    dashboardModel.widgets.forEach(dashboardWidget => (dashboardWidget.widget = null));
+
     if (saveDetails) {
+      // this is the save AS function
       clonedMenu.name = `${this.authQuery.getSnapshot().userDetails.userId}::${saveDetails.label}::${Date.now()}`;
       clonedMenu.parent = saveDetails.parentName;
       clonedMenu.label = saveDetails.label;
-    } else {
-      // this is the save (existing) function
+
+      clonedMenu.routerLink = `dashboard/${clonedMenu.name}`;
+
+      // Mark as owned by current user
+      clonedMenu.userIds = [this.authQuery.getSnapshot().userDetails.userId];
     }
-
-    clonedMenu.routerLink = `dashboard/${clonedMenu.name}`;
-
-    // Mark as owned by current user
-    clonedMenu.userIds = [this.authQuery.getSnapshot().userDetails.userId];
 
     this.menuService.saveMenuItem(clonedMenu);
     setTimeout(() => {
       this.notificationService.showMessage({ severity: 'info', summary: 'Save', detail: this.translate.instant('Dashboard Saved') });
-    }, 1000);
+    }, 300);
   }
 
   onTitleChanged(newTitle: string) {
