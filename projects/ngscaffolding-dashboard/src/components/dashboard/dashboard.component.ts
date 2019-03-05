@@ -379,6 +379,7 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
       dashItem.updateData({...oldConfigValues, ...model});
       dashItem.refreshData();
     });
+    this.dashboardInputPopup.isShown = false;
   }
 
   // User clicked Cancel

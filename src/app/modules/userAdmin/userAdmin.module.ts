@@ -16,6 +16,7 @@ export class UserAdminModule {
     menuService.addMenuItemsFromCode([
       {
         label: 'User Administration',
+        name: 'user.admin',
         type: MenuTypes.Folder,
         icon: 'person_add',
         roles: ['user_admin', 'admin'],
