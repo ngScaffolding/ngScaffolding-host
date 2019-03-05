@@ -36,7 +36,7 @@ export class DigitalReadoutComponent implements IDashboardItem, OnInit, OnChange
   }
 
   ngOnChanges(changes: { [propName: string]: SimpleChange }) {
-    if (changes.widget && changes.widget.isFirstChange) {
+    if (changes.widget && changes.widget.isFirstChange && changes.widget.currentValue.configuredValues) {
       this.setDisplay(changes.widget.currentValue.configuredValues.source);
     }
   }
