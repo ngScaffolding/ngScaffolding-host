@@ -26,6 +26,7 @@ import { Message } from 'primeng/api';
 import { ConfirmationService, ColumnHeaders } from 'primeng/primeng';
 import { subscribeOn, take } from 'rxjs/operators';
 import { MenuItemComponent } from 'ag-grid-enterprise';
+import { Subscription, interval } from 'rxjs';
 
 @Component({
   selector: 'ngs-dashboard',
@@ -58,6 +59,9 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
   private dynmicTypes: Type<any>[];
 
   private changesMade = false;
+
+  // Refresh Observable
+  private refreshSubscription: Subscription = null;
 
   // Hold widget we are configuring when input details clicked
   private widgetInstanceConfigured: IDashboardItem;
@@ -118,6 +122,19 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
     }
   }
 
+  private setAllRefresh() {
+    // Drop existing subscription
+    if (this.refreshSubscription) {
+      this.refreshSubscription.unsubscribe();
+    }
+    if (this.dashboard.refreshInterval) {
+      this.refreshSubscription = interval(this.dashboard.refreshInterval * 1000).subscribe(() => {
+        this.logger.info('Refreshing all Widgets');
+        this.refreshAll();
+      });
+    }
+  }
+
   loadDashboard() {
     this.loadingData = true;
 
@@ -132,6 +149,8 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
           }
 
           this.setButtons();
+
+          this.setAllRefresh();
 
           this.changesMade = false;
           this.loadingData = false;
@@ -187,10 +206,7 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
         break;
       }
       case 'refresh': {
-        this.components.forEach(comp => {
-          const component = comp as IDashboardItem;
-          component.refreshData();
-        });
+        this.refreshAll();
         break;
       }
       case 'remove': {
@@ -212,6 +228,13 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
         break;
       }
     }
+  }
+
+  private refreshAll() {
+    this.components.forEach(comp => {
+      const component = comp as IDashboardItem;
+      component.refreshData();
+    });
   }
 
   private deleteDashboard() {
@@ -255,7 +278,6 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
     clonedMenu.menuDetails = JSON.parse(JSON.stringify(this.dashboard));
     clonedMenu.roles = [];
 
-
     if (saveDetails) {
       // this is the save AS function
       clonedMenu.name = `${this.authQuery.getSnapshot().userDetails.userId}::${saveDetails.label}::${Date.now()}`;
@@ -273,7 +295,6 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
 
   /// Save our menu Item but keep the configured widget details for menu stuffing.
   private saveMenuItemToService(menuItem: CoreMenuItem, summary: string, result: string) {
-
     const clonedFullMenu = JSON.parse(JSON.stringify(menuItem));
 
     // Clear down the widget details for saving
@@ -457,6 +478,9 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
   ngOnDestroy(): void {
     if (this.paramSubscription) {
       this.paramSubscription.unsubscribe();
+    }
+    if (this.refreshSubscription) {
+      this.refreshSubscription.unsubscribe();
     }
   }
 
