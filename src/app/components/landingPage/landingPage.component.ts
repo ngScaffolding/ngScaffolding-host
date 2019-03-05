@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
+import { SpinnerService } from 'ngscaffolding-core';
 
 @Component({
     templateUrl: 'landingPage.component.html'
 })
 export class LandingPageComponent {
+  constructor(private spinner: SpinnerService){}
     public throwError(): void {
-        throw new Error('Oh oh, an error has occured');
+        this.spinner.showSpinner('Whee');
     }
 }

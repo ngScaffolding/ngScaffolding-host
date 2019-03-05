@@ -21,14 +21,15 @@
         <div class="layout-main">
             <!-- <app-breadcrumb [hidden]="!userAuthService.isAuthenticated"></app-breadcrumb> -->
 
-			<p-blockUI [blocked]="spinning"></p-blockUI>
-            <div *ngIf="spinning" class="spinner-container">
-                <br/>
-                <br/>
-                <p-progressSpinner class="spinner-spinner"></p-progressSpinner>
-                <br/>
-                <p class="spinner-message">{{ spinMessage }}</p>
-            </div>
+      <p-blockUI [blocked]="spinning"></p-blockUI>
+      <p-sidebar [(visible)]="spinning" position="top">
+        <div style="text-align: center">
+                    {{'Loading' | translate}}
+        <br/>
+        <p-progressSpinner></p-progressSpinner>
+      </div>
+      </p-sidebar>
+
 
             <p-messages *ngIf="showFullMessages$ | async"></p-messages>
             <p-growl *ngIf="showToastMessages$ | async"></p-growl>
