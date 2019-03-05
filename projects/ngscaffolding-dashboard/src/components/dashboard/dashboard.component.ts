@@ -25,6 +25,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { Message } from 'primeng/api';
 import { ConfirmationService, ColumnHeaders } from 'primeng/primeng';
 import { subscribeOn, take } from 'rxjs/operators';
+import { MenuItemComponent } from 'ag-grid-enterprise';
 
 @Component({
   selector: 'ngs-dashboard',
@@ -35,6 +36,7 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
   @ViewChildren(GridsterItemComponent) gridsterItems: QueryList<GridsterItemComponent>;
   @ViewChildren(DynamicComponent) component: DynamicComponent;
   @ViewChild(InputBuilderPopupComponent) actionInputPopup: InputBuilderPopupComponent;
+  @ViewChild(InputBuilderPopupComponent) dashboardInputPopup: InputBuilderPopupComponent;
 
   private paramSubscription: any;
   private menuName: string;
@@ -50,9 +52,12 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
   public showAdd = false;
   public showDelete = false;
   public showShare = false;
+  public showInput = false;
 
   private components: any[] = [];
   private dynmicTypes: Type<any>[];
+
+  private changesMade = false;
 
   // Hold widget we are configuring when input details clicked
   private widgetInstanceConfigured: IDashboardItem;
@@ -71,7 +76,8 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
   public loadingData = false;
   public galleryShown = false;
 
-  private changesMade = false;
+  // Show/Hide Dashboard Input Details
+  public dashboardInputShown = false;
 
   constructor(
     private widgetQuery: WidgetQuery,
@@ -149,6 +155,7 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
     this.showSave = false;
     this.showSaveAs = false;
     this.showShare = false;
+    this.showInput = false;
 
     const userId = this.authQuery.getSnapshot().userDetails.userId;
     if (this.menuItem.name.startsWith(userId)) {
@@ -160,6 +167,11 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
       this.showShare = true;
     }
 
+    // Check to see if the Dashboard is configurable
+    if (this.dashboard.inputBuilderDefinition && this.dashboard.inputBuilderDefinition.inputDetails) {
+      this.showInput = true;
+    }
+
     this.showSaveAs = true;
   }
 
@@ -167,6 +179,11 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
     switch (button) {
       case 'add': {
         this.galleryShown = !this.galleryShown;
+        break;
+      }
+      case 'input': {
+        // this.dashboardInputShown = !this.dashboardInputShown;
+        this.dashboardInputPopup.showPopup();
         break;
       }
       case 'refresh': {
@@ -345,13 +362,30 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
     this.widgetInstanceConfigured.refreshData(); //configuredValues = model;
     this.actionInputPopup.isShown = false;
 
-    // Resel widget selection
+    // Reset widget selection
     this.widgetInstanceConfigured = null;
     this.widgetDetailsConfigured = null;
   }
 
   // User clicked Cancel
   actionCancelClicked() {}
+
+  dashInputOkClicked(model: any) {
+    this.actionValues = model;
+    // this.widgetConfigured.configuredValues = model;
+
+    this.widgetDetailsConfigured.configuredValues = model;
+    this.widgetInstanceConfigured.updateData(model);
+    this.widgetInstanceConfigured.refreshData(); //configuredValues = model;
+    this.actionInputPopup.isShown = false;
+
+    // Resel widget selection
+    this.widgetInstanceConfigured = null;
+    this.widgetDetailsConfigured = null;
+  }
+
+  // User clicked Cancel
+  dashInputCancelClicked() {}
 
   ngOnChanges(changes: SimpleChanges): void {
     if (this.gridsterItems && this.gridsterItems.length > 0 && this.gridsterItems[0].gridster.curRowHeight > 1) {

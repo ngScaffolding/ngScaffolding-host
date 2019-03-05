@@ -37,8 +37,6 @@ import { TabMenuModule } from 'primeng/primeng';
 import { TabViewModule } from 'primeng/primeng';
 import { DynamicModule } from 'ng-dynamic-component';
 
-// export * from './pages';
-
 const dashboardRoute: Route =  { path: 'dcodashboard', component: TopDashboardComponent, canActivate: [AuthoriseRoleGuard] };
 
 const appRoutes: Routes = [
@@ -130,37 +128,8 @@ export class DCOAppModule {
 
     appSettingsService.registerDynamicTypes([DigitalReadoutComponent]);
 
-
-
     // Register dynamic components here
     // dynamicComponentService.registerComponent(machineDetailsRoute);
 
-    menuService.addMenuItemsFromCode([
-      {
-        name: 'Maramba Site 2',
-        label: 'Maramba Site 2',
-        items: [
-          {
-            name: 'MarambeDashboard',
-            label: 'Maraba Dashboard',
-            icon: 'brush',
-            routerLink: 'dcodashboard'
-          }
-        ]
-      },
-      {
-        name: 'System Admin2',
-        label: 'System Admin',
-        items: [
-          {
-            name: 'InputBuilderTest',
-            label: 'Input Builder (Works)',
-            icon: 'brush',
-            routerLink: 'fieldforcemachinedetails'
-          }
-        ]
-      },
-
-    ]);
   }
 }

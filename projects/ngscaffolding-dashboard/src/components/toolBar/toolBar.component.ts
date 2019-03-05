@@ -34,6 +34,7 @@ export class DashboardToolBarComponent implements OnInit {
   @Input() showAdd: boolean;
   @Input() showDelete: boolean;
   @Input() showShare: boolean;
+  @Input() showInput: boolean;
 
 
   @Output() toolbarClicked = new EventEmitter<string>();

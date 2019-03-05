@@ -12,7 +12,7 @@
     <div class="headerLine">
       <span class="dashHeader"><ngs-editable-title [readOnly]="dashboard.readOnly" [title]="dashboard.title" (titleChanged)="onTitleChanged($event)" ></ngs-editable-title></span>
       <span class="text-right">
-        <ngs-dashboard-toolbar
+        <ngs-dashboard-toolbar [showInput]="showInput"
           [showAdd]="showAdd" [showDelete]="showDelete" [showSave]="showSave" [showSaveAs]="showSaveAs" [showShare]="showShare"
           (toolbarClicked)="onToolbarClicked($event)"></ngs-dashboard-toolbar></span>
     </div>
@@ -20,6 +20,12 @@
 
   <div ngsFillHeight>
     <div style="width: 100%;" ngsFillHeight>
+      <ng-template #dashTemplate></ng-template>
+      <!-- Dashboard Input Values Here -->
+      <p-sidebar [(visible)]="dashboardInputShown" appendTo="dashTemplate" modal="false" position="top">
+        <span>Hello World</span>
+      </p-sidebar>
+
       <gridster [options]="options">
         <gridster-item [item]="widget" *ngFor="let widget of dashboard.widgets" #loopGridster>
           <ngs-widget-container (widgetEvent)="onWidgetEvent($event, widget, component.componentRef.instance)" [widgetDetails]="widget" [IsReadOnly]="dashboard.readOnly">
@@ -41,6 +47,12 @@
     </div>
   </div>
 </p-card>
+
+<!-- Input Details for Dashboard -->
+<ngs-input-builder-popup #dashboardInputPopup [inputBuilderDefinition]="dashboard?.inputBuilderDefinition"
+  [inputModel]="dashboard?.configuredValues"
+  (okClicked)="dashInputOkClicked($event)"
+  (cancelCliecked)="dashInputCancelClicked()"></ngs-input-builder-popup>
 
 <!-- Input Details for Widget -->
 <ngs-input-builder-popup #actionInputPopup [inputBuilderDefinition]="actionInputDefinition"
