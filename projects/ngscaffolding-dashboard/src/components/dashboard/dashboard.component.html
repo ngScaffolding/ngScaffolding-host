@@ -1,7 +1,3 @@
-<div *ngIf="loadingData">
-  <h2>{{'Loading' | translate }}...</h2>
-  <p-progressSpinner></p-progressSpinner>
-</div>
 
 <p-sidebar [(visible)]="galleryShown" position="right">
   <ngs-gallery [galleryName]="dashboard?.galleryName" (addWidget)="onAddWidget($event)"></ngs-gallery>

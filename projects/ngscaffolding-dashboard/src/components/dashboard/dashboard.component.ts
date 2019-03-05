@@ -1,20 +1,20 @@
 import { Component, OnInit, OnDestroy, ComponentRef, ViewChildren, QueryList, OnChanges, SimpleChanges, Type, ViewChild } from '@angular/core';
 import {
-  DataSourceService,
   LoggingService,
   MenuQuery,
   WidgetQuery,
   AppSettingsQuery,
   MenuService,
   UserAuthenticationQuery,
-  NotificationService
+  NotificationService,
+  SpinnerService
 } from 'ngscaffolding-core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { CoreMenuItem, WidgetModelBase, WidgetDetails, WidgetTypes, InputBuilderDefinition, IDashboardItem, BasicUser } from '@ngscaffolding/models';
+import { CoreMenuItem, WidgetDetails, WidgetTypes, InputBuilderDefinition, IDashboardItem } from '@ngscaffolding/models';
 
-import { DashboardModel, DialogOptions } from '@ngscaffolding/models';
+import { DashboardModel } from '@ngscaffolding/models';
 
-import { ChartComponent, ChartDataService } from 'ngscaffolding-chart';
+import { ChartComponent } from 'ngscaffolding-chart';
 
 import { CompactType, DisplayGrid, GridsterConfig, GridsterItem, GridType, GridsterItemComponent, GridsterItemComponentInterface } from 'angular-gridster2';
 import { HtmlContainerComponent } from '../htmlContainer/htmlContainer.component';
@@ -22,10 +22,7 @@ import { InputBuilderPopupComponent } from 'ngscaffolding-inputbuilder';
 import { DynamicComponent } from 'ng-dynamic-component';
 import { SaveDetails } from '../saveInput/saveInput.component';
 import { TranslateService } from '@ngx-translate/core';
-import { Message } from 'primeng/api';
 import { ConfirmationService, ColumnHeaders } from 'primeng/primeng';
-import { subscribeOn, take } from 'rxjs/operators';
-import { MenuItemComponent } from 'ag-grid-enterprise';
 import { Subscription, interval } from 'rxjs';
 
 @Component({
@@ -77,7 +74,6 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
   public componentInputs = {};
 
   public unitHeight: number;
-  public loadingData = false;
   public galleryShown = false;
 
   // Show/Hide Dashboard Input Details
@@ -94,7 +90,8 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
     private confirmationService: ConfirmationService,
     private logger: LoggingService,
     private menuQuery: MenuQuery,
-    private menuService: MenuService
+    private menuService: MenuService,
+    private spinner: SpinnerService
   ) {
     this.appSettingsQuery
       .select(store => store.dynamicTypes)
@@ -136,7 +133,7 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   loadDashboard() {
-    this.loadingData = true;
+    this.spinner.showSpinner('Loading');
 
     this.menuQuery.selectLoading().subscribe(menuLoading => {
       if (!menuLoading) {
@@ -153,7 +150,7 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
           this.setAllRefresh();
 
           this.changesMade = false;
-          this.loadingData = false;
+          this.spinner.hideSpinner();
         } else {
           this.notificationService.showMessage({
             summary: 'Error',
@@ -161,7 +158,7 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
             detail: 'You do not have access to this Dashboard'
           });
           this.changesMade = false;
-          this.loadingData = false;
+          this.spinner.hideSpinner();
         }
       }
     });

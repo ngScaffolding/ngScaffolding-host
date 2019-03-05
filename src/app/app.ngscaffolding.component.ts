@@ -1,6 +1,6 @@
 import { Component, AfterViewInit, ElementRef, Renderer, ViewChild, OnDestroy, OnInit, NgZone } from '@angular/core';
 
-import { Router, NavigationEnd, NavigationError, NavigationStart } from '@angular/router';
+import { Router, NavigationEnd, NavigationError, NavigationStart, RouterEvent, NavigationCancel } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { map, filter, scan } from 'rxjs/operators';
 
@@ -40,7 +40,26 @@ export class NgScaffoldingComponent implements AfterViewInit {
     public menuService: MenuService,
     public broadcastService: BroadcastService,
     public userPrefsQuery: UserPreferencesQuery
-  ) {}
+  ) {
+    router.events.subscribe((event: RouterEvent) => {
+      this._navigationInterceptor(event);
+    })
+  }
+
+  private _navigationInterceptor(event: RouterEvent): void {
+    if (event instanceof NavigationStart) {
+      this.spinnerService.showSpinner('Loading');
+      }
+    if (event instanceof NavigationEnd) {
+      this.spinnerService.hideSpinner();
+    }
+    if (event instanceof NavigationCancel) {
+      this.spinnerService.hideSpinner();
+    }
+    if (event instanceof NavigationError) {
+      this.spinnerService.hideSpinner();
+    }
+  }
 
   ngAfterViewInit() {
     this.logger.info('Loaded Main View');
