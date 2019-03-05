@@ -49,7 +49,7 @@ export class ChartComponent implements IDashboardItem, OnChanges {
   }
 
   updateData(newData: any) {
-    throw new Error('Method not implemented.');
+
   }
 
   private loadingComplete() {

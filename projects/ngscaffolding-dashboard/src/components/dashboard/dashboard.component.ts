@@ -355,11 +355,11 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
 
   actionOkClicked(model: any) {
     this.actionValues = model;
-    // this.widgetConfigured.configuredValues = model;
 
     this.widgetDetailsConfigured.configuredValues = model;
-    this.widgetInstanceConfigured.updateData(model);
-    this.widgetInstanceConfigured.refreshData(); //configuredValues = model;
+    // Copy in Dashboard values first
+    this.widgetInstanceConfigured.updateData({...this.dashboard.configuredValues, ...model});
+    this.widgetInstanceConfigured.refreshData();
     this.actionInputPopup.isShown = false;
 
     // Reset widget selection
@@ -371,17 +371,14 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
   actionCancelClicked() {}
 
   dashInputOkClicked(model: any) {
-    this.actionValues = model;
-    // this.widgetConfigured.configuredValues = model;
+    this.components.forEach(comp => {
+      const dashItem = comp as IDashboardItem;
+      const oldConfigValues = comp.widget.configuredValues;
 
-    this.widgetDetailsConfigured.configuredValues = model;
-    this.widgetInstanceConfigured.updateData(model);
-    this.widgetInstanceConfigured.refreshData(); //configuredValues = model;
-    this.actionInputPopup.isShown = false;
-
-    // Resel widget selection
-    this.widgetInstanceConfigured = null;
-    this.widgetDetailsConfigured = null;
+      // Add in updated Dashboard Input (Copy overwrites old bits)
+      dashItem.updateData({...oldConfigValues, ...model});
+      dashItem.refreshData();
+    });
   }
 
   // User clicked Cancel
