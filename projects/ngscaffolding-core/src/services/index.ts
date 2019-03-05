@@ -14,6 +14,7 @@ export * from './spinnerService/spinner.service';
 
 export * from './userPreferences';
 export * from './userAuthentication';
+export * from './userService/user.service';
 
 export * from './versions/versions.service';
 export * from './widgetsService';
