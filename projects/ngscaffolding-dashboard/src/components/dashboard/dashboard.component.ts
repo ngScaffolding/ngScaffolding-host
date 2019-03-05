@@ -245,10 +245,7 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
     // Mark as NOT owned by current user
     clonedMenu.userIds = null;
 
-    this.menuService.saveMenuItem(clonedMenu);
-    setTimeout(() => {
-      this.notificationService.showMessage({ severity: 'info', summary: 'Share', detail: this.translate.instant('Dashboard Shared') });
-    }, 300);
+    this.saveMenuItemToService(clonedMenu, 'Share', 'Dashboard Shared');
   }
 
   private saveDashboard(saveDetails: SaveDetails) {
@@ -256,10 +253,8 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
     const clonedMenu: CoreMenuItem = JSON.parse(JSON.stringify(this.menuItem));
 
     clonedMenu.menuDetails = JSON.parse(JSON.stringify(this.dashboard));
-    const dashboardModel = clonedMenu.menuDetails as DashboardModel;
     clonedMenu.roles = [];
 
-    dashboardModel.widgets.forEach(dashboardWidget => (dashboardWidget.widget = null));
 
     if (saveDetails) {
       // this is the save AS function
@@ -273,10 +268,23 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
       clonedMenu.userIds = [this.authQuery.getSnapshot().userDetails.userId];
     }
 
-    this.menuService.saveMenuItem(clonedMenu);
+    this.saveMenuItemToService(clonedMenu, 'Save', 'Dashboard Saved');
+  }
+
+  /// Save our menu Item but keep the configured widget details for menu stuffing.
+  private saveMenuItemToService(menuItem: CoreMenuItem, summary: string, result: string) {
+
+    const clonedFullMenu = JSON.parse(JSON.stringify(menuItem));
+
+    // Clear down the widget details for saving
+    const dashboardModel = menuItem.menuDetails as DashboardModel;
+    dashboardModel.widgets.forEach(dashboardWidget => (dashboardWidget.widget = null));
+
+    this.menuService.saveMenuItem(menuItem, false);
     setTimeout(() => {
-      this.notificationService.showMessage({ severity: 'info', summary: 'Save', detail: this.translate.instant('Dashboard Saved') });
-    }, 300);
+      this.menuService.updateExistingMenuItem(clonedFullMenu);
+      this.notificationService.showMessage({ severity: 'info', summary: this.translate.instant(summary), detail: this.translate.instant(result) });
+    }, 200);
   }
 
   onTitleChanged(newTitle: string) {
@@ -358,7 +366,7 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
 
     this.widgetDetailsConfigured.configuredValues = model;
     // Copy in Dashboard values first
-    this.widgetInstanceConfigured.updateData({...this.dashboard.configuredValues, ...model});
+    this.widgetInstanceConfigured.updateData({ ...this.dashboard.configuredValues, ...model });
     this.widgetInstanceConfigured.refreshData();
     this.actionInputPopup.isShown = false;
 
@@ -376,7 +384,7 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
       const oldConfigValues = comp.widget.configuredValues;
 
       // Add in updated Dashboard Input (Copy overwrites old bits)
-      dashItem.updateData({...oldConfigValues, ...model});
+      dashItem.updateData({ ...oldConfigValues, ...model });
       dashItem.refreshData();
     });
     this.dashboardInputPopup.isShown = false;

@@ -142,6 +142,9 @@ export class InputBuilderComponent implements OnInit, OnChanges {
     }
 
     this.form = new FormGroup(formGroup);
+    this.form.valueChanges.subscribe(changes => {
+      this.formChanges(changes);
+    });
   }
 
   private parseValue(inputDetail: InputDetail, value: string): any {
@@ -205,7 +208,39 @@ export class InputBuilderComponent implements OnInit, OnChanges {
   }
 
   private formChanges(changes: any) {
+    // Find out What has Changed
+    // Object.keys(changes).forEach(key => {
+    //   let extractedValue: any;
+    //   const property = changes[key];
+    //   if (property && property.hasOwnProperty('value')) {
+    //     extractedValue = property.value;
+    //   } else {
+    //     extractedValue = property;
+    //   }
 
+    //   if(this.clonedInputModel[key] !== extractedValue) {
+    //     // Value has Changed, tell the world
+    //     this.valueUpdated.emit(property);
+    //   }
+    // });
+
+    // this.clonedInputModel = changes;
+
+    // Flatten out Objects to value
+    const returnValue = Object.assign({}, this.clonedInputModel);
+    const localFlat = Object.assign({}, changes);
+
+    for (const property in localFlat) {
+      if (localFlat[property] && localFlat[property].hasOwnProperty('value')) {
+        returnValue[property] = localFlat[property].value;
+      } else {
+        returnValue[property] = localFlat[property];
+      }
+    }
+
+    // Tell subscribers we have changes
+    this.modelUpdated.emit(returnValue);
+    this.clonedInputModel = returnValue;
   }
 
   private mapValidators(inputDetail: InputDetail) {

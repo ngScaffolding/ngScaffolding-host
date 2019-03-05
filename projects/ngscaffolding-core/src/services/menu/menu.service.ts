@@ -90,36 +90,42 @@ export class MenuService {
     });
   }
 
-  public saveMenuItem(menuItem: CoreMenuItem) {
+  public saveMenuItem(menuItem: CoreMenuItem, updateMenuTree: boolean = true) {
     this.http.post<CoreMenuItem>(this.apiHome + '/api/v1/menuitems', menuItem).subscribe(savedMenuItem => {
-      // Is this existing?
-      const existing = this.menuQuery.hasEntity(menuItem.name);
-      if (existing) {
-        this.menuStore.createOrReplace(menuItem.name, menuItem);
-      } else {
-        // Add to reference list of menus
-        this.menuStore.add(savedMenuItem);
+      if(updateMenuTree){
+        this.updateExistingMenuItem(savedMenuItem);
       }
-
-      const existingMenus = JSON.parse(JSON.stringify(this.menuQuery.getSnapshot().menuItems));
-      let parentMenu: CoreMenuItem;
-      if (menuItem.parent) {
-        parentMenu = existingMenus.find(menu => menu.name.toLowerCase() === savedMenuItem.parent.toLowerCase());
-      }
-      // Add to treeview for menu rendering
-      if (!parentMenu.items || !Array.isArray(parentMenu.items)) {
-        parentMenu.items = [];
-      }
-      if (existing) {
-        const foundIndex = (parentMenu.items as CoreMenuItem[]).findIndex(childMenu => childMenu.name === menuItem.name);
-        parentMenu.items[foundIndex] = menuItem;
-      } else {
-        (parentMenu.items as CoreMenuItem[]).push(savedMenuItem);
-      }
-
-      // Update tree and tell the world
-      this.menuStore.updateRoot({ menuItems: existingMenus });
     });
+  }
+
+  public updateExistingMenuItem(menuItem: CoreMenuItem) {
+    // Is this existing?
+    const existing = this.menuQuery.hasEntity(menuItem.name);
+    if (existing) {
+      this.menuStore.createOrReplace(menuItem.name, menuItem);
+    } else {
+      // Add to reference list of menus
+      this.menuStore.add(menuItem);
+    }
+
+    const existingMenus = JSON.parse(JSON.stringify(this.menuQuery.getSnapshot().menuItems));
+    let parentMenu: CoreMenuItem;
+    if (menuItem.parent) {
+      parentMenu = existingMenus.find(menu => menu.name.toLowerCase() === menuItem.parent.toLowerCase());
+    }
+    // Add to treeview for menu rendering
+    if (!parentMenu.items || !Array.isArray(parentMenu.items)) {
+      parentMenu.items = [];
+    }
+    if (existing) {
+      const foundIndex = (parentMenu.items as CoreMenuItem[]).findIndex(childMenu => childMenu.name === menuItem.name);
+      parentMenu.items[foundIndex] = menuItem;
+    } else {
+      (parentMenu.items as CoreMenuItem[]).push(menuItem);
+    }
+
+    // Update tree and tell the world
+    this.menuStore.updateRoot({ menuItems: existingMenus });
   }
 
   // Iterative Call
@@ -134,7 +140,6 @@ export class MenuService {
   }
 
   private removeUnauthorisedMenuItems(menuItems: CoreMenuItem[]) {
-
     const userRoles = this.authQuery.getSnapshot().userDetails.roles;
     const removingMenus: number[] = [];
 
@@ -143,7 +148,7 @@ export class MenuService {
 
       // Is this role protected
       if (menuItem.roles && menuItem.roles.length > 0) {
-        if (userRoles && menuItem.roles.filter(allowedRole => userRoles.includes(allowedRole)).length === 0){
+        if (userRoles && menuItem.roles.filter(allowedRole => userRoles.includes(allowedRole)).length === 0) {
           // No Authority. Remove
           removingThis = true;
           removingMenus.push(menuItems.indexOf(menuItem));
@@ -155,7 +160,7 @@ export class MenuService {
     });
     removingMenus.forEach(removeMenu => {
       menuItems.splice(removeMenu, 1);
-     });
+    });
   }
 
   public downloadMenuItems() {
@@ -183,7 +188,6 @@ export class MenuService {
       )
       .subscribe(
         downloadedMenuItems => {
-
           this.log.info(`Downloaded MenuItems`, this.className);
 
           const clonedFromCode = JSON.parse(JSON.stringify(this.menuItemsFromCode));
@@ -230,7 +234,6 @@ export class MenuService {
 
     // Don't add if we already know about this
     if (targetMenu && !targetMenu.find(menu => menu.name === newMenuItem.name)) {
-
       // Router bits
       if (newMenuItem.routerLink && (<string>newMenuItem.routerLink).indexOf(',') > -1) {
         calcRouterLink = (<string>newMenuItem.routerLink).split(',');
@@ -241,7 +244,6 @@ export class MenuService {
       const createdMenuItem: CoreMenuItem = { ...newMenuItem, routerLink: calcRouterLink };
 
       targetMenu.push(createdMenuItem);
-
 
       if (newMenuItem.items && newMenuItem.items.length > 0) {
         createdMenuItem.items = [];

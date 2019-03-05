@@ -14,7 +14,7 @@ export interface SaveDetails {
   templateUrl: './saveInput.component.html',
   styleUrls: ['./saveInput.component.scss']
 })
-export class SaveInputComponent implements OnChanges, OnInit {
+export class SaveInputComponent implements OnChanges {
   @Input() menuDetails: CoreMenuItem;
   @Input() isShareDialog: boolean;
 
@@ -26,16 +26,21 @@ export class SaveInputComponent implements OnChanges, OnInit {
 
   constructor(private menuQuery: MenuQuery, private rolesQuery: RolesQuery) {}
 
-  ngOnInit(): void {
-
+  private setupForm() {
     if (this.isShareDialog) {
       this.inputDefinition = {
-        title: 'Save Menu',
-        okButtonText: 'Save',
+        title: 'Share Menu',
+        okButtonText: 'Share',
         cancelButtonText: 'Cancel',
         inputDetails: [
           { name: 'label', type: InputTypes.textbox, label: 'Menu Label', validateRequired: 'Label is required' },
-          <InputDetailReferenceValues>{ name: 'parentName', type: InputTypes.dropdown, label: 'Parent Menu Id', validateRequired: 'Parent Menu is required' }
+          <InputDetailReferenceValues>{ name: 'parentName', type: InputTypes.dropdown, label: 'Parent Menu Id', validateRequired: 'Parent Menu is required' },
+          <InputDetailReferenceValues>{
+            name: 'shareRole',
+            type: InputTypes.dropdown,
+            label: 'Shared with Role',
+            validateRequired: 'Shared with Role is required'
+          }
         ]
       };
     } else {
@@ -45,27 +50,25 @@ export class SaveInputComponent implements OnChanges, OnInit {
         cancelButtonText: 'Cancel',
         inputDetails: [
           { name: 'label', type: InputTypes.textbox, label: 'Menu Label', validateRequired: 'Label is required' },
-          <InputDetailReferenceValues>{ name: 'parentName', type: InputTypes.dropdown, label: 'Parent Menu Id', validateRequired: 'Parent Menu is required' },
-          <InputDetailReferenceValues>{ name: 'shareRole', type: InputTypes.dropdown, label: 'Shared with Role', validateRequired: 'Shared with Role is required' }
+          <InputDetailReferenceValues>{ name: 'parentName', type: InputTypes.dropdown, label: 'Parent Menu Id', validateRequired: 'Parent Menu is required' }
         ]
       };
+    }
 
-      // Load Roles for sharing diag
-      combineLatest([this.rolesQuery.selectAll(), this.rolesQuery.selectLoading()]).subscribe(([roles, rolesLoading]) => {
+    // Load Roles for sharing diag
+    combineLatest([this.rolesQuery.selectAll(), this.rolesQuery.selectLoading()]).subscribe(([roles, rolesLoading]) => {
       if (roles && !rolesLoading) {
         const rolesItem: InputDetailReferenceValues = this.inputDefinition.inputDetails[2];
 
         rolesItem.datasourceItems = [{ display: '(None)', value: null }];
-        roles
-          .forEach(loopRole => {
-            rolesItem.datasourceItems.push({
-              display: loopRole.name,
-              value: loopRole.name
-            });
+        roles.forEach(loopRole => {
+          rolesItem.datasourceItems.push({
+            display: loopRole.name,
+            value: loopRole.name
           });
+        });
       }
     });
-    }
 
     combineLatest([this.menuQuery.selectAll(), this.menuQuery.selectLoading()]).subscribe(([menuItems, menuLoading]) => {
       if (menuItems && !menuLoading) {
@@ -85,11 +88,11 @@ export class SaveInputComponent implements OnChanges, OnInit {
   }
 
   onModelUpdated(newSaveDetails: SaveDetails) {
-    this.saveDetails = newSaveDetails;
+    // this.saveDetails = newSaveDetails;
   }
 
   onOkClicked(event: any) {
-    this.saveMenu.emit(this.saveDetails);
+    this.saveMenu.emit(event);
   }
 
   onCancelClicked(event: any) {
@@ -97,9 +100,12 @@ export class SaveInputComponent implements OnChanges, OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges) {
+    if (changes.isShareDialog) {
+      this.setupForm();
+    }
     if (changes.menuDetails && changes.menuDetails.currentValue) {
       this.saveDetails = {
-        label: changes.menuDetails.currentValue.name
+        label: changes.menuDetails.currentValue.label
       };
     }
   }
