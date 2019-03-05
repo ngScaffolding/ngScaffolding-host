@@ -5,10 +5,11 @@ import { MenuService } from 'ngscaffolding-core';
 
 import { UserAdminRoutingModule } from './userAdmin-routing.module';
 import { UserListComponent } from './pages/userList/userList.component';
+import { UserDetailsComponent } from './pages/userDetails/userDetails.component';
 import { MenuTypes, GridViewDetail, ColumnModel, SystemDataSourceNames, ButtonColours } from '@ngscaffolding/models';
 
 @NgModule({
-  declarations: [UserListComponent],
+  declarations: [UserListComponent, UserDetailsComponent],
   imports: [CommonModule, UserAdminRoutingModule]
 })
 export class UserAdminModule {
@@ -39,14 +40,18 @@ export class UserAdminModule {
               ],
               actions: [
                 {
-                  columnButton: true, title: 'Edit User', icon: 'ui-icon-assignment', colour: ButtonColours.teal, type: 'angularroute',
+                  columnButton: true,
+                  title: 'Edit User',
+                  icon: 'ui-icon-assignment',
+                  colour: ButtonColours.teal,
+                  type: 'angularroute',
                   angularRoute: 'userdetails',
                   dialogOptions: {
-                    header : 'Device Details',
-                    width : 900,
-                    height : 800,
-                    maximizable : true
-                }
+                    header: 'Device Details',
+                    width: 900,
+                    height: 800,
+                    maximizable: true
+                  }
                 }
               ]
             }
