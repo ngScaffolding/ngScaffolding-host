@@ -12,13 +12,15 @@
 
 .widgetLine{
   &:hover {
-    background-color: lighten( $maskBgColor, 40% );
-    border: 2px solid lightgray;
+    background-color: lighten( $hoverBgColor, 40% );
+    color: $hoverTextColor;
+
   }
   cursor: pointer;
-  border: 1px solid lightgray;
-  color: $activeMenuItemBadgeColor;
-  background-color: lighten( $maskBgColor, 20% );
+  border: 1px solid $inputBorderColor;
+  color: $textSecondaryColor;
+  background-color: lighten( $profileMenuBorderBottomColor, 20% );
+  font-size: $inputFontSize;
   border-radius: 8px;
   margin-bottom: 16px;
 }

@@ -20,10 +20,12 @@
       <button pButton class="ui-button-warning toolbarButton" *ngIf="showSave" type="button" icon="ui-icon-save" tooltipPosition="bottom"
       (click)="buttonClicked('save');" pTooltip="{{'Save' | translate}}"></button>
 
-      <button pButton class="ui-button-danger toolbarButton" *ngIf="showDelete" type="button" icon="ui-icon-delete-forever" tooltipPosition="bottom"
-      (click)="buttonClicked('remove');" pTooltip="{{'Delete' | translate}}"></button>
 
       <button pButton class="ui-button-info toolbarButton" *ngIf="showShare" type="button" icon="ui-icon-share" tooltipPosition="bottom"
       (click)="buttonClicked('share');" pTooltip="{{'Share' | translate}}"></button>
+
+      <button pButton class="ui-button-danger toolbarButton deleteButton" *ngIf="showDelete" type="button" icon="ui-icon-delete-forever" tooltipPosition="bottom"
+      (click)="buttonClicked('remove');" pTooltip="{{'Delete' | translate}}"></button>
+
 
 </div>

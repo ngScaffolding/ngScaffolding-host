@@ -10,7 +10,7 @@
 <p-card *ngIf="!loadingData && dashboard">
   <p-header styleClass="dashHeader">
     <div class="headerLine">
-      <span class="dashHeader"><ngs-editable-title [readOnly]="dashboard.readOnly" [title]="dashboard.title" (titleChanged)="onTitleChanged($event)" ></ngs-editable-title></span>
+      <span class="dashHeader"><ngs-editable-title [readOnly]="dashboard.readOnly || !showSave" [title]="dashboard.title" (titleChanged)="onTitleChanged($event)" ></ngs-editable-title></span>
       <span class="text-right">
         <ngs-dashboard-toolbar [showInput]="showInput"
           [showAdd]="showAdd" [showDelete]="showDelete" [showSave]="showSave" [showSaveAs]="showSaveAs" [showShare]="showShare"

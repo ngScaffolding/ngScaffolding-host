@@ -1,10 +1,10 @@
 <div class="galleryHeader">{{'Add Widget' | translate }}</div>
 <div *ngFor="let widget of (widgets$ | async)">
-  <div class="ui-g widgetLine">
+  <div class="ui-g widgetLine" (click)="clickWidget(widget.name)">
     <div class="ui-g-2">
       <button pButton class="ui-button-success toolbarButton"
         type="button" icon="ui-icon-add" tooltipPosition="bottom"
-        (click)="clickWidget(widget.name)" pTooltip="{{'Add Widget' | translate }}">
+         pTooltip="{{'Add Widget' | translate }}">
     </button></div>
 
     <div class="ui-g-8 widgetName">{{ widget.name | translate}}</div>
