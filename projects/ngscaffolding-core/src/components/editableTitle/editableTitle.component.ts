@@ -8,6 +8,7 @@ import { Component, Inject, forwardRef, Input, Output, EventEmitter, OnInit, OnC
 export class EditableTitleComponent implements OnChanges {
   @ViewChild('inputTitle') inputTitleElement: ElementRef;
   @Input() title: string;
+  @Input() configObject: any;
   @Input() readOnly: boolean;
 
   @Output() titleChanged = new EventEmitter<string>();
@@ -17,7 +18,27 @@ export class EditableTitleComponent implements OnChanges {
   isEditing = false;
 
   ngOnChanges(changes: SimpleChanges) {
-    this.editTitle = changes.title.currentValue;
+    if (changes.title) {
+      this.editTitle = changes.title.currentValue;
+      this.applyObject(changes.configObject);
+    }
+    if (changes.configObject) {
+      this.applyObject(changes.configObject);
+    }
+  }
+
+  // update Title with string replacement @@key@@ style
+  private applyObject(config: any) {
+    let newTitle = this.title;
+
+    if (config) {
+      for (const key in config) {
+        if (config.hasOwnProperty(key)) {
+          newTitle = newTitle.replace(`@@${key}@@`, config[key]);
+        }
+      }
+      this.editTitle = newTitle;
+    }
   }
 
   mouseOver() {

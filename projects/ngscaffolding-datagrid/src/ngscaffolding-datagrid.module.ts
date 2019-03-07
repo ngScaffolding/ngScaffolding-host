@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 
 import { RouterModule, Routes } from '@angular/router';
 
-import { MenuService, LoggingService, VersionsService, AuthoriseRoleGuard, CoreModule, NgsDatePipe, NgsDateTimePipe } from 'ngscaffolding-core';
+import { MenuService, LoggingService, VersionsService, AuthoriseRoleGuard, CoreModule, NgsDatePipe, NgsDateTimePipe, ButtonColourPipe } from 'ngscaffolding-core';
 
 import { InputBuilderModule } from 'ngscaffolding-inputbuilder';
 import { TranslateModule } from '@ngx-translate/core';

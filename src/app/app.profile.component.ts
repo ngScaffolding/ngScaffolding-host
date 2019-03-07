@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { AppComponent } from './app.component';
-import { AppSettingsService, UserAuthenticationBase, AppSettingsQuery } from 'ngscaffolding-core';
+import { AppSettingsService, UserAuthenticationBase, AppSettingsQuery, UserAuthenticationQuery } from 'ngscaffolding-core';
 import { trigger, state, transition, style, animate } from '@angular/animations';
 import { Observable } from 'rxjs';
 import { AppSettings } from '@ngscaffolding/models';
@@ -17,7 +17,7 @@ import { AppSettings } from '@ngscaffolding/models';
           <!--<img class="profile-image" src="assets/layout/images/avatar1.png" />-->
         </ng-template>
 
-        <span class="profile-name">{{ authService.currentUser?.name }}</span> <i class="material-icons">keyboard_arrow_down</i>
+        <span class="profile-name">{{ (authQuery.currentUser$ | async )?.name }}</span> <i class="material-icons">keyboard_arrow_down</i>
       </a>
     </div>
 
@@ -69,7 +69,7 @@ export class AppInlineProfileComponent {
   showProfileSetting$: Observable<boolean>;
   showUserSetting$: Observable<boolean>;
 
-  constructor(public app: AppComponent, public appSettingsQuery: AppSettingsQuery, public authService: UserAuthenticationBase) {
+  constructor(public app: AppComponent,public authQuery: UserAuthenticationQuery, public appSettingsQuery: AppSettingsQuery, public authService: UserAuthenticationBase) {
     this.showProfilePicture$ = appSettingsQuery.selectEntity(AppSettings.showProfilePicture, e => e.value);
     this.showProfileSetting$ = appSettingsQuery.selectEntity(AppSettings.showProfileSetting, e => e.value);
     this.showUserSetting$ = appSettingsQuery.selectEntity(AppSettings.showUserSetting, e => e.value);

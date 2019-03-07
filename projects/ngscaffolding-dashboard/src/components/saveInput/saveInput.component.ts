@@ -59,14 +59,15 @@ export class SaveInputComponent implements OnChanges {
     combineLatest([this.rolesQuery.selectAll(), this.rolesQuery.selectLoading()]).subscribe(([roles, rolesLoading]) => {
       if (roles && !rolesLoading) {
         const rolesItem: InputDetailReferenceValues = this.inputDefinition.inputDetails[2];
-
-        rolesItem.datasourceItems = [{ display: '(None)', value: null }];
-        roles.forEach(loopRole => {
-          rolesItem.datasourceItems.push({
-            display: loopRole.name,
-            value: loopRole.name
+        if (rolesItem) {
+          rolesItem.datasourceItems = [{ display: '(None)', value: null }];
+          roles.forEach(loopRole => {
+            rolesItem.datasourceItems.push({
+              display: loopRole.name,
+              value: loopRole.name
+            });
           });
-        });
+        }
       }
     });
 

@@ -3,10 +3,11 @@
   <ngs-gallery [galleryName]="dashboard?.galleryName" (addWidget)="onAddWidget($event)"></ngs-gallery>
 </p-sidebar>
 
-<p-card *ngIf="!loadingData && dashboard">
+<p-card *ngIf="dashboard">
   <p-header styleClass="dashHeader">
     <div class="headerLine">
-      <span class="dashHeader"><ngs-editable-title [readOnly]="dashboard.readOnly || !showSave" [title]="dashboard.title" (titleChanged)="onTitleChanged($event)" ></ngs-editable-title></span>
+      <span class="dashHeader"><ngs-editable-title [configObject]="dashboard.configuredValues"
+        [readOnly]="dashboard.readOnly || !showSave" [title]="dashboard.title" (titleChanged)="onTitleChanged($event)" ></ngs-editable-title></span>
       <span class="text-right">
         <ngs-dashboard-toolbar [showInput]="showInput"
           [showAdd]="showAdd" [showDelete]="showDelete" [showSave]="showSave" [showSaveAs]="showSaveAs" [showShare]="showShare"
@@ -16,11 +17,11 @@
 
   <div ngsFillHeight>
     <div style="width: 100%;" ngsFillHeight>
-      <ng-template #dashTemplate></ng-template>
+      <!-- <ng-template #dashTemplate></ng-template> -->
       <!-- Dashboard Input Values Here -->
-      <p-sidebar [(visible)]="dashboardInputShown" appendTo="dashTemplate" modal="false" position="top">
+      <!-- <p-sidebar [(visible)]="dashboardInputShown" appendTo="dashTemplate" modal="false" position="top">
 
-      </p-sidebar>
+      </p-sidebar> -->
 
       <gridster [options]="options">
         <gridster-item [item]="widget" *ngFor="let widget of dashboard.widgets" #loopGridster>
@@ -64,7 +65,7 @@
   <div class="ui-fluid">
     <div class="card ui-g-12">
       <div class="ui-g-12">
-        <ngs-save-input [menuDetails]="newMenuDetails" [isShareDialog]="isShareDialog"
+        <ngs-save-input [isShareDialog]="isShareDialog"
           (saveMenu)="onSaveMenu($event)">
         </ngs-save-input>
       </div>

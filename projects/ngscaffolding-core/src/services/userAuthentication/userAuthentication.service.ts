@@ -19,15 +19,13 @@ import { timeout } from 'rxjs/internal/operators/timeout';
 export class UserAuthenticationService implements UserAuthenticationBase {
   private readonly tokenStorageKey = 'USER_TOKEN';
 
-   private jwtHelper: JwtHelperService;
+  private jwtHelper: JwtHelperService;
 
   constructor(
     private logger: LoggingService,
     private http: HttpClient,
-    private authQuery: UserAuthenticationQuery,
     private authStore: AuthenticationStore,
-    private appSettingsService: AppSettingsService,
-    private appSettingsQuery: AppSettingsQuery
+    private appSettingsService: AppSettingsService
   ) {
     logger.info('UserAuthorisationService - Constructor');
 
@@ -41,17 +39,14 @@ export class UserAuthenticationService implements UserAuthenticationBase {
     if (savedToken !== null) {
       // New AuthUser Based on Token
       if (!this.jwtHelper.isTokenExpired(savedToken)) {
-
         // If all Good
         this.logger.info('Token from Storage - Token Loaded and not Expired');
         this.setToken(savedToken);
       } else {
-
         // Expired Token
         this.logger.info('Token from Storage - Token Expired - Not using');
       }
     } else {
-
       // No token
       this.logger.info('Token from Storage - No Token Available');
     }
@@ -82,7 +77,7 @@ export class UserAuthenticationService implements UserAuthenticationBase {
     this.authStore.update({ token: token, userDetails: newUser, authenticated: true });
   }
 
-   public logon(userName: string, password: string): Observable<null> {
+  public logon(userName: string, password: string): Observable<null> {
     return new Observable<null>(observer => {
       let body = new HttpParams();
       body = body
@@ -100,7 +95,6 @@ export class UserAuthenticationService implements UserAuthenticationBase {
         .pipe(timeout(30000))
         .subscribe(
           response => {
-
             // Save Token in Storage if needed
             if (this.appSettingsService.getValue(AppSettings.authSaveinLocalStorage)) {
               localStorage.setItem(this.tokenStorageKey, response['access_token']);

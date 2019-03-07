@@ -39,14 +39,14 @@ export class InputBuilderPopupComponent implements OnInit {
 
   }
 
-  onModelUpdated(model: any){
+  onModelUpdated(model: any) {
     this.modelUpdated.emit(model);
     this.returnModel  = model;
   }
   onValueUpdated(){}
 
   onOkClicked(model: any) {
-    this.okClicked.emit(this.returnModel);
+    this.okClicked.emit(model);
     // this.isShown = false;
   }
   onCancelClicked() {

@@ -346,8 +346,6 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
       case 'properties': {
         this.actionInputDefinition = widgetDetails.widget.inputBuilderDefinition;
         this.actionValues = widgetDetails.configuredValues;
-        // this.dashboard.widgets[5].configuredValues = {x: 0};
-        // widgetDetails.configuredValues = {x: 0};
 
         this.actionInputPopup.showPopup();
         this.widgetInstanceConfigured = instance as IDashboardItem;
@@ -397,6 +395,10 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
   actionCancelClicked() {}
 
   dashInputOkClicked(model: any) {
+
+    // Save for future
+    this.dashboard.configuredValues = model;
+
     this.components.forEach(comp => {
       const dashItem = comp as IDashboardItem;
       const oldConfigValues = comp.widget.configuredValues;
