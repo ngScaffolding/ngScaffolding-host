@@ -15,7 +15,7 @@ import { CoreMenuItem } from '@ngscaffolding/models';
   template: `
     <ul app-submenu [item]="menuItems" root="true" class="ultima-menu ultima-main-menu clearfix" [reset]="reset" visible="true"></ul>
 
-    <div class="menu-spinner-continer" *ngIf="(menuQuery.selectLoading() | async)">
+    <div class="menu-spinner-container" *ngIf="(menuQuery.selectLoading() | async)">
       <p-progressSpinner class="spinner-spinner"></p-progressSpinner>
       <br />
       <p class="spinner-message">{{ 'Menu Loading' | translate }} ...</p>
