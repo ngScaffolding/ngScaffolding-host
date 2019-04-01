@@ -6,12 +6,26 @@
 <p-card *ngIf="dashboard">
   <p-header styleClass="dashHeader">
     <div class="headerLine">
-      <span class="dashHeader"><ngs-editable-title [configObject]="dashboard.configuredValues"
-        [readOnly]="dashboard.readOnly || !showSave" [title]="dashboard.title" (titleChanged)="onTitleChanged($event)" ></ngs-editable-title></span>
+      <!-- TITLE -->
+      <span class="dashHeader">
+        <ngs-editable-title [configObject]="dashboard.configuredValues"
+          [readOnly]="dashboard.readOnly || !showSave" [title]="dashboard.title" (titleChanged)="onTitleChanged($event)">
+        </ngs-editable-title>
+      </span>
+
+      <!-- INLINE INPUTS -->
+      <ngs-input-builder *ngIf="dashboard.inputBuilderDefinition && dashboard.inputBuilderDefinition.inputLocation ==='inline'"
+        [inputBuilderDefinition]="dashboard.inputBuilderDefinition"
+        [inputModel]="dashboard.configuredValues">
+      </ngs-input-builder>
+
+      <!-- TOOLBAR -->
       <span class="text-right">
         <ngs-dashboard-toolbar [showInput]="showInput"
           [showAdd]="showAdd" [showDelete]="showDelete" [showSave]="showSave" [showSaveAs]="showSaveAs" [showShare]="showShare"
-          (toolbarClicked)="onToolbarClicked($event)"></ngs-dashboard-toolbar></span>
+          (toolbarClicked)="onToolbarClicked($event)">
+        </ngs-dashboard-toolbar>
+      </span>
     </div>
   </p-header>
 

@@ -25,9 +25,8 @@ import { ChartSampleComponent } from './pages/chartSample/chartSample.component'
 export * from './pages/inputBuilderSimple/inputBuilderSimple.component';
 
 const appRoutes: Routes = [
-  { path: 'inputbuildersimple', component: InputBuilderSimpleComponent, canActivate: [AuthoriseRoleGuard] },
-  { path: 'inputbuildersimpletest', component: InputBuilderSimpleComponent, canActivate: [AuthoriseRoleGuard] },
-  { path: 'charttest', component: ChartSampleComponent, canActivate: [AuthoriseRoleGuard] }
+  { path: 'inputbuildersimple', component: InputBuilderSimpleComponent },
+  { path: 'charttest', component: ChartSampleComponent }
 ];
 
 @NgModule({
@@ -92,6 +91,12 @@ export class DemoAppModule {
             routerLink: 'charttest'
       },
       {
+        name: 'input.builder.simple',
+        label: 'Input Builder',
+        icon: 'brush',
+        routerLink: 'inputbuildersimple'
+      },
+      {
         label: 'DataGrid Samples',
         items: [
           {
@@ -104,11 +109,7 @@ export class DemoAppModule {
       {
         label: 'Input Builder (Simple)',
         items: [
-          {
-            label: 'Input Builder (Works)',
-            icon: 'brush',
-            routerLink: 'inputbuildersimple'
-          }
+
         ]
       }
     ]);
