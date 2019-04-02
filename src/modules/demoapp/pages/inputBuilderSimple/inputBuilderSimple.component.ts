@@ -6,7 +6,8 @@ import {
   InputDetailDropdown,
   InputDetailToggleButton,
   InputDetailTextArea,
-  InputDetailTextBox
+  InputDetailTextBox,
+  InputLocations
 } from '@ngscaffolding/models';
 
 @Component({
@@ -14,6 +15,26 @@ import {
   styleUrls: ['inputBuilderSimple.component.scss']
 })
 export class InputBuilderSimpleComponent {
+  inputDefInline: InputBuilderDefinition = {
+    orientation: OrientationValues.Horizontal,
+    inputLocation: InputLocations.INLINE,
+    columnCount: 2,
+    inputDetails: [
+      <InputDetailTextBox>{
+        placeholder: 'Hello Placeholder',
+        name: 'hello',
+        value: '',
+        type: InputTypes.textbox,
+        help: 'Help Me. Please help me Please Mister.'
+      },
+      <InputDetailDropdown> {
+        placeholder: 'Simple Continents',
+        name: 'simpleSelectContinents',
+        type: InputTypes.select,
+        referenceValueName: 'Continents',
+        help: 'Basic Select Only'
+      }]
+  };
   inputDefinition1: InputBuilderDefinition = {
     orientation: OrientationValues.Horizontal,
     columnCount: 3,

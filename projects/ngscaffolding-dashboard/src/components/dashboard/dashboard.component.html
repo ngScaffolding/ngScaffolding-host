@@ -4,23 +4,23 @@
 </p-sidebar>
 
 <p-card *ngIf="dashboard">
-  <p-header styleClass="dashHeader">
-    <div class="headerLine">
+  <p-header styleClass="dashHeader ui-fluid">
+    <div class="headerLine ui-g">
       <!-- TITLE -->
-      <span class="dashHeader">
+      <span class="dashHeader ui-g-4">
         <ngs-editable-title [configObject]="dashboard.configuredValues"
           [readOnly]="dashboard.readOnly || !showSave" [title]="dashboard.title" (titleChanged)="onTitleChanged($event)">
         </ngs-editable-title>
       </span>
 
       <!-- INLINE INPUTS -->
-      <ngs-input-builder *ngIf="dashboard.inputBuilderDefinition && dashboard.inputBuilderDefinition.inputLocation ==='inline'"
+      <ngs-input-builder class="ui-g-4" *ngIf="dashboard.inputBuilderDefinition && dashboard.inputBuilderDefinition.inputLocation ==='inline'"
         [inputBuilderDefinition]="dashboard.inputBuilderDefinition"
         [inputModel]="dashboard.configuredValues">
       </ngs-input-builder>
 
       <!-- TOOLBAR -->
-      <span class="text-right">
+      <span class="text-right ui-g-4">
         <ngs-dashboard-toolbar [showInput]="showInput"
           [showAdd]="showAdd" [showDelete]="showDelete" [showSave]="showSave" [showSaveAs]="showSaveAs" [showShare]="showShare"
           (toolbarClicked)="onToolbarClicked($event)">
