@@ -187,6 +187,8 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
     if (this.dashboard.inputBuilderDefinition &&
       this.dashboard.inputBuilderDefinition.inputLocation !== InputLocations.INLINE &&
       this.dashboard.inputBuilderDefinition.inputDetails) {
+
+      // Dont Show the input button if we have inline inputs
       this.showInput = true;
     }
 
@@ -343,6 +345,8 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
     this.components.push(compRef.instance);
   }
 
+
+
   onWidgetEvent(name: string, widgetDetails: WidgetDetails, instance: any) {
     switch (name) {
       case 'properties': {
@@ -396,6 +400,7 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
   // User clicked Cancel
   actionCancelClicked() {}
 
+  // User Provided Input for the Top Dashboard
   dashInputOkClicked(model: any) {
 
     // Save for future

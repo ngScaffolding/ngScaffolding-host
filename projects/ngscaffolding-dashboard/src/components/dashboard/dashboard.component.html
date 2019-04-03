@@ -16,6 +16,7 @@
       <!-- INLINE INPUTS -->
       <div class="ui-g-4 noPadding">
         <ngs-input-builder *ngIf="dashboard.inputBuilderDefinition && dashboard.inputBuilderDefinition.inputLocation ==='inline'"
+          (modelUpdated)="dashInputOkClicked($event)"
           [inputBuilderDefinition]="dashboard.inputBuilderDefinition"
           [inputModel]="dashboard.configuredValues">
         </ngs-input-builder>
