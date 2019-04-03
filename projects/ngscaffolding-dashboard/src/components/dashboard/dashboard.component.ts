@@ -10,7 +10,7 @@ import {
   SpinnerService
 } from 'ngscaffolding-core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { CoreMenuItem, WidgetDetails, WidgetTypes, InputBuilderDefinition, IDashboardItem } from '@ngscaffolding/models';
+import { CoreMenuItem, WidgetDetails, WidgetTypes, InputBuilderDefinition, IDashboardItem, InputLocations } from '@ngscaffolding/models';
 
 import { DashboardModel } from '@ngscaffolding/models';
 
@@ -184,7 +184,9 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
     }
 
     // Check to see if the Dashboard is configurable
-    if (this.dashboard.inputBuilderDefinition && this.dashboard.inputBuilderDefinition.inputDetails) {
+    if (this.dashboard.inputBuilderDefinition &&
+      this.dashboard.inputBuilderDefinition.inputLocation !== InputLocations.INLINE &&
+      this.dashboard.inputBuilderDefinition.inputDetails) {
       this.showInput = true;
     }
 

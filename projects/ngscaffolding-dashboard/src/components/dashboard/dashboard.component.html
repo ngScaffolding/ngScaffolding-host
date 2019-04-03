@@ -14,10 +14,12 @@
       </span>
 
       <!-- INLINE INPUTS -->
-      <ngs-input-builder class="ui-g-4" *ngIf="dashboard.inputBuilderDefinition && dashboard.inputBuilderDefinition.inputLocation ==='inline'"
-        [inputBuilderDefinition]="dashboard.inputBuilderDefinition"
-        [inputModel]="dashboard.configuredValues">
-      </ngs-input-builder>
+      <div class="ui-g-4 noPadding">
+        <ngs-input-builder *ngIf="dashboard.inputBuilderDefinition && dashboard.inputBuilderDefinition.inputLocation ==='inline'"
+          [inputBuilderDefinition]="dashboard.inputBuilderDefinition"
+          [inputModel]="dashboard.configuredValues">
+        </ngs-input-builder>
+      </div>
 
       <!-- TOOLBAR -->
       <span class="text-right ui-g-4">

@@ -1,6 +1,12 @@
-<form novalidate *ngIf="inputBuilderDefinition && inputBuilderDefinition.inputDetails" class="ui-g form-group" (ngSubmit)="onSubmit(form)"
+<form novalidate *ngIf="inputBuilderDefinition && inputBuilderDefinition.inputDetails"
+[class.noPadding]="inputBuilderDefinition.inputLocation === 'inline'"
+[class.form-group]="inputBuilderDefinition.inputLocation !== 'inline'"
+
+class="ui-g" (ngSubmit)="onSubmit(form)"
     [formGroup]="form">
-    <div [className]="controlStyle" *ngFor="let input of inputBuilderDefinition.inputDetails">
+    <div [className]="controlStyle" [class.noPadding]="inputBuilderDefinition.inputLocation === 'inline'"
+      *ngFor="let input of inputBuilderDefinition.inputDetails">
+
         <div [ngSwitch]="input.type" [className]="input.containerClass">
 
             <!-- textbox -->
