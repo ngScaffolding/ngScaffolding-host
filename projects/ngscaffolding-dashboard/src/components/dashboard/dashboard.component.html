@@ -7,15 +7,18 @@
   <p-header styleClass="dashHeader ui-fluid">
     <div class="headerLine ui-g">
       <!-- TITLE -->
-      <span class="dashHeader ui-g-4">
+      <span class="dashHeader"
+        [class.ui-g-3]="dashboard.inputBuilderDefinition && dashboard.inputBuilderDefinition.inputLocation === 'inline'"
+        [class.ui-g-8]="dashboard.inputBuilderDefinition && dashboard.inputBuilderDefinition.inputLocation !== 'inline'">
         <ngs-editable-title [configObject]="dashboard.configuredValues"
           [readOnly]="dashboard.readOnly || !showSave" [title]="dashboard.title" (titleChanged)="onTitleChanged($event)">
         </ngs-editable-title>
       </span>
 
       <!-- INLINE INPUTS -->
-      <div class="ui-g-4 noPadding">
-        <ngs-input-builder *ngIf="dashboard.inputBuilderDefinition && dashboard.inputBuilderDefinition.inputLocation ==='inline'"
+      <div class="ui-g-5 noPadding"
+        *ngIf="dashboard.inputBuilderDefinition && dashboard.inputBuilderDefinition.inputLocation ==='inline'">
+        <ngs-input-builder
           (modelUpdated)="dashInputOkClicked($event)"
           [inputBuilderDefinition]="dashboard.inputBuilderDefinition"
           [inputModel]="dashboard.configuredValues">
