@@ -78,6 +78,6 @@ export class DataSourceService {
   }
 
   private getKey(dataRequest: DataSourceRequest) {
-    return `name:${dataRequest.name} seed:${dataRequest.seed} inputData:${dataRequest.inputData} `;
+    return `name:${dataRequest.name} seed:${dataRequest.seed} inputData:${JSON.stringify(dataRequest.inputData)} `;
   }
 }

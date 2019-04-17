@@ -114,6 +114,7 @@ export class DCOAppModule {
     appSettingsService.setValue(AppSettings.showProfileSetting, true);
     appSettingsService.setValue(AppSettings.showUserSetting, true);
     appSettingsService.setValue(AppSettings.showProfilePicture, false);
+    appSettingsService.setValue(AppSettings.inputDateFormat, 'dd/mm/yy');
 
     appSettingsService.setValue(AppSettings.authClientId, 'democlient');
     appSettingsService.setValue(AppSettings.authClientSecret, 'democlientsecret');

@@ -166,6 +166,9 @@ export class InputBuilderComponent implements OnInit, OnChanges {
     if (inputDetail.type.endsWith('object')) {
       this.valueUpdated.emit([inputDetail.name, value]);
       returnedValue = value;
+    } else if (inputDetail.type === InputTypes.date || inputDetail.type === InputTypes.datetime || inputDetail.type === InputTypes.time) {
+      this.valueUpdated.emit([inputDetail.name, value]);
+      returnedValue = value;
     } else {
       returnedValue = value.toString();
 
@@ -208,11 +211,9 @@ export class InputBuilderComponent implements OnInit, OnChanges {
   }
 
   private formChanges(changes: any) {
-
     // // Flatten out Objects to value
     // const returnValue = Object.assign({}, this.clonedInputModel);
     // const localFlat = Object.assign({}, changes);
-
     // for (const property in localFlat) {
     //   if (localFlat[property] && localFlat[property].hasOwnProperty('value')) {
     //     returnValue[property] = localFlat[property].value;
@@ -220,7 +221,6 @@ export class InputBuilderComponent implements OnInit, OnChanges {
     //     returnValue[property] = localFlat[property];
     //   }
     // }
-
     // // Tell subscribers we have changes
     // this.modelUpdated.emit(returnValue);
     // this.clonedInputModel = returnValue;

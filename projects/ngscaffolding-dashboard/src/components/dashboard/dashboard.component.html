@@ -21,7 +21,7 @@
         <ngs-input-builder
           (modelUpdated)="dashInputOkClicked($event)"
           [inputBuilderDefinition]="dashboard.inputBuilderDefinition"
-          [inputModel]="dashboard.configuredValues">
+          [inputModel]="inputModel">
         </ngs-input-builder>
       </div>
 
@@ -67,7 +67,7 @@
 
 <!-- Input Details for Dashboard -->
 <ngs-input-builder-popup #dashboardInputPopup [inputBuilderDefinition]="dashboard?.inputBuilderDefinition"
-  [inputModel]="dashboard?.configuredValues"
+  [inputModel]="inputModel"
   (okClicked)="dashInputOkClicked($event)"
   (cancelCliecked)="dashInputCancelClicked()"></ngs-input-builder-popup>
 

@@ -47,7 +47,7 @@
     "core-js": "^2.6.2",
     "fullcalendar": "4.0.0-alpha",
     "highcharts": "^6.2.0",
-    "highcharts-angular": "^2.3.1",
+    "highcharts-angular": "^2.4.0",
     "intl": "1.2.5",
     "json-query": "^2.2.2",
     "jsoneditor": "^5.17.1",

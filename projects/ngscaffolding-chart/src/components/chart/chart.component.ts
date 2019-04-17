@@ -49,7 +49,7 @@ export class ChartComponent implements IDashboardItem, OnChanges {
   }
 
   updateData(newData: any) {
-
+    this.inputModel = newData;
   }
 
   private loadingComplete() {
@@ -58,7 +58,7 @@ export class ChartComponent implements IDashboardItem, OnChanges {
     this.updateChartFlag = true;
   }
 
-  private loadChart() {
+  private loadChart(forceRefresh: boolean = false) {
     if (this.itemDetails) {
       this.loadingError = false;
       if (!this.itemDetails.dataSourceName) {
@@ -70,7 +70,7 @@ export class ChartComponent implements IDashboardItem, OnChanges {
         this.loadingData = true;
         // Get Data from Server
         this.dataSourceService
-          .getDataSource({ name: this.itemDetails.dataSourceName.toString(), inputData: this.inputModel })
+          .getDataSource({ name: this.itemDetails.dataSourceName.toString(), inputData: this.inputModel, forceRefresh: forceRefresh })
           .subscribe(
             results => {
               if (!results.inflight) {
@@ -79,7 +79,18 @@ export class ChartComponent implements IDashboardItem, OnChanges {
                   this.loadingData = false;
                 } else {
                   const chartDataService = new ChartDataService();
-                  this.itemDetails.chartOptions.series[0].data = chartDataService.shapeDataForSeries(this.itemDetails, JSON.parse(results.jsonData)).data;
+                  if (!this.itemDetails.chartOptions.series || this.itemDetails.chartOptions.series.length === 0) {
+                    // Set to empty array if theres nothing there
+                    this.itemDetails.chartOptions.series = [{}];
+                  }
+                  const shaped = chartDataService.shapeDataForSeries(this.itemDetails, JSON.parse(results.jsonData));
+                  this.itemDetails.chartOptions.series[0].data = shaped.data;
+                  if (shaped.xAxisLabels) {
+                    if(!this.itemDetails.chartOptions.xAxis) {
+                      this.itemDetails.chartOptions.xAxis = {};
+                    }
+                    this.itemDetails.chartOptions.xAxis.categories = shaped.xAxisLabels;
+                  }
                   this.highChartsOptions = this.itemDetails.chartOptions;
                 }
 

@@ -76,6 +76,8 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
   public unitHeight: number;
   public galleryShown = false;
 
+  public inputModel: any;
+
   // Show/Hide Dashboard Input Details
   public dashboardInputShown = false;
 
@@ -203,6 +205,10 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
       }
       case 'input': {
         // this.dashboardInputShown = !this.dashboardInputShown;
+        if (!this.dashboard.configuredValues) {
+          this.dashboard.configuredValues = {};
+        }
+        this.inputModel = this.dashboard.configuredValues;
         this.dashboardInputPopup.showPopup();
         break;
       }
@@ -345,8 +351,6 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
     this.components.push(compRef.instance);
   }
 
-
-
   onWidgetEvent(name: string, widgetDetails: WidgetDetails, instance: any) {
     switch (name) {
       case 'properties': {
@@ -381,8 +385,8 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
     }
     this.saveShown = false;
   }
-  // Save As Bits and sharing
 
+  // Input Details for Widget
   actionOkClicked(model: any) {
     this.actionValues = model;
 
