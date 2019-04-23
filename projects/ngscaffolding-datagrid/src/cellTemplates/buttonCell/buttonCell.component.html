@@ -1,5 +1,5 @@
 <span *ngIf="!splitButton">
-  <p-button *ngFor="let action of actions" (click)="clicked(action)" styleClass="{{action.colour | buttonColour}}"
+  <p-button *ngFor="let action of actions" (click)="clicked(action)" styleClass="{{action.colour}}"
     icon="{{action.icon}}" iconPos="left" label="{{action.title}}"></p-button>
 </span>
 

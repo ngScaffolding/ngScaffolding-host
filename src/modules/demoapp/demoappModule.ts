@@ -59,8 +59,8 @@ export class DemoAppModule {
 
     appSettingsService.setValue(AppSettings.title , 'ngScaffolding Demo');
     appSettingsService.setValue(AppSettings.iconUrl , '');
-    appSettingsService.setValue(AppSettings.apiHome , 'http://localhost:3000');
-    appSettingsService.setValue(AppSettings.apiAuth , 'http://localhost:3010');
+    // appSettingsService.setValue(AppSettings.apiHome , 'http://localhost:3000');
+    // appSettingsService.setValue(AppSettings.apiAuth , 'http://localhost:3010');
     appSettingsService.setValue(AppSettings.authTokenEndpoint , '/auth/token');
     appSettingsService.setValue(AppSettings.errorLogConsole , true);
     appSettingsService.setValue(AppSettings.errorLogServer , true);
