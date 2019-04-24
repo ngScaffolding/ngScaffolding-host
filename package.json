@@ -73,7 +73,6 @@
     "@angular/language-service": "^7.2.0",
     "@biesbjerg/ngx-translate-extract": "^2.3.4",
     "@datorama/akita-ngdevtools": "^1.0.2",
-    "@types/highcharts": "^5.0.23",
     "@types/jasmine": "^3.3.5",
     "@types/jasminewd2": "2.0.3",
     "@types/node": "^10.12.18",
