@@ -5,7 +5,7 @@
 
 export const CUSTOM_IMPORTS: any[] = [
   // FieldForceAppModule.forRoot()
-  DCOAppModule.forRoot(),
-  DemoAppModule.forRoot()
+  DemoAppModule.forRoot(),
+  DCOAppModule.forRoot()
 ];
 export const CUSTOM_COMPONENTS: any[] =  [];
