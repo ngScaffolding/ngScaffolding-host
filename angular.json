@@ -19,7 +19,7 @@
             "polyfills": "src/polyfills.ts",
             "assets": [
               "src/assets",
-              "src/assets/data/appConfig.json",
+              "src/appConfig.json",
               "src/upload.php",
               "src/web.config",
               "src/modules/dcoSystems/fonts"

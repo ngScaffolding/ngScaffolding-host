@@ -1,0 +1,4 @@
+{
+  "apiHome": "http://localhost:3000",
+  "apiAuth": "http://localhost:3010"
+}
