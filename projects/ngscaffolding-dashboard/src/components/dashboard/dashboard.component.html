@@ -9,7 +9,7 @@
       <!-- TITLE -->
       <span class="dashHeader"
         [class.ui-g-3]="dashboard.inputBuilderDefinition && dashboard.inputBuilderDefinition.inputLocation === 'inline'"
-        [class.ui-g-8]="dashboard.inputBuilderDefinition && dashboard.inputBuilderDefinition.inputLocation !== 'inline'">
+        [class.ui-g-8]="!dashboard.inputBuilderDefinition || dashboard.inputBuilderDefinition.inputLocation !== 'inline'">
         <ngs-editable-title [configObject]="dashboard.configuredValues"
           [readOnly]="dashboard.readOnly || !showSave" [title]="dashboard.title" (titleChanged)="onTitleChanged($event)">
         </ngs-editable-title>
@@ -27,6 +27,8 @@
 
       <!-- TOOLBAR -->
       <span class="text-right ui-g-4">
+      <!-- [class.ui-g-4]="dashboard.inputBuilderDefinition && dashboard.inputBuilderDefinition.inputLocation ==='inline'"
+      [class.ui-g-9]="!dashboard.inputBuilderDefinition || dashboard.inputBuilderDefinition.inputLocation !=='inline'"> -->
         <ngs-dashboard-toolbar [showInput]="showInput"
           [showAdd]="showAdd" [showDelete]="showDelete" [showSave]="showSave" [showSaveAs]="showSaveAs" [showShare]="showShare"
           (toolbarClicked)="onToolbarClicked($event)">
