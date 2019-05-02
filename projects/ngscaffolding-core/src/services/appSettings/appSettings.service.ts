@@ -94,10 +94,10 @@ export class AppSettingsService {
 
   public loadFromJSON() {
     return this.http
-      .get('/assets/data/appConfig.json')
+      .get('/appConfig.json')
       .toPromise()
       .then(data => {
-        // this.setValues(data as AppSettings);
+        this.setValues(data as AppSettings);
       });
   }
 

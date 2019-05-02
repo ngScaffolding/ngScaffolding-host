@@ -72,7 +72,7 @@ export function jwtOptionsFactory(authQuery: UserAuthenticationQuery) {
 
 const appInitializerFn = (appConfig: AppSettingsService) => {
   return () => {
-    return null; // appConfig.loadFromJSON();
+    appConfig.loadFromJSON();
   };
 };
 
