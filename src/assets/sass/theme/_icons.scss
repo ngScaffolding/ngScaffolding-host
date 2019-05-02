@@ -11,6 +11,7 @@
     &.pi-angle-double-right {@include icon-override("fast_forward");}
     &.pi-angle-left {@include icon-override("play_arrow"); @include rotate(180deg);}
     &.pi-angle-double-left {@include icon-override("fast_rewind");}
+    &.pi-bars{@include icon-override("view_list");}
     &.pi-calendar { @include icon-override("date_range"); }
     &.pi-caret-up {@include icon-override("keyboard_arrow_up");}
     &.pi-caret-down {@include icon-override("keyboard_arrow_down");}
@@ -23,6 +24,7 @@
     &.pi-chevron-circle-up {@include icon-override("keyboard_arrow_up");}
     &.pi-chevron-right {@include icon-override("chevron_right");}
     &.pi-chevron-left {@include icon-override("chevron_left");}
+    &.pi-chevron-down {@include icon-override("keyboard_arrow_down");}
     &.pi-circle-off{@include icon-override("radio_button_unchecked");}
     &.pi-circle-on{@include icon-override("radio_button_checked");}
     &.pi-minus {@include icon-override("remove");}
@@ -31,6 +33,7 @@
     &.pi-upload  {@include icon-override("file_upload");}
     &.pi-home {@include icon-override("home");}
     &.pi-times {@include icon-override("close");}
+    &.pi-th-large {@include icon-override("view_module");}
     &.pi-search {@include icon-override("search");}
     &.pi-sort {@include icon-override("sort");}
     &.pi-sort-up {@include icon-override("keyboard_arrow_up");}

@@ -19,7 +19,7 @@ body {
         }
 
         .ui-progressbar-label {
-            color: #ffffff;
+            color: $headerTextColor;
             display: none !important;
         }
     }

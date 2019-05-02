@@ -5,8 +5,8 @@ body {
         }
 
         .ui-dialog-titlebar {
-            background-color: #ffffff;
-            color: $textColor;
+            background-color: $dialogHeaderBgColor;
+            color: $dialogHeaderTextColor;
             padding: $headerPadding;
 
             .ui-dialog-title {
@@ -60,8 +60,8 @@ body {
             border-top: 1px solid $dividerColor;
 
             .ui-button {
-                background-color: #ffffff;
-                color: $textColor;
+                background-color: $dialogFooterButtonBgColor;
+                color: $dialogFooterButtonTextColor;
                 @include no-shadow();
                 width: auto;
 
@@ -131,6 +131,26 @@ body {
             @include overlay-content-shadow();
         }
 
+        &:after {
+            border-color: rgba($contentBgColor, 0);
+            border-bottom-color: $contentBgColor;
+        }
+
+        &:before {
+            border-color: rgba($dividerColor, 0);
+            border-bottom-color: $dividerColor;
+        }
+
+        &.ui-overlaypanel-flipped {
+            &:after {
+                border-top-color: $contentBgColor;
+            }
+
+            &:before {
+                border-top-color: $dividerColor;
+            }
+        }
+
         .ui-overlaypanel-close {
             background-color: $accentColor;
             @include border-radius(50%);
@@ -158,30 +178,30 @@ body {
         @include opacity(.9);
 
         .ui-tooltip-text {
-            background-color: #323232;
+            background-color: $tooltipBgColor;
         }
 
         &.ui-tooltip-top {
             .ui-tooltip-arrow {
-                border-top-color: #323232;
+                border-top-color: $tooltipBgColor;
             }
         }
 
         &.ui-tooltip-bottom {
             .ui-tooltip-arrow {
-                border-bottom-color: #323232;
+                border-bottom-color: $tooltipBgColor;
             }
         }
 
         &.ui-tooltip-left {
             .ui-tooltip-arrow {
-                border-left-color: #323232;
+                border-left-color: $tooltipBgColor;
             }
         }
 
         &.ui-tooltip-right {
             .ui-tooltip-arrow {
-                border-right-color: #323232;
+                border-right-color: $tooltipBgColor;
             }
         }
     }

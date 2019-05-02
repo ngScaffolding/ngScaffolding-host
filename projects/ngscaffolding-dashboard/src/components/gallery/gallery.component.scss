@@ -17,10 +17,10 @@
 
   }
   cursor: pointer;
-  border: 1px solid $inputBorderColor;
+  border: 1px solid $dividerColor;
   color: $textSecondaryColor;
-  background-color: lighten( $profileMenuBorderBottomColor, 20% );
-  font-size: $inputFontSize;
+  background-color: lighten( $hoverBgColor, 20% );
+  font-size: $fontSize;
   border-radius: 8px;
   margin-bottom: 16px;
 }

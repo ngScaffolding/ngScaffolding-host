@@ -4,7 +4,7 @@ body {
 
         .ui-panel-titlebar {
             border: 0 none;
-            border-bottom: 1px solid $primaryColor;
+            border-bottom: 1px solid $panelHeaderBorderColor;
             padding: $headerPadding;
             @include border-radius-top($borderRadius - 1);
             @include border-radius-bottom(0);
@@ -17,7 +17,7 @@ body {
                 position: relative;
                 width: 1.5em;
                 height: 1.5em;
-                color: #ffffff;
+                color: $panelHeaderIconColor;
                 margin: 0;
                 @include transition(background-color .3s);
                 @include border-radius(50%);
@@ -55,8 +55,8 @@ body {
                 padding: .5em;
                 height: 2em;
                 width: 2em;
-                background-color: $primaryColor;
-                color: #ffffff;
+                background-color: $panelHeaderBgColor;
+                color: $panelHeaderIconColor;
                 font-size: 1.5em;
                 @include border-radius(50%);
                 @include transition(background-color .3s);
@@ -80,15 +80,15 @@ body {
 
     .ui-accordion {
         .ui-accordion-header {
-            background-color: $primaryColor;
+            background-color: $panelHeaderBgColor;
             padding: 0;
-            color:#ffffff;
+            color:$panelHeaderTextColor;
             font-size: $headerFontSize;
             @include transition(background-color .3s);
 
             > a {
                 padding: $headerPadding;
-                color: #ffffff;
+                color: $panelHeaderTextColor;
 
                 .ui-accordion-toggle-icon,
                 .ui-accordion-header-text {
@@ -127,7 +127,7 @@ body {
         padding: 0;
 
         .ui-tabview-nav {
-            background-color: #ffffff;
+            background-color: $tabsNavBgColor;
             border: 0 none;
             @include border-radius(0);
 
@@ -167,11 +167,11 @@ body {
                 }
 
                 &:not(.ui-state-active):not(.ui-state-disabled):hover {
-                    background-color: #ffffff;
+                    background-color: $tabsNavBgColor;
                 }
 
                 &.ui-state-active {
-                    background-color: #ffffff;
+                    background-color: $tabsNavBgColor;
                     border-color: $accentColor;
                     border-style: solid;
 
