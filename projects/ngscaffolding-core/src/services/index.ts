@@ -18,3 +18,5 @@ export * from './userService/user.service';
 
 export * from './versions/versions.service';
 export * from './widgetsService';
+
+export * from './componentLoader.service';

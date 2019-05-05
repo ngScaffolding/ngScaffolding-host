@@ -5,7 +5,6 @@ import { IDashboardItem, WidgetDetails, ReferenceValueItem } from '@ngscaffoldin
 const jsonQuery = require('json-query');
 
 @Component({
-  selector: 'app-digital-readout',
   templateUrl: 'digitalReadout.component.html',
   styleUrls: ['digitalReadout.component.scss']
 })
