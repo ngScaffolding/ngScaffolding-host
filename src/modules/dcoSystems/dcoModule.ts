@@ -7,12 +7,12 @@ import { RouterModule, Routes, Router, Route } from '@angular/router';
 
 import { AppSettings } from '@ngscaffolding/models';
 
-import { AppSettingsService, CoreModule, MenuService, LoggingService, VersionsService, AuthoriseRoleGuard, ComponentLoaderService } from 'ngscaffolding-core';
+import { AppSettingsService, CoreModule, LoggingService, VersionsService, AuthoriseRoleGuard, ComponentLoaderService } from 'ngscaffolding-core';
 
 import { InputBuilderModule } from 'ngscaffolding-inputbuilder';
 
-import { DatagridModule, DataGridComponent } from 'ngscaffolding-datagrid';
-import { ChartingModule, ChartComponent } from 'ngscaffolding-chart';
+import { DatagridModule } from 'ngscaffolding-datagrid';
+import { ChartingModule } from 'ngscaffolding-chart';
 import { TopDashboardComponent } from './pages/topDashboard/topDashboard.component';
 import { DigitalReadoutComponent } from './components/digitalReadout/digitalReadout.component';
 
@@ -30,7 +30,6 @@ import { ProgressSpinnerModule } from 'primeng/primeng';
 import { SpinnerModule } from 'primeng/primeng';
 import { TabMenuModule } from 'primeng/primeng';
 import { TabViewModule } from 'primeng/primeng';
-import { DynamicModule } from 'ng-dynamic-component';
 
 const dashboardRoute: Route = { path: 'dcodashboard', component: TopDashboardComponent, canActivate: [AuthoriseRoleGuard] };
 const digitalReadoutRoute: Route = { path: 'digitalReadoutComponent', component: DigitalReadoutComponent };
@@ -59,7 +58,6 @@ const appRoutes: Routes = [dashboardRoute, digitalReadoutRoute];
     SpinnerModule,
     TabMenuModule,
     TabViewModule,
-    DynamicModule.withComponents([DataGridComponent, ChartComponent, DigitalReadoutComponent]),
     RouterModule.forChild(appRoutes)
   ],
   declarations: [TopDashboardComponent, DigitalReadoutComponent],

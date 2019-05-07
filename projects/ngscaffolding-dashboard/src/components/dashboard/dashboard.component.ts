@@ -19,7 +19,6 @@ import { ChartComponent } from 'ngscaffolding-chart';
 import { CompactType, DisplayGrid, GridsterConfig, GridsterItem, GridType, GridsterItemComponent, GridsterItemComponentInterface } from 'angular-gridster2';
 import { HtmlContainerComponent } from '../htmlContainer/htmlContainer.component';
 import { InputBuilderPopupComponent } from 'ngscaffolding-inputbuilder';
-import { DynamicComponent } from 'ng-dynamic-component';
 import { SaveDetails } from '../saveInput/saveInput.component';
 import { TranslateService } from '@ngx-translate/core';
 import { ConfirmationService, ColumnHeaders } from 'primeng/primeng';
@@ -32,7 +31,7 @@ import { Subscription, interval } from 'rxjs';
 })
 export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
   @ViewChildren(GridsterItemComponent) gridsterItems: QueryList<GridsterItemComponent>;
-  @ViewChildren(DynamicComponent) component: DynamicComponent;
+  @ViewChildren(HTMLElement) component: any;
   @ViewChild(InputBuilderPopupComponent) actionInputPopup: InputBuilderPopupComponent;
   @ViewChild(InputBuilderPopupComponent) dashboardInputPopup: InputBuilderPopupComponent;
 
@@ -52,7 +51,7 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
   public showShare = false;
   public showInput = false;
 
-  private components: any[] = [];
+  private components: HTMLElement[] = [];
   private dynmicTypes: Type<any>[];
 
   private changesMade = false;
@@ -97,22 +96,7 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
   ) {}
 
   public getComponent(widgetDetails: WidgetDetails) {
-    switch (widgetDetails.widget.type) {
-      case WidgetTypes.GridView: {
-        break;
-      }
-      case WidgetTypes.Chart: {
-        return ChartComponent;
-      }
-      case WidgetTypes.Html: {
-        return HtmlContainerComponent;
-      }
-      default: {
-        let returnType: Type<any>;
-        returnType = this.dynmicTypes.find(type => type.name.toLowerCase() === widgetDetails.widget.type.toLowerCase());
-        return returnType;
-      }
-    }
+
   }
 
   private setAllRefresh() {
@@ -340,9 +324,9 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
     }
   }
 
-  public componentCreated(compRef: ComponentRef<any>) {
+  public componentCreated(compRef: HTMLElement) {
     // utilize compRef in some way ...
-    this.components.push(compRef.instance);
+    this.components.push(compRef);
   }
 
   onWidgetEvent(name: string, widgetDetails: WidgetDetails, instance: any) {
