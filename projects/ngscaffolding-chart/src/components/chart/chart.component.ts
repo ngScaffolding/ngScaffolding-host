@@ -86,7 +86,7 @@ export class ChartComponent implements IDashboardItem, OnChanges {
                   const shaped = chartDataService.shapeDataForSeries(this.itemDetails, JSON.parse(results.jsonData));
                   this.itemDetails.chartOptions.series[0].data = shaped.data;
                   if (shaped.xAxisLabels) {
-                    if(!this.itemDetails.chartOptions.xAxis) {
+                    if (!this.itemDetails.chartOptions.xAxis) {
                       this.itemDetails.chartOptions.xAxis = {};
                     }
                     this.itemDetails.chartOptions.xAxis.categories = shaped.xAxisLabels;

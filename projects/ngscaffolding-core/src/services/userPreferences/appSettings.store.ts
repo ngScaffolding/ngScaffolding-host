@@ -12,7 +12,7 @@ export interface UserPreferencesState extends EntityState<UserPreferenceValue> {
 export class UserPreferencesStore extends EntityStore<UserPreferencesState, UserPreferenceValue> {
 
   constructor() {
-    super({ isInitialised: false, dynamicTypes: []});
+    super({ isInitialised: false });
     console.log('UserPreferencesStore Constructor');
   }
 }

@@ -94,13 +94,7 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
     private menuQuery: MenuQuery,
     private menuService: MenuService,
     private spinner: SpinnerService
-  ) {
-    this.appSettingsQuery
-      .select(store => store.dynamicTypes)
-      .subscribe(types => {
-        this.dynmicTypes = types;
-      });
-  }
+  ) {}
 
   public getComponent(widgetDetails: WidgetDetails) {
     switch (widgetDetails.widget.type) {

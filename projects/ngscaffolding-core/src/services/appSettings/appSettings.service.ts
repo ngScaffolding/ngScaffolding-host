@@ -44,15 +44,6 @@ export class AppSettingsService {
     }
   }
 
-  public registerDynamicTypes(newTypes: Type<any>[]) {
-    this.appSettingsQuery.select(state => state.dynamicTypes)
-      .pipe(take(1))
-      .subscribe(dynamicTypes => {
-        const newList = dynamicTypes.concat(newTypes);
-        this.appSettingsStore.updateRoot({ dynamicTypes: newList });
-       });
-  }
-
   private loadFromServer(apiHome: string) {
     // Mark store as loading
     this.appSettingsStore.setLoading(true);

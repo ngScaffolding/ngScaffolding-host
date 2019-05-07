@@ -12,7 +12,7 @@
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "lazyModules": [
-              "modules/dcoSystems/dcoModule"
+
             ],
             "outputPath": "dist",
             "deleteOutputPath": false,

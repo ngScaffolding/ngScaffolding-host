@@ -7,7 +7,7 @@ import { RouterModule, Routes, Router, Route } from '@angular/router';
 
 import { AppSettings } from '@ngscaffolding/models';
 
-import { AppSettingsService, CoreModule, MenuService, LoggingService, VersionsService, DynamicComponentService, AuthoriseRoleGuard, ComponentLoaderService } from 'ngscaffolding-core';
+import { AppSettingsService, CoreModule, MenuService, LoggingService, VersionsService, AuthoriseRoleGuard, ComponentLoaderService } from 'ngscaffolding-core';
 
 import { InputBuilderModule } from 'ngscaffolding-inputbuilder';
 
@@ -63,7 +63,8 @@ const appRoutes: Routes = [dashboardRoute, digitalReadoutRoute];
     RouterModule.forChild(appRoutes)
   ],
   declarations: [TopDashboardComponent, DigitalReadoutComponent],
-  exports: [TopDashboardComponent, DigitalReadoutComponent, RouterModule]
+  exports: [TopDashboardComponent, DigitalReadoutComponent, RouterModule],
+  entryComponents: [DigitalReadoutComponent]
 })
 export class DCOAppModule {
   static forRoot(): ModuleWithProviders {
@@ -75,12 +76,9 @@ export class DCOAppModule {
   constructor(
     injector: Injector,
     appSettingsService: AppSettingsService,
-    dynamicComponentService: DynamicComponentService,
     componentLoaderService: ComponentLoaderService,
-    menuService: MenuService,
     logger: LoggingService,
     versions: VersionsService,
-    router: Router
   ) {
     logger.info('Setting Values', 'DCO.startup');
 
@@ -88,8 +86,7 @@ export class DCOAppModule {
     const el = createCustomElement(DigitalReadoutComponent, { injector });
     customElements.define('app-digital-readout', el);
 
-
-    componentLoaderService.registerComponent('DigitalReadout', '');
+    componentLoaderService.registerComponent('app-digital-readout');
 
     versions.addVersion('DCO', VERSION.version, true);
 
@@ -129,10 +126,5 @@ export class DCOAppModule {
       AppSettings.authTermsAndConditions,
       'DCO Systems Terms and Conditions Here. Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
     );
-
-    appSettingsService.registerDynamicTypes([DigitalReadoutComponent]);
-
-    // Register dynamic components here
-    dynamicComponentService.registerComponent(digitalReadoutRoute);
   }
 }

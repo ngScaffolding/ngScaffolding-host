@@ -14,8 +14,7 @@ import {
   AppSettingsService,
   MenuService,
   LoggingService,
-  VersionsService,
-  DynamicComponentService
+  VersionsService
 } from 'ngscaffolding-core';
 
 import { InputBuilderModule } from 'ngscaffolding-inputbuilder';
@@ -104,11 +103,9 @@ export class FieldForceAppModule {
 
   constructor(
     appSettingsService: AppSettingsService,
-    dynamicComponentService: DynamicComponentService,
     menuService: MenuService,
     logger: LoggingService,
-    versions: VersionsService,
-    router: Router
+    versions: VersionsService
   ) {
     logger.info('Setting Values', 'FieldForce.startup');
 
@@ -150,9 +147,6 @@ export class FieldForceAppModule {
     appSettingsService.setValue(AppSettings.authTokenEndpoint, '/auth/token');
     appSettingsService.setValue(AppSettings.authTermsAndConditions,
       'FieldForce Terms and Conditions Here. Lorem ipsum dolor sit amet, consectetur adipiscing elit.');
-
-    dynamicComponentService.registerComponent(machineDetailsRoute);
-    dynamicComponentService.registerComponent(workItemDetailsRoute);
 
     menuService.addMenuItemsFromCode([]);
   }
