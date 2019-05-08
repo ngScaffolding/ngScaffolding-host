@@ -1,30 +1,7 @@
-import {
-  Component,
-  OnInit,
-  Input,
-  Output,
-  EventEmitter,
-  OnChanges,
-  SimpleChanges,
-  ElementRef
-} from '@angular/core';
-import {
-  trigger,
-  state,
-  style,
-  animate,
-  transition
-} from '@angular/animations';
-import {
-  AppSettingsService,
-  AppSettingsQuery,
-  ComponentLoaderService
-} from 'ngscaffolding-core';
-import {
-  CoreMenuItem,
-  WidgetDetails,
-  WidgetTypes
-} from '@ngscaffolding/models';
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges, ElementRef } from '@angular/core';
+import { trigger, state, style, animate, transition } from '@angular/animations';
+import { AppSettingsService, AppSettingsQuery, ComponentLoaderService } from 'ngscaffolding-core';
+import { CoreMenuItem, WidgetDetails, WidgetTypes } from '@ngscaffolding/models';
 import { NgElement, WithProperties } from '@angular/elements';
 
 @Component({
@@ -79,10 +56,7 @@ export class WidgetContainerComponent implements OnChanges {
   @Output() widgetEvent = new EventEmitter<string>();
   @Output() widgetCreated = new EventEmitter<any>();
 
-  constructor(
-    private elementRef: ElementRef,
-    private componentLoader: ComponentLoaderService
-  ) {}
+  constructor(private elementRef: ElementRef, private componentLoader: ComponentLoaderService) {}
 
   allowClose = false;
   allowInputs = false;
@@ -124,10 +98,7 @@ export class WidgetContainerComponent implements OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (
-      changes['widgetDetails'].currentValue &&
-      changes['widgetDetails'].currentValue
-    ) {
+    if (changes['widgetDetails'].currentValue && changes['widgetDetails'].currentValue) {
       const widgetDetails = changes['widgetDetails'].currentValue as WidgetDetails;
 
       let newWidget: HTMLElement;
@@ -155,14 +126,11 @@ export class WidgetContainerComponent implements OnChanges {
       this.componentLoader.loadComponent(elementName).then(element => {
         newWidget = element;
         newWidget['itemDetails'] = widgetDetails.widget.itemDetails;
-          this.elementRef.nativeElement
-            .querySelector('#widgetContent')
-            .appendChild(newWidget);
+        this.elementRef.nativeElement.querySelector('#widgetContent').appendChild(newWidget);
 
         // Announce our new birth to the world
         this.widgetCreated.emit(newWidget);
       });
-
     }
   }
 }

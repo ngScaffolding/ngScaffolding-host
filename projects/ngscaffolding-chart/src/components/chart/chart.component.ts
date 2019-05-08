@@ -44,11 +44,15 @@ export class ChartComponent implements IDashboardItem, OnChanges {
     this.chart = chart;
   }
 
-  public refreshData() {
+  // Expose Method in Angular Element
+  // https://github.com/angular/angular/issues/22114
+  @Input()
+  public refreshData = () => {
     this.loadChart();
   }
 
-  updateData(newData: any) {
+  @Input()
+  public updateData = (newData: any) => {
     this.inputModel = newData;
   }
 

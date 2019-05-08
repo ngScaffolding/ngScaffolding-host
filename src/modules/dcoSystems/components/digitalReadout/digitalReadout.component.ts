@@ -21,11 +21,15 @@ export class DigitalReadoutComponent implements IDashboardItem, OnInit, OnChange
     this.route.queryParams.subscribe(params => {});
   }
 
-  refreshData() {
+  // Expose Method in Angular Element
+  // https://github.com/angular/angular/issues/22114
+  @Input()
+  public refreshData = () => {
     this.getData();
   }
 
-  updateData(newData: any) {
+  @Input()
+  public updateData = (newData: any) => {
     this.setDisplay(newData['source'] as ReferenceValueItem);
   }
 

@@ -47,7 +47,7 @@
 
       <gridster [options]="options">
         <gridster-item [item]="widget" *ngFor="let widget of dashboard.widgets" #loopGridster>
-          <ngs-widget-container (widgetEvent)="onWidgetEvent($event, widget, component.componentRef.instance)"
+          <ngs-widget-container (widgetEvent)="onWidgetEvent($event, widget, component)"
             (widgetCreated)="componentCreated($event)"
             [widgetDetails]="widget" [IsReadOnly]="dashboard.readOnly">
             <!-- <ndc-dynamic

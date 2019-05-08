@@ -51,7 +51,7 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
   public showShare = false;
   public showInput = false;
 
-  private components: HTMLElement[] = [];
+  private components: any[] = [];
   private dynmicTypes: Type<any>[];
 
   private changesMade = false;
@@ -324,9 +324,9 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
     }
   }
 
-  public componentCreated(compRef: HTMLElement) {
+  public componentCreated(component: any) {
     // utilize compRef in some way ...
-    this.components.push(compRef);
+    this.components.push(component);
   }
 
   onWidgetEvent(name: string, widgetDetails: WidgetDetails, instance: any) {
