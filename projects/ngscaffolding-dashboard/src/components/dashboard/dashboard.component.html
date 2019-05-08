@@ -45,10 +45,10 @@
 
       </p-sidebar> -->
 
-      <gridster [options]="options">
+      <gridster class="gridsterContainer" [options]="options">
         <gridster-item [item]="widget" *ngFor="let widget of dashboard.widgets" #loopGridster>
-          <ngs-widget-container (widgetEvent)="onWidgetEvent($event, widget, component)"
-            (widgetCreated)="componentCreated($event)"
+          <ngs-widget-container (widgetEvent)="onWidgetEvent($event, widget)"
+            (widgetCreated)="componentCreated(widget, $event)"
             [widgetDetails]="widget" [IsReadOnly]="dashboard.readOnly">
             <!-- <ndc-dynamic
               [ndcDynamicInputs]="{

@@ -129,6 +129,12 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
 
           this.setAllRefresh();
 
+          // Readonly means now moving!
+          if (this.dashboard.readOnly) {
+            this.options.draggable = {enabled: false};
+            this.options.resizable = {enabled: false};
+          }
+
           this.changesMade = false;
           this.spinner.hideSpinner();
         } else {
@@ -324,25 +330,25 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
     }
   }
 
-  public componentCreated(component: any) {
-    // utilize compRef in some way ...
+  public componentCreated(widget: WidgetDetails, component: any) {
+    widget['component'] = component;
     this.components.push(component);
   }
 
-  onWidgetEvent(name: string, widgetDetails: WidgetDetails, instance: any) {
+  onWidgetEvent(name: string, widgetDetails: WidgetDetails) {
+    const instance = widgetDetails['component'] as IDashboardItem;
     switch (name) {
       case 'properties': {
         this.actionInputDefinition = widgetDetails.widget.inputBuilderDefinition;
         this.actionValues = widgetDetails.configuredValues;
 
         this.actionInputPopup.showPopup();
-        this.widgetInstanceConfigured = instance as IDashboardItem;
+        this.widgetInstanceConfigured = instance;
         this.widgetDetailsConfigured = widgetDetails;
         break;
       }
       case 'refresh': {
-        const item = instance as IDashboardItem;
-        item.refreshData();
+        instance.refreshData();
         break;
       }
       case 'remove': {
@@ -413,54 +419,53 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
     this.paramSubscription = this.route.params.subscribe(params => {
       this.menuName = params['id'];
       this.loadDashboard();
-    });
+  });
+  this.options = {
+    itemChangeCallback: this.itemChange,
+    itemResizeCallback: this.itemResize.bind(this),
 
-    this.options = {
-      itemChangeCallback: this.itemChange,
-      itemResizeCallback: this.itemResize.bind(this),
-
-      gridType: GridType.Fit,
-      compactType: CompactType.None,
-      margin: 10,
-      outerMargin: true,
-      outerMarginTop: null,
-      outerMarginRight: null,
-      outerMarginBottom: null,
-      outerMarginLeft: null,
-      mobileBreakpoint: 640,
-      minCols: 12,
-      maxCols: 12,
-      minRows: 8,
-      maxRows: 20,
-      maxItemCols: 100,
-      minItemCols: 1,
-      maxItemRows: 100,
-      minItemRows: 1,
-      maxItemArea: 2500,
-      minItemArea: 1,
-      defaultItemCols: 1,
-      defaultItemRows: 1,
-      keepFixedHeightInMobile: false,
-      keepFixedWidthInMobile: false,
-      scrollSensitivity: 10,
-      scrollSpeed: 20,
-      enableEmptyCellClick: false,
-      enableEmptyCellContextMenu: false,
-      enableEmptyCellDrop: false,
-      enableEmptyCellDrag: false,
-      emptyCellDragMaxCols: 50,
-      emptyCellDragMaxRows: 50,
-      ignoreMarginInRow: false,
-      draggable: {
-        enabled: true
-      },
-      resizable: {
-        enabled: true
-      },
-      pushItems: true,
-      displayGrid: DisplayGrid.OnDragAndResize,
-      scrollToNewItems: true
-    };
+    gridType: GridType.Fit,
+    compactType: CompactType.None,
+    margin: 10,
+    outerMargin: true,
+    outerMarginTop: null,
+    outerMarginRight: null,
+    outerMarginBottom: null,
+    outerMarginLeft: null,
+    mobileBreakpoint: 640,
+    minCols: 12,
+    maxCols: 12,
+    minRows: 8,
+    maxRows: 20,
+    maxItemCols: 100,
+    minItemCols: 1,
+    maxItemRows: 100,
+    minItemRows: 1,
+    maxItemArea: 2500,
+    minItemArea: 1,
+    defaultItemCols: 1,
+    defaultItemRows: 1,
+    keepFixedHeightInMobile: false,
+    keepFixedWidthInMobile: true,
+    scrollSensitivity: 10,
+    scrollSpeed: 20,
+    enableEmptyCellClick: false,
+    enableEmptyCellContextMenu: false,
+    enableEmptyCellDrop: false,
+    enableEmptyCellDrag: false,
+    emptyCellDragMaxCols: 50,
+    emptyCellDragMaxRows: 50,
+    ignoreMarginInRow: false,
+    draggable: {
+      enabled: true
+    },
+    resizable: {
+      enabled: true
+    },
+    pushItems: true,
+    displayGrid: DisplayGrid.OnDragAndResize,
+    scrollToNewItems: true
+  };
   }
 
   ngOnDestroy(): void {
