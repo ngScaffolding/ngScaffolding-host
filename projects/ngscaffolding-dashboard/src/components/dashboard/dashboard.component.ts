@@ -14,10 +14,7 @@ import { CoreMenuItem, WidgetDetails, WidgetTypes, InputBuilderDefinition, IDash
 
 import { DashboardModel } from '@ngscaffolding/models';
 
-import { ChartComponent } from 'ngscaffolding-chart';
-
 import { CompactType, DisplayGrid, GridsterConfig, GridsterItem, GridType, GridsterItemComponent, GridsterItemComponentInterface } from 'angular-gridster2';
-import { HtmlContainerComponent } from '../htmlContainer/htmlContainer.component';
 import { InputBuilderPopupComponent } from 'ngscaffolding-inputbuilder';
 import { SaveDetails } from '../saveInput/saveInput.component';
 import { TranslateService } from '@ngx-translate/core';
@@ -52,9 +49,6 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
   public showInput = false;
 
   private components: any[] = [];
-  private dynmicTypes: Type<any>[];
-
-  private changesMade = false;
 
   // Refresh Observable
   private refreshSubscription: Subscription = null;
@@ -129,13 +123,20 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
 
           this.setAllRefresh();
 
-          // Readonly means now moving!
+          const userId = this.authQuery.getSnapshot().userDetails.userId;
+
+          // Readonly means no moving!
           if (this.dashboard.readOnly) {
+            this.options.draggable = {enabled: false};
+            this.options.resizable = {enabled: false};
+          } else if (this.menuItem.name.startsWith(userId)) {
+            this.options.draggable = {enabled: true};
+            this.options.resizable = {enabled: true};
+          } else {
             this.options.draggable = {enabled: false};
             this.options.resizable = {enabled: false};
           }
 
-          this.changesMade = false;
           this.spinner.hideSpinner();
         } else {
           this.notificationService.showMessage({
@@ -143,7 +144,6 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
             severity: 'error',
             detail: 'You do not have access to this Dashboard'
           });
-          this.changesMade = false;
           this.spinner.hideSpinner();
         }
       }
@@ -330,8 +330,10 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
     }
   }
 
+  // Component Here is our HTML Angular Element
   public componentCreated(widget: WidgetDetails, component: any) {
     widget['component'] = component;
+    component['widget'] = widget;
     this.components.push(component);
   }
 
@@ -415,57 +417,59 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   ngOnInit() {
+    this.options = {
+      itemChangeCallback: this.itemChange,
+      itemResizeCallback: this.itemResize.bind(this),
+
+      gridType: GridType.Fit,
+      compactType: CompactType.None,
+      margin: 10,
+      outerMargin: true,
+      outerMarginTop: null,
+      outerMarginRight: null,
+      outerMarginBottom: null,
+      outerMarginLeft: null,
+      mobileBreakpoint: 640,
+      minCols: 12,
+      maxCols: 12,
+      minRows: 8,
+      maxRows: 20,
+      maxItemCols: 100,
+      minItemCols: 1,
+      maxItemRows: 100,
+      minItemRows: 1,
+      maxItemArea: 2500,
+      minItemArea: 1,
+      defaultItemCols: 1,
+      defaultItemRows: 1,
+      keepFixedHeightInMobile: false,
+      keepFixedWidthInMobile: true,
+      scrollSensitivity: 10,
+      scrollSpeed: 20,
+      enableEmptyCellClick: false,
+      enableEmptyCellContextMenu: false,
+      enableEmptyCellDrop: false,
+      enableEmptyCellDrag: false,
+      emptyCellDragMaxCols: 50,
+      emptyCellDragMaxRows: 50,
+      ignoreMarginInRow: false,
+      draggable: {
+        enabled: true
+      },
+      resizable: {
+        enabled: true
+      },
+      pushItems: true,
+      displayGrid: DisplayGrid.OnDragAndResize,
+      scrollToNewItems: true
+    };
+
     // Get Menu Id
     this.paramSubscription = this.route.params.subscribe(params => {
       this.menuName = params['id'];
       this.loadDashboard();
   });
-  this.options = {
-    itemChangeCallback: this.itemChange,
-    itemResizeCallback: this.itemResize.bind(this),
 
-    gridType: GridType.Fit,
-    compactType: CompactType.None,
-    margin: 10,
-    outerMargin: true,
-    outerMarginTop: null,
-    outerMarginRight: null,
-    outerMarginBottom: null,
-    outerMarginLeft: null,
-    mobileBreakpoint: 640,
-    minCols: 12,
-    maxCols: 12,
-    minRows: 8,
-    maxRows: 20,
-    maxItemCols: 100,
-    minItemCols: 1,
-    maxItemRows: 100,
-    minItemRows: 1,
-    maxItemArea: 2500,
-    minItemArea: 1,
-    defaultItemCols: 1,
-    defaultItemRows: 1,
-    keepFixedHeightInMobile: false,
-    keepFixedWidthInMobile: true,
-    scrollSensitivity: 10,
-    scrollSpeed: 20,
-    enableEmptyCellClick: false,
-    enableEmptyCellContextMenu: false,
-    enableEmptyCellDrop: false,
-    enableEmptyCellDrag: false,
-    emptyCellDragMaxCols: 50,
-    emptyCellDragMaxRows: 50,
-    ignoreMarginInRow: false,
-    draggable: {
-      enabled: true
-    },
-    resizable: {
-      enabled: true
-    },
-    pushItems: true,
-    displayGrid: DisplayGrid.OnDragAndResize,
-    scrollToNewItems: true
-  };
   }
 
   ngOnDestroy(): void {
