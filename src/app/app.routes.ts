@@ -21,8 +21,15 @@ export const routes: Routes = [
   { path: 'about', component: AboutComponent, canActivate: [AuthoriseRoleGuard] },
   { path: 'usersettings', component: UserSettingsComponent, canActivate: [AuthoriseRoleGuard] },
   { path: 'profile', component: ProfilePageComponent, canActivate: [AuthoriseRoleGuard] },
+  {
+    path: '',
+    component: LandingPageComponent, canActivate: [AuthoriseRoleGuard],
+    pathMatch: 'full',
+  },
 
   // TODO: Lazy loaded User Admin Module
+
+  { path: 'users', loadChildren: './modules/userAdmin/userAdmin.module#UserAdminModule' },
 
 
   // Catch all

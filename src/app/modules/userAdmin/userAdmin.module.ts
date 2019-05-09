@@ -8,16 +8,18 @@ import { UserDetailsComponent } from './pages/userDetails/userDetails.component'
 import { MenuTypes, GridViewDetail, ColumnModel, SystemDataSourceNames, ButtonColours } from '@ngscaffolding/models';
 import { Routes, RouterModule } from '@angular/router';
 
+import { UserAdminRoutingModule } from './userAdmin-routing.module';
+
 // canActivate: [AuthoriseRoleGuard]
 
-const appRoutes: Routes = [
-  { path: 'users', component: UserListComponent },
-  { path: 'userdetails', component: UserDetailsComponent, outlet: 'popup' }
-];
+// const appRoutes: Routes = [
+//   { path: 'users', component: UserListComponent },
+//   { path: 'userdetails', component: UserDetailsComponent, outlet: 'popup' }
+// ];
 
 @NgModule({
   declarations: [UserListComponent, UserDetailsComponent],
-  imports: [CommonModule, RouterModule.forChild(appRoutes)]
+  imports: [CommonModule, UserAdminRoutingModule]
 })
 export class UserAdminModule {
   constructor(private menuService: MenuService) {
