@@ -14,12 +14,8 @@ import { CoreMenuItem, WidgetDetails, WidgetTypes, InputBuilderDefinition, IDash
 
 import { DashboardModel } from '@ngscaffolding/models';
 
-import { ChartComponent } from 'ngscaffolding-chart';
-
 import { CompactType, DisplayGrid, GridsterConfig, GridsterItem, GridType, GridsterItemComponent, GridsterItemComponentInterface } from 'angular-gridster2';
-import { HtmlContainerComponent } from '../htmlContainer/htmlContainer.component';
 import { InputBuilderPopupComponent } from 'ngscaffolding-inputbuilder';
-import { DynamicComponent } from 'ng-dynamic-component';
 import { SaveDetails } from '../saveInput/saveInput.component';
 import { TranslateService } from '@ngx-translate/core';
 import { ConfirmationService, ColumnHeaders } from 'primeng/primeng';
@@ -32,7 +28,7 @@ import { Subscription, interval } from 'rxjs';
 })
 export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
   @ViewChildren(GridsterItemComponent) gridsterItems: QueryList<GridsterItemComponent>;
-  @ViewChildren(DynamicComponent) component: DynamicComponent;
+  @ViewChildren(HTMLElement) component: any;
   @ViewChild(InputBuilderPopupComponent) actionInputPopup: InputBuilderPopupComponent;
   @ViewChild(InputBuilderPopupComponent) dashboardInputPopup: InputBuilderPopupComponent;
 
@@ -53,9 +49,6 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
   public showInput = false;
 
   private components: any[] = [];
-  private dynmicTypes: Type<any>[];
-
-  private changesMade = false;
 
   // Refresh Observable
   private refreshSubscription: Subscription = null;
@@ -94,31 +87,10 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
     private menuQuery: MenuQuery,
     private menuService: MenuService,
     private spinner: SpinnerService
-  ) {
-    this.appSettingsQuery
-      .select(store => store.dynamicTypes)
-      .subscribe(types => {
-        this.dynmicTypes = types;
-      });
-  }
+  ) {}
 
   public getComponent(widgetDetails: WidgetDetails) {
-    switch (widgetDetails.widget.type) {
-      case WidgetTypes.GridView: {
-        break;
-      }
-      case WidgetTypes.Chart: {
-        return ChartComponent;
-      }
-      case WidgetTypes.Html: {
-        return HtmlContainerComponent;
-      }
-      default: {
-        let returnType: Type<any>;
-        returnType = this.dynmicTypes.find(type => type.name.toLowerCase() === widgetDetails.widget.type.toLowerCase());
-        return returnType;
-      }
-    }
+
   }
 
   private setAllRefresh() {
@@ -151,7 +123,20 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
 
           this.setAllRefresh();
 
-          this.changesMade = false;
+          const userId = this.authQuery.getSnapshot().userDetails.userId;
+
+          // Readonly means no moving!
+          if (this.dashboard.readOnly) {
+            this.options.draggable = {enabled: false};
+            this.options.resizable = {enabled: false};
+          } else if (this.menuItem.name.startsWith(userId)) {
+            this.options.draggable = {enabled: true};
+            this.options.resizable = {enabled: true};
+          } else {
+            this.options.draggable = {enabled: false};
+            this.options.resizable = {enabled: false};
+          }
+
           this.spinner.hideSpinner();
         } else {
           this.notificationService.showMessage({
@@ -159,7 +144,6 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
             severity: 'error',
             detail: 'You do not have access to this Dashboard'
           });
-          this.changesMade = false;
           this.spinner.hideSpinner();
         }
       }
@@ -346,25 +330,27 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
     }
   }
 
-  public componentCreated(compRef: ComponentRef<any>) {
-    // utilize compRef in some way ...
-    this.components.push(compRef.instance);
+  // Component Here is our HTML Angular Element
+  public componentCreated(widget: WidgetDetails, component: any) {
+    widget['component'] = component;
+    component['widget'] = widget;
+    this.components.push(component);
   }
 
-  onWidgetEvent(name: string, widgetDetails: WidgetDetails, instance: any) {
+  onWidgetEvent(name: string, widgetDetails: WidgetDetails) {
+    const instance = widgetDetails['component'] as IDashboardItem;
     switch (name) {
       case 'properties': {
         this.actionInputDefinition = widgetDetails.widget.inputBuilderDefinition;
         this.actionValues = widgetDetails.configuredValues;
 
         this.actionInputPopup.showPopup();
-        this.widgetInstanceConfigured = instance as IDashboardItem;
+        this.widgetInstanceConfigured = instance;
         this.widgetDetailsConfigured = widgetDetails;
         break;
       }
       case 'refresh': {
-        const item = instance as IDashboardItem;
-        item.refreshData();
+        instance.refreshData();
         break;
       }
       case 'remove': {
@@ -431,12 +417,6 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   ngOnInit() {
-    // Get Menu Id
-    this.paramSubscription = this.route.params.subscribe(params => {
-      this.menuName = params['id'];
-      this.loadDashboard();
-    });
-
     this.options = {
       itemChangeCallback: this.itemChange,
       itemResizeCallback: this.itemResize.bind(this),
@@ -463,7 +443,7 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
       defaultItemCols: 1,
       defaultItemRows: 1,
       keepFixedHeightInMobile: false,
-      keepFixedWidthInMobile: false,
+      keepFixedWidthInMobile: true,
       scrollSensitivity: 10,
       scrollSpeed: 20,
       enableEmptyCellClick: false,
@@ -483,6 +463,13 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
       displayGrid: DisplayGrid.OnDragAndResize,
       scrollToNewItems: true
     };
+
+    // Get Menu Id
+    this.paramSubscription = this.route.params.subscribe(params => {
+      this.menuName = params['id'];
+      this.loadDashboard();
+  });
+
   }
 
   ngOnDestroy(): void {

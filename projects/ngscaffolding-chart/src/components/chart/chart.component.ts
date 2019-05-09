@@ -44,11 +44,15 @@ export class ChartComponent implements IDashboardItem, OnChanges {
     this.chart = chart;
   }
 
-  public refreshData() {
+  // Expose Method in Angular Element
+  // https://github.com/angular/angular/issues/22114
+  @Input()
+  public refreshData = () => {
     this.loadChart();
   }
 
-  updateData(newData: any) {
+  @Input()
+  public updateData = (newData: any) => {
     this.inputModel = newData;
   }
 
@@ -86,7 +90,7 @@ export class ChartComponent implements IDashboardItem, OnChanges {
                   const shaped = chartDataService.shapeDataForSeries(this.itemDetails, JSON.parse(results.jsonData));
                   this.itemDetails.chartOptions.series[0].data = shaped.data;
                   if (shaped.xAxisLabels) {
-                    if(!this.itemDetails.chartOptions.xAxis) {
+                    if (!this.itemDetails.chartOptions.xAxis) {
                       this.itemDetails.chartOptions.xAxis = {};
                     }
                     this.itemDetails.chartOptions.xAxis.categories = shaped.xAxisLabels;

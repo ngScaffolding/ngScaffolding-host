@@ -1,7 +1,8 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges, ElementRef } from '@angular/core';
 import { trigger, state, style, animate, transition } from '@angular/animations';
-import { AppSettingsService, AppSettingsQuery } from 'ngscaffolding-core';
-import { CoreMenuItem, WidgetDetails } from '@ngscaffolding/models';
+import { AppSettingsService, AppSettingsQuery, ComponentLoaderService } from 'ngscaffolding-core';
+import { CoreMenuItem, WidgetDetails, WidgetTypes } from '@ngscaffolding/models';
+import { NgElement, WithProperties } from '@angular/elements';
 
 @Component({
   selector: 'ngs-widget-container',
@@ -53,6 +54,9 @@ export class WidgetContainerComponent implements OnChanges {
   @Input() IsReadOnly: boolean;
 
   @Output() widgetEvent = new EventEmitter<string>();
+  @Output() widgetCreated = new EventEmitter<any>();
+
+  constructor(private elementRef: ElementRef, private componentLoader: ComponentLoaderService) {}
 
   allowClose = false;
   allowInputs = false;
@@ -72,9 +76,11 @@ export class WidgetContainerComponent implements OnChanges {
       return;
     }
 
-    if (this.widgetDetails.widget.inputBuilderDefinition &&
+    if (
+      this.widgetDetails.widget.inputBuilderDefinition &&
       this.widgetDetails.widget.inputBuilderDefinition.inputDetails &&
-      this.widgetDetails.widget.inputBuilderDefinition.inputDetails.length > 0) {
+      this.widgetDetails.widget.inputBuilderDefinition.inputDetails.length > 0
+    ) {
       this.allowInputs = true;
     }
 
@@ -92,6 +98,39 @@ export class WidgetContainerComponent implements OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    let x=0;
+    if (changes['widgetDetails'].currentValue && changes['widgetDetails'].currentValue) {
+      const widgetDetails = changes['widgetDetails'].currentValue as WidgetDetails;
+
+      let newWidget: HTMLElement;
+      let elementName = '';
+
+      switch (widgetDetails.widget.type) {
+        case WidgetTypes.GridView: {
+          elementName = 'ngs-data-grid';
+          break;
+        }
+        case WidgetTypes.Chart: {
+          elementName = 'ngs-chart';
+          break;
+        }
+        case WidgetTypes.Html: {
+          elementName = 'ngs-html-container';
+          break;
+        }
+        default: {
+          elementName = widgetDetails.widget.type;
+          break;
+        }
+      }
+
+      this.componentLoader.loadComponent(elementName).then(element => {
+        newWidget = element;
+        newWidget['itemDetails'] = widgetDetails.widget.itemDetails;
+        this.elementRef.nativeElement.querySelector('#widgetContent').appendChild(newWidget);
+
+        // Announce our new birth to the world
+        this.widgetCreated.emit(newWidget);
+      });
+    }
   }
 }

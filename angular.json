@@ -11,6 +11,9 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "lazyModules": [
+
+            ],
             "outputPath": "dist",
             "deleteOutputPath": false,
             "index": "src/index.html",

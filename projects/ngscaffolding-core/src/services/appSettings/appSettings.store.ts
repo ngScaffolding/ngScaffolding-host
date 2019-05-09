@@ -5,7 +5,6 @@ import { AppSettingsValue, AppSettings } from '@ngscaffolding/models';
 
 export interface AppSettingsState extends EntityState<AppSettingsValue> {
   isInitialised: boolean;
-  dynamicTypes: Type<any>[];
 }
 
 @Injectable({ providedIn: 'root' })
@@ -13,7 +12,7 @@ export interface AppSettingsState extends EntityState<AppSettingsValue> {
 export class AppSettingsStore extends EntityStore<AppSettingsState, AppSettingsValue> {
 
   constructor() {
-    super({ isInitialised: false, dynamicTypes: []});
+    super({ isInitialised: false });
     console.log('AppSettingsStore Constructor');
   }
 }

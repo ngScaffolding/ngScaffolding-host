@@ -1,4 +1,4 @@
-import { NgModule, ModuleWithProviders } from '@angular/core';
+import { NgModule, ModuleWithProviders, Injector } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { VERSION } from './version';
 import { CommonModule } from '@angular/common';
@@ -7,15 +7,13 @@ import { RouterModule, Routes } from '@angular/router';
 
 import {TranslateModule} from '@ngx-translate/core';
 
-import { MenuService, LoggingService, VersionsService } from 'ngscaffolding-core';
+import { MenuService, LoggingService, VersionsService, ComponentLoaderService } from 'ngscaffolding-core';
 import { CoreModule, AuthoriseRoleGuard } from 'ngscaffolding-core';
 
 import { InputBuilderModule } from 'ngscaffolding-inputbuilder';
 
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { WidgetContainerComponent } from './components/widgetContainer/widgetContainer.component';
-
-import { DynamicModule } from 'ng-dynamic-component';
 
 import { GridsterModule } from 'angular-gridster2';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
@@ -25,6 +23,7 @@ import { DashboardToolBarComponent } from './components';
 import { GalleryComponent } from './components/gallery/gallery.component';
 import { HtmlContainerComponent } from './components/htmlContainer/htmlContainer.component';
 import { SaveInputComponent } from './components/saveInput/saveInput.component';
+import { createCustomElement } from '@angular/elements';
 
 // Services
 
@@ -47,7 +46,6 @@ const appRoutes: Routes = [
     GridsterModule,
     CardModule,
     ProgressSpinnerModule,
-    DynamicModule,
     RouterModule.forChild(appRoutes),
     TranslateModule.forChild()
   ],
@@ -66,9 +64,8 @@ const appRoutes: Routes = [
     WidgetContainerComponent,
     RouterModule
   ],
-  providers: [
-
-  ]
+  providers: [],
+  entryComponents: [ HtmlContainerComponent ]
 })
 export class DashboardModule {
   static forRoot(): ModuleWithProviders {
@@ -77,7 +74,16 @@ export class DashboardModule {
     };
   }
 
-  constructor(menuService: MenuService, logger: LoggingService, versions: VersionsService) {
+  constructor(injector: Injector, versions: VersionsService,
+    componentLoaderService: ComponentLoaderService) {
     versions.addVersion('ngscaffolding-dashboard', VERSION.version);
+
+    // Register HTML Container
+    const el = createCustomElement(HtmlContainerComponent, { injector });
+    customElements.define('ngs-html-container', el);
+
+    componentLoaderService.registerComponent('ngs-html-container');
+
+
   }
 }

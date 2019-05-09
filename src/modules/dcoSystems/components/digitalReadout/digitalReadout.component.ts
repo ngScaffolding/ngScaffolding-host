@@ -5,7 +5,6 @@ import { IDashboardItem, WidgetDetails, ReferenceValueItem } from '@ngscaffoldin
 const jsonQuery = require('json-query');
 
 @Component({
-  selector: 'app-digital-readout',
   templateUrl: 'digitalReadout.component.html',
   styleUrls: ['digitalReadout.component.scss']
 })
@@ -22,11 +21,15 @@ export class DigitalReadoutComponent implements IDashboardItem, OnInit, OnChange
     this.route.queryParams.subscribe(params => {});
   }
 
-  refreshData() {
+  // Expose Method in Angular Element
+  // https://github.com/angular/angular/issues/22114
+  @Input()
+  public refreshData = () => {
     this.getData();
   }
 
-  updateData(newData: any) {
+  @Input()
+  public updateData = (newData: any) => {
     this.setDisplay(newData['source'] as ReferenceValueItem);
   }
 
