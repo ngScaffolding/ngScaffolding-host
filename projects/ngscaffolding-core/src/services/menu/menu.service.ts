@@ -72,10 +72,10 @@ export class MenuService {
           const existingMenus = JSON.parse(JSON.stringify(this.menuQuery.getSnapshot().menuItems));
           let parentMenu: CoreMenuItem;
           if (menuItem.parent) {
-            parentMenu = existingMenus.find(menu => menu.name.toLowerCase() === menuItem.parent.toLowerCase());
+            parentMenu = existingMenus.find(menu => menu.name && menu.name.toLowerCase() === menuItem.parent.toLowerCase());
           }
 
-          const foundIndex = (parentMenu.items as CoreMenuItem[]).findIndex(childMenu => childMenu.name === menuItem.name);
+          const foundIndex = (parentMenu.items as CoreMenuItem[]).findIndex(childMenu => childMenu.name && childMenu.name === menuItem.name);
           parentMenu.items.splice(foundIndex, 1);
 
           // Update tree and tell the world
