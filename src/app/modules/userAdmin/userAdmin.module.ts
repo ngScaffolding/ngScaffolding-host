@@ -46,8 +46,8 @@ export class UserAdminModule {
                   title: 'Edit User',
                   icon: 'ui-icon-assignment',
                   colour: ButtonColours.teal,
-                  type: 'angularroute',
-                  angularRoute: 'users',
+                  type: 'angularComponent',
+                  angularComponent: 'users',
                   dialogOptions: {
                     header: 'User Details',
                     width: 900,

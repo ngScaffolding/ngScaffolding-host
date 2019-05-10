@@ -360,9 +360,9 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
   public popupHidden(event: any) {}
   private callAction(action: Action, row: any) {
     switch (action.type.toLowerCase()) {
-      case 'angularroute': {
+      case 'angularComponent': {
         this.router
-          .navigate([{ outlets: { popup: [action.angularRoute] } }], { queryParams: row, skipLocationChange: true, relativeTo: this.route })
+          .navigate([{ outlets: { popup: [action.angularComponent] } }], { queryParams: row, skipLocationChange: true, relativeTo: this.route })
           .then(res => {
             // Use the options from our action
             if (action.dialogOptions) {
@@ -378,7 +378,7 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
             });
           })
           .catch(err => {
-            this.logger.error(`Unable to navigate route: ${action.angularRoute}`, 'GridView Action', true);
+            this.logger.error(`Unable to navigate route: ${action.angularComponent}`, 'GridView Action', true);
           });
 
         break;
