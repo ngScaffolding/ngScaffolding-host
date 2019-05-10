@@ -50,18 +50,6 @@
           <ngs-widget-container (widgetEvent)="onWidgetEvent($event, widget)"
             (widgetCreated)="componentCreated(widget, $event)"
             [widgetDetails]="widget" [IsReadOnly]="dashboard.readOnly">
-            <!-- <ndc-dynamic
-              [ndcDynamicInputs]="{
-                itemDetails: widget.widget.itemDetails,
-                widget: widget,
-                isWidget: true,
-                gridsterItem: loopGridster.item,
-                unitHeight: widget.unitHeight,
-                unitWidth: widget.unitWidth,
-                unitUpdate: widget.unitUpdate
-              }"
-              (ndcDynamicCreated)="componentCreated($event)"
-              [ndcDynamicComponent]="getComponent(widget)" #component></ndc-dynamic> -->
           </ngs-widget-container>
         </gridster-item>
       </gridster>

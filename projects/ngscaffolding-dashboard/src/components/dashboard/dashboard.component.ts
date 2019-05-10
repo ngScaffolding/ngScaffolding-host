@@ -28,7 +28,6 @@ import { Subscription, interval } from 'rxjs';
 })
 export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
   @ViewChildren(GridsterItemComponent) gridsterItems: QueryList<GridsterItemComponent>;
-  @ViewChildren(HTMLElement) component: any;
   @ViewChild(InputBuilderPopupComponent) actionInputPopup: InputBuilderPopupComponent;
   @ViewChild(InputBuilderPopupComponent) dashboardInputPopup: InputBuilderPopupComponent;
 

@@ -95,7 +95,8 @@ export class DemoAppModule {
         label: 'Input Builder',
         icon: 'brush',
         routerLink: 'inputbuildersimple'
-      },{
+      },
+      {
         name: 'users.test',
         label: 'Users Test',
         icon: 'brush',

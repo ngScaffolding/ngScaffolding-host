@@ -6,7 +6,7 @@ import { UserDetailsComponent } from './pages/userDetails/userDetails.component'
 
 const routes: Routes = [
   { path: 'users', component: UserListComponent, canActivate: [AuthoriseRoleGuard] },
-  { path: 'userdetails', component: UserDetailsComponent, canActivate: [AuthoriseRoleGuard], outlet: 'popup' },
+  { path: 'userdetails', component: UserDetailsComponent, canActivate: [AuthoriseRoleGuard] },
   { path: 'users/test', component: UserListComponent },
 ];
 
