@@ -39,7 +39,8 @@ import {
   UserAuthenticationService,
   UserAuthenticationQuery,
   CoreErrorHandlerService,
-  VersionsService
+  VersionsService,
+  MenuService
 } from 'ngscaffolding-core';
 
 // Externalise These Modules
@@ -47,6 +48,7 @@ import { DatagridModule } from 'ngscaffolding-datagrid';
 import { InputBuilderModule } from 'ngscaffolding-inputbuilder';
 import { DashboardModule } from 'ngscaffolding-dashboard';
 import { CUSTOM_IMPORTS } from '../../custom/custom.app';
+import { buildMenu } from './app.commonMenu';
 
 // Pages
 import { NgScaffoldingComponent } from './app.ngscaffolding.component';
@@ -74,9 +76,10 @@ export function jwtOptionsFactory(authQuery: UserAuthenticationQuery) {
   };
 }
 
-const appInitializerFn = (appConfig: AppSettingsService) => {
+const appInitializerFn = (appConfig: AppSettingsService, menuService: MenuService) => {
   return () => {
     appConfig.loadFromJSON();
+    buildMenu(menuService);
   };
 };
 
@@ -158,8 +161,9 @@ const appInitializerFn = (appConfig: AppSettingsService) => {
   bootstrap: [AppComponent]
 })
 export class AppModule {
-  constructor(private versions: VersionsService, private router: Router) {
+  constructor(private versions: VersionsService) {
     versions.addVersion('@ngscaffolding/host', VERSION.version);
+
 
     // this.router.events.subscribe(async routerEvent => {
 

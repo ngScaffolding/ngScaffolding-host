@@ -3,7 +3,7 @@ import { HostListener, Component, Input, Output, EventEmitter, OnInit, OnDestroy
 import { Router, ActivatedRoute } from '@angular/router';
 import { GridOptions, ColDef, ColDefUtil } from 'ag-grid/main';
 
-import { Action, CoreMenuItem, GridViewDetail, InputBuilderDefinition, DataResults, DialogOptions, IDashboardItem } from '@ngscaffolding/models';
+import { Action, CoreMenuItem, GridViewDetail, InputBuilderDefinition, DataResults, DialogOptions, IDashboardItem, ActionTypes } from '@ngscaffolding/models';
 
 import { ConfirmationService } from 'primeng/primeng';
 import { Dialog } from 'primeng/dialog';
@@ -21,7 +21,8 @@ import {
   BroadcastService,
   UserPreferencesService,
   NgsDatePipe,
-  NgsDateTimePipe
+  NgsDateTimePipe,
+  ComponentLoaderService
 } from 'ngscaffolding-core';
 
 import { FiltersHolderComponent } from '../filtersHolder/filtersHolder.component';
@@ -38,8 +39,6 @@ import { UserPreferencesQuery } from 'projects/ngscaffolding-core/src/services/u
   styleUrls: ['./datagrid.component.scss']
 })
 export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnChanges {
-  // @ViewChild(HTMLDivElement) gridArea: HTMLDivElement;
-  // @ViewChild(HTMLDivElement) gridSection: HTMLDivElement;
   @ViewChild(FiltersHolderComponent) filtersHolder: FiltersHolderComponent;
   @ViewChild(InputBuilderPopupComponent) actionInputPopup: InputBuilderPopupComponent;
   @ViewChild(ActionsHolderComponent) actionsHolder: ActionsHolderComponent;
@@ -91,7 +90,7 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
     private actionService: ActionService,
     private appSettingsService: AppSettingsService,
     private dataSourceService: DataSourceService,
-    private menuService: MenuService,
+    private componentLoader: ComponentLoaderService,
     private broadcast: BroadcastService,
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
@@ -359,27 +358,24 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
 
   public popupHidden(event: any) {}
   private callAction(action: Action, row: any) {
-    switch (action.type.toLowerCase()) {
-      case 'angularComponent': {
-        this.router
-          .navigate([{ outlets: { popup: [action.angularComponent] } }], { queryParams: row, skipLocationChange: true, relativeTo: this.route })
-          .then(res => {
-            // Use the options from our action
-            if (action.dialogOptions) {
-              this.dialogOptions = action.dialogOptions;
-            } else {
-              this.dialogOptions = {};
-            }
-            this.popupShown = true;
+    switch (action.type) {
+      case ActionTypes.angularComponent: {
+        this.componentLoader.loadComponent(action.angularComponent).then(newComponent => {
+          this.dialog.appendChild(newComponent);
+        });
 
-            // Center Popup here
-            window.setTimeout(() => {
-              this.dialog.center();
-            });
-          })
-          .catch(err => {
-            this.logger.error(`Unable to navigate route: ${action.angularComponent}`, 'GridView Action', true);
-          });
+        // Use the options from our action
+        if (action.dialogOptions) {
+          this.dialogOptions = action.dialogOptions;
+        } else {
+          this.dialogOptions = {};
+        }
+        this.popupShown = true;
+
+        // Center Popup here
+        window.setTimeout(() => {
+          this.dialog.center();
+        });
 
         break;
       }

@@ -49,8 +49,8 @@ import { ScrollPanelModule } from 'primeng/primeng';
 
 // export * from './pages';
 
-const machineDetailsRoute: Route =  { path: 'fieldforcemachinedetails', component: MachineDetailsComponent, outlet: 'popup' };
-const workItemDetailsRoute: Route =  { path: 'fieldforceworkitemdetails', component: WorkItemDetailsComponent, outlet: 'popup' };
+const machineDetailsRoute: Route =  { path: 'fieldforcemachinedetails', component: MachineDetailsComponent };
+const workItemDetailsRoute: Route =  { path: 'fieldforceworkitemdetails', component: WorkItemDetailsComponent };
 const upgradeCalcRoute: Route =  { path: 'fieldforceupgradeCalc', component: UpgradeCalcComponent };
 
 const appRoutes: Routes = [
