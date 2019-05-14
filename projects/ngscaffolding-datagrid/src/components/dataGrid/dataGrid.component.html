@@ -42,7 +42,8 @@
         (onHide)="popupHidden($event)"
         [closable]="dialogOptions.closable"
         [maximizable]="dialogOptions.maximizable"
-        [contentStyle]="{'overflow':'auto'}"  #dialog>
+        [contentStyle]="{'overflow':'auto'}" >
+        <div id="popupContent"  #dialog></div>
       </p-dialog>
 
   </div>

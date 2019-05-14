@@ -149,7 +149,7 @@ const appInitializerFn = (appConfig: AppSettingsService, menuService: MenuServic
       provide: APP_INITIALIZER,
       useFactory: appInitializerFn,
       multi: true,
-      deps: [AppSettingsService]
+      deps: [AppSettingsService, MenuService]
     },
     AuthoriseRoleGuard,
     { provide: UserAuthenticationBase, useClass: UserAuthenticationService },

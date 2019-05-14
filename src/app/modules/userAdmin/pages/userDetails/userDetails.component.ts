@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, SimpleChanges, AfterViewInit, Input, OnChanges } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IUserModel } from '@ngscaffolding/models';
 import { UserService, LoggingService } from 'ngscaffolding-core';
@@ -8,7 +8,16 @@ import { UserService, LoggingService } from 'ngscaffolding-core';
   templateUrl: 'userDetails.component.html',
   styleUrls: ['userDetails.component.scss']
 })
-export class UserDetailsComponent implements AfterViewInit {
+export class UserDetailsComponent implements AfterViewInit, OnChanges {
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if(changes.data && changes.data.currentValue) {
+
+    }
+  }
+
+  @Input() data: any;
+
   private userId: string;
   private user: IUserModel;
   constructor(private route: ActivatedRoute,

@@ -1,4 +1,4 @@
-import { Routes, RouterModule } from '@angular/router';
+import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 import { ModuleWithProviders } from '@angular/core';
 
 import { AuthoriseRoleGuard } from 'ngscaffolding-core';
@@ -37,4 +37,4 @@ export const routes: Routes = [
 
 ];
 
-export const AppRoutes: ModuleWithProviders = RouterModule.forRoot(routes, { enableTracing: true });
+export const AppRoutes: ModuleWithProviders = RouterModule.forRoot(routes, { enableTracing: true, preloadingStrategy: PreloadAllModules });

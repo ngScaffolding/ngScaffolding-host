@@ -1,4 +1,4 @@
-import { HostListener, Component, Input, Output, EventEmitter, OnInit, OnDestroy, ViewChild, OnChanges, SimpleChanges } from '@angular/core';
+import { HostListener, Component, Input, Output, EventEmitter, OnInit, OnDestroy, ViewChild, OnChanges, SimpleChanges, ElementRef } from '@angular/core';
 
 import { Router, ActivatedRoute } from '@angular/router';
 import { GridOptions, ColDef, ColDefUtil } from 'ag-grid/main';
@@ -42,7 +42,7 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
   @ViewChild(FiltersHolderComponent) filtersHolder: FiltersHolderComponent;
   @ViewChild(InputBuilderPopupComponent) actionInputPopup: InputBuilderPopupComponent;
   @ViewChild(ActionsHolderComponent) actionsHolder: ActionsHolderComponent;
-  @ViewChild(Dialog) dialog;
+  @ViewChild(Dialog) dialog: Dialog;
 
   @Input() isWidget: boolean;
   @Input() itemId: string;
@@ -83,12 +83,9 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
   constructor(
     private ngsDatePipe: NgsDatePipe,
     private ngsDateTimePipe: NgsDateTimePipe,
-    private router: Router,
     private logger: LoggingService,
-    private route: ActivatedRoute,
-    private notification: NotificationService,
+    private elementRef: ElementRef,
     private actionService: ActionService,
-    private appSettingsService: AppSettingsService,
     private dataSourceService: DataSourceService,
     private componentLoader: ComponentLoaderService,
     private broadcast: BroadcastService,
@@ -360,8 +357,18 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
   private callAction(action: Action, row: any) {
     switch (action.type) {
       case ActionTypes.angularComponent: {
+
         this.componentLoader.loadComponent(action.angularComponent).then(newComponent => {
-          this.dialog.appendChild(newComponent);
+          newComponent['data'] = row;
+
+          this.popupShown = true;
+          // Give the dialog time to open
+          window.setTimeout(() => {
+            this.elementRef.nativeElement.querySelector('#popupContent').appendChild(newComponent);
+
+            // Center Popup here
+            this.dialog.center();
+          });
         });
 
         // Use the options from our action
@@ -370,12 +377,6 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
         } else {
           this.dialogOptions = {};
         }
-        this.popupShown = true;
-
-        // Center Popup here
-        window.setTimeout(() => {
-          this.dialog.center();
-        });
 
         break;
       }

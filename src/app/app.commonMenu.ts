@@ -35,11 +35,12 @@ export function buildMenu(menuService: MenuService) {
                 icon: 'ui-icon-assignment',
                 colour: ButtonColours.teal,
                 type: 'angularComponent',
-                angularComponent: 'users',
+                angularComponent: 'app-user-details',
                 dialogOptions: {
                   header: 'User Details',
                   width: 900,
                   height: 800,
+                  closable: true,
                   maximizable: true
                 }
               }
