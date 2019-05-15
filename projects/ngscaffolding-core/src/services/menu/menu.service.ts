@@ -148,7 +148,8 @@ export class MenuService {
 
       // Is this role protected
       if (menuItem.roles && menuItem.roles.length > 0) {
-        if (userRoles && menuItem.roles.filter(allowedRole => userRoles.includes(allowedRole)).length === 0) {
+        if (userRoles && menuItem.roles
+            .filter(allowedRole => userRoles.includes(allowedRole)).length === 0) {
           // No Authority. Remove
           removingThis = true;
           removingMenus.push(menuItems.indexOf(menuItem));

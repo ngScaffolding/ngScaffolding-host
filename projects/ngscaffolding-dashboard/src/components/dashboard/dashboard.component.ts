@@ -125,16 +125,16 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
           const userId = this.authQuery.getSnapshot().userDetails.userId;
 
           // Readonly means no moving!
-          if (this.dashboard.readOnly) {
-            this.options.draggable = {enabled: false};
-            this.options.resizable = {enabled: false};
-          } else if (this.menuItem.name.startsWith(userId)) {
-            this.options.draggable = {enabled: true};
-            this.options.resizable = {enabled: true};
-          } else {
-            this.options.draggable = {enabled: false};
-            this.options.resizable = {enabled: false};
-          }
+          // if (this.dashboard.readOnly) {
+          //   this.options.draggable = {enabled: false};
+          //   this.options.resizable = {enabled: false};
+          // } else if (this.menuItem.name.startsWith(userId)) {
+          //   this.options.draggable = {enabled: true};
+          //   this.options.resizable = {enabled: true};
+          // } else {
+          //   this.options.draggable = {enabled: false};
+          //   this.options.resizable = {enabled: false};
+          // }
 
           this.spinner.hideSpinner();
         } else {
@@ -244,9 +244,9 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
 
   private shareDashboard(saveDetails: SaveDetails) {
     // Create Clone of current Dashboard
-    const clonedMenu: CoreMenuItem = JSON.parse(JSON.stringify(this.menuItem));
+    const clonedMenu: CoreMenuItem = {...this.menuItem};
 
-    clonedMenu.menuDetails = JSON.parse(JSON.stringify(this.dashboard));
+    clonedMenu.menuDetails = {...this.dashboard};
     clonedMenu.roles = [saveDetails.shareRole];
 
     clonedMenu.name = `${saveDetails.label}::${Date.now()}`;
