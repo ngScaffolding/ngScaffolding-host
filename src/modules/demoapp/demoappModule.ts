@@ -10,11 +10,12 @@ import {
   AuthoriseRoleGuard,
   AppSettingsService,
   MenuService,
-  LoggingService,
+  LoggingService,ReferenceValuesService,
   VersionsService
 } from 'ngscaffolding-core';
 
 import { InputBuilderModule } from 'ngscaffolding-inputbuilder';
+import { carsReferenceValues } from './demoData/cars.data';
 
 import { DatagridModule } from 'ngscaffolding-datagrid';
 import { ChartingModule } from 'ngscaffolding-chart';
@@ -51,6 +52,7 @@ export class DemoAppModule {
     appSettingsService: AppSettingsService,
     menuService: MenuService,
     logger: LoggingService,
+    referenceValuesService: ReferenceValuesService,
     versions: VersionsService
   ) {
     logger.info('Setting Values', 'demoApp.startup');
@@ -83,6 +85,8 @@ export class DemoAppModule {
     appSettingsService.setValue(AppSettings.authSaveinLocalStorage , true);
     appSettingsService.setValue(AppSettings.authTermsAndConditions ,
       'Demo Application Your Terms and Conditions Here. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Odio pellentesque diam volutpat commodo sed egestas.');
+
+    referenceValuesService.setReferenceValue(carsReferenceValues);
 
     menuService.addMenuItemsFromCode([
       {

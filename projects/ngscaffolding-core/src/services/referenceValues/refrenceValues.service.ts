@@ -40,17 +40,35 @@ export class ReferenceValuesService {
     });
   }
 
+  setReferenceValue(referenceValue: ReferenceValue) {
+    referenceValue.compositeKey = this.getKey(referenceValue.name, '');
+    this.refValuesStore.createOrReplace(this.getKey(referenceValue.name, ''), referenceValue);
+  }
+
   //
   // Get a complex ReferenceValue (May include multiple values)
   //
-  getReferenceValue(name: string, seed = ''): Observable<ReferenceValue> {
-
+  getReferenceValue(name: string, seed = '', childDepth = 0): Observable<ReferenceValue> {
     if (this.refValuesQuery.hasEntity(this.getKey(name, seed))) {
       // If we get one from Cache, thats handy to use
       return new Observable<ReferenceValue>(observer => {
         observer.next(this.refValuesQuery.getEntity(this.getKey(name, seed)));
         observer.complete();
       });
+    } else if (childDepth > 0) {
+      const refValue = this.refValuesQuery.getEntity(this.getKey(name, ''));
+      if (refValue) {
+        const parentRef = refValue.referenceValueItems.find(parent => parent.value === seed);
+        if (parentRef) {
+          const clone = { ...refValue };
+          clone.referenceValueItems = parentRef.referenceValueItems;
+
+          return new Observable<ReferenceValue>(observer => {
+            observer.next(clone);
+            observer.complete();
+          });
+        }
+      }
     } else {
       // Nothing in the Cache
       if (this.requestsInFlight.has(this.getKey(name, seed))) {

@@ -58,41 +58,20 @@ export class InputBuilderSimpleComponent {
         validateRequired: 'Please say hello'
       },
       <InputDetailDropdown> {
-        label: 'Simple Continents',
-        name: 'simpleSelectContinents',
-        type: InputTypes.select,
-        referenceValueName: 'Continents',
-        help: 'Basic Select Only'
-      },
-      <InputDetailDropdown> {
-        label: 'Simple Continents',
-        name: 'simpleSelectContinents2',
-        type: InputTypes.select,
-        referenceValueName: 'Continents',
-        help: 'Basic Select Only2'
-      },
-       <InputDetailDropdown> {
-        label: 'Simple Countries',
-        name: 'simpleSelectCountries',
-        type: InputTypes.select,
-        referenceValueName: 'Countries',
-        validateRequired: 'Select Me Please',
-        selectFilter: true
-      },
-      <InputDetailDropdown> {
-        label: 'linked Continents',
-        name: 'linkedSelectContinents',
-        type: InputTypes.select,
-        referenceValueName: 'Continents',
-        validateRequired: 'Select Me Please',
+        label: 'Linked Car Manufacturers',
+        name: 'linkedSelectManufacturers',
+        type: InputTypes.dropdown,
+        referenceValueName: 'Cars',
+        validateRequired: 'Select A Manufacturer',
         help: 'Basic Select Only'
       },
        <InputDetailDropdown> {
-        label: 'linked Countries',
-        name: 'linkedSelectCountries',
-        type: InputTypes.select,
-        referenceValueName: 'CountriesForContinent',
-        referenceValueSeedDependency: 'linkedSelectContinents',
+        label: 'Linked Models',
+        name: 'linkedSelectModels',
+        type: InputTypes.dropdown,
+        referenceValueName: 'Cars',
+        referenceValueSeedDependency: 'linkedSelectManufacturers',
+        referenceValueChildLevel: 1,
         validateRequired: 'Select Me Please',
         selectFilter: true
       },

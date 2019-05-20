@@ -187,7 +187,7 @@ export class InputBuilderComponent implements OnInit, OnChanges {
         (<InputDetailReferenceValues>input).referenceValueSeedDependency &&
         (<InputDetailReferenceValues>input).referenceValueSeedDependency === inputDetail.name
       ) {
-        this.loadDataSource(input, returnedValue);
+        this.loadDataSource(input, returnedValue, (<InputDetailReferenceValues>input).referenceValueChildLevel);
       }
     });
 
@@ -201,8 +201,8 @@ export class InputBuilderComponent implements OnInit, OnChanges {
     this.clonedInputModel = updatedModel;
   }
 
-  private loadDataSource(inputDetail: InputDetail, seed: string = ''): Observable<ReferenceValue> {
-    const obs = this.refValuesService.getReferenceValue((<InputDetailReferenceValues>inputDetail).referenceValueName, seed);
+  private loadDataSource(inputDetail: InputDetail, seed: string = '', childDepth = 0): Observable<ReferenceValue> {
+    const obs = this.refValuesService.getReferenceValue((<InputDetailReferenceValues>inputDetail).referenceValueName, seed, childDepth);
 
     obs.subscribe(refValue => {
       (<InputDetailReferenceValues>inputDetail).datasourceItems = refValue.referenceValueItems;
