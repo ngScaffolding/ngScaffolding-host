@@ -370,10 +370,16 @@ export class AppComponent extends NgScaffoldingComponent
   }
 
   isHorizontal() {
+    if (this.appSettingsQuery.hasEntity(AppSettings.menuType)) {
+      return this.appSettingsQuery.getEntity(AppSettings.menuType).value === MenuOrientation.HORIZONTAL;
+    }
     return this.layoutMode === MenuOrientation.HORIZONTAL;
   }
 
   isSlim() {
+    if (this.appSettingsQuery.hasEntity(AppSettings.menuType)) {
+      return this.appSettingsQuery.getEntity(AppSettings.menuType).value === MenuOrientation.SLIM;
+    }
     return this.layoutMode === MenuOrientation.SLIM;
   }
 
