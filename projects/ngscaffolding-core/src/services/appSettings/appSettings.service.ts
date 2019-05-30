@@ -5,7 +5,6 @@ import { HttpClient } from '@angular/common/http';
 import { AppSettingsStore } from './appSettings.store';
 import { AppSettingsQuery } from './appSettings.query';
 import { Observable } from 'rxjs/internal/Observable';
-import { take } from 'rxjs/internal/operators/take';
 
 @Injectable({
   providedIn: 'root'
@@ -83,13 +82,22 @@ export class AppSettingsService {
     this.appSettingsStore.updateRoot({ isInitialised: true });
   }
 
-  public loadFromJSON() {
+  public loadFromJSON(production: boolean) {
+    if (production) {
     return this.http
+      .get('/appConfig.prod.json')
+      .toPromise()
+      .then(data => {
+        this.setValues(data as AppSettings);
+      });
+    } else {
+      return this.http
       .get('/appConfig.json')
       .toPromise()
       .then(data => {
         this.setValues(data as AppSettings);
       });
+    }
   }
 
   public getBoolean(name: string): Observable<boolean> {

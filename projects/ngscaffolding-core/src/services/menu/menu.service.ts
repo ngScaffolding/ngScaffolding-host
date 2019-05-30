@@ -30,6 +30,7 @@ export class MenuService {
   public routeSubject = new BehaviorSubject<Array<Route>>(this.routes);
 
   private httpInFlight = false;
+  private menuDownloaded = false;
 
   constructor(
     private http: HttpClient,
@@ -42,7 +43,7 @@ export class MenuService {
   ) {
     // Wait for settings, then load from server
     combineLatest(this.authQuery.authenticated$, this.appSettingsQuery.selectEntity(AppSettings.apiHome)).subscribe(([authenticated, apiHome]) => {
-      if (authenticated && apiHome) {
+      if (authenticated && apiHome && !this.menuDownloaded) {
         this.apiHome = apiHome.value;
         if (!this.httpInFlight) {
           this.downloadMenuItems();
@@ -190,6 +191,8 @@ export class MenuService {
       .subscribe(
         downloadedMenuItems => {
           this.log.info(`Downloaded MenuItems`, this.className);
+          this.menuDownloaded = true;
+          this.menuItems = [ ...this.menuItems ];
 
           const clonedFromCode = JSON.parse(JSON.stringify(this.menuItemsFromCode));
           this.removeUnauthorisedMenuItems(clonedFromCode);
