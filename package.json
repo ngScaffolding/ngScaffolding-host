@@ -14,6 +14,7 @@
     "lib-datagrid": "ng build ngscaffolding-datagrid & cd ./dist/ngscaffolding-datagrid & npm pack",
     "lib-dashboard": "ng build ngscaffolding-dashboard & cd ./dist/ngscaffolding-dashboard & npm pack",
     "extract-translate": "ngx-translate-extract --input ./src ./projects --output ./src/assets/i18n/ --clean --sort --format namespaced-json",
+    "bundle-report": "webpack-bundle-analyzer dist/stats.json",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
@@ -97,6 +98,7 @@
     "tsickle": ">=0.29.0",
     "tslib": "^1.9.0",
     "tslint": "^5.12.1",
-    "typescript": "^3.2.4"
+    "typescript": "^3.2.4",
+    "webpack-bundle-analyzer": "^3.3.2"
   }
 }
