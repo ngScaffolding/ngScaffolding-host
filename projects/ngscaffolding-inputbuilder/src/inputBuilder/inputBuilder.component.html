@@ -9,6 +9,10 @@ class="ui-g" (ngSubmit)="onSubmit(form)"
 
         <div [ngSwitch]="input.type" [className]="input.containerClass">
 
+            <!-- null === Blank -->
+            <span *ngSwitchCase="'null'" class="md-inputfield">
+            </span>
+
             <!-- textbox -->
             <span *ngSwitchCase="'textbox'" class="md-inputfield">
                 <input class="textInput" *ngIf="!input.mask" type="text" [formControlName]="input.name" [id]="input.name" pInputText>

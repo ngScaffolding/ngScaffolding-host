@@ -1,2 +1,5 @@
-<h1>User DEtails</h1>
-<h2>{{data.email}}</h2>
+<p class="modal-title">User Details</p>
+<ngs-input-builder
+            (modelUpdated)="notifyChanged($event)"
+            [inputBuilderDefinition]="userInputDefinition"
+            [inputModel]="data"></ngs-input-builder>

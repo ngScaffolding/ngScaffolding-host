@@ -39,9 +39,9 @@ export class InputBuilderSimpleComponent {
     orientation: OrientationValues.Horizontal,
     columnCount: 3,
     okButtonText: 'Save Me',
-    okButtonIcon: 'fa-check',
+    okButtonIcon: 'ui-icon-check',
     cancelButtonText: 'Cancel Me',
-    cancelButtonIcon: 'fa-check',
+    cancelButtonIcon: 'ui-icon-clear',
 
     customButtonText: 'Custom Here',
     customButtonIcon: 'fa-check',

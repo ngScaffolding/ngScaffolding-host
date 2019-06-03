@@ -9,9 +9,11 @@ import { UserDetailsComponent } from './pages/userDetails/userDetails.component'
 import { UserAdminRoutingModule } from './userAdmin-routing.module';
 import { createCustomElement } from '@angular/elements';
 
+import { InputBuilderModule } from 'ngscaffolding-inputbuilder';
+
 @NgModule({
   declarations: [UserListComponent, UserDetailsComponent],
-  imports: [CommonModule, UserAdminRoutingModule],
+  imports: [CommonModule, InputBuilderModule, UserAdminRoutingModule],
   entryComponents: [UserDetailsComponent]
 })
 export class UserAdminModule {
