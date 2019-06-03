@@ -58,7 +58,7 @@ export class SaveInputComponent implements OnChanges {
     // Load Roles for sharing diag
     combineLatest([this.rolesQuery.selectAll(), this.rolesQuery.selectLoading()]).subscribe(([roles, rolesLoading]) => {
       if (roles && !rolesLoading) {
-        const rolesItem: InputDetailReferenceValues = this.inputDefinition.inputDetails[2];
+        const rolesItem = this.inputDefinition.inputDetails[2] as InputDetailReferenceValues;
         if (rolesItem) {
           rolesItem.datasourceItems = [{ display: '(None)', value: null }];
           roles.forEach(loopRole => {
@@ -73,7 +73,7 @@ export class SaveInputComponent implements OnChanges {
 
     combineLatest([this.menuQuery.selectAll(), this.menuQuery.selectLoading()]).subscribe(([menuItems, menuLoading]) => {
       if (menuItems && !menuLoading) {
-        const parentItem: InputDetailReferenceValues = this.inputDefinition.inputDetails[1];
+        const parentItem = this.inputDefinition.inputDetails[1] as InputDetailReferenceValues;
 
         parentItem.datasourceItems = [{ display: '(None)', value: null }];
         menuItems
