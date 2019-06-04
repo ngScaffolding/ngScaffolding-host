@@ -1,6 +1,6 @@
 import { Component, SimpleChanges, AfterViewInit, Input, OnChanges, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IUserModel, InputBuilderDefinition, OrientationValues, InputDetailTextBox, InputTypes, InputDetailDropdown, AppSettings, InputDetail } from '@ngscaffolding/models';
+import { IUserModel, InputBuilderDefinition, OrientationValues, InputDetailTextBox, InputTypes, InputDetailDropdown, AppSettings, InputDetail, InputDetailReferenceValues } from '@ngscaffolding/models';
 import { UserService, LoggingService, AppSettingsQuery } from 'ngscaffolding-core';
 
 @Component({
@@ -44,15 +44,25 @@ export class UserDetailsComponent implements AfterViewInit, OnInit, OnChanges {
         <InputDetail>{
           type: InputTypes.null
         },
-        <InputDetailDropdown>{
+        <InputDetailTextBox>{
           label: 'First Name',
           name: 'firstName',
           type: InputTypes.textbox
         },
-        <InputDetailDropdown>{
+        <InputDetailTextBox>{
           label: 'Last Name',
           name: 'lastName',
           type: InputTypes.textbox
+        },
+        <InputDetailReferenceValues>{
+          label: 'User Roles',
+          name: 'roles',
+          type: 'multiselect',
+          datasourceItems: [
+            { display: 'User', value: 'user'},
+            { display: 'Admin', value: 'admin'},
+            { display: 'Server', value: 'server'}
+          ]
         }
       ];
     } else {
@@ -71,15 +81,24 @@ export class UserDetailsComponent implements AfterViewInit, OnInit, OnChanges {
           validateEmail: 'Email is not correct format',
           type: InputTypes.textbox
         },
-        <InputDetailDropdown>{
+        <InputDetailTextBox>{
           label: 'First Name',
           name: 'firstName',
           type: InputTypes.textbox
         },
-        <InputDetailDropdown>{
+        <InputDetailTextBox>{
           label: 'Last Name',
           name: 'lastName',
           type: InputTypes.textbox
+        },
+        <InputDetailReferenceValues>{
+          label: 'User Roles',
+          name: 'roles',
+          type: 'multiselect',
+          datasourceItems: [
+            { display: 'User', value: 'User'},
+            { display: 'Admin', value: 'Admin'}
+          ]
         }
       ]
     }

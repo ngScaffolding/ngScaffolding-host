@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChange, SimpleChanges } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { InputDetail, InputTypes } from '@ngscaffolding/models';
+import { InputDetail, InputTypes, ReferenceValueItem } from '@ngscaffolding/models';
 import { InputBuilderDefinition, OrientationValues, ReferenceValue } from '@ngscaffolding/models';
 
 import { JsonEditorComponent, JsonEditorOptions } from 'ang-jsoneditor';
@@ -169,6 +169,14 @@ export class InputBuilderComponent implements OnInit, OnChanges {
     } else if (inputDetail.type === InputTypes.date || inputDetail.type === InputTypes.datetime || inputDetail.type === InputTypes.time) {
       this.valueUpdated.emit([inputDetail.name, value]);
       returnedValue = value;
+    } else if(inputDetail.type === InputTypes.multiselect) {
+      // This is an array
+      if (Array.isArray(value)) {
+        const asArray = value as Array<ReferenceValueItem>;
+        returnedValue = asArray.map(refVal => refVal.value);
+      } else {
+        returnedValue = [];
+      }
     } else {
       returnedValue = value.toString();
 

@@ -83,6 +83,14 @@ class="ui-g" (ngSubmit)="onSubmit(form)"
                 <p-chips [id]="input.name" [placeholder]="input.label" [formControlName]="input.name"></p-chips>
             </span>
 
+            <!-- multiselect -->
+            <span *ngSwitchCase="'multiselect'" class="md-inputfield">
+                <p-multiSelect [id]="input.name" class="multi-select"
+                  [formControlName]="input.name"
+                  appendTo="body" optionLabel="display"
+                  [options]="input.datasourceItems"></p-multiSelect>
+          </span>
+
             <!-- InputSwitch -->
             <span *ngSwitchCase="'switch'">
                 <p-inputSwitch [id]="input.name" [formControlName]="input.name">
