@@ -8,6 +8,7 @@ import { JsonEditorComponent, JsonEditorOptions } from 'ang-jsoneditor';
 
 import { AppSettingsService, AppSettingsQuery, ReferenceValuesService } from 'ngscaffolding-core';
 import { InputDetailReferenceValues } from '@ngscaffolding/models';
+import { deepStrictEqual } from 'assert';
 
 @Component({
   selector: 'ngs-input-builder',
@@ -121,21 +122,15 @@ export class InputBuilderComponent implements OnInit, OnChanges {
 
         formGroup[inputDetail.name] = formControl;
 
-        // If Datasource, get the values
-        if (inputDetail.hasOwnProperty('referenceValueName') && (<InputDetailReferenceValues>inputDetail).referenceValueName) {
-          this.loadDataSource(inputDetail).subscribe(_ => {
-            // Now we have the values, find the ReferenceValue that matches the inputValue from above
-            if (this.clonedInputModel[inputDetail.name] && (<InputDetailReferenceValues>inputDetail).datasourceItems) {
-              const foundInputValue = (<InputDetailReferenceValues>inputDetail).datasourceItems // tslint:disable-next-line:triple-equals
-                .find(ds => ds.value == inputValue);
+        if (inputDetail['datasourceItems'] && inputDetail['datasourceItems'].length > 0) {
 
-              if (foundInputValue) {
-                formControl.setValue(foundInputValue, {
-                  onlySelf: true,
-                  emitEvent: false
-                });
-              }
-            }
+          // Pre loaded datasourceItems
+          this.manipulateValuesToObjects(formControl, inputDetail as InputDetailReferenceValues, inputValue);
+        } else if (inputDetail.hasOwnProperty('referenceValueName') && (<InputDetailReferenceValues>inputDetail).referenceValueName) {
+
+          // If Datasource, get the values
+          this.loadDataSource(inputDetail).subscribe(_ => {
+            this.manipulateValuesToObjects(formControl, inputDetail as InputDetailReferenceValues, inputValue);
           });
         }
       });
@@ -145,6 +140,32 @@ export class InputBuilderComponent implements OnInit, OnChanges {
     this.form.valueChanges.subscribe(changes => {
       this.formChanges(changes);
     });
+  }
+
+  private manipulateValuesToObjects(formControl: FormControl, inputDetail: InputDetailReferenceValues, inputValue: any) {
+    if (inputDetail.type === InputTypes.multiselect) {
+      const foundValues = (<InputDetailReferenceValues>inputDetail).datasourceItems // tslint:disable-next-line:triple-equals
+        .filter(ds => inputValue.includes(ds.value));
+
+        formControl.setValue(foundValues, {
+          onlySelf: true,
+          emitEvent: false
+        });
+
+    } else {
+      // Now we have the values, find the ReferenceValue that matches the inputValue from above
+      if (this.clonedInputModel[inputDetail.name] && (<InputDetailReferenceValues>inputDetail).datasourceItems) {
+        const foundInputValue = (<InputDetailReferenceValues>inputDetail).datasourceItems // tslint:disable-next-line:triple-equals
+          .find(ds => ds.value == inputValue);
+
+        if (foundInputValue) {
+          formControl.setValue(foundInputValue, {
+            onlySelf: true,
+            emitEvent: false
+          });
+        }
+      }
+    }
   }
 
   private parseValue(inputDetail: InputDetail, value: string): any {

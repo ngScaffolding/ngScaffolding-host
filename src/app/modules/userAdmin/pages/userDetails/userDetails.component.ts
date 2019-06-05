@@ -115,16 +115,6 @@ export class UserDetailsComponent implements AfterViewInit, OnInit, OnChanges {
 
 
   ngAfterViewInit(): void {
-    // this.route.queryParams.subscribe(params => {
-    //   this.userId = params['userId'];
-    //   this.userService.getUser(this.userId).subscribe(
-    //     user => {
-    //       this.user = user;
-    //     },
-    //     err => {
-    //       this.logger.error('Failed to Load User', 'Load user', true);
-    //     }
-    //   );
-    // });
+
   }
 }
