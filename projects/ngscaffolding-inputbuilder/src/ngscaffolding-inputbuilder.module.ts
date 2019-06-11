@@ -9,6 +9,9 @@ import { InputBuilderPopupComponent } from './inputBuilderPopup/inputBuilderPopu
 
 import { NgJsonEditorModule } from 'ang-jsoneditor';
 
+// Components
+import { EditableTitleComponent } from './components';
+
 import {
   DialogModule,
   InputTextModule,
@@ -68,10 +71,12 @@ export * from './inputBuilderPopup/inputBuilderPopup.component';
     NgJsonEditorModule
   ],
   declarations: [
+    EditableTitleComponent,
     InputBuilderComponent,
     InputBuilderPopupComponent
   ],
   exports: [
+    EditableTitleComponent,
     InputBuilderComponent,
     InputBuilderPopupComponent
   ]
