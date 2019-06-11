@@ -12,7 +12,6 @@ HighchartsMore(Highcharts);
 
 // Load Gauge
 import * as HC_solid_gauge from 'highcharts/modules/solid-gauge.src';
-import { timeout } from 'rxjs/internal/operators/timeout';
 HC_solid_gauge(Highcharts);
 
 @Component({

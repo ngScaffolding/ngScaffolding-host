@@ -1,13 +1,11 @@
-import { Component, AfterViewInit, ElementRef, Renderer, ViewChild, OnDestroy, OnInit, NgZone } from '@angular/core';
+import { Component, AfterViewInit } from '@angular/core';
 
 import { Router, NavigationEnd, NavigationError, NavigationStart, RouterEvent, NavigationCancel } from '@angular/router';
 import { Title } from '@angular/platform-browser';
-import { map, filter, scan } from 'rxjs/operators';
+import { filter } from 'rxjs/operators';
 
-import { UserPreferenceValue, AppSettings } from '@ngscaffolding/models';
-import { LoggingService, SpinnerService } from 'ngscaffolding-core';
-import { UserAuthenticationQuery, UserPreferencesService } from 'ngscaffolding-core';
-import { BroadcastService, BroadcastTypes, MenuService } from 'ngscaffolding-core';
+import { AppSettings } from '@ngscaffolding/models';
+import { LoggingService, SpinnerService,UserAuthenticationQuery, BroadcastService, BroadcastTypes, MenuService } from 'ngscaffolding-core';
 import { NotificationReceiverService } from './services/notificationReceiver/notificationReceiver.service';
 import { AppSettingsQuery } from 'ngscaffolding-core';
 import { UserPreferencesQuery } from 'projects/ngscaffolding-core/src/services/userPreferences/appSettings.query';

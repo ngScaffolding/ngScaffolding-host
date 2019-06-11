@@ -12,7 +12,6 @@ import {
   LoggingService,
   UserAuthenticationQuery
 } from 'ngscaffolding-core';
-import { Observable } from 'rxjs';
 import { finalize, tap } from 'rxjs/operators';
 
 @Injectable()

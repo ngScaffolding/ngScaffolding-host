@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { UserPreferencesService, UserPreferencesQuery } from 'ngscaffolding-core';
 import { InputBuilderDefinition, OrientationValues, InputDetail, UserPreferenceValue } from '@ngscaffolding/models';
-import { take } from 'rxjs/internal/operators/take';
 import { combineLatest, Observable, Subscription } from 'rxjs';
 
 @Component({

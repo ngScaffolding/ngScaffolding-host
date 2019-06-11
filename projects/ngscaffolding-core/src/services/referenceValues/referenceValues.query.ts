@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { QueryEntity } from '@datorama/akita';
 import { ReferenceValuesStore, ReferenceValuesState } from './referenceValues.store';
 import { ReferenceValue } from '@ngscaffolding/models';
-import { Observable } from 'rxjs/internal/Observable';
 
 @Injectable({
   providedIn: 'root'

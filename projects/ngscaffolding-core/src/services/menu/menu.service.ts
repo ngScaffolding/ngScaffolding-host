@@ -2,6 +2,7 @@ import { RolesService } from '../rolesService/roles.service';
 import { Injectable } from '@angular/core';
 import { Route } from '@angular/router';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
+import { timeout, finalize } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 
 import { LoggingService } from '../logging/logging.service';
@@ -10,9 +11,6 @@ import { AppSettingsQuery } from '../appSettings';
 import { UserAuthenticationQuery } from '../userAuthentication';
 import { MenuStore } from './menu.store';
 import { MenuQuery } from './menu.query';
-import { isArray } from 'util';
-import { finalize } from 'rxjs/internal/operators/finalize';
-import { timeout } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'

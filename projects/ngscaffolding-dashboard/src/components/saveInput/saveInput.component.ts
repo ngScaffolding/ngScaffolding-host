@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
-import { AppSettingsService, AppSettingsQuery, MenuQuery } from 'ngscaffolding-core';
+import { MenuQuery } from 'ngscaffolding-core';
 import { CoreMenuItem, InputBuilderDefinition, InputTypes, InputDetailReferenceValues, MenuTypes } from '@ngscaffolding/models';
 import { combineLatest } from 'rxjs';
 import { RolesQuery } from 'projects/ngscaffolding-core/src/services/rolesService/roles.query';

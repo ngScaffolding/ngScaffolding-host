@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { Subject } from 'rxjs/internal/Subject';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { map, filter } from 'rxjs/operators';
 
 interface BroadcastEvent {

@@ -4,7 +4,7 @@ import { LoggingService } from '../logging/logging.service';
 import { HttpClient } from '@angular/common/http';
 import { AppSettingsStore } from './appSettings.store';
 import { AppSettingsQuery } from './appSettings.query';
-import { Observable } from 'rxjs/internal/Observable';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'

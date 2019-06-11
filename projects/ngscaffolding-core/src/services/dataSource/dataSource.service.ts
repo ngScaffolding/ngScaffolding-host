@@ -1,4 +1,5 @@
 import { Observable, forkJoin, throwError } from 'rxjs';
+import { timeout } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
@@ -7,7 +8,6 @@ import { DataSourceRequest, DataResults, AppSettings } from '@ngscaffolding/mode
 import { LoggingService } from '../logging/logging.service';
 import { DataSourceStore } from './dataSource.store';
 import { DataSourceQuery } from './dataSource.query';
-import { timeout, tap, map } from 'rxjs/operators';
 import {} from '@datorama/akita';
 
 @Injectable({

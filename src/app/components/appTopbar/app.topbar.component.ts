@@ -1,7 +1,7 @@
 import { Component, Inject, forwardRef } from '@angular/core';
 import { AppComponent } from '../../app.component';
 import { AppSettingsQuery, AppSettingsService, ReferenceValuesService, UserAuthenticationBase, UserAuthenticationQuery } from 'ngscaffolding-core';
-import { Observable } from 'rxjs/internal/Observable';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-topbar',

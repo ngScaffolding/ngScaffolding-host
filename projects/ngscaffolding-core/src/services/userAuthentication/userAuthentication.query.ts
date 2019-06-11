@@ -1,9 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Query, toBoolean } from '@datorama/akita';
 import { AuthenticationStore, AuthenticationState } from './userAuthentication.store';
-import { BasicUser } from '@ngscaffolding/models';
-import { Observable } from 'rxjs/internal/Observable';
-import { setStyles } from '@angular/animations/browser/src/util';
 
 @Injectable({
   providedIn: 'root'

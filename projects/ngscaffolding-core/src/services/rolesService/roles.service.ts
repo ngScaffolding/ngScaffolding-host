@@ -4,7 +4,7 @@ import { RolesQuery } from './roles.query';
 import { RolesStore } from './roles.store';
 import { AppSettingsQuery } from '../appSettings';
 import { combineLatest } from 'rxjs';
-import { AppSettings, Role, SystemDataSourceNames } from '@ngscaffolding/models';
+import { AppSettings, SystemDataSourceNames } from '@ngscaffolding/models';
 import { take, finalize } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { DataSourceService } from '../dataSource/dataSource.service';

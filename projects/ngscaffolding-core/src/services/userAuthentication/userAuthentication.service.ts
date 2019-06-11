@@ -1,4 +1,6 @@
-import { BehaviorSubject, Observable, combineLatest } from 'rxjs';
+import { Observable } from 'rxjs';
+import { timeout } from 'rxjs/operators';
+
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 
@@ -7,13 +9,10 @@ import { LoggingService } from '../logging/logging.service';
 
 import { BasicUser, AppSettings } from '@ngscaffolding/models';
 
-import { UserAuthenticationQuery } from './userAuthentication.query';
 import { AuthenticationStore } from './userAuthentication.store';
 
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { UserAuthenticationBase } from './UserAuthenticationBase';
-import { AppSettingsQuery } from '../appSettings';
-import { timeout } from 'rxjs/internal/operators/timeout';
 
 @Injectable({ providedIn: 'root' })
 export class UserAuthenticationService implements UserAuthenticationBase {

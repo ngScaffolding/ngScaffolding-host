@@ -1,7 +1,7 @@
 import { RolesService } from '../rolesService/roles.service';
 import { Injectable } from '@angular/core';
-import { Route } from '@angular/router';
-import { BehaviorSubject, combineLatest, forkJoin } from 'rxjs';
+import { combineLatest } from 'rxjs';
+import { finalize, take } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 
 import { LoggingService } from '../logging/logging.service';
@@ -10,9 +10,7 @@ import { AppSettingsQuery } from '../appSettings';
 import { UserAuthenticationQuery } from '../userAuthentication';
 import { WidgetStore } from './widget.store';
 import { WidgetQuery } from './widget.query';
-import { isArray } from 'util';
-import { finalize } from 'rxjs/internal/operators/finalize';
-import { take } from 'rxjs/internal/operators/take';
+
 
 @Injectable({
   providedIn: 'root'

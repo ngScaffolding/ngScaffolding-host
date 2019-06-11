@@ -11,7 +11,7 @@ import { UserAuthenticationQuery } from 'ngscaffolding-core';
 import { BroadcastService, BroadcastTypes, MenuService } from 'ngscaffolding-core';
 import { NotificationReceiverService } from './services/notificationReceiver/notificationReceiver.service';
 import { AppSettingsQuery } from 'ngscaffolding-core';
-import { Observable } from 'rxjs/internal/Observable';
+import { Observable } from 'rxjs';
 import { AppSettings } from '@ngscaffolding/models';
 import { UserPreferencesQuery } from 'projects/ngscaffolding-core/src/services/userPreferences/appSettings.query';
 
