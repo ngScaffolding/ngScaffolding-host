@@ -9,7 +9,9 @@ import { ConfirmationService } from 'primeng/primeng';
 import { Dialog } from 'primeng/dialog';
 import { MessageService } from 'primeng/components/common/messageservice';
 
-import * as moment from 'moment';
+// Workaround for odd moment naming collision
+import * as moment_ from 'moment';
+const moment = moment_;
 
 import {
   ActionService,

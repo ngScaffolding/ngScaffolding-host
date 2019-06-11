@@ -40,7 +40,7 @@ export class MenuService {
     public rolesService: RolesService
   ) {
     // Wait for settings, then load from server
-    combineLatest(this.authQuery.authenticated$, this.appSettingsQuery.selectEntity(AppSettings.apiHome)).subscribe(([authenticated, apiHome]) => {
+    combineLatest([this.authQuery.authenticated$, this.appSettingsQuery.selectEntity(AppSettings.apiHome)]).subscribe(([authenticated, apiHome]) => {
       if (authenticated && apiHome && !this.menuDownloaded) {
         this.apiHome = apiHome.value;
         if (!this.httpInFlight) {
@@ -148,7 +148,7 @@ export class MenuService {
       // Is this role protected
       if (menuItem.roles && menuItem.roles.length > 0) {
         if (userRoles && menuItem.roles
-            .filter(allowedRole => userRoles.includes(allowedRole)).length === 0) {
+            .filter(allowedRole => userRoles.indexOf(allowedRole) !== -1).length === 0) {
           // No Authority. Remove
           removingThis = true;
           removingMenus.push(menuItems.indexOf(menuItem));

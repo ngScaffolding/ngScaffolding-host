@@ -1,4 +1,5 @@
-import * as moment from 'moment';
+import * as dateFormatimp from 'dateformat';
+const dateFormat = dateFormatimp;
 
 import { Pipe, PipeTransform } from '@angular/core';
 import { AppSettingsQuery } from '../services';
@@ -10,7 +11,7 @@ export class NgsDateTimePipe implements PipeTransform {
   transform(inputDate: Date): string {
     if (inputDate) {
       const format = this.appSettings.getEntity(AppSettings.momentDateTimeFormat);
-      return moment(inputDate).format(format.value);
+      return dateFormat(inputDate, format.value);
     } else {
       return '';
     }

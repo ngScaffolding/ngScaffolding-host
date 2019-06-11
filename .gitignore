@@ -8,6 +8,16 @@ build/*
 
 # dependencies
 /node_modules
+/projects/ngscaffolding-core/dist
+/projects/ngscaffolding-core/node_modules
+/projects/ngscaffolding-chart/dist
+/projects/ngscaffolding-chart/node_modules
+/projects/ngscaffolding-dashboard/dist
+/projects/ngscaffolding-dashboard/node_modules
+/projects/ngscaffolding-datagrid/dist
+/projects/ngscaffolding-datagrid/node_modules
+/projects/ngscaffolding-inputbuilder/dist
+/projects/ngscaffolding-inputbuilder/node_modules
 
 # IDEs and editors
 /.idea
