@@ -26,13 +26,6 @@ export class InputBuilderSimpleComponent {
         value: '',
         type: InputTypes.textbox,
         help: 'Help Me. Please help me Please Mister.'
-      },
-      <InputDetailDropdown> {
-        placeholder: 'Simple Continents',
-        name: 'simpleSelectContinents',
-        type: InputTypes.select,
-        referenceValueName: 'Continents',
-        help: 'Basic Select Only'
       }]
   };
   inputDefinition1: InputBuilderDefinition = {

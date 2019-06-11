@@ -58,11 +58,7 @@ export class UserDetailsComponent implements AfterViewInit, OnInit, OnChanges {
           label: 'User Roles',
           name: 'roles',
           type: 'multiselect',
-          datasourceItems: [
-            { display: 'User', value: 'user'},
-            { display: 'Admin', value: 'admin'},
-            { display: 'Server', value: 'server'}
-          ]
+          referenceValueName: 'system.roles'
         }
       ];
     } else {
