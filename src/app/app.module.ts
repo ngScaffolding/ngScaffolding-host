@@ -163,16 +163,5 @@ const appInitializerFn = (appConfig: AppSettingsService, menuService: MenuServic
 export class AppModule {
   constructor(private versions: VersionsService) {
     versions.addVersion('@ngscaffolding/host', VERSION.version);
-
-
-    // this.router.events.subscribe(async routerEvent => {
-
-    //   if (routerEvent instanceof NavigationStart) {
-    //     const event = routerEvent as NavigationStart;
-    //     if (event.url.startsWith('/datagrid')) {
-    //       addDynamicDatagridComponents(this.router.config, this.dynamicComponents);
-    //     }
-    //   }
-    // });
   }
 }
