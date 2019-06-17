@@ -49,6 +49,7 @@
     "chart.js": "2.7.1",
     "copy-webpack-plugin": "4.5.2",
     "core-js": "^2.6.2",
+    "dateformat": "^3.0.3",
     "fullcalendar": "4.0.0-alpha",
     "highcharts": "^6.2.0",
     "highcharts-angular": "^2.4.0",
