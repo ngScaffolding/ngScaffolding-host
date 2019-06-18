@@ -3,7 +3,6 @@ import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { LoggingService, MenuQuery } from 'ngscaffolding-core';
 import { CoreMenuItem, ChartDetailModel } from '@ngscaffolding/models';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'ngs-chart-holder',
