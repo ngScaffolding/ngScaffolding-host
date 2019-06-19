@@ -11,6 +11,7 @@ export { AppSettingsService } from './services/appSettings/appSettings.service';
 export { AppSettingsState, AppSettingsStore } from './services/appSettings/appSettings.store';
 
 export { BroadcastService, BroadcastTypes } from './services/broadcast/broadcast.service';
+export { ComponentLoaderService } from './services/componentLoader.service';
 export { CoreErrorHandlerService } from './services/coreErrorHandler/coreErrorHandler.service';
 export { DataSourceQuery } from './services/dataSource/dataSource.query';
 export { DataSourceService } from './services/dataSource/dataSource.service';
