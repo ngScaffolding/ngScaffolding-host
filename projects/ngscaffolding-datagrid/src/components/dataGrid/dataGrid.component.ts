@@ -33,7 +33,7 @@ import { ActionsHolderComponent } from '../actionsHolder/actionsHolder.component
 import { ButtonCellComponent, ActionClickedData } from '../../cellTemplates/buttonCell/buttonCell.component';
 import { Subscription } from 'rxjs';
 import { ValueGetterParams } from 'ag-grid/dist/lib/entities/colDef';
-import { UserPreferencesQuery } from 'projects/ngscaffolding-core/src/services/userPreferences/appSettings.query';
+import { UserPreferencesQuery } from 'ngscaffolding-core';
 
 @Component({
   selector: 'ngs-data-grid',

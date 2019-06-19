@@ -31,8 +31,8 @@
   ],
   "paths": {
     "ngscaffolding-core": [
-      // "dist/ngscaffolding-core"
-      "../ngscaffolding-core/src/public_api"
+       //"../dist/ngscaffolding-core"
+       "../ngscaffolding-core/src/public_api"
     ]
   }
 }
