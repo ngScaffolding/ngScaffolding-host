@@ -33,6 +33,7 @@ export { RoleState, RolesStore } from './services/rolesService/roles.store';
 
 export { SpinnerService } from './services/spinnerService/spinner.service';
 
+export { UserAuthenticationBase } from './services/userAuthentication/UserAuthenticationBase';
 export { UserAuthenticationQuery } from './services/userAuthentication/userAuthentication.query';
 export { UserAuthenticationService } from './services/userAuthentication/userAuthentication.service';
 export { AuthenticationState, AuthenticationStore } from './services/userAuthentication/userAuthentication.store';
@@ -40,6 +41,10 @@ export { AuthenticationState, AuthenticationStore } from './services/userAuthent
 export { UserPreferencesQuery } from './services/userPreferences/userPreferences.query';
 export { UserPreferencesService } from './services/userPreferences/userPreferences.service';
 export { UserPreferencesState, UserPreferencesStore } from './services/userPreferences/userPreferences.store';
+
+export { WidgetQuery } from './services/widgetsService/widget.query';
+export { WidgetService } from './services/widgetsService/widget.service';
+export { WidgetState, WidgetStore } from './services/widgetsService/widget.store';
 
 export { UserService } from './services/userService/user.service';
 export { SoftwareVersion, VersionsService } from './services/versions/versions.service';
