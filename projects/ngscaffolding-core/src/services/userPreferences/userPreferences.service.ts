@@ -7,8 +7,8 @@ import { AppSettingsService } from '../appSettings/appSettings.service';
 
 // Models
 import { UserPreferenceDefinition, UserPreferenceValue, AppSettings } from '@ngscaffolding/models';
-import { UserPreferencesStore } from './appSettings.store';
-import { UserPreferencesQuery } from './appSettings.query';
+import { UserPreferencesStore } from './userPreferences.store';
+import { UserPreferencesQuery } from './userPreferences.query';
 import { LoggingService } from '../logging/logging.service';
 
 @Injectable({

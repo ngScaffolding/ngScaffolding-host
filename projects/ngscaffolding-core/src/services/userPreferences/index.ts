@@ -1,3 +1,3 @@
-export * from './appSettings.query';
-export * from './appSettings.store';
+export * from './userPreferences.query';
+export * from './userPreferences.store';
 export * from './userPreferences.service';

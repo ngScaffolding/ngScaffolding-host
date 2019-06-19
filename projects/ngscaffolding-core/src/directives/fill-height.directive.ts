@@ -1,7 +1,6 @@
 import { HostListener, Directive, ElementRef, Input, AfterViewInit } from '@angular/core';
 
 @Directive({ selector: '[ngsFillHeight]' })
-
 export class FillHeightDirective implements AfterViewInit {
   @Input() footerElement = null;
   constructor(private el: ElementRef) {}

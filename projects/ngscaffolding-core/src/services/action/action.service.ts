@@ -13,8 +13,7 @@ import { ActionResultModel, ActionRequestModel } from '@ngscaffolding/models';
 export class ActionService {
   constructor(
     private http: HttpClient,
-    private appSettingsService: AppSettingsService,
-    private logger: LoggingService
+    private appSettingsService: AppSettingsService
   ) {}
 
   callAction(action: Action, inputDetails: any, rows: any[]): Observable<ActionResultModel> {

@@ -6,11 +6,13 @@ import { FormsModule } from '@angular/forms';
 import { VERSION } from './version';
 
 // Pipes
-import { ButtonColourPipe, NgsDateTimePipe } from './pipes';
-import { NgsDatePipe } from './pipes/ngsDate.pipe';
+import { ButtonColourPipe, NgsDateTimePipe, NgsDatePipe } from './pipes/index';
 
 // Directives
-import { FillHeightDirective } from './directives';
+import { FillHeightDirective } from './directives/index';
+
+// Services
+import { ActionService, AppSettingsService, LoggingService } from './services/index';
 
 import { VersionsService } from './services/versions/versions.service';
 
