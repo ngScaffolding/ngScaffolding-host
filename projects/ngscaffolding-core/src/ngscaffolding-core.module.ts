@@ -6,32 +6,20 @@ import { FormsModule } from '@angular/forms';
 import { VERSION } from './version';
 
 // Pipes
-import { ButtonColourPipe, NgsDateTimePipe, NgsDatePipe } from './pipes/index';
+import { ButtonColourPipe } from './pipes/buttonColour.pipe';
+import { NgsDateTimePipe } from './pipes/ngsDateTime.pipe';
+import { NgsDatePipe } from './pipes/ngsDate.pipe';
 
 // Directives
-import { FillHeightDirective } from './directives/index';
+import { FillHeightDirective } from './directives/fill-height.directive';
 
 // Services
-import { ActionService, AppSettingsService, LoggingService } from './services/index';
-
 import { VersionsService } from './services/versions/versions.service';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    HttpClientModule
-  ],
-  declarations: [
-    FillHeightDirective,
-    ButtonColourPipe,
-    NgsDatePipe, NgsDateTimePipe
-  ],
-  exports: [
-    ButtonColourPipe,
-    NgsDatePipe, NgsDateTimePipe,
-    FillHeightDirective
-  ]
+  imports: [CommonModule, FormsModule, HttpClientModule],
+  declarations: [FillHeightDirective, ButtonColourPipe, NgsDatePipe, NgsDateTimePipe],
+  exports: [ButtonColourPipe, NgsDatePipe, NgsDateTimePipe, FillHeightDirective]
 })
 export class CoreModule {
   static forRoot(): ModuleWithProviders {

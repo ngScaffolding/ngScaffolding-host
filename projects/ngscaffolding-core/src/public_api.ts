@@ -49,6 +49,8 @@ export { WidgetState, WidgetStore } from './services/widgetsService/widget.store
 export { UserService } from './services/userService/user.service';
 export { SoftwareVersion, VersionsService } from './services/versions/versions.service';
 
-export * from './directives/index';
-export * from './pipes/index';
-export * from './routeGuards/index';
+export { FillHeightDirective } from './directives/fill-height.directive';
+export { ButtonColourPipe } from './pipes/buttonColour.pipe';
+export { NgsDatePipe } from './pipes/ngsDate.pipe';
+export { NgsDateTimePipe } from './pipes/ngsDateTime.pipe';
+export { AuthoriseRoleGuard } from './routeGuards/authoriseRoleGuard';

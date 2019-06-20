@@ -1,4 +1,6 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
+
 import { VERSION } from './version';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -42,6 +44,7 @@ import {
   imports: [
     CoreModule,
     CommonModule,
+    HttpClientModule,
     AutoCompleteModule,
     FormsModule,
     DialogModule,
@@ -69,11 +72,6 @@ import {
     NgJsonEditorModule
   ],
   declarations: [
-    EditableTitleComponent,
-    InputBuilderComponent,
-    InputBuilderPopupComponent
-  ],
-  exports: [
     EditableTitleComponent,
     InputBuilderComponent,
     InputBuilderPopupComponent
