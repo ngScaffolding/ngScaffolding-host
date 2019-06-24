@@ -75,6 +75,11 @@ import {
     EditableTitleComponent,
     InputBuilderComponent,
     InputBuilderPopupComponent
+  ],
+  exports: [
+    EditableTitleComponent,
+    InputBuilderComponent,
+    InputBuilderPopupComponent
   ]
 })
 export class InputBuilderModule {
