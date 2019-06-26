@@ -215,12 +215,10 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
 
   onSelectionChanged($event) {
     this.selectedRows = this.gridOptions.api.getSelectedRows();
-    this.actionsHolder.selectedRows = this.selectedRows;
-    this.actionsHolder.selectedRowsCount = this.selectedRows.length;
-  }
-
-  selectAllRows() {
-    // this.gridOptions.api.selectAll();
+    if(this.actionsHolder) {
+      this.actionsHolder.selectedRows = this.selectedRows;
+      this.actionsHolder.selectedRowsCount = this.selectedRows.length;
+    }
   }
 
   // Load First Data and if any criteria Changes
