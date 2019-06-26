@@ -5,10 +5,8 @@ import { Title } from '@angular/platform-browser';
 import { filter } from 'rxjs/operators';
 
 import { AppSettings } from '@ngscaffolding/models';
-import { LoggingService, SpinnerService,UserAuthenticationQuery, BroadcastService, BroadcastTypes, MenuService } from 'ngscaffolding-core';
+import { AppSettingsQuery, UserPreferencesQuery, LoggingService, SpinnerService,UserAuthenticationQuery, BroadcastService, BroadcastTypes, MenuService } from 'ngscaffolding-core';
 import { NotificationReceiverService } from './services/notificationReceiver/notificationReceiver.service';
-import { AppSettingsQuery } from 'ngscaffolding-core';
-import { UserPreferencesQuery } from 'projects/ngscaffolding-core/src/services/userPreferences/appSettings.query';
 
 enum MenuOrientation {
   STATIC,

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {
   LoggingService,
   AppSettingsService,
+  AppSettingsQuery,
   NotificationService,
   SpinnerService,
   UserAuthenticationBase
@@ -9,9 +10,7 @@ import {
 import { Router, ActivatedRoute } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { AppSettings } from '@ngscaffolding/models';
-import { AppSettingsQuery } from 'projects/ngscaffolding-core/src/services';
 import { Observable } from 'rxjs';
-// import {MessageService} from 'primeng/components/common/messageservice';
 
 @Component({
   templateUrl: 'loginPage.component.html'

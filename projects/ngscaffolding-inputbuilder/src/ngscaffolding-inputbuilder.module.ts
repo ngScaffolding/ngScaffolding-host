@@ -1,8 +1,10 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
+
 import { VERSION } from './version';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { VersionsService } from 'ngscaffolding-core';
+import { VersionsService, CoreModule } from 'ngscaffolding-core';
 
 import { InputBuilderComponent } from './inputBuilder/inputBuilder.component';
 import { InputBuilderPopupComponent } from './inputBuilderPopup/inputBuilderPopup.component';
@@ -10,7 +12,7 @@ import { InputBuilderPopupComponent } from './inputBuilderPopup/inputBuilderPopu
 import { NgJsonEditorModule } from 'ang-jsoneditor';
 
 // Components
-import { EditableTitleComponent } from './components';
+import { EditableTitleComponent } from './components/editableTitle/editableTitle.component';
 
 import {
   DialogModule,
@@ -38,12 +40,11 @@ import {
   MultiSelectModule, ToggleButtonModule, TooltipModule
 } from 'primeng/primeng';
 
-export * from './inputBuilder/inputBuilder.component';
-export * from './inputBuilderPopup/inputBuilderPopup.component';
-
 @NgModule({
   imports: [
+    CoreModule,
     CommonModule,
+    HttpClientModule,
     AutoCompleteModule,
     FormsModule,
     DialogModule,

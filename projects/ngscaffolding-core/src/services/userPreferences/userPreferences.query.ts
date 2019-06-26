@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { QueryEntity } from '@datorama/akita';
-import { UserPreferencesStore, UserPreferencesState } from './appSettings.store';
+import { UserPreferencesStore, UserPreferencesState } from './userPreferences.store';
 import { UserPreferenceValue } from '@ngscaffolding/models';
 
 @Injectable({

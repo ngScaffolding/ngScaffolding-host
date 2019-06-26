@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, ElementRef, Renderer, ViewChild, OnDestroy, OnInit, NgZone} from '@angular/core';
+import { Component, AfterViewInit, ElementRef, Renderer, ViewChild, OnDestroy, OnInit, NgZone } from '@angular/core';
 import { ScrollPanel } from 'primeng/primeng';
 
 // ngScaffolding
@@ -6,20 +6,16 @@ import { Router } from '@angular/router';
 import { NgScaffoldingComponent } from './app.ngscaffolding.component';
 import { Title } from '@angular/platform-browser';
 
-import { LoggingService, AppSettingsService, SpinnerService } from 'ngscaffolding-core';
-import { UserAuthenticationQuery } from 'ngscaffolding-core';
-import { BroadcastService, BroadcastTypes, MenuService } from 'ngscaffolding-core';
+import { LoggingService, AppSettingsService, SpinnerService, UserPreferencesQuery, AppSettingsQuery, UserAuthenticationQuery, BroadcastService, BroadcastTypes, MenuService } from 'ngscaffolding-core';
 import { NotificationReceiverService } from './services/notificationReceiver/notificationReceiver.service';
-import { AppSettingsQuery } from 'ngscaffolding-core';
 import { Observable } from 'rxjs';
 import { AppSettings } from '@ngscaffolding/models';
-import { UserPreferencesQuery } from 'projects/ngscaffolding-core/src/services/userPreferences/appSettings.query';
 
 enum MenuOrientation {
-    STATIC,
-    OVERLAY,
-    SLIM,
-    HORIZONTAL
+  STATIC,
+  OVERLAY,
+  SLIM,
+  HORIZONTAL
 }
 
 @Component({
@@ -27,8 +23,7 @@ enum MenuOrientation {
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent extends NgScaffoldingComponent
-  implements AfterViewInit, OnDestroy, OnInit {
+export class AppComponent extends NgScaffoldingComponent implements AfterViewInit, OnDestroy, OnInit {
   layoutCompact = false;
 
   layoutMode: MenuOrientation = MenuOrientation.STATIC;
@@ -92,18 +87,7 @@ export class AppComponent extends NgScaffoldingComponent
     public broadcastService: BroadcastService,
     public userPrefsQuery: UserPreferencesQuery
   ) {
-    super(
-      router,
-      logger,
-      authQuery,
-      titleService,
-      appSettingsQuery,
-      notificationReceiverService,
-      spinnerService,
-      menuService,
-      broadcastService,
-      userPrefsQuery
-    );
+    super(router, logger, authQuery, titleService, appSettingsQuery, notificationReceiverService, spinnerService, menuService, broadcastService, userPrefsQuery);
 
     this.showFullMessages$ = this.appSettingsQuery.selectEntity(AppSettings.showFullMessages, entity => entity.value);
     this.showToastMessages$ = this.appSettingsQuery.selectEntity(AppSettings.showToastMessages, entity => entity.value);
@@ -127,11 +111,7 @@ export class AppComponent extends NgScaffoldingComponent
   }
 
   rippleMouseDown(e) {
-    for (
-      let target = e.target;
-      target && target !== this;
-      target = target['parentNode']
-    ) {
+    for (let target = e.target; target && target !== this; target = target['parentNode']) {
       if (!this.isVisible(target)) {
         continue;
       }
@@ -168,9 +148,7 @@ export class AppComponent extends NgScaffoldingComponent
       this.addClass(inkEl, 'ink');
 
       if (this.hasClass(element, 'ripplelink')) {
-        element
-          .querySelector('span')
-          .insertAdjacentHTML('afterend', '<span class="ink"></span>');
+        element.querySelector('span').insertAdjacentHTML('afterend', '<span class="ink"></span>');
       } else {
         element.appendChild(inkEl);
       }
@@ -197,9 +175,7 @@ export class AppComponent extends NgScaffoldingComponent
     if (element.classList) {
       return element.classList.contains(className);
     } else {
-      return new RegExp('(^| )' + className + '( |$)', 'gi').test(
-        element.className
-      );
+      return new RegExp('(^| )' + className + '( |$)', 'gi').test(element.className);
     }
   }
 
@@ -215,13 +191,7 @@ export class AppComponent extends NgScaffoldingComponent
     if (element.classList) {
       element.classList.remove(className);
     } else {
-      element.className = element.className.replace(
-        new RegExp(
-          '(^|\\b)' + className.split(' ').join('|') + '(\\b|$)',
-          'gi'
-        ),
-        ' '
-      );
+      element.className = element.className.replace(new RegExp('(^|\\b)' + className.split(' ').join('|') + '(\\b|$)', 'gi'), ' ');
     }
   }
 
@@ -229,18 +199,8 @@ export class AppComponent extends NgScaffoldingComponent
     const rect = el.getBoundingClientRect();
 
     return {
-      top:
-        rect.top +
-        (window.pageYOffset ||
-          document.documentElement.scrollTop ||
-          document.body.scrollTop ||
-          0),
-      left:
-        rect.left +
-        (window.pageXOffset ||
-          document.documentElement.scrollLeft ||
-          document.body.scrollLeft ||
-          0)
+      top: rect.top + (window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0),
+      left: rect.left + (window.pageXOffset || document.documentElement.scrollLeft || document.body.scrollLeft || 0)
     };
   }
 
@@ -255,8 +215,7 @@ export class AppComponent extends NgScaffoldingComponent
 
   ngAfterViewInit() {
     super.ngAfterViewInit();
-    this.layoutContainer = <HTMLDivElement>this.layourContainerViewChild
-      .nativeElement;
+    this.layoutContainer = <HTMLDivElement>this.layourContainerViewChild.nativeElement;
     setTimeout(() => {
       this.layoutMenuScrollerViewChild.moveBar();
     }, 100);

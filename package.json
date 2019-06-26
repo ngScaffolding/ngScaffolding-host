@@ -9,7 +9,7 @@
     "build": "ng build --prod",
     "libs": "rimraf dist & npm run lib-core & npm run lib-inputbuilder & npm run lib-chart & npm run lib-datagrid & npm run lib-dashboard",
     "lib-core": "rimraf dist/ngscaffolding-core & ng build ngscaffolding-core & cd ./dist/ngscaffolding-core & npm pack",
-    "lib-inputbuilder": "ng build ngscaffolding-inputbuilder & cd ./dist/ngscaffolding-inputbuilder & npm pack",
+    "lib-inputbuilder": "rimraf dist/ngscaffolding-inputbuilder & ng build ngscaffolding-inputbuilder & cd ./dist/ngscaffolding-inputbuilder & npm pack",
     "lib-chart": "rimraf dist/ngscaffolding-chart & ng build ngscaffolding-chart & cd ./dist/ngscaffolding-chart & npm pack",
     "lib-datagrid": "ng build ngscaffolding-datagrid & cd ./dist/ngscaffolding-datagrid & npm pack",
     "lib-dashboard": "ng build ngscaffolding-dashboard & cd ./dist/ngscaffolding-dashboard & npm pack",

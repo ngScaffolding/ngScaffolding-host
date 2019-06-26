@@ -2,9 +2,7 @@
  * Public API Surface of ngscaffolding-inputbuilder
  */
 
-
-export * from './ngscaffolding-inputbuilder.module';
-
-export * from './inputBuilder/inputBuilder.component';
-export * from './inputBuilderPopup/inputBuilderPopup.component';
-export * from './components';
+export { EditableTitleComponent } from './components/editableTitle/editableTitle.component';
+export { InputBuilderComponent } from './inputBuilder/inputBuilder.component';
+export { InputBuilderPopupComponent } from './inputBuilderPopup/inputBuilderPopup.component';
+export { InputBuilderModule } from './ngscaffolding-inputbuilder.module';

@@ -4,7 +4,7 @@ import {
   ActivatedRouteSnapshot,
   RouterStateSnapshot
 } from '@angular/router';
-import { UserAuthenticationQuery } from '../services';
+import { UserAuthenticationQuery } from '../services/userAuthentication/userAuthentication.query';
 import { Injectable } from '@angular/core';
 import { RolesService } from '../services/rolesService/roles.service';
 
