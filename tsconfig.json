@@ -22,28 +22,22 @@
     ],
     "paths": {
       "ngscaffolding-models": [
-        // "dist/ngscaffolding-core"
         "projects/models/src/index"
       ],
       "ngscaffolding-core": [
         "projects/core/src/public_api"
       ],
       "ngscaffolding-inputbuilder": [
-        // "dist/ngscaffolding-inputbuilder"
-        "projects/ngscaffolding-inputbuilder/src/public_api"
-
+        "projects/inputbuilder/src/public_api"
       ],
       "ngscaffolding-chart": [
         "projects/chart/src/public_api"
-        // "dist/ngscaffolding-chart"
       ],
       "ngscaffolding-dashboard": [
-        "projects/ngscaffolding-dashboard/src/public_api"
-        // "dist/ngscaffolding-dashboard"
+        "projects/dashboard/src/public_api"
       ],
       "ngscaffolding-datagrid": [
-        // "dist/ngscaffolding-datagrid"
-        "projects/ngscaffolding-datagrid/src/public_api"
+        "projects/datagrid/src/public_api"
       ]
     }
   },
