@@ -26,8 +26,7 @@
         "projects/models/src/index"
       ],
       "ngscaffolding-core": [
-        // "dist/ngscaffolding-core"
-        "projects/ngscaffolding-core/src/public_api"
+        "projects/core/src/public_api"
       ],
       "ngscaffolding-inputbuilder": [
         // "dist/ngscaffolding-inputbuilder"
