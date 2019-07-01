@@ -56,7 +56,6 @@
     "json-query": "^2.2.2",
     "jsoneditor": "^5.17.1",
     "moment": "2.19.3",
-    "ngscaffolding-models": "file:./projects/models",
     "ngx-cookie": "^2.0.0",
     "ngx-cookie-service": "^1.0.9",
     "node-sass": "^4.10.0",

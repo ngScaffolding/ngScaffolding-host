@@ -30,6 +30,10 @@
     "**/*.spec.ts"
   ],
   "paths": {
+    "ngscaffolding-models": [
+      //"../dist/ngscaffolding-core"
+      "../models/src/index"
+   ],
     "ngscaffolding-core": [
        //"../dist/ngscaffolding-core"
        "../ngscaffolding-core/src/public_api"
