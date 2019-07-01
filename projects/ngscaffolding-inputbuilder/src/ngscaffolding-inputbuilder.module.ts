@@ -85,10 +85,7 @@ import {
 export class InputBuilderModule {
   static forRoot(): ModuleWithProviders {
     return {
-      ngModule: InputBuilderModule,
-      providers: [
-        // SampleService
-      ]
+      ngModule: InputBuilderModule
     };
   }
   constructor(versions: VersionsService) {
