@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { QueryEntity } from '@datorama/akita';
 import { UserPreferencesStore, UserPreferencesState } from './userPreferences.store';
-import { UserPreferenceValue } from '@ngscaffolding/models';
+import { UserPreferenceValue } from 'ngscaffolding-models';
 
 @Injectable({
   providedIn: 'root'

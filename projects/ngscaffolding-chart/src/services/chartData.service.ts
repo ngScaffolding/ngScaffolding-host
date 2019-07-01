@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ChartDetailModel, DataShapes } from '@ngscaffolding/models';
+import { ChartDetailModel, DataShapes } from 'ngscaffolding-models';
 
 export class ShapedChartData {
   xAxisLabels: string[];

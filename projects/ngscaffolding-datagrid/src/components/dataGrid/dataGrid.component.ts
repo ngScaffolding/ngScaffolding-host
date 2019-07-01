@@ -3,7 +3,7 @@ import { HostListener, Component, Input, Output, EventEmitter, OnInit, OnDestroy
 import { Router, ActivatedRoute } from '@angular/router';
 import { GridOptions, ColDef, ColDefUtil } from 'ag-grid/main';
 
-import { Action, CoreMenuItem, GridViewDetail, InputBuilderDefinition, DataResults, DialogOptions, IDashboardItem, ActionTypes } from '@ngscaffolding/models';
+import { Action, CoreMenuItem, GridViewDetail, InputBuilderDefinition, DataResults, DialogOptions, IDashboardItem, ActionTypes } from 'ngscaffolding-models';
 
 import { ConfirmationService } from 'primeng/primeng';
 import { Dialog } from 'primeng/dialog';

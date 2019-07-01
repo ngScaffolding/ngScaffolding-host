@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { EntityState, EntityStore, StoreConfig } from '@datorama/akita';
-import { CoreMenuItem } from '@ngscaffolding/models';
+import { CoreMenuItem } from 'ngscaffolding-models';
 
 export interface MenuState extends EntityState<CoreMenuItem> {
   menuItems: CoreMenuItem[];

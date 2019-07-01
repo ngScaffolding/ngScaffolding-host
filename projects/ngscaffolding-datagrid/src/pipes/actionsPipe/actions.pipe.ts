@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Action } from '@ngscaffolding/models';
+import { Action } from 'ngscaffolding-models';
 
 @Pipe({
     name: 'actions'

@@ -1,7 +1,7 @@
 import { ErrorHandler, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { ErrorModel, AppSettings } from '@ngscaffolding/models';
+import { ErrorModel, AppSettings } from 'ngscaffolding-models';
 import { AppSettingsService } from '../appSettings/appSettings.service';
 import { NotificationService } from '../notification/notification.service';
 

@@ -7,7 +7,7 @@ import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { AppSettingsService } from '../appSettings/appSettings.service';
 import { LoggingService } from '../logging/logging.service';
 
-import { BasicUser, AppSettings } from '@ngscaffolding/models';
+import { BasicUser, AppSettings } from 'ngscaffolding-models';
 
 import { AuthenticationStore } from './userAuthentication.store';
 

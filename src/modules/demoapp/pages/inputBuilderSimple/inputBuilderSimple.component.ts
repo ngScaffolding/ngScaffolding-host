@@ -8,7 +8,7 @@ import {
   InputDetailTextArea,
   InputDetailTextBox,
   InputLocations
-} from '@ngscaffolding/models';
+} from 'ngscaffolding-models';
 
 @Component({
   templateUrl: 'inputBuilderSimple.component.html',

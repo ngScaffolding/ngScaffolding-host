@@ -5,7 +5,7 @@ import { finalize, take } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 
 import { LoggingService } from '../logging/logging.service';
-import { WidgetModelBase, AppSettings } from '@ngscaffolding/models';
+import { WidgetModelBase, AppSettings } from 'ngscaffolding-models';
 import { AppSettingsQuery } from '../appSettings';
 import { UserAuthenticationQuery } from '../userAuthentication';
 import { WidgetStore } from './widget.store';

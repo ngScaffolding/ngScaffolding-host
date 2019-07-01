@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { ButtonColours } from '@ngscaffolding/models';
+import { ButtonColours } from 'ngscaffolding-models';
 
 @Pipe({ name: 'buttonColour' })
 export class ButtonColourPipe implements PipeTransform {

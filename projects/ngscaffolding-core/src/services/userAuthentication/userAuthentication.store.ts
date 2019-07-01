@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Store, StoreConfig } from '@datorama/akita';
-import { createBasicUser , BasicUser } from '@ngscaffolding/models';
+import { createBasicUser , BasicUser } from 'ngscaffolding-models';
 
 
 export interface AuthenticationState {

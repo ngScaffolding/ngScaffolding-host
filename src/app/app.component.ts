@@ -9,7 +9,7 @@ import { Title } from '@angular/platform-browser';
 import { LoggingService, AppSettingsService, SpinnerService, UserPreferencesQuery, AppSettingsQuery, UserAuthenticationQuery, BroadcastService, BroadcastTypes, MenuService } from 'ngscaffolding-core';
 import { NotificationReceiverService } from './services/notificationReceiver/notificationReceiver.service';
 import { Observable } from 'rxjs';
-import { AppSettings } from '@ngscaffolding/models';
+import { AppSettings } from 'ngscaffolding-models';
 
 enum MenuOrientation {
   STATIC,

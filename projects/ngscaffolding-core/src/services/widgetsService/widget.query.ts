@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { QueryEntity } from '@datorama/akita';
-import { WidgetModelBase } from '@ngscaffolding/models';
+import { WidgetModelBase } from 'ngscaffolding-models';
 import { WidgetStore, WidgetState } from './widget.store';
 
 @Injectable({

@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, ComponentRef, ViewChildren, QueryList, OnChanges, SimpleChanges, Input, Output, EventEmitter } from '@angular/core';
 import { WidgetQuery, WidgetService } from 'ngscaffolding-core';
-import { WidgetModelBase, WidgetTypes } from '@ngscaffolding/models';
+import { WidgetModelBase, WidgetTypes } from 'ngscaffolding-models';
 import { Observable } from 'rxjs';
 
 @Component({

@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 
 import { ActivatedRoute } from '@angular/router';
 import { MenuService, LoggingService, MenuQuery } from 'ngscaffolding-core';
-import { CoreMenuItem, GridViewDetail } from '@ngscaffolding/models';
+import { CoreMenuItem, GridViewDetail } from 'ngscaffolding-models';
 
 @Component({
   selector: 'ngs-datagrid-holder',

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { ColumnModel } from '@ngscaffolding/models';
+import { ColumnModel } from 'ngscaffolding-models';
 
 @Component({
   selector: 'app-column-picker',

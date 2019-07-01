@@ -1,6 +1,6 @@
 import { Component, SimpleChanges, AfterViewInit, Input, OnChanges, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IUserModel, InputBuilderDefinition, OrientationValues, InputDetailTextBox, InputTypes, InputDetailDropdown, AppSettings, InputDetail, InputDetailReferenceValues } from '@ngscaffolding/models';
+import { IUserModel, InputBuilderDefinition, OrientationValues, InputDetailTextBox, InputTypes, InputDetailDropdown, AppSettings, InputDetail, InputDetailReferenceValues } from 'ngscaffolding-models';
 import { UserService, LoggingService, AppSettingsQuery } from 'ngscaffolding-core';
 
 @Component({

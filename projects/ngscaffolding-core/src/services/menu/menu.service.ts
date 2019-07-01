@@ -6,7 +6,7 @@ import { timeout, finalize } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 
 import { LoggingService } from '../logging/logging.service';
-import { CoreMenuItem, AppSettings } from '@ngscaffolding/models';
+import { CoreMenuItem, AppSettings } from 'ngscaffolding-models';
 import { AppSettingsQuery } from '../appSettings';
 import { UserAuthenticationQuery } from '../userAuthentication';
 import { MenuStore } from './menu.store';

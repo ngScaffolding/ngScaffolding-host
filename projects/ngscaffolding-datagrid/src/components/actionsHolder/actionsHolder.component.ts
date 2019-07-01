@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Action } from '@ngscaffolding/models';
+import { Action } from 'ngscaffolding-models';
 import { ButtonColourPipe } from 'ngscaffolding-core';
 
 @Component({

@@ -9,7 +9,7 @@ import {
 } from 'ngscaffolding-core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
-import { AppSettings } from '@ngscaffolding/models';
+import { AppSettings } from 'ngscaffolding-models';
 import { Observable } from 'rxjs';
 
 @Component({

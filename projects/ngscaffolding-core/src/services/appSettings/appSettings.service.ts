@@ -1,5 +1,5 @@
 import { Injectable, Type } from '@angular/core';
-import { AppSettings, AppSettingsValue } from '@ngscaffolding/models';
+import { AppSettings, AppSettingsValue } from 'ngscaffolding-models';
 import { LoggingService } from '../logging/logging.service';
 import { HttpClient } from '@angular/common/http';
 import { AppSettingsStore } from './appSettings.store';

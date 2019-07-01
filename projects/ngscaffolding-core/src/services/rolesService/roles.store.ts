@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { EntityState, EntityStore, StoreConfig } from '@datorama/akita';
-import { Role } from '@ngscaffolding/models';
+import { Role } from 'ngscaffolding-models';
 
 export interface RoleState extends EntityState<Role> {}
 

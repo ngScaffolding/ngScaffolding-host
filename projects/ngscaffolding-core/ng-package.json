@@ -7,7 +7,7 @@
       "@auth0/angular-jwt": "@auth0/angular-jwt",
       "@datorama/akita": "@datorama/akita",
       "dateformat": "dateformat",
-      "@ngscaffolding/models": "@ngscaffolding/models"
+      "ngscaffolding-models": "ngscaffolding-models"
     }
   }
 }

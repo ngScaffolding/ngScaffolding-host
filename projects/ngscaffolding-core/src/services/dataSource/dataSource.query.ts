@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { QueryEntity } from '@datorama/akita';
 import { DataSourceState, DataSourceStore } from './dataSource.store';
-import { DataResults } from '@ngscaffolding/models';
+import { DataResults } from 'ngscaffolding-models';
 
 @Injectable({
   providedIn: 'root'

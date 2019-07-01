@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { BasicUser } from '@ngscaffolding/models';
+import { BasicUser } from 'ngscaffolding-models';
 
 @Injectable()
 export abstract class UserAuthenticationBase {

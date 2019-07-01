@@ -1,6 +1,6 @@
 import { Injectable, Type } from '@angular/core';
 import { EntityState, EntityStore, StoreConfig } from '@datorama/akita';
-import { ReferenceValue } from '@ngscaffolding/models';
+import { ReferenceValue } from 'ngscaffolding-models';
 
 
 export interface ReferenceValuesState extends EntityState<ReferenceValue> {

@@ -1,13 +1,13 @@
 import { Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChange, SimpleChanges } from '@angular/core';
 import { Observable } from 'rxjs';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { InputDetail, InputTypes, ReferenceValueItem } from '@ngscaffolding/models';
-import { InputBuilderDefinition, OrientationValues, ReferenceValue } from '@ngscaffolding/models';
+import { InputDetail, InputTypes, ReferenceValueItem } from 'ngscaffolding-models';
+import { InputBuilderDefinition, OrientationValues, ReferenceValue } from 'ngscaffolding-models';
 
 import { JsonEditorComponent, JsonEditorOptions } from 'ang-jsoneditor';
 
 import { AppSettingsService, AppSettingsQuery, ReferenceValuesService } from 'ngscaffolding-core';
-import { InputDetailReferenceValues } from '@ngscaffolding/models';
+import { InputDetailReferenceValues } from 'ngscaffolding-models';
 
 @Component({
   selector: 'ngs-input-builder',

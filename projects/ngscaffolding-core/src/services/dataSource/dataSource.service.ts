@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { AppSettingsService } from '../appSettings/appSettings.service';
-import { DataSourceRequest, DataResults, AppSettings } from '@ngscaffolding/models';
+import { DataSourceRequest, DataResults, AppSettings } from 'ngscaffolding-models';
 import { LoggingService } from '../logging/logging.service';
 import { DataSourceStore } from './dataSource.store';
 import { DataSourceQuery } from './dataSource.query';

@@ -1,4 +1,4 @@
-import { ReferenceValue, ReferenceValueItem } from '@ngscaffolding/models';
+import { ReferenceValue, ReferenceValueItem } from 'ngscaffolding-models';
 
 export const carsReferenceValues: ReferenceValue = {
   name: 'Cars',

@@ -1,6 +1,6 @@
 import { Injectable, Type } from '@angular/core';
 import { EntityState, EntityStore, StoreConfig } from '@datorama/akita';
-import { AppSettingsValue, AppSettings } from '@ngscaffolding/models';
+import { AppSettingsValue, AppSettings } from 'ngscaffolding-models';
 
 
 export interface AppSettingsState extends EntityState<AppSettingsValue> {

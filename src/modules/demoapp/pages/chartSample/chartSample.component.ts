@@ -8,7 +8,7 @@ import {
   InputDetailTextArea,
   InputDetailTextBox,
   ChartDetailModel
-} from '@ngscaffolding/models';
+} from 'ngscaffolding-models';
 import { ChartComponent } from 'ngscaffolding-chart';
 
 @Component({

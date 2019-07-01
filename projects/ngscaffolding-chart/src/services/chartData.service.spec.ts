@@ -1,6 +1,6 @@
 import { TestBed, inject } from '@angular/core/testing';
 import { ChartDataService, ShapedChartData } from './chartData.service';
-import { ChartDetailModel, DataShapes } from '@ngscaffolding/models';
+import { ChartDetailModel, DataShapes } from 'ngscaffolding-models';
 
 describe('ChartDataService', () => {
   beforeEach(() => {

@@ -4,7 +4,7 @@ import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 
 import { ChartDataService } from '../../services/chartData.service';
 import { DataSourceService, LoggingService } from 'ngscaffolding-core';
-import { ChartDetailModel, IDashboardItem } from '@ngscaffolding/models';
+import { ChartDetailModel, IDashboardItem } from 'ngscaffolding-models';
 import * as Highcharts from 'highcharts';
 // Loading HighCharts More
 const HighchartsMore = require('highcharts/highcharts-more.src');

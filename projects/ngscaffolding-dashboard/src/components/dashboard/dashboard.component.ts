@@ -10,9 +10,9 @@ import {
   SpinnerService
 } from 'ngscaffolding-core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { CoreMenuItem, WidgetDetails, WidgetTypes, InputBuilderDefinition, IDashboardItem, InputLocations } from '@ngscaffolding/models';
+import { CoreMenuItem, WidgetDetails, WidgetTypes, InputBuilderDefinition, IDashboardItem, InputLocations } from 'ngscaffolding-models';
 
-import { DashboardModel } from '@ngscaffolding/models';
+import { DashboardModel } from 'ngscaffolding-models';
 
 import { CompactType, DisplayGrid, GridsterConfig, GridsterItem, GridType, GridsterItemComponent, GridsterItemComponentInterface } from 'angular-gridster2';
 import { InputBuilderPopupComponent } from 'ngscaffolding-inputbuilder';

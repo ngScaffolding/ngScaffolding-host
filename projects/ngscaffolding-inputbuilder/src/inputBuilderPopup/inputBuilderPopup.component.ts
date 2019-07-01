@@ -5,7 +5,7 @@ import {
   EventEmitter,
   OnInit
 } from '@angular/core';
-import { InputBuilderDefinition } from '@ngscaffolding/models';
+import { InputBuilderDefinition } from 'ngscaffolding-models';
 
 @Component({
   selector: 'ngs-input-builder-popup',

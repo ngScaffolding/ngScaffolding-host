@@ -4,8 +4,8 @@ import { Injectable } from '@angular/core';
 import { AppSettingsService } from '../appSettings';
 import { LoggingService } from '../logging/logging.service';
 
-import { Action, AppSettings } from '@ngscaffolding/models';
-import { ActionResultModel, ActionRequestModel } from '@ngscaffolding/models';
+import { Action, AppSettings } from 'ngscaffolding-models';
+import { ActionResultModel, ActionRequestModel } from 'ngscaffolding-models';
 
 @Injectable({
   providedIn: 'root',

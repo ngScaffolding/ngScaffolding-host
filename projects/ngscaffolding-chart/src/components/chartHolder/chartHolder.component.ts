@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 
 import { ActivatedRoute } from '@angular/router';
 import { LoggingService, MenuQuery } from 'ngscaffolding-core';
-import { CoreMenuItem, ChartDetailModel } from '@ngscaffolding/models';
+import { CoreMenuItem, ChartDetailModel } from 'ngscaffolding-models';
 
 @Component({
   selector: 'ngs-chart-holder',

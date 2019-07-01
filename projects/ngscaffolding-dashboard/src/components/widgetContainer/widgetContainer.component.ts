@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges, ElementRef } from '@angular/core';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import { AppSettingsService, AppSettingsQuery, ComponentLoaderService } from 'ngscaffolding-core';
-import { CoreMenuItem, WidgetDetails, WidgetTypes } from '@ngscaffolding/models';
+import { CoreMenuItem, WidgetDetails, WidgetTypes } from 'ngscaffolding-models';
 import { NgElement, WithProperties } from '@angular/elements';
 
 @Component({

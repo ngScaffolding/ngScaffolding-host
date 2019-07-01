@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BroadcastService, BroadcastTypes } from '../broadcast/broadcast.service';
 
-import { Message } from '@ngscaffolding/models';
+import { Message } from 'ngscaffolding-models';
 @Injectable({
   providedIn: 'root',
 })

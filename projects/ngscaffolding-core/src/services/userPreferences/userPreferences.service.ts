@@ -6,7 +6,7 @@ import { UserAuthenticationQuery } from '../userAuthentication';
 import { AppSettingsService } from '../appSettings/appSettings.service';
 
 // Models
-import { UserPreferenceDefinition, UserPreferenceValue, AppSettings } from '@ngscaffolding/models';
+import { UserPreferenceDefinition, UserPreferenceValue, AppSettings } from 'ngscaffolding-models';
 import { UserPreferencesStore } from './userPreferences.store';
 import { UserPreferencesQuery } from './userPreferences.query';
 import { LoggingService } from '../logging/logging.service';

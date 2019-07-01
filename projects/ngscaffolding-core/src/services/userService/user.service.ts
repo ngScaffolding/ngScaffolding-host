@@ -4,7 +4,7 @@ import { AppSettingsQuery } from '../appSettings/appSettings.query';
 import { UserAuthenticationQuery } from '../userAuthentication/userAuthentication.query';
 import { LoggingService } from '../logging/logging.service';
 import { RolesService } from '../rolesService/roles.service';
-import { IUserModel, AppSettings } from '@ngscaffolding/models';
+import { IUserModel, AppSettings } from 'ngscaffolding-models';
 import { Observable } from 'rxjs';
 import { timeout } from 'rxjs/operators';
 
