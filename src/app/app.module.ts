@@ -66,7 +66,7 @@ import { ProfilePageComponent } from './pages/profile/profilePage.component';
 import { TokenInterceptor } from './interceptors/token.interceptor';
 import { AkitaNgDevtools } from '@datorama/akita-ngdevtools';
 import { environment } from '../environments/environment';
-import { AppSettings } from '@ngscaffolding/models';
+import { AppSettings } from 'ngscaffolding-models';
 
 export function jwtOptionsFactory(authQuery: UserAuthenticationQuery) {
   return {

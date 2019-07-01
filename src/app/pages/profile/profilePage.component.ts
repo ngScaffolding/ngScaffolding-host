@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { UserPreferencesQuery, NotificationService, UserPreferencesService } from 'ngscaffolding-core';
-import { InputBuilderDefinition, PreferenceTypes } from '@ngscaffolding/models';
+import { InputBuilderDefinition, PreferenceTypes } from 'ngscaffolding-models';
 
 @Component({
   templateUrl: './profilePage.component.html',

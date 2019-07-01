@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 
 import { RouterModule, Routes } from '@angular/router';
 
-import { AppSettings } from '@ngscaffolding/models';
+import { AppSettings } from 'ngscaffolding-models';
 
 import {
   AuthoriseRoleGuard,

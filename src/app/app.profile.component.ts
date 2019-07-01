@@ -3,7 +3,7 @@ import { AppComponent } from './app.component';
 import { AppSettingsService, UserAuthenticationBase, AppSettingsQuery, UserAuthenticationQuery } from 'ngscaffolding-core';
 import { trigger, state, transition, style, animate } from '@angular/animations';
 import { Observable } from 'rxjs';
-import { AppSettings } from '@ngscaffolding/models';
+import { AppSettings } from 'ngscaffolding-models';
 
 @Component({
   selector: 'app-inline-profile',

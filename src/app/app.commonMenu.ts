@@ -1,4 +1,4 @@
-import { MenuTypes, GridViewDetail, SystemDataSourceNames, ColumnModel, ButtonColours } from '@ngscaffolding/models';
+import { MenuTypes, GridViewDetail, SystemDataSourceNames, ColumnModel, ButtonColours } from 'ngscaffolding-models';
 import { MenuService } from 'ngscaffolding-core';
 
 export function buildMenu(menuService: MenuService) {

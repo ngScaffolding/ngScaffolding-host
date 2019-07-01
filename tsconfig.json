@@ -21,26 +21,23 @@
       "dom"
     ],
     "paths": {
+      "ngscaffolding-models": [
+        "projects/models/src/index"
+      ],
       "ngscaffolding-core": [
-        // "dist/ngscaffolding-core"
-        "projects/ngscaffolding-core/src/public_api"
+        "projects/core/src/public_api"
       ],
       "ngscaffolding-inputbuilder": [
-        // "dist/ngscaffolding-inputbuilder"
-        "projects/ngscaffolding-inputbuilder/src/public_api"
-
+        "projects/inputbuilder/src/public_api"
       ],
       "ngscaffolding-chart": [
-        "projects/ngscaffolding-chart/src/public_api"
-        // "dist/ngscaffolding-chart"
+        "projects/chart/src/public_api"
       ],
       "ngscaffolding-dashboard": [
-        "projects/ngscaffolding-dashboard/src/public_api"
-        // "dist/ngscaffolding-dashboard"
+        "projects/dashboard/src/public_api"
       ],
       "ngscaffolding-datagrid": [
-        // "dist/ngscaffolding-datagrid"
-        "projects/ngscaffolding-datagrid/src/public_api"
+        "projects/datagrid/src/public_api"
       ]
     }
   },

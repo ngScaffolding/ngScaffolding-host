@@ -1,0 +1,18 @@
+[submodule "projects/models"]
+	path = projects/models
+	url = https://github.com/ngScaffolding/models.git
+[submodule "projects\\core"]
+	path = projects\\core
+	url = https://github.com/ngScaffolding/core.git
+[submodule "projects\\chart"]
+	path = projects\\chart
+	url = https://github.com/ngScaffolding/chart.git
+[submodule "projects\\dashboard"]
+	path = projects\\dashboard
+	url = https://github.com/ngScaffolding/dashboard.git
+[submodule "projects\\datagrid"]
+	path = projects\\datagrid
+	url = https://github.com/ngScaffolding/datagrid.git
+[submodule "projects\\inputbuilder"]
+	path = projects\\inputbuilder
+	url = https://github.com/ngScaffolding/inputbuilder.git

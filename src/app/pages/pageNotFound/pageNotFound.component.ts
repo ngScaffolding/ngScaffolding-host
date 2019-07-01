@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { LoggingService, AppSettingsService } from 'ngscaffolding-core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
-import { AppSettings } from '@ngscaffolding/models';
+import { AppSettings } from 'ngscaffolding-models';
 // import {MessageService} from 'primeng/components/common/messageservice';
 
 @Component({

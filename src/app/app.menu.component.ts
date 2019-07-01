@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 // ngScaffolding
 import { Inject, forwardRef } from '@angular/core';
 import { MenuService, MenuQuery, LoggingService } from 'ngscaffolding-core';
-import { CoreMenuItem } from '@ngscaffolding/models';
+import { CoreMenuItem } from 'ngscaffolding-models';
 // ngScaffolding
 
 @Component({
