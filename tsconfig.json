@@ -34,7 +34,7 @@
 
       ],
       "ngscaffolding-chart": [
-        "projects/ngscaffolding-chart/src/public_api"
+        "projects/chart/src/public_api"
         // "dist/ngscaffolding-chart"
       ],
       "ngscaffolding-dashboard": [

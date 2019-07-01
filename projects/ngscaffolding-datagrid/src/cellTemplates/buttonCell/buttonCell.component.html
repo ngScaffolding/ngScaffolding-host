@@ -1,7 +1,0 @@
-<span *ngIf="!splitButton">
-  <p-button *ngFor="let action of actions" (click)="clicked(action)" styleClass="{{action.colour}}"
-    icon="{{action.icon}}" iconPos="left" label="{{action.title}}"></p-button>
-</span>
-
-  <!-- Split button need Line-height to work Also possibly needs to be an EditorCell with Popup -->
-  <p-splitButton *ngIf="splitButton" [style]="{'line-height': '0px'}" label="Actions" appendTo="body" menuStyleClass="editorButtonMenu" styleClass="ui-button-success" [model]="splitButtonItems"></p-splitButton>
