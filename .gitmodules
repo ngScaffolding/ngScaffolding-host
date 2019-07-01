@@ -1,0 +1,3 @@
+[submodule "projects/models"]
+	path = projects/models
+	url = https://github.com/ngScaffolding/models.git
