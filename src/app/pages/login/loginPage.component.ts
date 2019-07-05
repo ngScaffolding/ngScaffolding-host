@@ -1,12 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  LoggingService,
-  AppSettingsService,
-  AppSettingsQuery,
-  NotificationService,
-  SpinnerService,
-  UserAuthenticationBase
-} from 'ngscaffolding-core';
+import { LoggingService, AppSettingsService, AppSettingsQuery, NotificationService, SpinnerService, UserAuthenticationBase, UserAuthenticationQuery } from 'ngscaffolding-core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { AppSettings } from 'ngscaffolding-models';
@@ -35,6 +28,7 @@ export class LoginPageComponent implements OnInit {
     private cookieService: CookieService,
     public appSettings: AppSettingsService,
     public appSettingsQuery: AppSettingsQuery,
+    public authQuery: UserAuthenticationQuery,
     private spinner: SpinnerService,
     private logger: LoggingService,
     private notificationService: NotificationService,
@@ -49,6 +43,17 @@ export class LoginPageComponent implements OnInit {
   ngOnInit() {
     // get return url from route parameters or default to '/'
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+
+    // Check if already logged on
+    if (this.authQuery.isAuthenticated) {
+      // Send them packing
+      if (this.returnUrl) {
+        this.router.navigate([this.returnUrl]);
+      } else {
+        // Default route
+        this.router.navigate(['']);
+      }
+    }
 
     // Are we going to Remember?
     if (this.appSettings.getValue(AppSettings.authShowRememberMe)) {
@@ -72,17 +77,19 @@ export class LoginPageComponent implements OnInit {
       this.cookieService.delete(this.userNameCookie);
     }
 
-    this.userAuthService.logon(this.inputModel.username,this.inputModel.password)
-    .subscribe(authUser => {
-      this.router.navigate([this.returnUrl]);
-    }, err =>{
-      this.notificationService.showMessage({
-        summary: 'Logon Failed',
-        detail: 'Check you User Name and Password and try again',
-        severity: 'error'
-      });
-      this.spinnerService.hideSpinner();
-    });
+    this.userAuthService.logon(this.inputModel.username, this.inputModel.password).subscribe(
+      authUser => {
+        this.router.navigate([this.returnUrl]);
+      },
+      err => {
+        this.notificationService.showMessage({
+          summary: 'Logon Failed',
+          detail: 'Check you User Name and Password and try again',
+          severity: 'error'
+        });
+        this.spinnerService.hideSpinner();
+      }
+    );
   }
 
   rememberChanged(isChecked: boolean) {
