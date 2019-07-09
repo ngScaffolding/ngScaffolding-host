@@ -56,6 +56,7 @@ import { LandingPageComponent } from './components/landingPage/landingPage.compo
 import { PageNotFoundComponent } from './pages/pageNotFound/pageNotFound.component';
 import { LoginPageComponent } from './pages/login/loginPage.component';
 import { LogoffPageComponent } from './pages/logoff/logoffPage.component';
+import { ChangePasswordComponent } from './pages/changePassword/changePassword.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
 import { AboutComponent } from './pages/about/about.component';
@@ -128,6 +129,7 @@ const appInitializerFn = (appConfig: AppSettingsService, menuService: MenuServic
     LandingPageComponent,
     LoginPageComponent,
     LogoffPageComponent,
+    ChangePasswordComponent,
     PageNotFoundComponent,
     ProfilePageComponent,
     APP_COMPONENTS,

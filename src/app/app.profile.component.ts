@@ -24,22 +24,27 @@ import { AppSettings } from 'ngscaffolding-models';
     <ul class="ultima-menu profile-menu" [@menu]="active ? 'visible' : 'hidden'">
       <li role="menuitem" *ngIf="(showProfileSetting$ | async)">
         <a href="#" routerLink="/profile" class="ripplelink" [attr.tabindex]="!active ? '-1' : null">
-          <i class="material-icons">person</i> <span>Profile</span>
+          <i class="material-icons">person</i> <span>{{'Profile' | translate}}</span>
         </a>
       </li>
       <li role="menuitem" *ngIf="(showUserSetting$ | async)">
         <a href="#" routerLink="usersettings" class="ripplelink" [attr.tabindex]="!active ? '-1' : null">
-          <i class="material-icons">settings_application</i> <span>Settings</span>
+          <i class="material-icons">settings_application</i> <span>{{'Settings' | translate}}</span>
         </a>
       </li>
       <li role="menuitem">
         <a href="#" routerLink="about" class="ripplelink" [attr.tabindex]="!active ? '-1' : null">
-          <i class="material-icons">description</i> <span>About</span>
+          <i class="material-icons">description</i> <span>{{'About' | translate}}</span>
+        </a>
+      </li>
+      <li role="menuitem">
+        <a href="#" routerLink="changepassword" class="ripplelink" [attr.tabindex]="!active ? '-1' : null">
+          <i class="material-icons">vpn_key</i> <span>{{'Change Password' | translate}}</span>
         </a>
       </li>
       <li role="menuitem">
         <a href="#" routerLink="logoff" class="ripplelink" [attr.tabindex]="!active ? '-1' : null">
-          <i class="material-icons">power_settings_new</i> <span>Logout</span>
+          <i class="material-icons">power_settings_new</i> <span>{{'Logout' | translate}}</span>
         </a>
       </li>
     </ul>
