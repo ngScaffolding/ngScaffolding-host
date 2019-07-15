@@ -155,6 +155,7 @@ const appInitializerFn = (appConfig: AppSettingsService, menuService: MenuServic
     },
     AuthoriseRoleGuard,
     { provide: UserAuthenticationBase, useClass: UserAuthenticationService },
+
     MessageService
     // ngScaffolding
   ],
