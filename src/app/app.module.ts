@@ -40,7 +40,8 @@ import {
   UserAuthenticationQuery,
   CoreErrorHandlerService,
   VersionsService,
-  MenuService
+  MenuService,
+  UserService, UserServiceBase
 } from 'ngscaffolding-core';
 
 // Externalise These Modules
@@ -155,6 +156,7 @@ const appInitializerFn = (appConfig: AppSettingsService, menuService: MenuServic
     },
     AuthoriseRoleGuard,
     { provide: UserAuthenticationBase, useClass: UserAuthenticationService },
+    { provide: UserServiceBase, useClass: UserService},
 
     MessageService
     // ngScaffolding

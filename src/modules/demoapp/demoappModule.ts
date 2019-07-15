@@ -10,7 +10,7 @@ import {
   AuthoriseRoleGuard,
   AppSettingsService,
   MenuService,
-  LoggingService,ReferenceValuesService,
+  LoggingService, ReferenceValuesService,
   VersionsService
 } from 'ngscaffolding-core';
 
@@ -67,6 +67,13 @@ export class DemoAppModule {
     appSettingsService.setValue(AppSettings.errorLogConsole , true);
     appSettingsService.setValue(AppSettings.errorLogServer , true);
     appSettingsService.setValue(AppSettings.errorShowUser , true);
+
+    // Password complexity
+    appSettingsService.setValue(AppSettings.authPasswordMinLength, 8);
+    appSettingsService.setValue(AppSettings.authPasswordUpperCase, true);
+    appSettingsService.setValue(AppSettings.authPasswordLowerCase, true);
+    appSettingsService.setValue(AppSettings.authPasswordNumeric, true);
+    appSettingsService.setValue(AppSettings.authPasswordSpecial, false);
 
     appSettingsService.setValue(AppSettings.inputShowCalendarIcon , true);
 

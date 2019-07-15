@@ -24,7 +24,7 @@
       <p-blockUI [blocked]="spinning"></p-blockUI>
       <p-sidebar [(visible)]="spinning" position="top">
         <div style="text-align: center">
-                    {{'Loading' | translate}}
+                    {{spinMessage | translate}}
         <br/>
         <p-progressSpinner></p-progressSpinner>
       </div>

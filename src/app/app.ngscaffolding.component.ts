@@ -111,7 +111,7 @@ export class NgScaffoldingComponent implements AfterViewInit {
       if (message) {
         this.spinMessage = message.toString();
       } else {
-        this.spinMessage = '';
+        this.spinMessage = 'Loading';
       }
     });
 

@@ -16,8 +16,9 @@ export class NotificationReceiverService {
       if (message) {
         this.messageService.add({
           severity: message.severity,
-          summary: this.translationService.instant(message.summary),
-          detail: this.translationService.instant(message.detail)
+          life: message.life,
+          summary: this.translationService.instant(`${message.summary}`),
+          detail: this.translationService.instant(`${message.detail}`)
         });
       }
     });
