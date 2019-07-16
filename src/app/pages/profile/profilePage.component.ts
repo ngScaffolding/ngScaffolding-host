@@ -39,7 +39,7 @@ export class ProfilePageComponent implements OnInit {
 
   okClicked(changedModel: any) {
     this.userPrefsService.setValue(PreferenceTypes.UserPrefs_Profile, JSON.stringify(changedModel)).subscribe(() => {
-      this.notification.showMessage({ detail: 'Profile Saved' });
+      this.notification.showMessage({severity: 'success', summary: 'Complete', detail: 'Profile Saved' });
     });
   }
 }
