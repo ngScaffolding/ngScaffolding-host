@@ -28,6 +28,37 @@ export class InputBuilderSimpleComponent {
         help: 'Help Me. Please help me Please Mister.'
       }]
   };
+
+  // Defn for split inputbuilders
+  inputDefSplit1: InputBuilderDefinition = {
+    orientation: OrientationValues.Horizontal,
+    inputLocation: InputLocations.INLINE,
+    inputDetails: [
+      <InputDetailTextBox>{
+        placeholder: 'Left Placeholder',
+        name: 'left',
+        type: InputTypes.textbox
+      }]
+  };
+
+  inputDefSplit2: InputBuilderDefinition = {
+    orientation: OrientationValues.Horizontal,
+    inputLocation: InputLocations.INLINE,
+    inputDetails: [
+      <InputDetailTextBox>{
+        placeholder: 'Right Placeholder',
+        name: 'right',
+        type: InputTypes.textbox
+      }]
+  };
+
+  inputSplitModel = {};
+
+  notifySplitChanged(val: any) {
+    var x = 0;
+  }
+
+
   inputDefinition1: InputBuilderDefinition = {
     orientation: OrientationValues.Horizontal,
     columnCount: 3,

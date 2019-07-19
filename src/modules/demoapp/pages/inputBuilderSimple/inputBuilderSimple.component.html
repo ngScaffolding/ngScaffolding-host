@@ -10,6 +10,27 @@
     </div>
 </div>
 
+<h2>2 Inputs 1 Model</h2>
+<div class="ui-fluid">
+    <div class="card ui-g-12">
+        <div class="ui-g-6">
+          <h4>Left Content</h4>
+          <ngs-input-builder
+            (modelUpdated)="notifySplitChanged($event)"
+            [inputBuilderDefinition]="inputDefSplit1"
+            [inputModel]="inputSplitModel"></ngs-input-builder>
+        </div>
+        <div class="ui-g-6">
+            <h4>Right Content</h4>
+            <ngs-input-builder
+            (modelUpdated)="notifySplitChanged($event)"
+            [inputBuilderDefinition]="inputDefSplit2"
+            [inputModel]="inputSplitModel"></ngs-input-builder>
+          </div>
+    </div>
+    <div class="card ui-g-12">{{inputSplitModel | json}}</div>
+</div>
+
 <h2>Inline Input Row</h2>
 <div class="ui-fluid">
     <div class="card ui-g-12">
