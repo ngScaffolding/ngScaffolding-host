@@ -22,22 +22,22 @@
     ],
     "paths": {
       "ngscaffolding-models": [
-        "projects/models/src/index"
+        "projects/models/index"
       ],
       "ngscaffolding-core": [
-        "projects/core/src/public_api"
+        "projects/core/public_api"
       ],
       "ngscaffolding-inputbuilder": [
-        "projects/inputbuilder/src/public_api"
+        "projects/inputbuilder/public_api"
       ],
       "ngscaffolding-chart": [
-        "projects/chart/src/public_api"
+        "projects/chart/public_api"
       ],
       "ngscaffolding-dashboard": [
-        "projects/dashboard/src/public_api"
+        "projects/dashboard/public_api"
       ],
       "ngscaffolding-datagrid": [
-        "projects/datagrid/src/public_api"
+        "projects/datagrid/public_api"
       ]
     }
   },
