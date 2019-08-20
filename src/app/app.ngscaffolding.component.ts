@@ -5,7 +5,7 @@ import { Title } from '@angular/platform-browser';
 import { filter } from 'rxjs/operators';
 
 import { AppSettings } from 'ngscaffolding-models';
-import { AppSettingsQuery, UserPreferencesQuery, LoggingService, SpinnerService,UserAuthenticationQuery, BroadcastService, BroadcastTypes, MenuService } from 'ngscaffolding-core';
+import { AppSettingsQuery, UserPreferencesQuery, LoggingService, SpinnerService, UserAuthenticationQuery, BroadcastService, BroadcastTypes, MenuService } from 'ngscaffolding-core';
 import { NotificationReceiverService } from './services/notificationReceiver/notificationReceiver.service';
 
 enum MenuOrientation {
@@ -39,13 +39,13 @@ export class NgScaffoldingComponent implements AfterViewInit {
   ) {
     router.events.subscribe((event: RouterEvent) => {
       this._navigationInterceptor(event);
-    })
+    });
   }
 
   private _navigationInterceptor(event: RouterEvent): void {
     if (event instanceof NavigationStart) {
       this.spinnerService.showSpinner('Loading');
-      }
+    }
     if (event instanceof NavigationEnd) {
       this.spinnerService.hideSpinner();
     }
@@ -107,17 +107,21 @@ export class NgScaffoldingComponent implements AfterViewInit {
 
     // Spinner Notification Here
     this.broadcastService.on(BroadcastTypes.SHOW_SPINNER).subscribe(message => {
-      this.spinning = true;
-      if (message) {
-        this.spinMessage = message.toString();
-      } else {
-        this.spinMessage = 'Loading';
-      }
+      setTimeout(_ => {
+        this.spinning = true;
+        if (message) {
+          this.spinMessage = message.toString();
+        } else {
+          this.spinMessage = 'Loading';
+        }
+      });
     });
 
     this.broadcastService.on(BroadcastTypes.HIDE_SPINNER).subscribe(message => {
+      setTimeout(_ => {
       this.spinning = false;
       this.spinMessage = null;
+      });
     });
     // End Spinner
   }
