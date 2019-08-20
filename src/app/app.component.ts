@@ -217,7 +217,9 @@ export class AppComponent extends NgScaffoldingComponent implements AfterViewIni
     super.ngAfterViewInit();
     this.layoutContainer = <HTMLDivElement>this.layourContainerViewChild.nativeElement;
     setTimeout(() => {
+      if(this.layoutMenuScrollerViewChild) {
       this.layoutMenuScrollerViewChild.moveBar();
+      }
     }, 100);
   }
 
