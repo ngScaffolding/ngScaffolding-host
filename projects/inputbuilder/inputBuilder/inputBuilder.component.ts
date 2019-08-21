@@ -27,6 +27,7 @@ export class InputBuilderComponent implements OnInit, OnChanges {
 
   private clonedInputModel: any;
 
+  formBuilt = false;
   form: FormGroup;
   controlStyle = 'ui-g-12';
   containerClass = 'ui-g-12'; // This changes to allow the help Icon
@@ -74,9 +75,11 @@ export class InputBuilderComponent implements OnInit, OnChanges {
   }
 
   private buildForm() {
-    if (!this.inputBuilderDefinition || !this.inputModel) {
+    if (this.formBuilt || !this.inputBuilderDefinition || !this.inputModel) {
       return;
     }
+
+    this.formBuilt = true;
 
     // Clone our inputModel
     this.clonedInputModel = Object.assign({}, this.inputModel);

@@ -1,4 +1,4 @@
-<form novalidate *ngIf="inputBuilderDefinition && inputBuilderDefinition.inputDetails"
+<form novalidate *ngIf="formBuilt && inputBuilderDefinition && inputBuilderDefinition.inputDetails"
 [class.noPadding]="inputBuilderDefinition.inputLocation === 'inline'"
 [class.form-group]="inputBuilderDefinition.inputLocation !== 'inline'"
 
