@@ -1,0 +1,31 @@
+@import '../../../../src/assets/sass/variables';
+
+.galleryHeader {
+  height: 24px;
+  font-size: 28px;
+  text-align: center;
+  padding-top: 8px;
+  padding-bottom: 38px;
+  margin-bottom: 18px;
+  border-bottom: 1px solid grey;
+}
+
+.widgetLine{
+  &:hover {
+    background-color: lighten( $hoverBgColor, 40% );
+    color: $hoverTextColor;
+
+  }
+  cursor: pointer;
+  border: 1px solid $dividerColor;
+  color: $textSecondaryColor;
+  background-color: lighten( $hoverBgColor, 20% );
+  font-size: $fontSize;
+  border-radius: 8px;
+  margin-bottom: 16px;
+}
+
+.widgetName{
+  text-align: center;
+  font-size: 18px;
+}

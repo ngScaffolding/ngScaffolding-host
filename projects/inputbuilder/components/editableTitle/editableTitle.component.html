@@ -1,0 +1,5 @@
+<span *ngIf="!isEditing" (click)="mouseClicked()" (mouseleave)="mouseLeave()" (mouseenter)="mouseOver()">{{title}}</span>
+
+<button *ngIf="displayIcon" pButton class="ui-button-info tipIcon" type="button" icon="ui-icon-edit"></button>
+
+<input #inputTitle class="large-edit" *ngIf="isEditing" type="text" (blur)="isEditing=false" [(ngModel)]="editTitle" (change)="textChanged()" pInputText>

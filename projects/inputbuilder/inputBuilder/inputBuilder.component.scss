@@ -1,0 +1,34 @@
+@import '../../../src/assets/sass/variables';
+
+.small-label{
+    font-size: 12px;
+}
+
+.textInput{
+  width: 100%;
+}
+
+.textArea{
+  height: 250px;
+}
+
+.dropdownInput{
+
+  display: block;
+}
+
+.helpIcon{
+  color: $grayBgColor;
+}
+
+.switch-label{
+  margin-left: 16px;
+}
+
+.noPadding{
+  padding: 0px 3px 0px 0px !important;
+}
+
+.multi-select {
+  width: 100%;
+}

@@ -1,0 +1,20 @@
+<div (mouseenter)="mouseEnter()" (mouseleave)="mouseLeave()" class="widgetContainer">
+    <div class="expand-toolbar">
+
+        <span [@toolBarShown]="showToolbar">
+          <!-- Add Button -->
+          <button *ngIf="allowInputs" pButton class="ui-button-success toolbarButton" type="button" icon="ui-icon-settings" tooltipPosition="bottom"
+            (click)="buttonClicked('properties')" pTooltip="{{'Properties' | translate}}">
+          </button>
+
+          <button pButton class="ui-button-info toolbarButton" type="button" icon="ui-icon-refresh" tooltipPosition="bottom"
+            (click)="buttonClicked('refresh')" pTooltip="{{'Refresh' | translate}}">
+          </button>
+
+          <button *ngIf="allowClose" pButton class="ui-button-danger toolbarButton" type="button" icon="ui-icon-close" tooltipPosition="bottom"
+            (click)="buttonClicked('remove')" pTooltip="{{'Remove' | translate}}" ></button>
+        </span>
+
+      </div>
+<div id="widgetContent" style="width: 100%; height: 100%;"></div>
+</div>
