@@ -37,7 +37,7 @@ export class ChangePasswordComponent implements OnInit {
     this.specialChars = this.appSettings.getEntity(AppSettings.authPasswordSpecial).value;
   }
 
-  checkComplexity(event: any) {
+  checkComplexity() {
     const newPassword = this.inputModel.newPassword;
     if (newPassword.length < this.minLength) {
       this.failComplexLength = true;

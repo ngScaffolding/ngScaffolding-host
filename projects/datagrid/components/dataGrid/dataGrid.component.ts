@@ -146,6 +146,7 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
     this.loadInitialData();
   }
 
+  // Dashboard Item Interface
   public updateData(newData: any) {
     throw new Error('Method not implemented.');
   }
@@ -236,7 +237,8 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
       .getDataSource({
         forceRefresh: true,
         name: this.itemDetail.selectDataSourceName,
-        filterValues: JSON.stringify(this.filterValues)
+        filterValues: this.filterValues,
+        seed: this.itemDetail.seedValue
       })
       .subscribe(
         results => {
@@ -336,7 +338,7 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
 
       // Actions Here
       this.actions = this.itemDetail.actions;
-      this.showActionBar = this.actions.filter(action => !action.columnButton).length > 0;
+      this.showActionBar = this.actions && this.actions.filter(action => !action.columnButton).length > 0;
     }
 
     this.loadInitialData();

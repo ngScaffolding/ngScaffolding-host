@@ -51,7 +51,7 @@ class="ui-g" (ngSubmit)="onSubmit(form)"
 
             <!-- TextArea -->
             <span *ngSwitchCase="'textarea'" class="md-inputfield">
-                <textarea class="textInput" [rows]="input.rows" [placeholder]="input.label" pInputTextarea [formControlName]="input.name" autoResize="true"></textarea>
+                <textarea class="textInput" [rows]="input.rows" [placeholder]="input.label" pInputTextarea [formControlName]="input.name" autoResize="false"></textarea>
             </span>
 
             <!-- Checkbox -->

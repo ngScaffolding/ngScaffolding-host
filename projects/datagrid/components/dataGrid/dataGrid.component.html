@@ -1,5 +1,5 @@
 <p-card id="gridContainer">
-  <p-header>
+  <p-header *ngIf="!itemDetail?.isDataIsland">
     <div class="ui-g">
       <div class="ui-g-8">
         <span class="grid-title">{{itemDetail?.title | translate}}</span>

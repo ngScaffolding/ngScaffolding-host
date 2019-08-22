@@ -19,7 +19,7 @@ export class ActionService {
   callAction(action: Action, inputDetails: any, rows: any[]): Observable<ActionResultModel> {
 
     const request: ActionRequestModel = {
-      action: action, inputDetails:  JSON.stringify(inputDetails), rows: JSON.stringify(rows)
+      action: action, inputDetails:  inputDetails, rows: rows
     };
 
     return this.http.post<ActionResultModel>(`${this.appSettingsService.getValue(AppSettings.apiHome)}/api/v1/action`, request);
