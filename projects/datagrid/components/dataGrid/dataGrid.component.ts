@@ -37,6 +37,7 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
   @Input() isWidget: boolean;
   @Input() itemId: string;
   @Input() itemDetail: GridViewDetail;
+  @Input() fixedHeight: number;
 
   filterValues: any;
   filters: InputBuilderDefinition;
@@ -319,6 +320,7 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
           suppressMenu: column.suppressMenu,
           suppressFilter: column.suppressFilter,
           suppressSorting: column.suppressSorting,
+          width: column.width,
           enableRowGroup: true,
 
           type: column.type,

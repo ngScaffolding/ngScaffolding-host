@@ -3,6 +3,8 @@ import { HostListener, Directive, ElementRef, Input, AfterViewInit } from '@angu
 @Directive({ selector: '[ngsFillHeight]' })
 export class FillHeightDirective implements AfterViewInit {
   @Input() footerElement = null;
+  @Input() fixedHeight = 0;
+
   constructor(private el: ElementRef) {}
 
   ngAfterViewInit(): void {
@@ -15,14 +17,17 @@ export class FillHeightDirective implements AfterViewInit {
   }
 
   private calculateAndSetElementHeight() {
-    this.el.nativeElement.style.overflow = 'auto';
-    const windowHeight = window.innerHeight;
-    const elementOffsetTop = this.getElementOffsetTop();
-    const elementMarginBottom = this.el.nativeElement.style.marginBottom;
-    const footerElementMargin = this.getfooterElementMargin();
+    if (this.fixedHeight > 0) {
+      this.el.nativeElement.style.height = `${this.fixedHeight}px`;
+    } else {
+      this.el.nativeElement.style.overflow = 'auto';
+      const windowHeight = window.innerHeight;
+      const elementOffsetTop = this.getElementOffsetTop();
+      const elementMarginBottom = this.el.nativeElement.style.marginBottom;
+      const footerElementMargin = this.getfooterElementMargin();
 
-    this.el.nativeElement.style.height =
-      windowHeight - footerElementMargin - elementOffsetTop - 36 + 'px';
+      this.el.nativeElement.style.height = `${windowHeight - footerElementMargin - elementOffsetTop - 36}px`;
+    }
   }
 
   private getElementOffsetTop() {
