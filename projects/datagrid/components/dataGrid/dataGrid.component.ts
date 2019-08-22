@@ -38,6 +38,9 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
   @Input() itemId: string;
   @Input() itemDetail: GridViewDetail;
   @Input() fixedHeight: number;
+  @Input() overrideGridOptions: object;
+
+  @Output() selectionChanged = new EventEmitter<object[]>();
 
   filterValues: any;
   filters: InputBuilderDefinition;
@@ -163,7 +166,7 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
     this.gridOptions.api.showToolPanel(this.showToolPanel);
   }
 
-   exportData() {
+  exportData() {
     this.gridOptions.api.exportDataAsCsv();
   }
 
@@ -226,6 +229,7 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
       this.actionsHolder.selectedRows = this.selectedRows;
       this.actionsHolder.selectedRowsCount = this.selectedRows.length;
     }
+    this.selectionChanged.emit(this.selectedRows);
   }
 
   // Load First Data and if any criteria Changes
@@ -486,6 +490,12 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
     if (changes.itemDetail && changes.itemDetail.currentValue) {
       this.loadMenuItem();
     }
+
+    // We have some incomming updates to gridOptions
+    if (changes.overrideGridOptions && changes.overrideGridOptions.currentValue) {
+      this.gridOptions = { ...this.gridOptions, ...changes.overrideGridOptions.currentValue };
+    }
+
     if (changes.itemId && changes.itemId.currentValue && !changes.itemId.previousValue) {
       // watch for Prefs changes
       this.prefsQuery.selectEntity(this.gridviewPrefPrefix + this.itemId).subscribe(pref => {

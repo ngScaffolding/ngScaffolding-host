@@ -168,16 +168,17 @@ class="ui-g" (ngSubmit)="onSubmit(form)"
             </div>
         </div>
     </div>
-    <div [className]="" class="ui-g-12" *ngIf="inputBuilderDefinition.customButtonText || inputBuilderDefinition.cancelButtonText || inputBuilderDefinition.okButtonText">
-        <div *ngIf="inputBuilderDefinition.customButtonText" class="ui-g-4">
+    <!-- [className]="controlStyle" -->
+    <div class="button-line" class="ui-g-12" *ngIf="inputBuilderDefinition.customButtonText || inputBuilderDefinition.cancelButtonText || inputBuilderDefinition.okButtonText">
+        <div class="button-container" *ngIf="inputBuilderDefinition.customButtonText" >
             <button pButton type="button" (click)="onCustom()" class="ui-button-info" icon="{{inputBuilderDefinition.customButtonIcon}}"
                 iconPos="left" label="{{inputBuilderDefinition.customButtonText}}"></button>
         </div>
-        <div *ngIf="inputBuilderDefinition.cancelButtonText" class="ui-g-4">
-            <button pButton type="button" (click)="onCancel()" class="ui-button-danger" icon="{{inputBuilderDefinition.cancelButtonIcon}}"
+        <div class="button-container" *ngIf="inputBuilderDefinition.cancelButtonText" >
+            <button pButton type="button" (click)="onCancel()" class="ui-button-warning" icon="{{inputBuilderDefinition.cancelButtonIcon}}"
                 iconPos="left" label="{{inputBuilderDefinition.cancelButtonText}}"></button>
         </div>
-        <div *ngIf="inputBuilderDefinition.okButtonText" class="ui-g-4">
+        <div class="button-container" *ngIf="inputBuilderDefinition.okButtonText" >
             <button pButton type="submit" class="ui-button-success" icon="{{inputBuilderDefinition.okButtonIcon}}" iconPos="left" label="{{inputBuilderDefinition.okButtonText}}"></button>
         </div>
     </div>

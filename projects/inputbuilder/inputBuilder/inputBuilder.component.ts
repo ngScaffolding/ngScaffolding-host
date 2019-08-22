@@ -65,6 +65,9 @@ export class InputBuilderComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
+    if(changes.inputModel && changes.inputModel.currentValue !== changes.inputModel.previousValue){
+      this.formBuilt = false;
+    }
     this.buildForm();
   }
 
