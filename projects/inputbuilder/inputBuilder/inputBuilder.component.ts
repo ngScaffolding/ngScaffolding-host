@@ -186,12 +186,16 @@ export class InputBuilderComponent implements OnInit, OnChanges {
     switch (inputDetail.type) {
       case InputTypes.checkbox:
       case InputTypes.switch: {
-        return value.toString() === 'true';
+        return value.toString() === 'true' || value.toString() === 'True' || value.toString() === '1';
       }
       case InputTypes.date:
       case InputTypes.datetime:
       case InputTypes.time: {
         return new Date(value);
+      }
+      case InputTypes.datetimeUTC: {
+        const date = new Date(value);
+        return new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(),  date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds());
       }
     }
 
@@ -209,6 +213,10 @@ export class InputBuilderComponent implements OnInit, OnChanges {
     } else if (inputDetail.type === InputTypes.date || inputDetail.type === InputTypes.datetime || inputDetail.type === InputTypes.time) {
       this.valueUpdated.emit([inputDetail.name, value]);
       returnedValue = value;
+    } else if (inputDetail.type === InputTypes.datetimeUTC) {
+      const zuluDate = new Date(Date.UTC(value.getFullYear(), value.getMonth(), value.getDate(),  value.getHours(), value.getMinutes(), value.getSeconds()));
+      this.valueUpdated.emit([inputDetail.name, zuluDate]);
+      returnedValue = zuluDate;
     } else if (inputDetail.type === InputTypes.multiselect) {
       // This is an array
       if (Array.isArray(value)) {

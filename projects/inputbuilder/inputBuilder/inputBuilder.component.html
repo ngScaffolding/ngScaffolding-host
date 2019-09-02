@@ -109,6 +109,16 @@ class="ui-g" (ngSubmit)="onSubmit(form)"
                 <label>{{getLabel(input)}}</label>
             </span>
 
+            <!-- DateTime UTC -->
+            <span *ngSwitchCase="'datetimeUTC'" class="md-inputfield">
+              <p-calendar
+                appendTo="body"
+                [showIcon]="appSettings.getBoolean('inputShowCalendarIcon') | async" [dateFormat]="appSettings.getString('inputDateFormat') | async" showTime="true"
+                [formControlName]="input.name" [id]="input.name">
+              </p-calendar>
+              <label>{{getLabel(input)}}</label>
+          </span>
+
             <!-- Date -->
             <span *ngSwitchCase="'date'" class="md-inputfield">
                 <p-calendar appendTo="body"
