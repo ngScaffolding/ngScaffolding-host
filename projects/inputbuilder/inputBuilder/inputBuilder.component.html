@@ -15,48 +15,50 @@ class="ui-g" (ngSubmit)="onSubmit(form)"
 
             <!-- textbox -->
             <span *ngSwitchCase="'textbox'" class="md-inputfield">
-                <input class="textInput" *ngIf="!input.mask" type="text" [formControlName]="input.name" [id]="input.name" pInputText>
+                <input class="textInput" [readonly]="input.readonly" *ngIf="!input.mask" type="text" [formControlName]="input.name" [id]="input.name" pInputText>
                 <label>{{getLabel(input)}}</label>
             </span>
 
             <!-- email -->
             <span *ngSwitchCase="'email'" class="md-inputfield">
-                <input class="textInput" *ngIf="!input.mask" type="email" [formControlName]="input.name" [id]="input.name" pInputText>
+                <input class="textInput" *ngIf="!input.mask" [readonly]="input.readonly" type="email" [formControlName]="input.name" [id]="input.name" pInputText>
                 <label>{{getLabel(input)}}</label>
             </span>
 
             <!-- keyfilter/number -->
             <span *ngSwitchCase="'number'" class="md-inputfield">
-                <input class="textInput" type="text" [formControlName]="input.name" [id]="input.name" pKeyFilter="num"  pInputText>
+                <input class="textInput" [readonly]="input.readonly" type="text" [formControlName]="input.name" [id]="input.name" pKeyFilter="num"  pInputText>
                 <label>{{getLabel(input)}}</label>
             </span>
 
             <!-- slider -->
             <span *ngSwitchCase="'slider'" class="md-inputfield">
-                <p-slider [formControlName]="input.name" [id]="input.name" [min]="input.min" [max]="input.max" [step]="input.step" ></p-slider>
+                <p-slider [formControlName]="input.name" [id]="input.name"  [min]="input.min" [max]="input.max" [step]="input.step" ></p-slider>
                 <label>{{getLabel(input)}}</label>
             </span>
 
             <!-- Mask -->
             <span *ngSwitchCase="'mask'">
-                <p-inputMask [mask]="input.mask" [id]="input.name" [formControl]="form.controls[input.name]"></p-inputMask>
+                <p-inputMask [mask]="input.mask" [id]="input.name" [readonly]="input.readonly" [formControl]="form.controls[input.name]"></p-inputMask>
                 <label>{{getLabel(input)}}</label>
             </span>
 
             <!-- Spinner -->
             <span *ngSwitchCase="'spinner'">
-                <p-spinner [id]="input.name" [formControl]="form.controls[input.name]"></p-spinner>
+                <p-spinner [id]="input.name" [readonly]="input.readonly" [formControl]="form.controls[input.name]"></p-spinner>
                 <label>{{getLabel(input)}}</label>
             </span>
 
             <!-- TextArea -->
             <span *ngSwitchCase="'textarea'" class="md-inputfield">
-                <textarea class="textInput" [rows]="input.rows" [placeholder]="input.label" pInputTextarea [formControlName]="input.name" autoResize="false"></textarea>
+                <textarea class="textInput" [readonly]="input.readonly"
+                  rows="5" [placeholder]="input.label"
+                  pInputTextarea [formControlName]="input.name" autoResize="false"></textarea>
             </span>
 
             <!-- Checkbox -->
             <span *ngSwitchCase="'checkbox'">
-                <p-checkbox binary="true" [label]="input.label" [id]="input.name" [formControl]="form.controls[input.name]">
+                <p-checkbox binary="true" [label]="input.label" [disabled]="input.readonly" [id]="input.name" [formControl]="form.controls[input.name]">
                 </p-checkbox>
             </span>
 
@@ -67,26 +69,27 @@ class="ui-g" (ngSubmit)="onSubmit(form)"
             <!-- Simple DropDown -->
             <span *ngSwitchCase="'dropdown'">
                 <label class="small-label" [for]="input.name">{{getLabel(input)}}</label>
-                <p-dropdown appendTo="body" class="dropdownInput" [id]="input.name" [options]="input.datasourceItems" [autoWidth]="false" [filter]="input.selectFilter" dataKey="value"
+                <p-dropdown appendTo="body" class="dropdownInput" [readonly]="input.readonly"  [id]="input.name" [options]="input.datasourceItems" [autoWidth]="false" [filter]="input.selectFilter" dataKey="value"
                     optionLabel="display" [formControlName]="input.name"></p-dropdown>
             </span>
 
             <!-- DropDown Returns Object -->
             <span *ngSwitchCase="'dropdownobject'">
               <label class="small-label" [for]="input.name">{{getLabel(input)}}</label>
-              <p-dropdown appendTo="body" class="dropdownInput" [id]="input.name" [options]="input.datasourceItems" [autoWidth]="false" [filter]="input.selectFilter"
+              <p-dropdown appendTo="body" class="dropdownInput" [readonly]="input.readonly"  [id]="input.name" [options]="input.datasourceItems" [autoWidth]="false" [filter]="input.selectFilter"
                   optionLabel="display" [formControlName]="input.name"></p-dropdown>
             </span>
 
             <!-- Chips -->
             <span *ngSwitchCase="'chips'" class="md-inputfield">
-                <p-chips [id]="input.name" [placeholder]="input.label" [formControlName]="input.name"></p-chips>
+                <p-chips [id]="input.name" [placeholder]="input.label" [disabled]="input.readonly"  [formControlName]="input.name"></p-chips>
             </span>
 
             <!-- multiselect -->
             <span *ngSwitchCase="'multiselect'" class="md-inputfield">
               <label class="small-label" [for]="input.name">{{getLabel(input)}}</label>
                 <p-multiSelect [id]="input.name" class="multi-select"
+                [readonly]="input.readonly"
                   [formControlName]="input.name"
                   appendTo="body" optionLabel="display" dataKey="value"
                   [options]="input.datasourceItems"></p-multiSelect>
@@ -94,7 +97,7 @@ class="ui-g" (ngSubmit)="onSubmit(form)"
 
             <!-- InputSwitch -->
             <span *ngSwitchCase="'switch'">
-                <p-inputSwitch [id]="input.name" [formControlName]="input.name">
+                <p-inputSwitch [id]="input.name" [readonly]="input.readonly"  [formControlName]="input.name">
                 </p-inputSwitch>
                 <label class="switch-label">{{getLabel(input)}}</label>
             </span>
@@ -103,6 +106,7 @@ class="ui-g" (ngSubmit)="onSubmit(form)"
             <span *ngSwitchCase="'datetime'" class="md-inputfield">
                 <p-calendar
                   appendTo="body"
+                  [disabled]="input.readonly"
                   [showIcon]="appSettings.getBoolean('inputShowCalendarIcon') | async" [dateFormat]="appSettings.getString('inputDateFormat') | async" showTime="true"
                   [formControlName]="input.name" [id]="input.name">
                 </p-calendar>
@@ -113,6 +117,7 @@ class="ui-g" (ngSubmit)="onSubmit(form)"
             <span *ngSwitchCase="'datetimeUTC'" class="md-inputfield">
               <p-calendar
                 appendTo="body"
+                [disabled]="input.readonly"
                 [showIcon]="appSettings.getBoolean('inputShowCalendarIcon') | async" [dateFormat]="appSettings.getString('inputDateFormat') | async" showTime="true"
                 [formControlName]="input.name" [id]="input.name">
               </p-calendar>
@@ -122,6 +127,7 @@ class="ui-g" (ngSubmit)="onSubmit(form)"
             <!-- Date -->
             <span *ngSwitchCase="'date'" class="md-inputfield">
                 <p-calendar appendTo="body"
+                [disabled]="input.readonly"
                  [showIcon]="appSettings.getBoolean('inputShowCalendarIcon') | async" [dateFormat]="appSettings.getString('inputDateFormat') | async" [formControlName]="input.name"
                     [id]="input.name">
                 </p-calendar>
@@ -130,7 +136,9 @@ class="ui-g" (ngSubmit)="onSubmit(form)"
 
             <!-- Time -->
             <span *ngSwitchCase="'time'" class="md-inputfield">
-                <p-calendar  appendTo="body" timeOnly="true" showTime="true" [showIcon]="appSettings.getBoolean('inputShowCalendarIcon') | async" [formControlName]="input.name"
+                <p-calendar  appendTo="body"
+                [disabled]="input.readonly"
+                timeOnly="true" showTime="true" [showIcon]="appSettings.getBoolean('inputShowCalendarIcon') | async" [formControlName]="input.name"
                     [id]="input.name">
                 </p-calendar>
                 <label>{{getLabel(input)}}</label>
@@ -144,7 +152,7 @@ class="ui-g" (ngSubmit)="onSubmit(form)"
 
             <!-- DEFUALT textbox -->
             <span *ngSwitchDefault class="md-inputfield">
-                <input type="text" [formControlName]="input.name" [id]="input.name" pInputText>
+                <input type="text"            [readOnly]="input.readonly"  [formControlName]="input.name" [id]="input.name" pInputText>
                 <label>{{getLabel(input)}}</label>
             </span>
 

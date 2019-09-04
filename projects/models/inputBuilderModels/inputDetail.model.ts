@@ -72,7 +72,7 @@ export class InputDetail {
   classes?: string;
   hidden?: boolean;
 
-  editable?: boolean;
+  readonly?: boolean;
 
   value?: any;
 
