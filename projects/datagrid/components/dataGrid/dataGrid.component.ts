@@ -118,6 +118,11 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
         }
       },
 
+      // context used to call back from button Column
+      context: {
+        componentParent: this
+      },
+
       onGridReady: () => {
         if (this.gridSavedState) {
           this.gridOptions.columnApi.setColumnState(this.gridSavedState);
@@ -131,12 +136,6 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
       renderers[renderer.name] = renderer.renderer;
     }
     this.gridOptions.frameworkComponents = renderers;
-
-    // Wire up broadcast for action clicked
-    this.broadcastSubscription = this.broadcast.on('ACTION_CLICKED').subscribe(actionData => {
-      const actionClickedData = actionData as ActionClickedData;
-      this.actionClicked(actionClickedData.action, actionClickedData.row);
-    });
 
     this.broadcastSubscription = this.broadcast.on('CLOSE_POPUP').subscribe(saved => {
       this.popupShown = false;

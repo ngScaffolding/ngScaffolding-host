@@ -51,9 +51,9 @@ class="ui-g" (ngSubmit)="onSubmit(form)"
 
             <!-- TextArea -->
             <span *ngSwitchCase="'textarea'" class="md-inputfield">
-                <textarea class="textInput" [readonly]="input.readonly"
-                  rows="5" [placeholder]="input.label"
-                  pInputTextarea [formControlName]="input.name" autoResize="false"></textarea>
+                <textarea class="textInput" [disabled]="input.readonly"
+                  [rows]="input.rows" [placeholder]="input.label"
+                  pInputTextarea [formControlName]="input.name"></textarea>
             </span>
 
             <!-- Checkbox -->
@@ -61,10 +61,6 @@ class="ui-g" (ngSubmit)="onSubmit(form)"
                 <p-checkbox binary="true" [label]="input.label" [disabled]="input.readonly" [id]="input.name" [formControl]="form.controls[input.name]">
                 </p-checkbox>
             </span>
-
-            <!--  [filter]="input.selectFilter"
-                [filterBy]="input.selectFilterBy"
-                    [filterPlaceholder]="input.selectFilterPlaceholder" -->
 
             <!-- Simple DropDown -->
             <span *ngSwitchCase="'dropdown'">

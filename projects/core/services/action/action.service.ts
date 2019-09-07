@@ -18,6 +18,7 @@ export class ActionService {
 
   callAction(action: Action, inputDetails: any, rows: any[]): Observable<ActionResultModel> {
 
+    // Add in standard Values
     const request: ActionRequestModel = {
       action: action, inputDetails:  inputDetails, rows: rows
     };
