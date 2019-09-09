@@ -37,6 +37,7 @@ export enum InputTypes {
   password = 'password',
   textarea = 'textarea',
   datetime = 'datetime',
+  datetimeUTC = 'datetimeUTC',
   date = 'date',
   time = 'time',
   select = 'select',
@@ -71,7 +72,7 @@ export class InputDetail {
   classes?: string;
   hidden?: boolean;
 
-  editable?: boolean;
+  readonly?: boolean;
 
   value?: any;
 
@@ -115,7 +116,7 @@ export class InputDetailDropdown extends InputDetailReferenceValues {
 }
 
 export class InputDetailToggleButton extends InputDetail{
-  
+
 }
 export class InputDetailTextArea extends InputDetail{
   rows?: number; // Rows for TextArea

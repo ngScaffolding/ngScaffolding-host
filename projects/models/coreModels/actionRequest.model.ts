@@ -2,8 +2,8 @@ import { Action } from '..';
 
 export class ActionRequestModel{
   action: Action;
-  inputDetails: string;
-  rows: string;
+  inputDetails: object;
+  rows: object[];
 }
 
 export class ActionResultModel

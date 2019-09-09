@@ -3,10 +3,8 @@ import { InputBuilderDefinition } from '../inputBuilderModels';
 import { Action } from '../coreModels';
 
 export class GridViewDetail {
-  
-  
-  title: string;
-  
+  title?: string;
+
   disableCheckboxSelection?: boolean;
   waitForInput?: boolean;
 
@@ -39,7 +37,14 @@ export class GridViewDetail {
 
   filters?: InputBuilderDefinition;
 
+  // Value passed to datasources
+  seedValue?: string;
+
+  // Get data from dataSource
   selectDataSourceName?: string;
+
+  // Or here is the data
+  dataValues?: any[];
 
   actions?: Array<Action>;
 }

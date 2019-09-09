@@ -38,4 +38,6 @@ export interface CoreMenuItem {
   title?: string;
 
   menuDetails?: {};
+
+  order?: number;
 }

@@ -16,13 +16,16 @@ export interface ActionClickedData {
 })
 export class ButtonCellComponent implements ICellRendererAngularComp {
   constructor(private broadcast: BroadcastService) {}
+
+  public params: any;
+
   public cell: any;
 
   public actions: Action[];
   public splitButton: boolean;
 
   agInit(params: any): void {
-
+    this.params = params;
     this.actions = [];
     for (const action of params.actions) {
 
@@ -34,10 +37,7 @@ export class ButtonCellComponent implements ICellRendererAngularComp {
   }
 
   public clicked(action: Action): void {
-    this.broadcast.broadcast('ACTION_CLICKED', {
-      action: action,
-      row: this.cell.row
-    } as ActionClickedData);
+    this.params.context.componentParent.actionClicked(action, this.cell.row);
   }
 
   refresh(): boolean {
