@@ -24,6 +24,7 @@
             "assets": [
               "src/assets",
               "src/appConfig.json",
+              "src/appConfig.prod.json",
               "src/upload.php",
               "src/web.config",
               "src/modules/dcoSystems/fonts"

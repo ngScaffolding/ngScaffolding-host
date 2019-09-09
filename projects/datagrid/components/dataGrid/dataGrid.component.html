@@ -1,5 +1,5 @@
 <p-card id="gridContainer">
-  <p-header>
+  <p-header *ngIf="!itemDetail?.isDataIsland">
     <div class="ui-g">
       <div class="ui-g-8">
         <span class="grid-title">{{itemDetail?.title | translate}}</span>
@@ -15,7 +15,7 @@
     </div>
   </p-header>
 
-  <div ngsFillHeight>
+  <div ngsFillHeight [fixedHeight]="fixedHeight">
       <p-sidebar [(visible)]="dataLoading" position="top">
         <div style="text-align: center">
                     Loading
@@ -26,7 +26,7 @@
 
     <filters-holder #filtersHolder [hidden]="!showFilters" [filterDefinition]="filters" [filterValues]="filterValues" (valuesUpdated)="onFiltersUpdated($event)"></filters-holder>
 
-      <ag-grid-angular [style.height]="showActionBar ? '90%' :'100%'" style="width: 100%;" class="ag-theme-material" [rowData]="rowData" [columnDefs]="columnDefs"
+      <ag-grid-angular [style.height]="showActionBar ? '90%' :'100%'" style="width: 97%;" class="ag-theme-material" [rowData]="rowData" [columnDefs]="columnDefs"
         [gridOptions]="gridOptions" (selectionChanged)='onSelectionChanged($event)' (gridReady)="onGridReady($event)">
       </ag-grid-angular>
 

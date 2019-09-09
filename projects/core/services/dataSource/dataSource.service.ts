@@ -24,6 +24,10 @@ export class DataSourceService {
     private logger: LoggingService
   ) {}
 
+  decorateInput(inputDetails: object): object{
+    return null;
+  }
+
   getDataSource(dataRequest: DataSourceRequest): Observable<DataResults> {
     const key = this.getKey(dataRequest);
 

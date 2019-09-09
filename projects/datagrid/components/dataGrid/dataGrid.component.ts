@@ -37,6 +37,13 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
   @Input() isWidget: boolean;
   @Input() itemId: string;
   @Input() itemDetail: GridViewDetail;
+  @Input() fixedHeight: number;
+  @Input() overrideGridOptions: object;
+
+  // Base context, passed to Actions
+  @Input() baseContext: object;
+
+  @Output() selectionChanged = new EventEmitter<object[]>();
 
   filterValues: any;
   filters: InputBuilderDefinition;
@@ -114,6 +121,11 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
         }
       },
 
+      // context used to call back from button Column
+      context: {
+        componentParent: this
+      },
+
       onGridReady: () => {
         if (this.gridSavedState) {
           this.gridOptions.columnApi.setColumnState(this.gridSavedState);
@@ -128,12 +140,6 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
     }
     this.gridOptions.frameworkComponents = renderers;
 
-    // Wire up broadcast for action clicked
-    this.broadcastSubscription = this.broadcast.on('ACTION_CLICKED').subscribe(actionData => {
-      const actionClickedData = actionData as ActionClickedData;
-      this.actionClicked(actionClickedData.action, actionClickedData.row);
-    });
-
     this.broadcastSubscription = this.broadcast.on('CLOSE_POPUP').subscribe(saved => {
       this.popupShown = false;
       if (saved) {
@@ -146,6 +152,7 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
     this.loadInitialData();
   }
 
+  // Dashboard Item Interface
   public updateData(newData: any) {
     throw new Error('Method not implemented.');
   }
@@ -161,7 +168,7 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
     this.gridOptions.api.showToolPanel(this.showToolPanel);
   }
 
-   exportData() {
+  exportData() {
     this.gridOptions.api.exportDataAsCsv();
   }
 
@@ -224,6 +231,7 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
       this.actionsHolder.selectedRows = this.selectedRows;
       this.actionsHolder.selectedRowsCount = this.selectedRows.length;
     }
+    this.selectionChanged.emit(this.selectedRows);
   }
 
   // Load First Data and if any criteria Changes
@@ -236,7 +244,8 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
       .getDataSource({
         forceRefresh: true,
         name: this.itemDetail.selectDataSourceName,
-        filterValues: JSON.stringify(this.filterValues)
+        filterValues: this.filterValues,
+        seed: this.itemDetail.seedValue
       })
       .subscribe(
         results => {
@@ -317,6 +326,7 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
           suppressMenu: column.suppressMenu,
           suppressFilter: column.suppressFilter,
           suppressSorting: column.suppressSorting,
+          width: column.width,
           enableRowGroup: true,
 
           type: column.type,
@@ -336,7 +346,7 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
 
       // Actions Here
       this.actions = this.itemDetail.actions;
-      this.showActionBar = this.actions.filter(action => !action.columnButton).length > 0;
+      this.showActionBar = this.actions && this.actions.filter(action => !action.columnButton).length > 0;
     }
 
     this.loadInitialData();
@@ -378,6 +388,7 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
   }
 
   public popupHidden(event: any) {}
+
   private callAction(action: Action, row: any) {
     switch (action.type) {
       case ActionTypes.angularComponent: {
@@ -404,7 +415,7 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
         break;
       }
       default: {
-        this.actionService.callAction(action, this.actionValues, this.selectedRows).subscribe(
+        this.actionService.callAction(action, this.actionValues, this.selectedRows, this.baseContext).subscribe(
           result => {
             if (result.success) {
               if (action.successMessage) {
@@ -482,6 +493,12 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
     if (changes.itemDetail && changes.itemDetail.currentValue) {
       this.loadMenuItem();
     }
+
+    // We have some incomming updates to gridOptions
+    if (changes.overrideGridOptions && changes.overrideGridOptions.currentValue) {
+      this.gridOptions = { ...this.gridOptions, ...changes.overrideGridOptions.currentValue };
+    }
+
     if (changes.itemId && changes.itemId.currentValue && !changes.itemId.previousValue) {
       // watch for Prefs changes
       this.prefsQuery.selectEntity(this.gridviewPrefPrefix + this.itemId).subscribe(pref => {

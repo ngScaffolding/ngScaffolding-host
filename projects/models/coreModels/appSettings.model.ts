@@ -47,6 +47,7 @@ export enum AppSettings {
   inputShowCalendarIcon = 'inputShowCalendarIcon',
   inputDateTimeFormat = 'inputDateTimeFormat',
   inputDateFormat = 'inputDateFormat',
+  inputDateForceUTC = 'inputDateForceUTC',
 
   // moment Formats for dates
   momentDateTimeFormat = 'momentDateTimeFormat',
