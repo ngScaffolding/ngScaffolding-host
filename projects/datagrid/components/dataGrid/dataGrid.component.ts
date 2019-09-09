@@ -40,6 +40,9 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
   @Input() fixedHeight: number;
   @Input() overrideGridOptions: object;
 
+  // Base context, passed to Actions
+  @Input() baseContext: object;
+
   @Output() selectionChanged = new EventEmitter<object[]>();
 
   filterValues: any;
@@ -385,6 +388,7 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
   }
 
   public popupHidden(event: any) {}
+
   private callAction(action: Action, row: any) {
     switch (action.type) {
       case ActionTypes.angularComponent: {
@@ -411,7 +415,7 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
         break;
       }
       default: {
-        this.actionService.callAction(action, this.actionValues, this.selectedRows).subscribe(
+        this.actionService.callAction(action, this.actionValues, this.selectedRows, this.baseContext).subscribe(
           result => {
             if (result.success) {
               if (action.successMessage) {
