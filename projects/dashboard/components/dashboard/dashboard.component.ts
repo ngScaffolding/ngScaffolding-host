@@ -122,7 +122,7 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
 
           this.setAllRefresh();
 
-          const userId = this.authQuery.getSnapshot().userDetails.userId;
+          const userId = this.authQuery.getValue().userDetails.userId;
 
           // Readonly means no moving!
           // if (this.dashboard.readOnly) {
@@ -158,7 +158,7 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
     this.showShare = false;
     this.showInput = false;
 
-    const userId = this.authQuery.getSnapshot().userDetails.userId;
+    const userId = this.authQuery.getValue().userDetails.userId;
     if (this.menuItem.name.startsWith(userId)) {
       // We are the owner of this menu Item
       // We can save changes and delete
@@ -270,14 +270,14 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
 
     if (saveDetails) {
       // this is the save AS function
-      clonedMenu.name = `${this.authQuery.getSnapshot().userDetails.userId}::${saveDetails.label}::${Date.now()}`;
+      clonedMenu.name = `${this.authQuery.getValue().userDetails.userId}::${saveDetails.label}::${Date.now()}`;
       clonedMenu.parent = saveDetails.parentName;
       clonedMenu.label = saveDetails.label;
 
       clonedMenu.routerLink = `dashboard/${clonedMenu.name}`;
 
       // Mark as owned by current user
-      clonedMenu.userIds = [this.authQuery.getSnapshot().userDetails.userId];
+      clonedMenu.userIds = [this.authQuery.getValue().userDetails.userId];
     }
 
     this.saveMenuItemToService(clonedMenu, 'Save', 'Dashboard Saved');

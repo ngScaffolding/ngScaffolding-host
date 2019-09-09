@@ -13,7 +13,7 @@ import { LoggingService } from '../logging/logging.service';
 import { AppSettingsQuery } from '../appSettings/appSettings.query';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class UserPreferencesService {
   private readonly className = 'UserPreferencesService';
@@ -25,19 +25,20 @@ export class UserPreferencesService {
   private definitionsDownloaded = false;
   private httpInFlight = 0;
 
-  constructor(private http: HttpClient, private authQuery: UserAuthenticationQuery,
+  constructor(
+    private http: HttpClient,
+    private authQuery: UserAuthenticationQuery,
     private appSettingsQuery: AppSettingsQuery,
     private logger: LoggingService,
     private userPrefsStore: UserPreferencesStore,
     private userPrefsQuery: UserPreferencesQuery,
-    private appSettings: AppSettingsService) {
-
-      // Wait for settings, then load from server
+    private appSettings: AppSettingsService
+  ) {
+    // Wait for settings, then load from server
     combineLatest([this.authQuery.authenticated$, this.appSettingsQuery.selectEntity(AppSettings.apiHome)]).subscribe(([authenticated, apiHome]) => {
       if (authenticated && apiHome && !this.valuesDownloaded && !this.definitionsDownloaded) {
         this.apiHome = apiHome.value;
         if (!this.httpInFlight) {
-
           // Load User Prefs from Localstorage
           this.loadFromLocal();
 
@@ -46,12 +47,12 @@ export class UserPreferencesService {
 
           // Load User Prefs from Server
           this.getValues();
-          }
-        } else if (!authenticated) {
-          // Clear Here as we logoff
-          this.clearValues();
         }
-      });
+      } else if (!authenticated) {
+        // Clear Here as we logoff
+        this.clearValues();
+      }
+    });
   }
 
   private clearValues() {
@@ -84,19 +85,22 @@ export class UserPreferencesService {
   public getValues() {
     // Load values from Server
     this.httpInFlight++;
-    this.http.get<Array<UserPreferenceValue>>(`${this.appSettings.getValue(AppSettings.apiHome)}/api/v1/userpreferencevalue`).subscribe(prefValues => {
-      if (prefValues) {
-        prefValues.forEach(prefValue => {
-          this.userPrefsStore.createOrReplace(prefValue.name, prefValue);
-        });
-        this.userPrefsStore.setLoading(false);
+    this.http.get<Array<UserPreferenceValue>>(`${this.appSettings.getValue(AppSettings.apiHome)}/api/v1/userpreferencevalue`).subscribe(
+      prefValues => {
+        if (prefValues) {
+          prefValues.forEach(prefValue => {
+            this.userPrefsStore.upsert(prefValue.name, prefValue);
+          });
+          this.userPrefsStore.setLoading(false);
+          this.httpInFlight--;
+          this.valuesDownloaded = true;
+        }
+      },
+      err => {
         this.httpInFlight--;
-        this.valuesDownloaded = true;
+        this.logger.error(err, this.className, true);
       }
-    }, err => {
-        this.httpInFlight--;
-        this.logger.error(err, this.className , true);
-    });
+    );
   }
 
   public setValue(key: string, value: any): Observable<any> {
@@ -110,11 +114,11 @@ export class UserPreferencesService {
             newEntity = JSON.parse(JSON.stringify(existingEntity));
           } else {
             newEntity.name = key;
-            newEntity.userId = this.authQuery.getSnapshot().userDetails.userId;
+            newEntity.userId = this.authQuery.getValue().userDetails.userId;
           }
 
           newEntity.value = value;
-          this.userPrefsStore.createOrReplace(key, newEntity);
+          this.userPrefsStore.upsert(key, newEntity);
 
           observer.next();
           observer.complete();
@@ -128,19 +132,22 @@ export class UserPreferencesService {
 
   private getDefinitions() {
     this.httpInFlight++;
-    this.http.get<Array<UserPreferenceDefinition>>(`${this.appSettings.getValue(AppSettings.apiHome)}/api/v1/UserPreferenceDefinition`).subscribe(prefDefinitions => {
-      if (prefDefinitions && prefDefinitions.length > 0) {
-        let defns = [];
-        prefDefinitions.forEach(definition => {
-          defns.push(definition);
-        });
+    this.http.get<Array<UserPreferenceDefinition>>(`${this.appSettings.getValue(AppSettings.apiHome)}/api/v1/UserPreferenceDefinition`).subscribe(
+      prefDefinitions => {
+        if (prefDefinitions && prefDefinitions.length > 0) {
+          let defns = [];
+          prefDefinitions.forEach(definition => {
+            defns.push(definition);
+          });
+          this.httpInFlight--;
+          this.definitionsDownloaded = true;
+          this.userPrefsStore.update({ preferenceDefinitions: defns });
+        }
+      },
+      err => {
         this.httpInFlight--;
-        this.definitionsDownloaded = true;
-        this.userPrefsStore.updateRoot({ preferenceDefinitions:  defns });
       }
-    },err=>{
-      this.httpInFlight--;
-    });
+    );
   }
 
   private loadFromLocal() {
@@ -149,7 +156,7 @@ export class UserPreferencesService {
       const map: Array<UserPreferenceValue> = JSON.parse(stored);
       if (map && map.length > 0) {
         map.forEach(value => {
-          // this.userPrefsStore.createOrReplace(value.name, value.value);
+          // this.userPrefsStore.upsert(value.name, value.value);
         });
       }
     }
@@ -157,7 +164,7 @@ export class UserPreferencesService {
 
   private saveToLocal(): void {
     // Save to LocalStorage
-    const serial = JSON.stringify(this.userPrefsQuery.getSnapshot().entities);
+    const serial = JSON.stringify(this.userPrefsQuery.getValue().entities);
 
     localStorage.setItem(this.storageKey, serial);
   }

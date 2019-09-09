@@ -56,7 +56,7 @@ export class AppSettingsService {
           });
         }
         this.appSettingsStore.setLoading(false);
-        this.appSettingsStore.updateRoot({ isInitialised: true });
+        this.appSettingsStore.update({ isInitialised: true });
       },
       err => {
         this.appSettingsStore.setLoading(false);
@@ -67,7 +67,7 @@ export class AppSettingsService {
   private setValues(settings: AppSettings) {
     // Mark store as loading
     this.appSettingsStore.setLoading(true);
-    this.appSettingsStore.updateRoot({ isInitialised: false });
+    this.appSettingsStore.update({ isInitialised: false });
 
     // Load values
     if (settings) {
@@ -79,7 +79,7 @@ export class AppSettingsService {
     }
 
     this.appSettingsStore.setLoading(false);
-    this.appSettingsStore.updateRoot({ isInitialised: true });
+    this.appSettingsStore.update({ isInitialised: true });
   }
 
   public loadFromJSON(production: boolean) {

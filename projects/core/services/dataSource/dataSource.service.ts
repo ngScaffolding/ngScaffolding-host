@@ -37,7 +37,7 @@ export class DataSourceService {
       };
 
       // Save as marker that the request has been sent
-      this.dataSourceStore.createOrReplace(key, placeHolderResults);
+      this.dataSourceStore.upsert(key, placeHolderResults);
 
       this.http
         .post<DataResults>(`${this.appSettingsService.getValue(AppSettings.apiHome)}/api/v1/datasource`, dataRequest)

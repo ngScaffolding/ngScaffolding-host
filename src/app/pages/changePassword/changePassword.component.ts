@@ -78,7 +78,7 @@ export class ChangePasswordComponent implements OnInit {
     this.spinner.showSpinner('Changing Password');
 
     const change: ChangePasswordModel = {
-      userId: this.authQuery.getSnapshot().userDetails.userId,
+      userId: this.authQuery.getValue().userDetails.userId,
       currentPassword: this.inputModel.currentPassword,
       newPassword: this.inputModel.newPassword
     };

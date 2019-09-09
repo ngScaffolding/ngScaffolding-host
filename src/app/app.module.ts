@@ -73,7 +73,7 @@ import { AppSettings } from 'ngscaffolding-models';
 export function jwtOptionsFactory(authQuery: UserAuthenticationQuery) {
   return {
     tokenGetter: () => {
-      return authQuery.getSnapshot().token;
+      return authQuery.getValue().token;
     }
   };
 }

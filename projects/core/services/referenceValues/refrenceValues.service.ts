@@ -42,7 +42,7 @@ export class ReferenceValuesService {
 
   setReferenceValue(referenceValue: ReferenceValue) {
     referenceValue.compositeKey = this.getKey(referenceValue.name, '');
-    this.refValuesStore.createOrReplace(this.getKey(referenceValue.name, ''), referenceValue);
+    this.refValuesStore.upsert(this.getKey(referenceValue.name, ''), referenceValue);
   }
 
   //
@@ -82,7 +82,7 @@ export class ReferenceValuesService {
           );
           httpRequest.subscribe(value => {
             value.compositeKey = this.getKey(name, seed);
-            this.refValuesStore.createOrReplace(this.getKey(name, seed), value);
+            this.refValuesStore.upsert(this.getKey(name, seed), value);
             this.requestsInFlight.delete(this.getKey(name, seed));
 
             observer.next(value);
