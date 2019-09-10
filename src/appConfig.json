@@ -1,4 +1,4 @@
 {
-  "apiHome": "https://dcowebapi.azurewebsites.net",
-  "apiAuth": "https://dcoauthapi.azurewebsites.net"
+  "apiHome": "http://localhost:3000",
+  "apiAuth": "http://localhost:3010"
 }

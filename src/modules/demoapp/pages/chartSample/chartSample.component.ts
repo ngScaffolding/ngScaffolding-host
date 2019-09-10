@@ -16,7 +16,7 @@ import { ChartComponent } from 'ngscaffolding-chart';
   styleUrls: ['chartSample.component.scss']
 })
 export class ChartSampleComponent implements OnInit {
-  @ViewChild(ChartComponent) chart1: ChartComponent;
+  @ViewChild(ChartComponent, {static: false}) chart1: ChartComponent;
 
   constructor() {}
 
