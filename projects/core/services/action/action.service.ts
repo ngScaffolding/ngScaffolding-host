@@ -26,7 +26,7 @@ export class ActionService {
       inputDetails = {...baseContext, ...inputDetails};
     }
     // Add in standard Values
-    const currentUser = this.authQuery.getSnapshot().userDetails;
+    const currentUser = this.authQuery.getValue().userDetails;
     const now = new Date();
     inputDetails['now'] = now;
     inputDetails['zuluDate'] = new Date(Date.UTC(now.getFullYear(), now.getMonth(), now.getDate(),  now.getHours(), now.getMinutes(), now.getSeconds()));

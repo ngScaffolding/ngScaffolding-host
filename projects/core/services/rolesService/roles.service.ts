@@ -58,7 +58,7 @@ export class RolesService {
       )
       .subscribe(results => {
         if (!results.inflight && !results.error) {
-          this.rolesStore.add(JSON.parse(results.jsonData));
+          this.rolesStore.add(results.jsonData);
           this.rolesStore.setLoading(false);
         }
       });
