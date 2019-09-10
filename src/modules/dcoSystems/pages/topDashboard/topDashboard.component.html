@@ -1,0 +1,31 @@
+<p-card id="gridContainer">
+  <p-header>
+    <div>
+      <h2 class="breadcrumbs">Maramba / Factory / Drying / Dryer 2</h2>
+      <h3>Live Data</h3>
+    </div>
+  </p-header>
+
+<div ngsFillHeight>
+  <p-tabView [style]="{'height':'100%'}">
+    <p-tabPanel header="Header 1" ngsFillHeight>
+      <h4>Dryer Output</h4>
+
+    </p-tabPanel>
+    <p-tabPanel header="Gauge Display">
+      <div class="ui-g">
+        <div class="ui-g-3 ui-sm-6"><ngs-chart [itemDetails]="chartDetail"></ngs-chart></div>
+        <div class="ui-g-3 ui-sm-6"><ngs-chart [itemDetails]="chartDetailWetAirInlet"></ngs-chart></div>
+        <div class="ui-g-3 ui-sm-6"><ngs-chart [itemDetails]="chartDetailMidAirInlet"></ngs-chart></div>
+        <div class="ui-g-3 ui-sm-6"><ngs-chart [itemDetails]="chartDetailDryAirInlet"></ngs-chart></div>
+        <div class="ui-g-3 ui-sm-6"><ngs-chart [itemDetails]="chartDetail"></ngs-chart></div>
+        <div class="ui-g-3 ui-sm-6"><ngs-chart [itemDetails]="chartDetailWetAirInlet"></ngs-chart></div>
+        <div class="ui-g-3 ui-sm-6"><ngs-chart [itemDetails]="chartDetailMidAirInlet"></ngs-chart></div>
+        <div class="ui-g-3 ui-sm-6"><ngs-chart [itemDetails]="chartDetailDryAirInlet"></ngs-chart></div>
+      </div>
+    </p-tabPanel>
+    <p-tabPanel header="Header 3"> Content 3 </p-tabPanel>
+  </p-tabView>
+</div>
+</p-card>
+
