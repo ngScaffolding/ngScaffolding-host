@@ -14,6 +14,6 @@ export interface DataResults {
   expiresWhen?: Date;
 
   rowCount?: number;
-  jsonData?: string;
+  jsonData?: any;
   results?: ActionResultModel[];
 }

@@ -52,7 +52,7 @@ export class DigitalReadoutComponent implements IDashboardItem, OnInit, OnChange
     this.dataSource.getDataSource({ name: this.itemDetails.dataSourceName }).subscribe(
       results => {
         if (!results.inflight && !results.error) {
-          const data = JSON.parse(results.jsonData);
+          const data = results.jsonData;
 
           this.displayValue = jsonQuery(this.itemDetails.jsonQuery, { data: data }).value;
         }
