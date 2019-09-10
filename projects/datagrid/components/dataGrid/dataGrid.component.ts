@@ -25,8 +25,8 @@ import { GridExtensionsService } from '../../services/gridExtensions/gridExtensi
 
 @Component({
   selector: 'ngs-data-grid',
-  templateUrl: './datagrid.component.html',
-  styleUrls: ['./datagrid.component.scss']
+  templateUrl: './dataGrid.component.html',
+  styleUrls: ['./dataGrid.component.scss']
 })
 export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnChanges {
   @ViewChild(FiltersHolderComponent, {static: false}) filtersHolder: FiltersHolderComponent;
