@@ -60,9 +60,9 @@ export class AppComponent extends NgScaffoldingComponent implements AfterViewIni
 
   menuHoverActive: boolean;
 
-  @ViewChild('layoutContainer') layourContainerViewChild: ElementRef;
+  @ViewChild('layoutContainer', {static: false}) layourContainerViewChild: ElementRef;
 
-  @ViewChild('scrollPanel') layoutMenuScrollerViewChild: ScrollPanel;
+  @ViewChild('scrollPanel', {static: false}) layoutMenuScrollerViewChild: ScrollPanel;
 
   rippleInitListener: any;
 

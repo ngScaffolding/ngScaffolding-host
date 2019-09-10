@@ -1,14 +1,5 @@
 import { Component, OnInit, OnDestroy, ComponentRef, ViewChildren, QueryList, OnChanges, SimpleChanges, Type, ViewChild } from '@angular/core';
-import {
-  LoggingService,
-  MenuQuery,
-  WidgetQuery,
-  AppSettingsQuery,
-  MenuService,
-  UserAuthenticationQuery,
-  NotificationService,
-  SpinnerService
-} from 'ngscaffolding-core';
+import { LoggingService, MenuQuery, WidgetQuery, AppSettingsQuery, MenuService, UserAuthenticationQuery, NotificationService, SpinnerService } from 'ngscaffolding-core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CoreMenuItem, WidgetDetails, WidgetTypes, InputBuilderDefinition, IDashboardItem, InputLocations } from 'ngscaffolding-models';
 
@@ -28,8 +19,8 @@ import { Subscription, interval } from 'rxjs';
 })
 export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
   @ViewChildren(GridsterItemComponent) gridsterItems: QueryList<GridsterItemComponent>;
-  @ViewChild(InputBuilderPopupComponent) actionInputPopup: InputBuilderPopupComponent;
-  @ViewChild(InputBuilderPopupComponent) dashboardInputPopup: InputBuilderPopupComponent;
+  @ViewChild(InputBuilderPopupComponent, { static: false }) actionInputPopup: InputBuilderPopupComponent;
+  @ViewChild(InputBuilderPopupComponent, { static: false }) dashboardInputPopup: InputBuilderPopupComponent;
 
   private paramSubscription: any;
   private menuName: string;
@@ -88,9 +79,7 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
     private spinner: SpinnerService
   ) {}
 
-  public getComponent(widgetDetails: WidgetDetails) {
-
-  }
+  public getComponent(widgetDetails: WidgetDetails) {}
 
   private setAllRefresh() {
     // Drop existing subscription
@@ -169,10 +158,7 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
     }
 
     // Check to see if the Dashboard is configurable
-    if (this.dashboard.inputBuilderDefinition &&
-      this.dashboard.inputBuilderDefinition.inputLocation !== InputLocations.INLINE &&
-      this.dashboard.inputBuilderDefinition.inputDetails) {
-
+    if (this.dashboard.inputBuilderDefinition && this.dashboard.inputBuilderDefinition.inputLocation !== InputLocations.INLINE && this.dashboard.inputBuilderDefinition.inputDetails) {
       // Dont Show the input button if we have inline inputs
       this.showInput = true;
     }
@@ -223,7 +209,10 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
   private refreshAll() {
     this.components.forEach(comp => {
       const component = comp as IDashboardItem;
-      component.refreshData();
+      if (typeof component.refreshData === 'function') {
+        // safe to use the function
+        component.refreshData();
+      }
     });
   }
 
@@ -244,9 +233,9 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
 
   private shareDashboard(saveDetails: SaveDetails) {
     // Create Clone of current Dashboard
-    const clonedMenu: CoreMenuItem = {...this.menuItem};
+    const clonedMenu: CoreMenuItem = { ...this.menuItem };
 
-    clonedMenu.menuDetails = {...this.dashboard};
+    clonedMenu.menuDetails = { ...this.dashboard };
     clonedMenu.roles = [saveDetails.shareRole];
 
     clonedMenu.name = `${saveDetails.label}::${Date.now()}`;
@@ -349,7 +338,9 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
         break;
       }
       case 'refresh': {
-        instance.refreshData();
+        if (typeof instance.refreshData === 'function') {
+          instance.refreshData();
+        }
         break;
       }
       case 'remove': {
@@ -391,7 +382,6 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
 
   // User Provided Input for the Top Dashboard
   dashInputOkClicked(model: any) {
-
     // Save for future
     this.dashboard.configuredValues = model;
 
@@ -400,8 +390,12 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
       const oldConfigValues = comp.widget.configuredValues;
 
       // Add in updated Dashboard Input (Copy overwrites old bits)
-      dashItem.updateData({ ...oldConfigValues, ...model });
-      dashItem.refreshData();
+      if (typeof dashItem.updateData === 'function') {
+        dashItem.updateData({ ...oldConfigValues, ...model });
+      }
+      if (typeof dashItem.refreshData === 'function') {
+        dashItem.refreshData();
+      }
     });
     this.dashboardInputPopup.isShown = false;
   }
@@ -467,8 +461,7 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
     this.paramSubscription = this.route.params.subscribe(params => {
       this.menuName = params['id'];
       this.loadDashboard();
-  });
-
+    });
   }
 
   ngOnDestroy(): void {
