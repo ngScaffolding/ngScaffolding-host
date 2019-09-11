@@ -7,7 +7,7 @@ import { combineLatest, Observable, Subscription } from 'rxjs';
   templateUrl: './userSettings.component.html',
   styleUrls: ['./userSettings.component.scss']
 })
-export class UserSettingsComponent implements OnInit {
+export class UserSettingsComponent implements OnInit, OnDestroy {
   private baseInputDefinition: InputBuilderDefinition = {
     inputDetails: [],
     columnCount: 3,
@@ -52,9 +52,14 @@ export class UserSettingsComponent implements OnInit {
           newValues[prefValue.name] = prefValue.value;
         });
         this.userPrefsModel = newValues;
-        this.obsSubscription.unsubscribe();
       }
     });
+  }
+
+  ngOnDestroy(): void {
+    if (this.obsSubscription) {
+      this.obsSubscription.unsubscribe();
+    }
   }
 
   valueChanged(changedValue: [string, any]) {
