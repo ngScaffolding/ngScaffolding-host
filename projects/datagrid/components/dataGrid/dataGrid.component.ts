@@ -25,14 +25,14 @@ import { GridExtensionsService } from '../../services/gridExtensions/gridExtensi
 
 @Component({
   selector: 'ngs-data-grid',
-  templateUrl: './datagrid.component.html',
-  styleUrls: ['./datagrid.component.scss']
+  templateUrl: './dataGrid.component.html',
+  styleUrls: ['./dataGrid.component.scss']
 })
 export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnChanges {
-  @ViewChild(FiltersHolderComponent) filtersHolder: FiltersHolderComponent;
-  @ViewChild(InputBuilderPopupComponent) actionInputPopup: InputBuilderPopupComponent;
-  @ViewChild(ActionsHolderComponent) actionsHolder: ActionsHolderComponent;
-  @ViewChild(Dialog) dialog: Dialog;
+  @ViewChild(FiltersHolderComponent, {static: false}) filtersHolder: FiltersHolderComponent;
+  @ViewChild(InputBuilderPopupComponent, {static: false}) actionInputPopup: InputBuilderPopupComponent;
+  @ViewChild(ActionsHolderComponent, {static: false}) actionsHolder: ActionsHolderComponent;
+  @ViewChild(Dialog, {static: false}) dialog: Dialog;
 
   @Input() isWidget: boolean;
   @Input() itemId: string;

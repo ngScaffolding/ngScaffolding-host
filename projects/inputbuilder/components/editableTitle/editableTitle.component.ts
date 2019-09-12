@@ -6,7 +6,7 @@ import { Component, Inject, forwardRef, Input, Output, EventEmitter, OnInit, OnC
   styleUrls: ['editableTitle.component.scss']
 })
 export class EditableTitleComponent implements OnChanges {
-  @ViewChild('inputTitle') inputTitleElement: ElementRef;
+  @ViewChild('inputTitle', {static: false}) inputTitleElement: ElementRef;
   @Input() title: string;
   @Input() configObject: any;
   @Input() readOnly: boolean;
