@@ -17,4 +17,12 @@ export class UserAuthenticationQuery extends Query<AuthenticationState> {
   isAuthenticated() {
     return toBoolean(this.getValue().authenticated);
   }
+
+  getUserId() {
+    if(this.isAuthenticated() && this.getValue().userDetails) {
+      return this.getValue().userDetails.userId;
+    } else {
+      return null;
+    }
+  }
 }
