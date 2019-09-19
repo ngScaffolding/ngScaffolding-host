@@ -83,10 +83,10 @@ class="ui-g" (ngSubmit)="onSubmit(form)"
 
             <!-- multiselect -->
             <span *ngSwitchCase="'multiselect'" class="md-inputfield">
-              <label class="small-label" [for]="input.name">{{getLabel(input)}}</label>
+              <!-- <label class="small-label" [for]="input.name">{{getLabel(input)}}</label> -->
                 <p-multiSelect [id]="input.name" class="multi-select"
-                [readonly]="input.readonly"
                   [formControlName]="input.name"
+                  [filter]="false"
                   appendTo="body" optionLabel="display" dataKey="value"
                   [options]="input.datasourceItems"></p-multiSelect>
             </span>

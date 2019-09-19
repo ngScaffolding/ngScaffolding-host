@@ -1,6 +1,7 @@
 <div class="action-container">
     <div class="ui-g">
         <p-button *ngFor="let action of actions | actions:false"
+            style="margin-right: 22px;"
             [disabled]="(action.multipleTarget && selectedRowsCount < 1) || (action.selectionRequired && selectedRowsCount === 0)"
             (click)="clickHandler(action)"
             styleClass="{{action.colour | buttonColour}} action-button"

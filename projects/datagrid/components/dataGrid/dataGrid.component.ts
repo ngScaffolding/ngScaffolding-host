@@ -395,6 +395,13 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
         this.componentLoader.loadComponent(action.angularComponent).then(newComponent => {
           newComponent['data'] = row;
 
+          if (action.idValue) {
+            newComponent['idValue'] = action.idValue;
+          }
+          if (action.additionalProperties) {
+            newComponent['additionalProperties'] = action.additionalProperties;
+          }
+
           this.popupShown = true;
           // Give the dialog time to open
           window.setTimeout(() => {

@@ -142,7 +142,8 @@ export class InputBuilderComponent implements OnInit, OnChanges {
           if((<InputDetailReferenceValues>inputDetail).referenceValueSeedDependency){
             seed = this.clonedInputModel[(<InputDetailReferenceValues>inputDetail).referenceValueSeedDependency];
           }
-          this.loadDataSource(inputDetail, seed).subscribe(_ => {
+          this.loadDataSource(inputDetail, seed).subscribe(data => {
+            (<InputDetailReferenceValues>inputDetail).datasourceItems = data.referenceValueItems;
             this.manipulateValuesToObjects(formControl, inputDetail as InputDetailReferenceValues, inputValue);
           });
         }
@@ -252,7 +253,9 @@ export class InputBuilderComponent implements OnInit, OnChanges {
   private checkForDependencies(inputDetail: InputDetail, updatedValue: any) {
     this.inputBuilderDefinition.inputDetails.forEach(input => {
       if (this.form && input.hasOwnProperty('referenceValueSeedDependency') && (<InputDetailReferenceValues>input).referenceValueSeedDependency && (<InputDetailReferenceValues>input).referenceValueSeedDependency === inputDetail.name) {
-        this.loadDataSource(input, updatedValue, (<InputDetailReferenceValues>input).referenceValueChildLevel).subscribe(_ => {
+        this.loadDataSource(input, updatedValue, (<InputDetailReferenceValues>input).referenceValueChildLevel).subscribe(data => {
+          (<InputDetailReferenceValues>input).datasourceItems = data.referenceValueItems;
+
           const formControl = this.form.controls[inputDetail.name] as FormControl;
           this.manipulateValuesToObjects(formControl, inputDetail as InputDetailReferenceValues, formControl.value);
         });
@@ -261,12 +264,7 @@ export class InputBuilderComponent implements OnInit, OnChanges {
   }
 
   private loadDataSource(inputDetail: InputDetail, seed: string = '', childDepth = 0): Observable<ReferenceValue> {
-    const obs = this.refValuesService.getReferenceValue((<InputDetailReferenceValues>inputDetail).referenceValueName, seed, childDepth);
-
-    obs.subscribe(refValue => {
-      (<InputDetailReferenceValues>inputDetail).datasourceItems = refValue.referenceValueItems;
-    });
-    return obs;
+    return this.refValuesService.getReferenceValue((<InputDetailReferenceValues>inputDetail).referenceValueName, seed, childDepth);
   }
 
   private formChanges(changes: any) {
