@@ -6,4 +6,5 @@ export * from './dashboardModels';
 
 export * from './dataSourceModels';
 export * from './chartModels';
+export * from './zuluDate.helper';
 
