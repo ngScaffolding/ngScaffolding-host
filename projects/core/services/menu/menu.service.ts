@@ -18,7 +18,7 @@ import { MenuQuery } from './menu.query';
 export class MenuService {
   private className = 'core.MenuService';
 
-  private menuItemsFromCode: Array<CoreMenuItem> = [];
+  private masterListMenu: Array<CoreMenuItem> = [];
   private routes: Array<Route> = [];
 
   private menuItems: CoreMenuItem[] = [];
@@ -47,7 +47,6 @@ export class MenuService {
 
     // Save for later use
     this.addMenuItems(menuItems);
-    // this.menuItemsFromCode = [...this.menuItemsFromCode, ...menuItems];
   }
 
   public delete(menuItem: CoreMenuItem): Observable<any> {
@@ -141,9 +140,18 @@ export class MenuService {
     menuItems.forEach(menuItem => {
       let removingThis = false;
 
+      // makes sure roles is array
+      let checkingRoles = [];
+
+      if (Array.isArray(menuItem.roles)) {
+        checkingRoles = [...menuItem.roles];
+      } else {
+        checkingRoles = [menuItem.roles];
+      }
+
       // Is this role protected
-      if (menuItem.roles && menuItem.roles.length > 0) {
-        if (userRoles && menuItem.roles.filter(allowedRole => userRoles.indexOf(allowedRole) !== -1).length === 0) {
+      if (checkingRoles && checkingRoles.length > 0) {
+        if (userRoles && checkingRoles.filter(allowedRole => userRoles.indexOf(allowedRole) !== -1).length === 0) {
           // No Authority. Remove
           removingThis = true;
           removingMenus.push(menuItems.indexOf(menuItem));
@@ -201,10 +209,11 @@ export class MenuService {
   }
 
   public addMenuItems(newMenuItems: CoreMenuItem[]) {
-    this.menuItems = [...this.menuItems];
+    // Save to Master List
+    this.masterListMenu = [...this.masterListMenu, ...newMenuItems];
 
-    // Remove the unatuhorised
-    this.removeUnauthorisedMenuItems(newMenuItems);
+    // Clone so we can amend
+    this.menuItems = [...this.masterListMenu];
 
     // Add to flat reference List
     this.addMenuItemsToReferenceList(newMenuItems);
@@ -213,9 +222,12 @@ export class MenuService {
       this.addNewMenuItemToEntities(newMenuItems, loopMenuItem);
     });
 
-    newMenuItems.forEach(newMenuItem => {
-      this.menuItems.push(newMenuItem);
-    });
+    // newMenuItems.forEach(newMenuItem => {
+    //   this.menuItems.push(newMenuItem);
+    // });
+
+    // Remove the unatuhorised
+    this.removeUnauthorisedMenuItems(this.menuItems);
 
     this.menuStore.update({ menuItems: this.menuItems });
   }

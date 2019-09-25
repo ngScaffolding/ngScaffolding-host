@@ -9,7 +9,7 @@ export class GridViewDetail {
   waitForInput?: boolean;
 
   pageSize?: number;
-  InfiniteScroll?: boolean;
+  infiniteScroll?: boolean;
 
   // No save functions
   readOnly?: boolean;
