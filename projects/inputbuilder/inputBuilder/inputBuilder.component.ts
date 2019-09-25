@@ -65,7 +65,7 @@ export class InputBuilderComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if(changes.inputModel && changes.inputModel.currentValue !== changes.inputModel.previousValue){
+    if (changes.inputModel && changes.inputModel.currentValue !== changes.inputModel.previousValue) {
       this.formBuilt = false;
     }
     this.buildForm();
@@ -73,7 +73,7 @@ export class InputBuilderComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {}
 
-  getContainerClass(inputDetail: InputDetail){
+  getContainerClass(inputDetail: InputDetail) {
     return inputDetail.help ? 'ui-g-11' : 'ui-g-12';
   }
 
@@ -105,7 +105,6 @@ export class InputBuilderComponent implements OnInit, OnChanges {
     if (this.inputBuilderDefinition.inputDetails) {
       // tslint:disable-next-line: prefer-const
       for (const inputDetail of this.inputBuilderDefinition.inputDetails) {
-
         // Get value from model and apply to new FormControl
         let inputValue: any = null;
         if (this.clonedInputModel[inputDetail.name]) {
@@ -139,7 +138,7 @@ export class InputBuilderComponent implements OnInit, OnChanges {
 
           // Do we need a seed value
           let seed = '';
-          if((<InputDetailReferenceValues>inputDetail).referenceValueSeedDependency){
+          if ((<InputDetailReferenceValues>inputDetail).referenceValueSeedDependency) {
             seed = this.clonedInputModel[(<InputDetailReferenceValues>inputDetail).referenceValueSeedDependency];
           }
           this.loadDataSource(inputDetail, seed).subscribe(data => {
@@ -196,7 +195,7 @@ export class InputBuilderComponent implements OnInit, OnChanges {
       }
       case InputTypes.datetimeUTC: {
         const date = new Date(value);
-        return new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(),  date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds());
+        return new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds());
       }
     }
 
@@ -208,17 +207,17 @@ export class InputBuilderComponent implements OnInit, OnChanges {
     let returnedValue: any;
 
     // If we are any 'Object' type input just return the object. Simples.
-    if (inputDetail.type.endsWith('object')) {
+    if (inputDetail.type && inputDetail.type.endsWith('object')) {
       this.valueUpdated.emit([inputDetail.name, value]);
       returnedValue = value;
-    } else if (inputDetail.type === InputTypes.date || inputDetail.type === InputTypes.datetime || inputDetail.type === InputTypes.time) {
+    } else if (inputDetail.type && inputDetail.type === InputTypes.date || inputDetail.type === InputTypes.datetime || inputDetail.type === InputTypes.time) {
       this.valueUpdated.emit([inputDetail.name, value]);
       returnedValue = value;
-    } else if (inputDetail.type === InputTypes.datetimeUTC) {
-      const zuluDate = new Date(Date.UTC(value.getFullYear(), value.getMonth(), value.getDate(),  value.getHours(), value.getMinutes(), value.getSeconds()));
+    } else if (inputDetail.type && inputDetail.type === InputTypes.datetimeUTC) {
+      const zuluDate = new Date(Date.UTC(value.getFullYear(), value.getMonth(), value.getDate(), value.getHours(), value.getMinutes(), value.getSeconds()));
       this.valueUpdated.emit([inputDetail.name, zuluDate]);
       returnedValue = zuluDate;
-    } else if (inputDetail.type === InputTypes.multiselect) {
+    } else if (inputDetail.type && inputDetail.type === InputTypes.multiselect) {
       // This is an array
       if (Array.isArray(value)) {
         const asArray = value as Array<ReferenceValueItem>;

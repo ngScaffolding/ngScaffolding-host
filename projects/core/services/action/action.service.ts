@@ -19,6 +19,9 @@ export class ActionService {
     // Add in base Context
     if (baseContext) {
       inputDetails = { ...baseContext, ...inputDetails };
+    } else {
+      // Clone so we can extend
+      inputDetails = { ...inputDetails };
     }
     // Add in standard Values
     const currentUser = this.authQuery.getValue().userDetails;

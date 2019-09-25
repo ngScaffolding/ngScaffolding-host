@@ -382,7 +382,11 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
       }
       this.actionInputPopup.showPopup();
     } else {
-      this.actionValues = {};
+      if (row) {
+        this.actionValues = row;
+      } else {
+        this.actionValues = {};
+      }
       this.callAction(action, row);
     }
   }
