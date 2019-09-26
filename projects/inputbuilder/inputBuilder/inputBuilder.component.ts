@@ -159,25 +159,28 @@ export class InputBuilderComponent implements OnInit, OnChanges {
 
   private manipulateValuesToObjects(formControl: FormControl, inputDetail: InputDetailReferenceValues, inputValue: any) {
     if (inputDetail.type === InputTypes.multiselect) {
-      const foundValues = (<InputDetailReferenceValues>inputDetail).datasourceItems // tslint:disable-next-line:triple-equals
+      const foundValues = this.dataSourceLookup[inputDetail.name]
         .filter(ds => inputValue.includes(ds.value));
-
-      formControl.setValue(foundValues, {
-        onlySelf: true,
-        emitEvent: false
-      });
+      setTimeout(_ => {
+        formControl.setValue(foundValues, {
+          onlySelf: true,
+          emitEvent: false
+        });
+      }, 100);
     } else {
       // Now we have the values, find the ReferenceValue that matches the inputValue from above
-      if (this.clonedInputModel[inputDetail.name] && (<InputDetailReferenceValues>inputDetail).datasourceItems) {
+      if (this.clonedInputModel[inputDetail.name] && this.dataSourceLookup[inputDetail.name]) {
         if (inputValue) {
-          const foundInputValue = (<InputDetailReferenceValues>inputDetail).datasourceItems // tslint:disable-next-line:triple-equals
+          const foundInputValue = this.dataSourceLookup[inputDetail.name] // tslint:disable-next-line:triple-equals
             .find(ds => ds.value && ds.value.toString() == inputValue.toString()); // Full on corecion
 
           if (foundInputValue) {
-            formControl.setValue(foundInputValue, {
-              onlySelf: true,
-              emitEvent: false
-            });
+            setTimeout(_ => {
+              formControl.setValue(foundInputValue, {
+                onlySelf: true,
+                emitEvent: false
+              });
+            }, 100);
           }
         }
       }
@@ -212,7 +215,7 @@ export class InputBuilderComponent implements OnInit, OnChanges {
     if (inputDetail.type && inputDetail.type.endsWith('object')) {
       this.valueUpdated.emit([inputDetail.name, value]);
       returnedValue = value;
-    } else if (inputDetail.type && inputDetail.type === InputTypes.date || inputDetail.type === InputTypes.datetime || inputDetail.type === InputTypes.time) {
+    } else if ((inputDetail.type && inputDetail.type === InputTypes.date) || inputDetail.type === InputTypes.datetime || inputDetail.type === InputTypes.time) {
       this.valueUpdated.emit([inputDetail.name, value]);
       returnedValue = value;
     } else if (inputDetail.type && inputDetail.type === InputTypes.datetimeUTC) {
