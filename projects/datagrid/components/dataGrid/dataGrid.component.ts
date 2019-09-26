@@ -13,7 +13,7 @@ import { MessageService } from 'primeng/components/common/messageservice';
 import * as moment_ from 'moment';
 const moment = moment_;
 
-import { ActionService, AppSettingsService, DataSourceService, MenuService, LoggingService, NotificationService, BroadcastService, UserPreferencesService, NgsDatePipe, NgsDateTimePipe, ComponentLoaderService } from 'ngscaffolding-core';
+import { ActionService, AppSettingsService, DataSourceService, MenuService, LoggingService, NotificationService, BroadcastService, UserPreferencesService, NgsDatePipe, NgsDateTimePipe, ComponentLoaderService, ReferenceValuesService } from 'ngscaffolding-core';
 
 import { FiltersHolderComponent } from '../filtersHolder/filtersHolder.component';
 import { InputBuilderPopupComponent } from 'ngscaffolding-inputbuilder';
@@ -83,6 +83,7 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
     private ngsDatePipe: NgsDatePipe,
     private ngsDateTimePipe: NgsDateTimePipe,
     private logger: LoggingService,
+    private referenceService: ReferenceValuesService,
     private elementRef: ElementRef,
     private actionService: ActionService,
     private dataSourceService: DataSourceService,
@@ -437,8 +438,8 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
                     detail: action.successMessage
                   });
                   if (action.flushReferenceValues) {
-                    // TODO: Flush values from Reference Store
-                    // this.cacheService.resetValue('referenceValue::' + action.flushReferenceValues + '::');
+                    // Remove cached version
+                    this.referenceService.clearReferenceValue(action.flushReferenceValues);
                   }
                 } else {
                   this.confirmationService.confirm({

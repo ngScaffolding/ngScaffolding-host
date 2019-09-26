@@ -40,6 +40,10 @@ export class ReferenceValuesService {
     });
   }
 
+  clearReferenceValue(name: string, seed = '') {
+    this.refValuesStore.remove(this.getKey(name, seed));
+  }
+
   setReferenceValue(referenceValue: ReferenceValue) {
     referenceValue.compositeKey = this.getKey(referenceValue.name, '');
     this.refValuesStore.upsert(this.getKey(referenceValue.name, ''), referenceValue);
