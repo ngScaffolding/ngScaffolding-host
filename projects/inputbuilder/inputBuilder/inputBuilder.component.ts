@@ -161,26 +161,23 @@ export class InputBuilderComponent implements OnInit, OnChanges {
     if (inputDetail.type === InputTypes.multiselect) {
       const foundValues = (<InputDetailReferenceValues>inputDetail).datasourceItems // tslint:disable-next-line:triple-equals
         .filter(ds => inputValue.includes(ds.value));
-      setTimeout(_=>{
+
       formControl.setValue(foundValues, {
         onlySelf: true,
         emitEvent: false
       });
-    }, 10);
     } else {
       // Now we have the values, find the ReferenceValue that matches the inputValue from above
-      if (this.clonedInputModel[inputDetail.name] && this.dataSourceLookup[inputDetail.name]) {
+      if (this.clonedInputModel[inputDetail.name] && (<InputDetailReferenceValues>inputDetail).datasourceItems) {
         if (inputValue) {
-          const foundInputValue = this.dataSourceLookup[inputDetail.name] // tslint:disable-next-line:triple-equals
+          const foundInputValue = (<InputDetailReferenceValues>inputDetail).datasourceItems // tslint:disable-next-line:triple-equals
             .find(ds => ds.value && ds.value.toString() == inputValue.toString()); // Full on corecion
 
           if (foundInputValue) {
-            setTimeout(_=>{
             formControl.setValue(foundInputValue, {
               onlySelf: true,
               emitEvent: false
             });
-          }, 10);
           }
         }
       }
