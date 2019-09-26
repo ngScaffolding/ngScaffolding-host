@@ -33,6 +33,7 @@ export class InputBuilderComponent implements OnInit, OnChanges {
   containerClass = 'ui-g-12'; // This changes to allow the help Icon
   editorOptions: JsonEditorOptions;
   formSubmitted = false;
+  dataSourceLookup = {};
 
   constructor(public appSettings: AppSettingsService, public appSettingsQuery: AppSettingsQuery, public refValuesService: ReferenceValuesService) {
     this.editorOptions = new JsonEditorOptions();
@@ -142,7 +143,8 @@ export class InputBuilderComponent implements OnInit, OnChanges {
             seed = this.clonedInputModel[(<InputDetailReferenceValues>inputDetail).referenceValueSeedDependency];
           }
           this.loadDataSource(inputDetail, seed).subscribe(data => {
-            (<InputDetailReferenceValues>inputDetail).datasourceItems = data.referenceValueItems;
+            this.dataSourceLookup[inputDetail.name] = data.referenceValueItems;
+            // (<InputDetailReferenceValues>inputDetail).datasourceItems = data.referenceValueItems;
             this.manipulateValuesToObjects(formControl, inputDetail as InputDetailReferenceValues, inputValue);
           });
         }
