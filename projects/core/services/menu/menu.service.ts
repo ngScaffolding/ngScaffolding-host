@@ -143,7 +143,9 @@ export class MenuService {
       // makes sure roles is array
       let checkingRoles = [];
 
-      if (Array.isArray(menuItem.roles)) {
+      if (!menuItem.roles) {
+        checkingRoles = [];
+      } else if (Array.isArray(menuItem.roles)) {
         checkingRoles = [...menuItem.roles];
       } else {
         checkingRoles = [menuItem.roles];
