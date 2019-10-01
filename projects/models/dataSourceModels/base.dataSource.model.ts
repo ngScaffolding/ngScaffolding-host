@@ -7,10 +7,10 @@ import { MongoDBDataSource } from './mongoDB.dataSource';
 
 export const enum DataSourceTypes {
   SQL = 'SQL',
-  RestApi ='RestAPI',
-  MongoDB ='MongoDB',
-  DocumentDB ='DocumentDB',
-  MySQL ='MySQL'
+  RestApi = 'RestAPI',
+  MongoDB = 'MongoDB',
+  DocumentDB = 'DocumentDB',
+  MySQL = 'MySQL'
 }
 
 export const enum SystemDataSourceNames {
@@ -40,13 +40,10 @@ export const enum SystemDataSourceNames {
   CLIENTS_SELECT = 'system.Clients.Select',
   CLIENTS_DELETE = 'system.Clients.Delete',
   CLIENTS_UPDATE = 'system.Clients.Update',
-  CLIENTS_CREATE = 'system.Clients.Create',
-
-
+  CLIENTS_CREATE = 'system.Clients.Create'
 }
 
 export class BaseDataSource {
-
   name: string;
   type: DataSourceTypes;
 
