@@ -1,12 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
-import { MenuItem, MessageService } from 'primeng/primeng';
 import { AppComponent } from './app.component';
 
 // ngScaffolding
 import { Inject, forwardRef } from '@angular/core';
 import { MenuService, MenuQuery, LoggingService } from 'ngscaffolding-core';
 import { CoreMenuItem } from 'ngscaffolding-models';
+import { MessageService, MenuItem } from 'primeng/api';
 // ngScaffolding
 
 @Component({

@@ -1,27 +1,22 @@
-import { HostListener, Component, Input, Output, EventEmitter, OnInit, OnDestroy, ViewChild, OnChanges, SimpleChanges, ElementRef } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, OnDestroy, ViewChild, OnChanges, SimpleChanges, ElementRef } from '@angular/core';
 
-import { Router, ActivatedRoute } from '@angular/router';
-import { GridOptions, ColDef, ColDefUtil } from 'ag-grid/main';
+import { GridOptions, ColDef } from 'ag-grid/main';
 
-import { Action, CoreMenuItem, GridViewDetail, InputBuilderDefinition, DataResults, DialogOptions, IDashboardItem, ActionTypes } from 'ngscaffolding-models';
+import { Action, GridViewDetail, InputBuilderDefinition, DialogOptions, IDashboardItem, ActionTypes } from 'ngscaffolding-models';
 
-import { ConfirmationService } from 'primeng/primeng';
 import { Dialog } from 'primeng/dialog';
 import { MessageService } from 'primeng/components/common/messageservice';
 
-// Workaround for odd moment naming collision
-import * as moment_ from 'moment';
-const moment = moment_;
-
-import { ActionService, AppSettingsService, DataSourceService, MenuService, LoggingService, NotificationService, BroadcastService, UserPreferencesService, NgsDatePipe, NgsDateTimePipe, ComponentLoaderService, ReferenceValuesService } from 'ngscaffolding-core';
+import { ActionService, DataSourceService, LoggingService, BroadcastService, UserPreferencesService, NgsDatePipe, NgsDateTimePipe, ComponentLoaderService, ReferenceValuesService } from 'ngscaffolding-core';
 
 import { FiltersHolderComponent } from '../filtersHolder/filtersHolder.component';
 import { InputBuilderPopupComponent } from 'ngscaffolding-inputbuilder';
 import { ActionsHolderComponent } from '../actionsHolder/actionsHolder.component';
-import { ButtonCellComponent, ActionClickedData } from '../../cellTemplates/buttonCell/buttonCell.component';
+import { ButtonCellComponent } from '../../cellTemplates/buttonCell/buttonCell.component';
 import { Subscription } from 'rxjs';
 import { UserPreferencesQuery } from 'ngscaffolding-core';
 import { GridExtensionsService } from '../../services/gridExtensions/gridExtensions.service';
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'ngs-data-grid',
@@ -36,7 +31,7 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
 
   @Input() isWidget: boolean;
   @Input() itemId: string;
-  @Input() itemDetail: GridViewDetail;
+  @Input() itemDetails: GridViewDetail;
   @Input() fixedHeight: number;
   @Input() overrideGridOptions: object;
 
@@ -82,7 +77,6 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
   constructor(
     private ngsDatePipe: NgsDatePipe,
     private ngsDateTimePipe: NgsDateTimePipe,
-    private logger: LoggingService,
     private referenceService: ReferenceValuesService,
     private elementRef: ElementRef,
     private actionService: ActionService,
@@ -183,7 +177,7 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
           detail: 'View Saved'
         });
       },
-      err => {
+      () => {
         this.messageService.add({
           severity: 'error',
           summary: 'Error',
@@ -204,7 +198,7 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
         });
         this.loadMenuItem();
       },
-      err => {
+      () => {
         this.messageService.add({
           severity: 'error',
           summary: 'Error',
@@ -216,7 +210,7 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
   shareView() {}
   // Toolbar Operations
 
-  onGridReady(params) {
+  onGridReady() {
     // params.api.sizeColumnsToFit();
   }
 
@@ -226,7 +220,7 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
     this.loadInitialData();
   }
 
-  onSelectionChanged($event) {
+  onSelectionChanged() {
     this.selectedRows = this.gridOptions.api.getSelectedRows();
     if (this.actionsHolder) {
       this.actionsHolder.selectedRows = this.selectedRows;
@@ -244,9 +238,9 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
     this.dataSourceService
       .getDataSource({
         forceRefresh: true,
-        name: this.itemDetail.selectDataSourceName,
+        name: this.itemDetails.selectDataSourceName,
         filterValues: this.filterValues,
-        seed: this.itemDetail.seedValue
+        seed: this.itemDetails.seedValue
       })
       .subscribe(
         results => {
@@ -265,16 +259,16 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
             this.dataLoading = false;
           }
         },
-        err => {
+        () => {
           alert('err');
         }
       );
   }
 
   private loadMenuItem() {
-    if (this.itemDetail) {
+    if (this.itemDetails) {
       this.columnDefs = [];
-      this.filters = this.itemDetail.filters;
+      this.filters = this.itemDetails.filters;
       if (this.filters && this.filters.inputDetails && this.filters.inputDetails.length > 0) {
         this.hideFiltersButton = false;
       } else {
@@ -282,7 +276,7 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
       }
 
       // Do We need a Checkbox
-      if (!this.itemDetail.disableCheckboxSelection) {
+      if (!this.itemDetails.disableCheckboxSelection) {
         // Switch off RowSelection
         this.gridOptions.suppressRowClickSelection = true;
 
@@ -299,8 +293,12 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
         });
       }
 
+      if (this.itemDetails.isDataIsland) {
+        this.gridOptions.rowGroupPanelShow = 'onlyWhenGrouping';
+      }
+
       // Do We need an Actions button
-      if (this.itemDetail.actions && this.itemDetail.actions.filter(action => action.columnButton).length > 0) {
+      if (this.itemDetails.actions && this.itemDetails.actions.filter(action => action.columnButton).length > 0) {
         this.columnDefs.push({
           headerName: 'Actions',
           suppressMenu: true,
@@ -309,13 +307,13 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
           field: 'Id',
           cellRendererFramework: ButtonCellComponent,
           cellRendererParams: {
-            actions: this.itemDetail.actions,
-            splitButton: this.itemDetail.isActionColumnSplitButton
+            actions: this.itemDetails.actions,
+            splitButton: this.itemDetails.isActionColumnSplitButton
           }
         });
       }
 
-      this.itemDetail.columns.forEach(column => {
+      this.itemDetails.columns.forEach(column => {
         const colDef: ColDef = {
           field: column.field,
           cellClass: <string>column.cellClass,
@@ -346,7 +344,7 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
       });
 
       // Actions Here
-      this.actions = this.itemDetail.actions;
+      this.actions = this.itemDetails.actions;
       this.showActionBar = this.actions && this.actions.filter(action => !action.columnButton).length > 0;
     }
 
@@ -392,7 +390,7 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
     }
   }
 
-  public popupHidden(event: any) {}
+  public popupHidden() {}
 
   private callAction(action: Action, row: any) {
     switch (action.type) {
@@ -468,7 +466,7 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
               }
             }
           },
-          err => {
+          () => {
             if (action.errorMessage) {
               this.confirmationService.confirm({
                 message: action.errorMessage,
@@ -502,7 +500,7 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.itemDetail && changes.itemDetail.currentValue) {
+    if (changes.itemDetails && changes.itemDetails.currentValue) {
       this.loadMenuItem();
     }
 

@@ -27,7 +27,6 @@ import { JwtModule, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { AppTopBarComponent } from './components/appTopbar/app.topbar.component';
 
 import { PRIME_COMPONENTS } from './app.prime.components';
-import { ConfirmationService } from 'primeng/primeng';
 import { APP_COMPONENTS } from './app.component.list';
 import { MessageService } from 'primeng/components/common/messageservice';
 
@@ -69,6 +68,7 @@ import { TokenInterceptor } from './interceptors/token.interceptor';
 import { AkitaNgDevtools } from '@datorama/akita-ngdevtools';
 import { environment } from '../environments/environment';
 import { AppSettings } from 'ngscaffolding-models';
+import { ConfirmationService } from 'primeng/api';
 
 export function jwtOptionsFactory(authQuery: UserAuthenticationQuery) {
   return {

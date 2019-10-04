@@ -13,32 +13,30 @@ import { NgJsonEditorModule } from 'ang-jsoneditor';
 
 // Components
 import { EditableTitleComponent } from './components/editableTitle/editableTitle.component';
-
-import {
-  DialogModule,
-  InputTextModule,
-  InputSwitchModule,
-  CalendarModule,
-  EditorModule,
-  ListboxModule,
-  InputTextareaModule,
-  ColorPickerModule,
-  SpinnerModule,
-  SliderModule,
-  ChipsModule,
-  CheckboxModule,
-  SelectButtonModule,
-  RadioButtonModule,
-  DropdownModule,
-  TriStateCheckboxModule,
-  PasswordModule,
-  RatingModule,
-  AutoCompleteModule,
-  InputMaskModule,
-  KeyFilterModule,
-
-  MultiSelectModule, ToggleButtonModule, TooltipModule
-} from 'primeng/primeng';
+import { AutoCompleteModule } from 'primeng/autocomplete';
+import { DialogModule } from 'primeng/dialog';
+import { EditorModule } from 'primeng/editor';
+import { ListboxModule } from 'primeng/listbox';
+import { SelectButtonModule } from 'primeng/selectbutton';
+import { ColorPickerModule } from 'primeng/colorpicker';
+import { SliderModule } from 'primeng/slider';
+import { ChipsModule } from 'primeng/chips';
+import { InputSwitchModule } from 'primeng/inputswitch';
+import { InputTextModule } from 'primeng/inputtext';
+import { InputMaskModule } from 'primeng/inputmask';
+import { SpinnerModule } from 'primeng/spinner';
+import { CalendarModule } from 'primeng/calendar';
+import { TriStateCheckboxModule } from 'primeng/tristatecheckbox';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { CheckboxModule } from 'primeng/checkbox';
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { DropdownModule } from 'primeng/dropdown';
+import { PasswordModule } from 'primeng/password';
+import { RatingModule } from 'primeng/rating';
+import { KeyFilterModule } from 'primeng/keyfilter';
+import { MultiSelectModule } from 'primeng/multiselect';
+import { ToggleButtonModule } from 'primeng/togglebutton';
+import { TooltipModule } from 'primeng/tooltip';
 
 @NgModule({
   imports: [
@@ -68,19 +66,13 @@ import {
     PasswordModule,
     RatingModule,
     KeyFilterModule,
-    MultiSelectModule, ToggleButtonModule, TooltipModule,
+    MultiSelectModule,
+    ToggleButtonModule,
+    TooltipModule,
     NgJsonEditorModule
   ],
-  declarations: [
-    EditableTitleComponent,
-    InputBuilderComponent,
-    InputBuilderPopupComponent
-  ],
-  exports: [
-    EditableTitleComponent,
-    InputBuilderComponent,
-    InputBuilderPopupComponent
-  ]
+  declarations: [EditableTitleComponent, InputBuilderComponent, InputBuilderPopupComponent],
+  exports: [EditableTitleComponent, InputBuilderComponent, InputBuilderPopupComponent]
 })
 export class InputBuilderModule {
   static forRoot(): ModuleWithProviders {

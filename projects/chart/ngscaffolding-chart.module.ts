@@ -18,7 +18,7 @@ import { ChartComponent } from './components/chart/chart.component';
 import { ChartHolderComponent } from './components/chartHolder/chartHolder.component';
 
 import { HighchartsChartModule } from 'highcharts-angular';
-import { ProgressSpinnerModule } from 'primeng/primeng';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 // Services
 import { ChartDataService } from './services/chartData.service';

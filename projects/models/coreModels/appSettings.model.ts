@@ -50,8 +50,8 @@ export enum AppSettings {
   inputDateForceUTC = 'inputDateForceUTC',
 
   // moment Formats for dates
-  momentDateTimeFormat = 'momentDateTimeFormat',
-  momentDateFormat = 'momentDateFormat',
+  dateTimeFormat = 'dateTimeFormat',
+  dateFormat = 'dateFormat',
 
   // DataGrid Options
   dataGridIconToolBar = 'dataGridIconToolBar',

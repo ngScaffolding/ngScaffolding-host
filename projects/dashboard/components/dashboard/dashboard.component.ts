@@ -9,8 +9,8 @@ import { CompactType, DisplayGrid, GridsterConfig, GridsterItem, GridType, Grids
 import { InputBuilderPopupComponent } from 'ngscaffolding-inputbuilder';
 import { SaveDetails } from '../saveInput/saveInput.component';
 import { TranslateService } from '@ngx-translate/core';
-import { ConfirmationService } from 'primeng/primeng';
 import { Subscription, interval } from 'rxjs';
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'ngs-dashboard',

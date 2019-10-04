@@ -13,7 +13,7 @@ export class DataGridHolderComponent implements OnInit, OnDestroy {
   private paramSubscription: any;
   private menuItem: CoreMenuItem;
 
-  public itemDetail: GridViewDetail;
+  public itemDetails: GridViewDetail;
   public itemId: string;
 
   constructor(private route: ActivatedRoute, private logger: LoggingService, private menuQuery: MenuQuery) {}
@@ -31,7 +31,7 @@ export class DataGridHolderComponent implements OnInit, OnDestroy {
               this.menuItem = menuItem;
               this.itemId = menuName;
 
-              this.itemDetail = this.menuItem.menuDetails as GridViewDetail;
+              this.itemDetails = this.menuItem.menuDetails as GridViewDetail;
             }
           });
         }

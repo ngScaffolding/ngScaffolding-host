@@ -1,8 +1,8 @@
 <p-card id="gridContainer">
-  <p-header *ngIf="!itemDetail?.isDataIsland">
+  <p-header *ngIf="!itemDetails?.isDataIsland">
     <div class="ui-g">
       <div class="ui-g-8">
-        <span class="grid-title">{{itemDetail?.title | translate}}</span>
+        <span class="grid-title">{{itemDetails?.title | translate}}</span>
       </div>
       <div class="ui-g-4">
         <app-grid-toolbar

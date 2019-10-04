@@ -10,7 +10,12 @@ export class NgsDateTimePipe implements PipeTransform {
   constructor(private appSettings: AppSettingsQuery) {}
   transform(inputDate: Date): string {
     if (inputDate) {
-      const format = this.appSettings.getEntity(AppSettings.momentDateTimeFormat);
+      // If a string gets through, convert to date object
+      if (typeof inputDate === 'string' || inputDate instanceof String) {
+        inputDate = new Date(inputDate);
+      }
+
+      const format = this.appSettings.getEntity(AppSettings.dateTimeFormat);
       return dateFormat(inputDate, format.value);
     } else {
       return '';

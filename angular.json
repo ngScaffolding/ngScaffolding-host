@@ -41,8 +41,6 @@
               "custom/theme/theme.scss"
             ],
             "scripts": [
-              "node_modules/moment/moment.js",
-              "node_modules/chart.js/dist/Chart.js",
               "node_modules/@fullcalendar/core/main.js",
               "node_modules/@fullcalendar/daygrid/main.js",
               "node_modules/@fullcalendar/timegrid/main.js",
@@ -95,8 +93,6 @@
             "tsConfig": "src/tsconfig.spec.json",
             "karmaConfig": "src/karma.conf.js",
             "scripts": [
-              "node_modules/moment/moment.js",
-              "node_modules/chart.js/dist/Chart.js",
               "node_modules/fullcalendar/dist/fullcalendar.js",
               "node_modules/quill/dist/quill.js"
             ],

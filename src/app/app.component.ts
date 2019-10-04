@@ -1,5 +1,4 @@
 import { Component, AfterViewInit, ElementRef, Renderer, ViewChild, OnDestroy, OnInit, NgZone } from '@angular/core';
-import { ScrollPanel } from 'primeng/primeng';
 
 // ngScaffolding
 import { Router } from '@angular/router';
@@ -10,6 +9,7 @@ import { LoggingService, AppSettingsService, SpinnerService, UserPreferencesQuer
 import { NotificationReceiverService } from './services/notificationReceiver/notificationReceiver.service';
 import { Observable } from 'rxjs';
 import { AppSettings } from 'ngscaffolding-models';
+import { ScrollPanel } from 'primeng/scrollpanel';
 
 enum MenuOrientation {
   STATIC,

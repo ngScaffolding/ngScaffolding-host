@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges, ElementRef } from '@angular/core';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import { AppSettingsService, AppSettingsQuery, ComponentLoaderService } from 'ngscaffolding-core';
-import { CoreMenuItem, WidgetDetails, WidgetTypes } from 'ngscaffolding-models';
+import { CoreMenuItem, WidgetDetails, WidgetTypes, GridViewDetail } from 'ngscaffolding-models';
 import { NgElement, WithProperties } from '@angular/elements';
 
 @Component({
@@ -103,10 +103,11 @@ export class WidgetContainerComponent implements OnChanges {
 
       let newWidget: HTMLElement;
       let elementName = '';
+      let itemDetails = widgetDetails.widget.itemDetails;
 
       switch (widgetDetails.widget.type) {
         case WidgetTypes.GridView: {
-          elementName = 'ngs-data-grid';
+          elementName = 'ngs-data-grid-widget';
           break;
         }
         case WidgetTypes.Chart: {
@@ -125,7 +126,7 @@ export class WidgetContainerComponent implements OnChanges {
 
       this.componentLoader.loadComponent(elementName).then(element => {
         newWidget = element;
-        newWidget['itemDetails'] = widgetDetails.widget.itemDetails;
+        newWidget['itemDetails'] = itemDetails;
         this.elementRef.nativeElement.querySelector('#widgetContent').appendChild(newWidget);
 
         // Announce our new birth to the world

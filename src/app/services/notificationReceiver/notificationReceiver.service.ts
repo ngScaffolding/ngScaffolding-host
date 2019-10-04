@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BroadcastService, BroadcastTypes } from 'ngscaffolding-core';
-import { Message } from 'primeng/primeng';
+import { Message } from 'primeng/api';
 import { MessageService } from 'primeng/api';
 import { TranslateService } from '@ngx-translate/core';
 
