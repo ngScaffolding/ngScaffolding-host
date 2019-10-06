@@ -18,6 +18,8 @@ import { UserPreferencesQuery } from 'ngscaffolding-core';
 import { GridExtensionsService } from '../../services/gridExtensions/gridExtensions.service';
 import { ConfirmationService } from 'primeng/api';
 
+import * as Papa from 'papaparse';
+
 @Component({
   selector: 'ngs-data-grid',
   templateUrl: './dataGrid.component.html',
@@ -47,6 +49,7 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
   showActionBar = false;
   actionInputDefinition: InputBuilderDefinition;
   actionValues: any;
+  actionFile: string;
 
   gridOptions: GridOptions;
   selectedRows: any[];
@@ -425,7 +428,15 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
         break;
       }
       default: {
-        this.actionService.callAction(action, this.actionValues, this.selectedRows, this.baseContext).subscribe(
+        let rowsToProcess: object[] = this.selectedRows;
+
+        // If user uploaded file. Use this as rows once parsed
+        if (this.actionFile) {
+          rowsToProcess = Papa.parse(this.actionFile, {
+            header: true
+          }).data;
+        }
+        this.actionService.callAction(action, this.actionValues, rowsToProcess, this.baseContext).subscribe(
           result => {
             if (result.success) {
               if (action.successMessage) {
@@ -483,10 +494,11 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
   }
 
   //
-  // User Cliecked OK on popup
+  // User Clicked OK on popup
   //
-  actionOkClicked(model: any) {
-    this.actionValues = model;
+  actionOkClicked(model: object) {
+    this.actionValues = model[0];
+    this.actionFile = model[1];
 
     // Setup call to service to run Action
     // Once Complete

@@ -37,6 +37,8 @@ import { KeyFilterModule } from 'primeng/keyfilter';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { ToggleButtonModule } from 'primeng/togglebutton';
 import { TooltipModule } from 'primeng/tooltip';
+import { FileUploadModule } from 'primeng/fileupload';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   imports: [
@@ -69,7 +71,9 @@ import { TooltipModule } from 'primeng/tooltip';
     MultiSelectModule,
     ToggleButtonModule,
     TooltipModule,
-    NgJsonEditorModule
+    NgJsonEditorModule,
+    FileUploadModule,
+    TranslateModule
   ],
   declarations: [EditableTitleComponent, InputBuilderComponent, InputBuilderPopupComponent],
   exports: [EditableTitleComponent, InputBuilderComponent, InputBuilderPopupComponent]
