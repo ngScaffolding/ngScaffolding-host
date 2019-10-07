@@ -1,5 +1,8 @@
 <p class="modal-title">User Details</p>
 <ngs-input-builder
             (modelUpdated)="notifyChanged($event)"
+            (cancelClicked)="cancelClicked($event)"
+            (okClicked)="okClicked($event)"
+            (valueUpdated)="valueUpdated($event)"
             [inputBuilderDefinition]="userInputDefinition"
             [inputModel]="data"></ngs-input-builder>

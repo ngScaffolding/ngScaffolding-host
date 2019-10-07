@@ -22,14 +22,26 @@ export class UserDetailsComponent implements AfterViewInit, OnInit, OnChanges {
 
   private userId: string;
   private user: IUserModel;
-  constructor(private route: ActivatedRoute,
-    private appSettingsQuery: AppSettingsQuery,
-     private userService: UserService, private logger: LoggingService) {
+  private settingPassword = false;
+
+  constructor(private route: ActivatedRoute, private appSettingsQuery: AppSettingsQuery, private userService: UserService, private logger: LoggingService) {
     console.log('userDetails Constructor');
   }
 
+  cancelClicked(event: any) {
+    var x = 0;
+  }
+  okClicked(event: any) {
+    var x = 0;
+  }
+  valueUpdated(event: any) {
+    if (event[0] === 'password') {
+      this.settingPassword = true;
+    }
+  }
+
   ngOnInit(): void {
-    const userIsEmail =  this.appSettingsQuery.getEntity(AppSettings.authUserIdIsEmail);
+    const userIsEmail = this.appSettingsQuery.getEntity(AppSettings.authUserIdIsEmail);
 
     if (!userIsEmail) {
       this.userInputDefinition.inputDetails = [
@@ -53,6 +65,14 @@ export class UserDetailsComponent implements AfterViewInit, OnInit, OnChanges {
           label: 'Last Name',
           name: 'lastName',
           type: InputTypes.textbox
+        },
+        <InputDetailTextBox>{
+          label: 'Password',
+          name: 'password',
+          type: InputTypes.password
+        },
+        <InputDetail>{
+          type: InputTypes.null
         },
         <InputDetailReferenceValues>{
           label: 'User Roles',
@@ -87,30 +107,30 @@ export class UserDetailsComponent implements AfterViewInit, OnInit, OnChanges {
           name: 'lastName',
           type: InputTypes.textbox
         },
+        <InputDetailTextBox>{
+          label: 'Password',
+          name: 'password',
+          type: InputTypes.password
+        },
+        <InputDetail>{
+          type: InputTypes.null
+        },
         <InputDetailReferenceValues>{
           label: 'User Roles',
           name: 'roles',
           type: 'multiselect',
-          datasourceItems: [
-            { display: 'User', value: 'User'},
-            { display: 'Admin', value: 'Admin'}
-          ]
+          referenceValueName: SystemDataSourceNames.ROLES_SELECT
         }
-      ]
+      ];
     }
-   }
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.data && changes.data.currentValue) {
     }
   }
 
-  notifyChanged(event: any) {
+  notifyChanged(event: any) {}
 
-  }
-
-
-  ngAfterViewInit(): void {
-
-  }
+  ngAfterViewInit(): void {}
 }

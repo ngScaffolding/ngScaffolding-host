@@ -43,6 +43,21 @@ export function buildMenu(menuService: MenuService) {
                   closable: true,
                   maximizable: true
                 }
+              },
+              {
+                title: 'Add User',
+                icon: 'ui-icon-add',
+                colour: ButtonColours.success,
+                type: 'angularComponent',
+                angularComponent: 'app-user-details',
+                idValue: 'new',
+                dialogOptions: {
+                  header: 'New User Details',
+                  width: 900,
+                  height: 800,
+                  closable: true,
+                  maximizable: true
+                }
               }
             ]
           }

@@ -19,6 +19,12 @@ class="ui-g" (ngSubmit)="onSubmit(form)"
                 <label>{{getLabel(input)}}</label>
             </span>
 
+            <!-- password -->
+            <span *ngSwitchCase="'password'" class="md-inputfield">
+              <input class="textInput" [readonly]="input.readonly" *ngIf="!input.mask" type="password" [formControlName]="input.name" [id]="input.name" pPassword>
+              <label>{{getLabel(input)}}</label>
+            </span>
+
             <!-- email -->
             <span *ngSwitchCase="'email'" class="md-inputfield">
                 <input class="textInput" *ngIf="!input.mask" [readonly]="input.readonly" type="email" [formControlName]="input.name" [id]="input.name" pInputText>
