@@ -16,7 +16,11 @@ export class NgsDatePipe implements PipeTransform {
       }
 
       const format = this.appSettings.getEntity(AppSettings.dateFormat);
-      return dateFormat(inputDate, format.value);
+      if (format && format.value) {
+        return dateFormat(inputDate, format.value);
+      } else {
+        return dateFormat(inputDate, 'default');
+      }
     } else {
       return '';
     }
