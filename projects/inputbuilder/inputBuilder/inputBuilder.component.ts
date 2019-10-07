@@ -160,10 +160,14 @@ export class InputBuilderComponent implements OnInit, OnChanges {
           }
           this.loadDataSource(inputDetail, seed).subscribe(data => {
             this.dataSourceLookup[inputDetail.name] = data.referenceValueItems;
-            // (<InputDetailReferenceValues>inputDetail).datasourceItems = data.referenceValueItems;
             this.manipulateValuesToObjects(formControl, inputDetail as InputDetailReferenceValues, inputValue);
           });
         }
+      }
+
+      // Now re-loop notifying any dependencies
+      for (const inputDetail of this.inputBuilderDefinition.inputDetails) {
+        this.checkForDependencies(inputDetail, localModel[inputDetail.name]);
       }
     }
 
@@ -274,7 +278,7 @@ export class InputBuilderComponent implements OnInit, OnChanges {
     this.inputBuilderDefinition.inputDetails.forEach(input => {
       if (this.form && input.hasOwnProperty('referenceValueSeedDependency') && (<InputDetailReferenceValues>input).referenceValueSeedDependency && (<InputDetailReferenceValues>input).referenceValueSeedDependency === inputDetail.name) {
         this.loadDataSource(input, updatedValue, (<InputDetailReferenceValues>input).referenceValueChildLevel).subscribe(data => {
-          (<InputDetailReferenceValues>input).datasourceItems = data.referenceValueItems;
+          this.dataSourceLookup[input.name] = data.referenceValueItems;
 
           const formControl = this.form.controls[inputDetail.name] as FormControl;
           this.manipulateValuesToObjects(formControl, inputDetail as InputDetailReferenceValues, formControl.value);
