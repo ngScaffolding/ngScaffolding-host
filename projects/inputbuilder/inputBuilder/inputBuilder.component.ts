@@ -19,13 +19,15 @@ export class InputBuilderComponent implements OnInit, OnChanges {
   @Input() inputBuilderDefinition: InputBuilderDefinition;
   @Input() inputModel: any;
 
-  @Output() modelUpdated = new EventEmitter<any>();
-  @Output() valueUpdated = new EventEmitter<[string, any]>();
+  @Output() modelUpdated = new EventEmitter<object>();
+  @Output() valueUpdated = new EventEmitter<[string, object]>();
+  @Output() fileAttached = new EventEmitter<string>();
 
-  @Output() okClicked = new EventEmitter<any>();
+  @Output() okClicked = new EventEmitter<[object, string]>();
   @Output() cancelClicked = new EventEmitter<any>();
 
   private clonedInputModel: any;
+  private fileContent: string;
 
   formBuilt = false;
   form: FormGroup;
@@ -51,7 +53,7 @@ export class InputBuilderComponent implements OnInit, OnChanges {
   onSubmit(form: any) {
     this.formSubmitted = true;
     if (this.form.valid) {
-      this.okClicked.emit(this.clonedInputModel);
+      this.okClicked.emit([this.clonedInputModel, this.fileContent]);
     }
   }
 
@@ -76,6 +78,20 @@ export class InputBuilderComponent implements OnInit, OnChanges {
 
   getContainerClass(inputDetail: InputDetail) {
     return inputDetail.help ? 'ui-g-11' : 'ui-g-12';
+  }
+
+  attachFiles(event: any) {
+    if (event.files && event.files.length > 0) {
+      for (const file of event.files) {
+        const fileReader = new FileReader();
+        fileReader.onload = () => {
+          // this 'text' is the content of the file
+          this.fileContent = fileReader.result.toString();
+          this.fileAttached.emit(this.fileContent);
+        };
+      fileReader.readAsText(file);
+      }
+    }
   }
 
   private buildForm() {
