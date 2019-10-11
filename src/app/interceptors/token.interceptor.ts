@@ -12,7 +12,8 @@ import {
   LoggingService,
   UserAuthenticationQuery
 } from 'ngscaffolding-core';
-import { finalize, tap } from 'rxjs/operators';
+import { finalize, catchError, map } from 'rxjs/operators';
+import { throwError, Observable } from 'rxjs';
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
@@ -22,7 +23,7 @@ export class TokenInterceptor implements HttpInterceptor {
     private authService: UserAuthenticationBase
   ) {}
 
-  intercept(request: HttpRequest<any>, next: HttpHandler) {
+  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const started = Date.now();
     let ok: string;
 
@@ -37,21 +38,21 @@ export class TokenInterceptor implements HttpInterceptor {
     }
 
     return next.handle(request).pipe(
-      tap(
-        // Succeeds when there is a response; ignore other events
-        event => {
+      // Succeeds when there is a response; ignore other events
+      map((event: HttpEvent<any>) => {
           ok = event instanceof HttpResponse ? 'succeeded' : '';
-        },
+          return event;
+        }),
         // Operation failed; error is an HttpErrorResponse
-        error => {
-          ok = 'failed';
-          if (error instanceof HttpErrorResponse) {
-            if (error.status === 401 || error.status === 403) {
-              this.authService.logoff();
-            }
+      catchError((error: HttpErrorResponse) => {
+        ok = 'failed';
+        if (error instanceof HttpErrorResponse) {
+          if (error.status === 401 || error.status === 403) {
+            this.authService.logoff();
           }
         }
-      ),
+        return throwError(error);
+      }),
       // Log when response observable either completes or errors
       finalize(() => {
         const elapsed = Date.now() - started;
@@ -61,16 +62,5 @@ export class TokenInterceptor implements HttpInterceptor {
         this.logger.info(msg);
       })
     );
-
-    //     event => {
-    //       this.logger.info(`Returned Data ${JSON.stringify(request.body)}`, 'HttpInterceptor');
-    //     },
-    //     error => {
-    //     if (error instanceof HttpErrorResponse && error.status === 401) {
-    //         // handle 401 errors
-    //       this.logger.info(`Returned 401 Error`, 'HttpInterceptor');
-    //         auth.logoff();
-    //     }
-    // });
   }
 }
