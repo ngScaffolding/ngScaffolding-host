@@ -51,7 +51,7 @@ class="ui-g" (ngSubmit)="onSubmit(form)"
 
             <!-- Spinner -->
             <span *ngSwitchCase="'spinner'">
-                <p-spinner [id]="input.name" [readonly]="input.readonly" [formControl]="form.controls[input.name]"></p-spinner>
+                <p-spinner [id]="input.name" [readonly]="input.readonly" [min]="input.min" [max]="input.max" [formControl]="form.controls[input.name]"></p-spinner>
                 <label>{{getLabel(input)}}</label>
             </span>
 
