@@ -27,7 +27,7 @@
     <filters-holder #filtersHolder [hidden]="!showFilters" [filterDefinition]="filters" [filterValues]="filterValues" (valuesUpdated)="onFiltersUpdated($event)"></filters-holder>
 
       <ag-grid-angular [style.height]="showActionBar ? '90%' :'100%'" style="width: 97%;" class="ag-theme-material" [rowData]="rowData" [columnDefs]="columnDefs"
-        [gridOptions]="gridOptions" (selectionChanged)='onSelectionChanged($event)' (gridReady)="onGridReady($event)">
+        [gridOptions]="gridOptions" (selectionChanged)='onSelectionChanged()' (gridReady)="onGridReady()">
       </ag-grid-angular>
 
     <app-actions-holder #actionsHolder *ngIf="actions && actions.length > 0"
@@ -40,7 +40,7 @@
         [width]="dialogOptions.width"
         [height]="dialogOptions.height"
         [(visible)]="popupShown"
-        (onHide)="popupHidden($event)"
+        (onHide)="popupHidden()"
         [closable]="dialogOptions.closable"
         [maximizable]="dialogOptions.maximizable"
         [contentStyle]="{'max-height': (dialogOptions.height - 80) + 'px' , 'overflow':'auto'}" >
