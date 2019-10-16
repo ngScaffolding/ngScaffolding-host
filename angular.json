@@ -35,8 +35,8 @@
               "node_modules/@fullcalendar/timegrid/main.min.css",
               "node_modules/quill/dist/quill.snow.css",
               "node_modules/primeicons/primeicons.css",
-              "node_modules/ag-grid/dist/styles/ag-grid.css",
-              "node_modules/ag-grid/dist/styles/ag-theme-material.css",
+              "node_modules/ag-grid-community/dist/styles/ag-grid.css",
+              "node_modules/ag-grid-community/dist/styles/ag-theme-material.css",
               "src/styles.scss",
               "custom/theme/theme.scss"
             ],

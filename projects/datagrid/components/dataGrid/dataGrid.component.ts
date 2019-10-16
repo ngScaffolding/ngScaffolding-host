@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter, OnInit, OnDestroy, ViewChild, OnChanges, SimpleChanges, ElementRef } from '@angular/core';
 
-import { GridOptions, ColDef } from 'ag-grid/main';
+import { GridOptions, ColDef } from 'ag-grid-community';
 
 import { Action, GridViewDetail, InputBuilderDefinition, DialogOptions, IDashboardItem, ActionTypes } from 'ngscaffolding-models';
 
@@ -93,6 +93,36 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
     private gridExtensionsService: GridExtensionsService
   ) {
     this.gridOptions = <GridOptions>{
+      defaultColDef: {
+        filter: true
+      },
+      statusBar: {
+        statusPanels: [
+            { statusPanel: 'agTotalAndFilteredRowCountComponent', align: 'left' },
+            { statusPanel: 'agTotalRowCountComponent', align: 'center' },
+            { statusPanel: 'agFilteredRowCountComponent' },
+            { statusPanel: 'agSelectedRowCountComponent' },
+            { statusPanel: 'agAggregationComponent' }
+          ]
+      },
+      sideBar: {
+          toolPanels: [
+              {
+                  id: 'columns',
+                  labelDefault: 'Columns',
+                  labelKey: 'columns',
+                  iconKey: 'columns',
+                  toolPanel: 'agColumnsToolPanel',
+              },
+              {
+                  id: 'filters',
+                  labelDefault: 'Filters',
+                  labelKey: 'filters',
+                  iconKey: 'filter',
+                  toolPanel: 'agFiltersToolPanel',
+              }
+          ]
+      },
       enableColResize: true,
       enableSorting: true,
       enableFilter: true,
@@ -289,6 +319,7 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
           suppressMenu: true,
           suppressFilter: true,
           suppressSorting: true,
+          suppressToolPanel: true,
           checkboxSelection: true,
           pinned: 'left',
           headerCheckboxSelection: true,
@@ -307,6 +338,8 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
           suppressMenu: true,
           suppressFilter: true,
           suppressSorting: true,
+          suppressToolPanel: true,
+          pinned: 'left',
           field: 'Id',
           cellRendererFramework: ButtonCellComponent,
           cellRendererParams: {
