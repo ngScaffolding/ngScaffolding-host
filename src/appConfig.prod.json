@@ -1,4 +1,5 @@
 {
   "apiHome": "http://localhost:3000",
-  "apiAuth": "http://localhost:3010"
+  "apiAuth": "http://localhost:3010",
+  "isMobile": false
 }

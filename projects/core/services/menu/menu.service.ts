@@ -32,11 +32,14 @@ export class MenuService {
 
   constructor(private http: HttpClient, private menuStore: MenuStore, private menuQuery: MenuQuery, private appSettingsQuery: AppSettingsQuery, private authQuery: UserAuthenticationQuery, private log: LoggingService, public rolesService: RolesService) {
     // Wait for settings, then load from server
-    combineLatest([this.authQuery.authenticated$, this.appSettingsQuery.selectEntity(AppSettings.apiHome)]).subscribe(([authenticated, apiHome]) => {
+    combineLatest([this.authQuery.authenticated$,
+       this.appSettingsQuery.selectEntity(AppSettings.apiHome),
+       this.appSettingsQuery.selectEntity(AppSettings.isMobile)]
+       ).subscribe(([authenticated, apiHome, isMobile]) => {
       if (authenticated && apiHome && !this.menuDownloaded) {
         this.apiHome = apiHome.value;
         if (!this.httpInFlight) {
-          this.downloadMenuItems();
+          this.downloadMenuItems(isMobile);
         }
       }
     });
@@ -168,28 +171,15 @@ export class MenuService {
     });
   }
 
-  public downloadMenuItems() {
+  public downloadMenuItems(isMobile: boolean) {
     // Mark loading status
     this.menuStore.setLoading(true);
     this.httpInFlight = true;
 
     const newMenuItems: CoreMenuItem[] = [];
 
-    // // First Add Menu Items Added from Code
-    // if (this.menuItemsFromCode) {
-    //   const clonedFromCode = JSON.parse(JSON.stringify(this.menuItemsFromCode));
-    //       this.removeUnauthorisedMenuItems(clonedFromCode);
-
-    //       // Add to flat reference List
-    //       this.addMenuItemsToReferenceList(clonedFromCode);
-
-    //       clonedFromCode.forEach(loopMenuItem => {
-    //         this.addNewMenuItemToEntities(newMenuItems, loopMenuItem);
-    //       });
-    // }
-
     this.http
-      .get<Array<CoreMenuItem>>(this.apiHome + '/api/v1/menuitems')
+      .get<Array<CoreMenuItem>>(`this.apiHome/api/v1/menuitems?mobile=${isMobile}`)
       .pipe(
         timeout(20000),
         finalize(() => {
