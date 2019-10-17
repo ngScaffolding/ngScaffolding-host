@@ -1,16 +1,45 @@
-import { Component, OnInit, OnDestroy, ComponentRef, ViewChildren, QueryList, OnChanges, SimpleChanges, Type, ViewChild } from '@angular/core';
-import { LoggingService, MenuQuery, WidgetQuery, AppSettingsQuery, MenuService, UserAuthenticationQuery, NotificationService, SpinnerService } from 'ngscaffolding-core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  ComponentRef,
+  ViewChildren,
+  QueryList,
+  OnChanges,
+  SimpleChanges,
+  Type,
+  ViewChild
+} from '@angular/core';
+import {
+  LoggingService,
+  MenuQuery,
+  WidgetQuery,
+  AppSettingsQuery,
+  MenuService,
+  UserAuthenticationQuery,
+  NotificationService,
+  SpinnerService
+} from 'ngscaffolding-core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CoreMenuItem, WidgetDetails, WidgetTypes, InputBuilderDefinition, IDashboardItem, InputLocations } from 'ngscaffolding-models';
 
 import { DashboardModel } from 'ngscaffolding-models';
 
-import { CompactType, DisplayGrid, GridsterConfig, GridsterItem, GridType, GridsterItemComponent, GridsterItemComponentInterface } from 'angular-gridster2';
+import {
+  CompactType,
+  DisplayGrid,
+  GridsterConfig,
+  GridsterItem,
+  GridType,
+  GridsterItemComponent,
+  GridsterItemComponentInterface
+} from 'angular-gridster2';
 import { InputBuilderPopupComponent } from 'ngscaffolding-inputbuilder';
 import { SaveDetails } from '../saveInput/saveInput.component';
 import { TranslateService } from '@ngx-translate/core';
-import { Subscription, interval } from 'rxjs';
+import { Subscription, interval, combineLatest } from 'rxjs';
 import { ConfirmationService } from 'primeng/api';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'ngs-dashboard',
@@ -97,45 +126,47 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
   loadDashboard() {
     this.spinner.showSpinner('Loading');
 
-    this.menuQuery.selectLoading().subscribe(menuLoading => {
-      if (!menuLoading) {
-        const menuItem = this.menuQuery.getEntity(this.menuName);
-        if (menuItem) {
-          this.menuItem = JSON.parse(JSON.stringify(menuItem));
+    this.menuQuery
+      .select(this.menuName)
+      .pipe(
+        map(menuItem => {
+          if (menuItem) {
+            this.menuItem = JSON.parse(JSON.stringify(menuItem));
 
-          if (this.menuItem && this.menuItem.menuDetails) {
-            this.dashboard = this.menuItem.menuDetails as DashboardModel;
+            if (this.menuItem && this.menuItem.menuDetails) {
+              this.dashboard = this.menuItem.menuDetails as DashboardModel;
+            }
+
+            this.setButtons();
+
+            this.setAllRefresh();
+
+            const userId = this.authQuery.getValue().userDetails.userId;
+
+            // Readonly means no moving!
+            // if (this.dashboard.readOnly) {
+            //   this.options.draggable = {enabled: false};
+            //   this.options.resizable = {enabled: false};
+            // } else if (this.menuItem.name.startsWith(userId)) {
+            //   this.options.draggable = {enabled: true};
+            //   this.options.resizable = {enabled: true};
+            // } else {
+            //   this.options.draggable = {enabled: false};
+            //   this.options.resizable = {enabled: false};
+            // }
+
+            this.spinner.hideSpinner();
+          } else {
+            this.notificationService.showMessage({
+              summary: 'Error',
+              severity: 'error',
+              detail: 'You do not have access to this Dashboard'
+            });
+            this.spinner.hideSpinner();
           }
-
-          this.setButtons();
-
-          this.setAllRefresh();
-
-          const userId = this.authQuery.getValue().userDetails.userId;
-
-          // Readonly means no moving!
-          // if (this.dashboard.readOnly) {
-          //   this.options.draggable = {enabled: false};
-          //   this.options.resizable = {enabled: false};
-          // } else if (this.menuItem.name.startsWith(userId)) {
-          //   this.options.draggable = {enabled: true};
-          //   this.options.resizable = {enabled: true};
-          // } else {
-          //   this.options.draggable = {enabled: false};
-          //   this.options.resizable = {enabled: false};
-          // }
-
-          this.spinner.hideSpinner();
-        } else {
-          this.notificationService.showMessage({
-            summary: 'Error',
-            severity: 'error',
-            detail: 'You do not have access to this Dashboard'
-          });
-          this.spinner.hideSpinner();
-        }
-      }
-    });
+        })
+      )
+      .subscribe();
   }
 
   private setButtons() {
@@ -158,7 +189,11 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
     }
 
     // Check to see if the Dashboard is configurable
-    if (this.dashboard.inputBuilderDefinition && this.dashboard.inputBuilderDefinition.inputLocation !== InputLocations.INLINE && this.dashboard.inputBuilderDefinition.inputDetails) {
+    if (
+      this.dashboard.inputBuilderDefinition &&
+      this.dashboard.inputBuilderDefinition.inputLocation !== InputLocations.INLINE &&
+      this.dashboard.inputBuilderDefinition.inputDetails
+    ) {
       // Dont Show the input button if we have inline inputs
       this.showInput = true;
     }
@@ -222,7 +257,11 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
       accept: () => {
         this.menuService.delete(this.menuItem).subscribe(() => {
           setTimeout(() => {
-            this.notificationService.showMessage({ severity: 'info', summary: 'Delete', detail: this.translate.instant('Dashboard Deleted') });
+            this.notificationService.showMessage({
+              severity: 'info',
+              summary: 'Delete',
+              detail: this.translate.instant('Dashboard Deleted')
+            });
           }, 1000);
 
           this.router.navigateByUrl('/');
@@ -283,7 +322,11 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
     this.menuService.saveMenuItem(menuItem, false);
     setTimeout(() => {
       this.menuService.updateExistingMenuItem(clonedFullMenu);
-      this.notificationService.showMessage({ severity: 'info', summary: this.translate.instant(summary), detail: this.translate.instant(result) });
+      this.notificationService.showMessage({
+        severity: 'info',
+        summary: this.translate.instant(summary),
+        detail: this.translate.instant(result)
+      });
     }, 200);
   }
 
