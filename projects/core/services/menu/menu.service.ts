@@ -36,10 +36,10 @@ export class MenuService {
        this.appSettingsQuery.selectEntity(AppSettings.apiHome),
        this.appSettingsQuery.selectEntity(AppSettings.isMobile)]
        ).subscribe(([authenticated, apiHome, isMobile]) => {
-      if (authenticated && apiHome && !this.menuDownloaded) {
+      if (authenticated && apiHome && isMobile && !this.menuDownloaded) {
         this.apiHome = apiHome.value;
         if (!this.httpInFlight) {
-          this.downloadMenuItems(isMobile);
+          this.downloadMenuItems(isMobile.value || false);
         }
       }
     });
@@ -179,7 +179,7 @@ export class MenuService {
     const newMenuItems: CoreMenuItem[] = [];
 
     this.http
-      .get<Array<CoreMenuItem>>(`this.apiHome/api/v1/menuitems?mobile=${isMobile}`)
+      .get<Array<CoreMenuItem>>(`${this.apiHome}/api/v1/menuitems?mobile=${isMobile}`)
       .pipe(
         timeout(20000),
         finalize(() => {
