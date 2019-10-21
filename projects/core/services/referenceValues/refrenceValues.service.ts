@@ -60,6 +60,7 @@ export class ReferenceValuesService {
   getReferenceValue(name: string, seed = '', childDepth = 0): Observable<ReferenceValue> {
     if (this.refValuesQuery.hasEntity(this.getKey(name, seed))) {
       // If we get one from Cache, thats handy to use
+      this.logger.info(`Reference Values From Cache ${name}::${seed}`);
       return new Observable<ReferenceValue>(observer => {
         observer.next(this.refValuesQuery.getEntity(this.getKey(name, seed)));
         observer.complete();
@@ -86,6 +87,7 @@ export class ReferenceValuesService {
       } else {
         const wrapper = new Observable<ReferenceValue>(observer => {
           // Call HTTP Here
+          this.logger.info(`Reference Values From HTTP ${name}::${seed}`);
           const httpRequest = this.http.get<ReferenceValue>(
             `${this.appSettingsService.getValue(AppSettings.apiHome)}/api/v1/referencevalues?name=${name}&seed=${seed}`
           );

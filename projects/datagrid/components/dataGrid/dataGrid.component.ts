@@ -7,7 +7,17 @@ import { Action, GridViewDetail, InputBuilderDefinition, DialogOptions, IDashboa
 import { Dialog } from 'primeng/dialog';
 import { MessageService } from 'primeng/components/common/messageservice';
 
-import { ActionService, DataSourceService, LoggingService, BroadcastService, UserPreferencesService, NgsDatePipe, NgsDateTimePipe, ComponentLoaderService, ReferenceValuesService } from 'ngscaffolding-core';
+import {
+  ActionService,
+  DataSourceService,
+  LoggingService,
+  BroadcastService,
+  UserPreferencesService,
+  NgsDatePipe,
+  NgsDateTimePipe,
+  ComponentLoaderService,
+  ReferenceValuesService
+} from 'ngscaffolding-core';
 
 import { FiltersHolderComponent } from '../filtersHolder/filtersHolder.component';
 import { InputBuilderPopupComponent } from 'ngscaffolding-inputbuilder';
@@ -26,10 +36,10 @@ import * as Papa from 'papaparse';
   styleUrls: ['./dataGrid.component.scss']
 })
 export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnChanges {
-  @ViewChild(FiltersHolderComponent, {static: false}) filtersHolder: FiltersHolderComponent;
-  @ViewChild(InputBuilderPopupComponent, {static: false}) actionInputPopup: InputBuilderPopupComponent;
-  @ViewChild(ActionsHolderComponent, {static: false}) actionsHolder: ActionsHolderComponent;
-  @ViewChild(Dialog, {static: false}) dialog: Dialog;
+  @ViewChild(FiltersHolderComponent, { static: false }) filtersHolder: FiltersHolderComponent;
+  @ViewChild(InputBuilderPopupComponent, { static: false }) actionInputPopup: InputBuilderPopupComponent;
+  @ViewChild(ActionsHolderComponent, { static: false }) actionsHolder: ActionsHolderComponent;
+  @ViewChild(Dialog, { static: false }) dialog: Dialog;
 
   @Input() isWidget: boolean;
   @Input() itemId: string;
@@ -98,30 +108,30 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
       },
       statusBar: {
         statusPanels: [
-            { statusPanel: 'agTotalAndFilteredRowCountComponent', align: 'left' },
-            { statusPanel: 'agTotalRowCountComponent', align: 'center' },
-            { statusPanel: 'agFilteredRowCountComponent' },
-            { statusPanel: 'agSelectedRowCountComponent' },
-            { statusPanel: 'agAggregationComponent' }
-          ]
+          { statusPanel: 'agTotalAndFilteredRowCountComponent', align: 'left' },
+          { statusPanel: 'agTotalRowCountComponent', align: 'center' },
+          { statusPanel: 'agFilteredRowCountComponent' },
+          { statusPanel: 'agSelectedRowCountComponent' },
+          { statusPanel: 'agAggregationComponent' }
+        ]
       },
       sideBar: {
-          toolPanels: [
-              {
-                  id: 'columns',
-                  labelDefault: 'Columns',
-                  labelKey: 'columns',
-                  iconKey: 'columns',
-                  toolPanel: 'agColumnsToolPanel',
-              },
-              {
-                  id: 'filters',
-                  labelDefault: 'Filters',
-                  labelKey: 'filters',
-                  iconKey: 'filter',
-                  toolPanel: 'agFiltersToolPanel',
-              }
-          ]
+        toolPanels: [
+          {
+            id: 'columns',
+            labelDefault: 'Columns',
+            labelKey: 'columns',
+            iconKey: 'columns',
+            toolPanel: 'agColumnsToolPanel'
+          },
+          {
+            id: 'filters',
+            labelDefault: 'Filters',
+            labelKey: 'filters',
+            iconKey: 'filter',
+            toolPanel: 'agFiltersToolPanel'
+          }
+        ]
       },
       enableColResize: true,
       enableSorting: true,
@@ -317,8 +327,8 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
         this.columnDefs.push({
           width: 70,
           suppressMenu: true,
-          suppressFilter: true,
-          suppressSorting: true,
+          filter: false,
+          sortable: false,
           suppressToolPanel: true,
           checkboxSelection: true,
           pinned: 'left',
@@ -336,8 +346,8 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
         this.columnDefs.push({
           headerName: 'Actions',
           suppressMenu: true,
-          suppressFilter: true,
-          suppressSorting: true,
+          filter: false,
+          sortable: false,
           suppressToolPanel: true,
           pinned: 'left',
           field: 'Id',
@@ -359,8 +369,8 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
           headerTooltip: column.headerTooltip,
           pinned: column.pinned,
           suppressMenu: column.suppressMenu,
-          suppressFilter: column.suppressFilter,
-          suppressSorting: column.suppressSorting,
+          filter: column.filter,
+          sortable: column.sortable,
           width: column.width,
           enableRowGroup: true,
 
@@ -559,7 +569,9 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
       this.prefsQuery.selectEntity(this.gridviewPrefPrefix + this.itemId).subscribe(pref => {
         if (pref) {
           this.gridSavedState = JSON.parse(pref.value);
-          this.gridOptions.columnApi.setColumnState(this.gridSavedState);
+          if (this.gridOptions.columnApi) {
+            this.gridOptions.columnApi.setColumnState(this.gridSavedState);
+          }
         }
       });
     }

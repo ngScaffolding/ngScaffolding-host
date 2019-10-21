@@ -1,39 +1,11 @@
-import {
-  Component,
-  OnInit,
-  OnDestroy,
-  ComponentRef,
-  ViewChildren,
-  QueryList,
-  OnChanges,
-  SimpleChanges,
-  Type,
-  ViewChild
-} from '@angular/core';
-import {
-  LoggingService,
-  MenuQuery,
-  WidgetQuery,
-  AppSettingsQuery,
-  MenuService,
-  UserAuthenticationQuery,
-  NotificationService,
-  SpinnerService
-} from 'ngscaffolding-core';
+import { Component, OnInit, OnDestroy, ComponentRef, ViewChildren, QueryList, OnChanges, SimpleChanges, Type, ViewChild } from '@angular/core';
+import { LoggingService, MenuQuery, WidgetQuery, AppSettingsQuery, MenuService, UserAuthenticationQuery, NotificationService, SpinnerService } from 'ngscaffolding-core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CoreMenuItem, WidgetDetails, WidgetTypes, InputBuilderDefinition, IDashboardItem, InputLocations } from 'ngscaffolding-models';
 
 import { DashboardModel } from 'ngscaffolding-models';
 
-import {
-  CompactType,
-  DisplayGrid,
-  GridsterConfig,
-  GridsterItem,
-  GridType,
-  GridsterItemComponent,
-  GridsterItemComponentInterface
-} from 'angular-gridster2';
+import { CompactType, DisplayGrid, GridsterConfig, GridsterItem, GridType, GridsterItemComponent, GridsterItemComponentInterface } from 'angular-gridster2';
 import { InputBuilderPopupComponent } from 'ngscaffolding-inputbuilder';
 import { SaveDetails } from '../saveInput/saveInput.component';
 import { TranslateService } from '@ngx-translate/core';
@@ -126,47 +98,42 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
   loadDashboard() {
     this.spinner.showSpinner('Loading');
 
-    this.menuQuery
-      .select(this.menuName)
-      .pipe(
-        map(menuItem => {
-          if (menuItem) {
-            this.menuItem = JSON.parse(JSON.stringify(menuItem));
+    this.menuQuery.selectEntity(this.menuName).subscribe(menuItem => {
+      if (menuItem) {
+        this.menuItem = JSON.parse(JSON.stringify(menuItem));
 
-            if (this.menuItem && this.menuItem.menuDetails) {
-              this.dashboard = this.menuItem.menuDetails as DashboardModel;
-            }
+        if (this.menuItem && this.menuItem.menuDetails) {
+          this.dashboard = this.menuItem.menuDetails as DashboardModel;
+        }
 
-            this.setButtons();
+        this.setButtons();
 
-            this.setAllRefresh();
+        this.setAllRefresh();
 
-            const userId = this.authQuery.getValue().userDetails.userId;
+        const userId = this.authQuery.getValue().userDetails.userId;
 
-            // Readonly means no moving!
-            // if (this.dashboard.readOnly) {
-            //   this.options.draggable = {enabled: false};
-            //   this.options.resizable = {enabled: false};
-            // } else if (this.menuItem.name.startsWith(userId)) {
-            //   this.options.draggable = {enabled: true};
-            //   this.options.resizable = {enabled: true};
-            // } else {
-            //   this.options.draggable = {enabled: false};
-            //   this.options.resizable = {enabled: false};
-            // }
+        // Readonly means no moving!
+        // if (this.dashboard.readOnly) {
+        //   this.options.draggable = {enabled: false};
+        //   this.options.resizable = {enabled: false};
+        // } else if (this.menuItem.name.startsWith(userId)) {
+        //   this.options.draggable = {enabled: true};
+        //   this.options.resizable = {enabled: true};
+        // } else {
+        //   this.options.draggable = {enabled: false};
+        //   this.options.resizable = {enabled: false};
+        // }
 
-            this.spinner.hideSpinner();
-          } else {
-            this.notificationService.showMessage({
-              summary: 'Error',
-              severity: 'error',
-              detail: 'You do not have access to this Dashboard'
-            });
-            this.spinner.hideSpinner();
-          }
-        })
-      )
-      .subscribe();
+        this.spinner.hideSpinner();
+      } else {
+        this.notificationService.showMessage({
+          summary: 'Error',
+          severity: 'error',
+          detail: 'You do not have access to this Dashboard'
+        });
+        this.spinner.hideSpinner();
+      }
+    });
   }
 
   private setButtons() {
