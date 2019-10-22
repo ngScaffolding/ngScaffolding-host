@@ -1,5 +1,5 @@
 {
-  "apiHome": "http://localhost:3000",
+  "apiHome": "https://tesamm-api.azurewebsites.net",
   "apiAuth": "https://tesamm-oauth.azurewebsites.net",
   "isMobile": false
 }

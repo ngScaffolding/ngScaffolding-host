@@ -6,7 +6,7 @@ import { buildMenu } from '../src/app/app.commonMenu';
 const appInitializerFn = (appConfig: AppSettingsService, menuService: MenuService) => {
   return () => {
     return new Promise((resolve, reject) => {
-      appConfig.loadFromJSON(environment.production);
+      appConfig.setValues(environment.appConfig);
       buildMenu(menuService);
       resolve();
     });

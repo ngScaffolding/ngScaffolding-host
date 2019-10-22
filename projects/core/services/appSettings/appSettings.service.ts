@@ -64,7 +64,7 @@ export class AppSettingsService {
     );
   }
 
-  private setValues(settings: AppSettings) {
+  public setValues(settings: object) {
     // Mark store as loading
     this.appSettingsStore.setLoading(true);
     this.appSettingsStore.update({ isInitialised: false });
@@ -80,24 +80,6 @@ export class AppSettingsService {
 
     this.appSettingsStore.setLoading(false);
     this.appSettingsStore.update({ isInitialised: true });
-  }
-
-  public loadFromJSON(production: boolean) {
-    if (production) {
-    return this.http
-      .get('/appConfig.prod.json')
-      .toPromise()
-      .then(data => {
-        this.setValues(data as AppSettings);
-      });
-    } else {
-      return this.http
-      .get('/appConfig.json')
-      .toPromise()
-      .then(data => {
-        this.setValues(data as AppSettings);
-      });
-    }
   }
 
   public getBoolean(name: string): Observable<boolean> {
