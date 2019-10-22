@@ -125,13 +125,6 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
         // }
 
         this.spinner.hideSpinner();
-      } else {
-        this.notificationService.showMessage({
-          summary: 'Error',
-          severity: 'error',
-          detail: 'You do not have access to this Dashboard'
-        });
-        this.spinner.hideSpinner();
       }
     });
   }
