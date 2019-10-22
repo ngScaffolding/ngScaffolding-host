@@ -363,7 +363,6 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
         const colDef: ColDef = {
           field: column.field,
           cellClass: <string>column.cellClass,
-          filter: column.filter,
           tooltipField: column.tooltipField,
           headerName: column.headerName,
           headerTooltip: column.headerTooltip,
