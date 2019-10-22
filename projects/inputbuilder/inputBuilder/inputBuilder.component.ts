@@ -241,7 +241,7 @@ export class InputBuilderComponent implements OnInit, OnChanges {
     } else if (inputDetail.type === InputTypes.spinner) {
       returnedValue = Number(value);
     } else if (inputDetail.type && inputDetail.type === InputTypes.datetimeUTC) {
-      const zuluDate = new Date(Date.UTC(value.getFullYear(), value.getMonth(), value.getDate(), value.getHours(), value.getMinutes(), value.getSeconds()));
+      const zuluDate = ZuluDateHelper.getZuluDate(value);
       this.valueUpdated.emit([inputDetail.name, zuluDate]);
       returnedValue = zuluDate;
     } else if (inputDetail.type && inputDetail.type === InputTypes.multiselect) {
