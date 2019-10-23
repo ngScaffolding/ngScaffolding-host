@@ -88,6 +88,7 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
   private gridSavedState: any;
 
   constructor(
+    private log: LoggingService,
     private ngsDatePipe: NgsDatePipe,
     private ngsDateTimePipe: NgsDateTimePipe,
     private referenceService: ReferenceValuesService,
@@ -186,11 +187,12 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
     });
   }
 
+  // Dashboard Item Interface
   public refreshData() {
+    this.log.info('DataGrid: Refreshing Data');
     this.loadInitialData();
   }
 
-  // Dashboard Item Interface
   public updateData(newData: any) {
     throw new Error('Method not implemented.');
   }
