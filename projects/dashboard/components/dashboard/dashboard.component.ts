@@ -20,8 +20,8 @@ import { map } from 'rxjs/operators';
 })
 export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
   @ViewChildren(GridsterItemComponent) gridsterItems: QueryList<GridsterItemComponent>;
-  @ViewChild(InputBuilderPopupComponent, { static: false }) actionInputPopup: InputBuilderPopupComponent;
-  @ViewChild(InputBuilderPopupComponent, { static: false }) dashboardInputPopup: InputBuilderPopupComponent;
+  @ViewChild('actionInputPopup', { static: false }) actionInputPopup: InputBuilderPopupComponent;
+  @ViewChild('dashboardInputPopup', { static: false }) dashboardInputPopup: InputBuilderPopupComponent;
 
   private paramSubscription: any;
   private menuName: string;
