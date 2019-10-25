@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit } from '@angular/core';
-import { SpinnerService, ComponentLoaderService, UserServiceBase, UserAuthenticationQuery, AppSettingsQuery, LoggingService, NotificationService, UserAuthenticationService } from 'ngscaffolding-core';
+import { SpinnerService, UserServiceBase, UserAuthenticationQuery, AppSettingsQuery, LoggingService, NotificationService, UserAuthenticationService } from 'ngscaffolding-core';
 import { ChangePasswordModel, AppSettings } from 'ngscaffolding-models';
 import { Router } from '@angular/router';
 
@@ -27,7 +27,7 @@ export class ChangePasswordComponent implements OnInit {
     private userAuthService: UserAuthenticationService,
     private router: Router,
     private logger: LoggingService, private authQuery: UserAuthenticationQuery,
-    private appSettings: AppSettingsQuery, private spinner: SpinnerService, private componentLoader: ComponentLoaderService, private elementRef: ElementRef) {}
+    private appSettings: AppSettingsQuery, private spinner: SpinnerService) {}
 
   ngOnInit(): void {
     this.minLength = this.appSettings.getEntity(AppSettings.authPasswordMinLength).value;
