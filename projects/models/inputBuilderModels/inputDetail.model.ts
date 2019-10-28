@@ -14,7 +14,6 @@ export enum InputTypes {
   password = 'password',
   textarea = 'textarea',
   datetime = 'datetime',
-  datetimeUTC = 'datetimeUTC',
   date = 'date',
   time = 'time',
   select = 'select',
@@ -79,6 +78,10 @@ export class InputDetail {
 
 export class InputDetailTextBox extends InputDetail {
   mask?: string; // 999-999
+}
+
+export class InputDetailDateTime extends InputDetail {
+  forceUTC: boolean;
 }
 
 export class InputDetailReferenceValues extends InputDetail {

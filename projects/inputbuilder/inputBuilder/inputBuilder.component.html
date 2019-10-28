@@ -109,7 +109,9 @@ class="ui-g" (ngSubmit)="onSubmit(form)"
                 <p-calendar
                   appendTo="body"
                   [disabled]="input.readonly"
-                  [showIcon]="appSettings.getBoolean('inputShowCalendarIcon') | async" [dateFormat]="appSettings.getString('inputDateFormat') | async" showTime="true"
+                  [showIcon]="appSettings.getBoolean('inputShowCalendarIcon') | async" [dateFormat]="appSettings.getString('inputDateFormat') | async"
+                  showTime="true"
+                  hourFormat="24"
                   [formControlName]="input.name" [id]="input.name">
                 </p-calendar>
                 <label>{{getLabel(input)}}</label>
@@ -120,7 +122,9 @@ class="ui-g" (ngSubmit)="onSubmit(form)"
               <p-calendar
                 appendTo="body"
                 [disabled]="input.readonly"
-                [showIcon]="appSettings.getBoolean('inputShowCalendarIcon') | async" [dateFormat]="appSettings.getString('inputDateFormat') | async" showTime="true"
+                [showIcon]="appSettings.getBoolean('inputShowCalendarIcon') | async" [dateFormat]="appSettings.getString('inputDateFormat') | async"
+                showTime="true"
+                hourFormat="24"
                 [formControlName]="input.name" [id]="input.name">
               </p-calendar>
               <label>{{getLabel(input)}}</label>
@@ -140,7 +144,8 @@ class="ui-g" (ngSubmit)="onSubmit(form)"
             <span *ngSwitchCase="'time'" class="md-inputfield">
                 <p-calendar  appendTo="body"
                 [disabled]="input.readonly"
-                timeOnly="true" showTime="true" [showIcon]="appSettings.getBoolean('inputShowCalendarIcon') | async" [formControlName]="input.name"
+                timeOnly="true" showTime="true"
+                hourFormat="24" [showIcon]="appSettings.getBoolean('inputShowCalendarIcon') | async" [formControlName]="input.name"
                     [id]="input.name">
                 </p-calendar>
                 <label>{{getLabel(input)}}</label>

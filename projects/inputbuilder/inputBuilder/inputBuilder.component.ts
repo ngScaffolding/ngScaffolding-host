@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChanges, ChangeDetectionStrategy } from '@angular/core';
 import { Observable } from 'rxjs';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { InputDetail, InputTypes, ReferenceValueItem, ZuluDateHelper } from 'ngscaffolding-models';
+import { InputDetail, InputTypes, ReferenceValueItem, ZuluDateHelper, InputDetailDateTime } from 'ngscaffolding-models';
 import { InputBuilderDefinition, OrientationValues, ReferenceValue } from 'ngscaffolding-models';
 
 import { JsonEditorComponent, JsonEditorOptions } from 'ang-jsoneditor';
@@ -169,8 +169,6 @@ export class InputBuilderComponent implements OnInit, OnChanges {
 
         formGroup[inputDetail.name] = formControl;
 
-        //Set default value
-
         if (inputDetail['datasourceItems'] && inputDetail['datasourceItems'].length > 0) {
           // Pre loaded datasourceItems
           this.manipulateValuesToObjects(formControl, inputDetail as InputDetailReferenceValues, inputValue);
@@ -239,11 +237,12 @@ export class InputBuilderComponent implements OnInit, OnChanges {
       case InputTypes.date:
       case InputTypes.datetime:
       case InputTypes.time: {
-        return new Date(value);
-      }
-      case InputTypes.datetimeUTC: {
-        const date = new Date(value);
-        return new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds());
+        const valueAsDate = new Date(value);
+        if ((<InputDetailDateTime>inputDetail).forceUTC) {
+          return ZuluDateHelper.getGMTDate(valueAsDate);
+        } else {
+          return valueAsDate;
+        }
       }
     }
 
@@ -259,14 +258,15 @@ export class InputBuilderComponent implements OnInit, OnChanges {
       this.valueUpdated.emit([inputDetail.name, value]);
       returnedValue = value;
     } else if ((inputDetail.type && inputDetail.type === InputTypes.date) || inputDetail.type === InputTypes.datetime || inputDetail.type === InputTypes.time) {
-      this.valueUpdated.emit([inputDetail.name, ZuluDateHelper.getZuluDate(value)]);
-      returnedValue = value;
+      if ((<InputDetailDateTime>inputDetail).forceUTC) {
+        returnedValue = ZuluDateHelper.getGMTDate(value);
+        this.valueUpdated.emit([inputDetail.name, returnedValue]);
+      } else {
+        returnedValue = value;
+        this.valueUpdated.emit([inputDetail.name, returnedValue]);
+      }
     } else if (inputDetail.type === InputTypes.spinner) {
       returnedValue = Number(value);
-    } else if (inputDetail.type && inputDetail.type === InputTypes.datetimeUTC) {
-      const zuluDate = ZuluDateHelper.getZuluDate(value);
-      this.valueUpdated.emit([inputDetail.name, zuluDate]);
-      returnedValue = zuluDate;
     } else if (inputDetail.type && inputDetail.type === InputTypes.multiselect) {
       // This is an array
       if (Array.isArray(value)) {
