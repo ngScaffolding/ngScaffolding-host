@@ -9,7 +9,6 @@ import { Observable } from 'rxjs';
   templateUrl: 'loginPage.component.html'
 })
 export class LoginPageComponent implements OnInit {
-  private readonly className = 'LoginPagecomponent';
   private readonly rememberMeCookie = 'authRememberMe';
   private readonly userNameCookie = 'authuserName';
 
@@ -93,7 +92,7 @@ export class LoginPageComponent implements OnInit {
   }
 
   rememberChanged(isChecked: boolean) {
-    this.logger.info(`Remember Me (${isChecked})`, this.className);
+    this.logger.info(`Remember Me (${isChecked})`);
     this.cookieService.set(this.rememberMeCookie, isChecked.toString());
   }
 }

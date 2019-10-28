@@ -30,13 +30,10 @@ export class LoggingService {
       console.warn(`Warning ${message}`);
     }
   }
-  public info(message: string, methodName = ''): void {
-    if (methodName) {
+  public info(message: string, objectInfo: object = null): void {
+
       // tslint:disable-next-line:no-console
-      console.info(`Info : [Method ${methodName}]  ${message}`);
-    } else {
-      // tslint:disable-next-line:no-console
-      console.info(`Info : ${message}`);
-    }
+      console.info(`Info : ${message}`, objectInfo);
+
   }
 }

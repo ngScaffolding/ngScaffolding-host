@@ -73,7 +73,7 @@ export class AppSettingsService {
     if (settings) {
       Object.keys(settings).forEach(key => {
         // Setting Value Here
-        this.logger.info(`Setting Value ${key} = ${settings[key]}`, this.className + '.loadSettings');
+        this.logger.info(`[${this.className}.loadSettings] Setting Value ${key} = ${settings[key]}`);
         this.setValue(key, settings[key]);
       });
     }

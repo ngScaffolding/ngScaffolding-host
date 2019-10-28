@@ -187,16 +187,6 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
     });
   }
 
-  // Dashboard Item Interface
-  public refreshData() {
-    this.log.info('DataGrid: Refreshing Data');
-    this.loadInitialData();
-  }
-
-  public updateData(newData: any) {
-    throw new Error('Method not implemented.');
-  }
-
   // Toolbar Operations
   showHideFilters() {
     this.showFilters = !this.showFilters;
@@ -210,6 +200,20 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
 
   exportData() {
     this.gridOptions.api.exportDataAsCsv();
+  }
+
+  // Expose Method in Angular Element
+  // https://github.com/angular/angular/issues/22114
+  // Dashboard Item Interface
+  @Input()
+  public refreshData = () => {
+    this.log.info('DataGrid: Refreshing Data');
+    this.loadInitialData();
+  }
+
+  @Input()
+  public updateData = (newData: any) => {
+    this.filterValues = newData;
   }
 
   saveView() {

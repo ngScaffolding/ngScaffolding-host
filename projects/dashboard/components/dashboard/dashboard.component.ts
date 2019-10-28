@@ -105,10 +105,6 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
           this.dashboard = this.menuItem.menuDetails as DashboardModel;
         }
 
-        if(this.dashboard.inputBuilderDefinition && this.dashboard.inputBuilderDefinition.inputLocation === InputLocations.INLINE) {
-          this.dashboard.inputBuilderDefinition.orientation = OrientationValues.Horizontal;
-        }
-
         this.setButtons();
 
         this.setAllRefresh();

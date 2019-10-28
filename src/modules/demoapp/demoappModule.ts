@@ -7,7 +7,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { AppSettings } from 'ngscaffolding-models';
 
 import {
-  AuthoriseRoleGuard,
   AppSettingsService,
   MenuService,
   LoggingService, ReferenceValuesService,
@@ -55,7 +54,7 @@ export class DemoAppModule {
     referenceValuesService: ReferenceValuesService,
     versions: VersionsService
   ) {
-    logger.info('Setting Values', 'demoApp.startup');
+    logger.info('Setting Values demoApp.startup');
 
     versions.addVersion('@ngscaffolding/demoapp', VERSION.version, true);
 

@@ -20,7 +20,7 @@ export class UserAdminModule {
   constructor(
     injector: Injector, menuService: MenuService,  componentLoaderService: ComponentLoaderService,  logger: LoggingService) {
 
-    logger.info('Setting Values', 'UserAdminModule.startup');
+    logger.info('Setting Values UserAdminModule.startup');
 
     // registering our Angular Component
     const el = createCustomElement(UserDetailsComponent, { injector });

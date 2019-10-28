@@ -16,8 +16,6 @@ import { MenuQuery } from './menu.query';
   providedIn: 'root'
 })
 export class MenuService {
-  private className = 'core.MenuService';
-
   private masterListMenu: Array<CoreMenuItem> = [];
   private routes: Array<Route> = [];
 
@@ -46,7 +44,7 @@ export class MenuService {
   }
 
   public addMenuItemsFromCode(menuItems: CoreMenuItem[], roles: string[] = null) {
-    this.log.info(`Adding MenuItems ${JSON.stringify(menuItems)}`, this.className);
+    this.log.info(`Adding MenuItems ${JSON.stringify(menuItems)}`);
 
     // Save for later use
     this.addMenuItems(menuItems);
@@ -189,13 +187,13 @@ export class MenuService {
       )
       .subscribe(
         downloadedMenuItems => {
-          this.log.info(`Downloaded MenuItems`, this.className);
+          this.log.info(`Downloaded MenuItems`);
           this.menuDownloaded = true;
 
           this.addMenuItems(downloadedMenuItems);
         },
         err => {
-          this.log.error('Failed to download Menu', this.className);
+          this.log.error('Failed to download Menu');
         }
       );
   }
@@ -225,7 +223,7 @@ export class MenuService {
   }
 
   public addRoute(route: Route, roles: string[] = null) {
-    this.log.info(`Adding Route ${JSON.stringify(route)}`, this.className);
+    this.log.info(`Adding Route ${JSON.stringify(route)}`);
     this.routes.push(route);
     this.routeSubject.next(this.routes);
 

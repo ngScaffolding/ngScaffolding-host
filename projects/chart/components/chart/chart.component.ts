@@ -39,7 +39,7 @@ export class ChartComponent implements IDashboardItem, OnChanges {
   constructor(private logger: LoggingService, private chartDataService: ChartDataService, private dataSourceService: DataSourceService) {}
 
   public logChartInstance(chart: any) {
-    console.log('Chart instance: ', chart);
+    this.logger.info('Chart instance: ', chart);
     this.chart = chart;
   }
 
@@ -47,7 +47,7 @@ export class ChartComponent implements IDashboardItem, OnChanges {
   // https://github.com/angular/angular/issues/22114
   @Input()
   public refreshData = () => {
-    this.loadChart();
+    this.loadChart(true);
   }
 
   @Input()
