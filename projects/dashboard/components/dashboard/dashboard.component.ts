@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ComponentRef, ViewChildren, QueryList, OnChanges, SimpleChanges, Type, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChildren, QueryList, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
 import { LoggingService, MenuQuery, WidgetQuery, AppSettingsQuery, MenuService, UserAuthenticationQuery, NotificationService, SpinnerService } from 'ngscaffolding-core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CoreMenuItem, WidgetDetails, WidgetTypes, InputBuilderDefinition, IDashboardItem, InputLocations } from 'ngscaffolding-models';
@@ -11,7 +11,6 @@ import { SaveDetails } from '../saveInput/saveInput.component';
 import { TranslateService } from '@ngx-translate/core';
 import { Subscription, interval, combineLatest } from 'rxjs';
 import { ConfirmationService } from 'primeng/api';
-import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'ngs-dashboard',
@@ -60,7 +59,7 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
   public unitHeight: number;
   public galleryShown = false;
 
-  public inputModel: any;
+  public inputModel: object = {};
 
   // Show/Hide Dashboard Input Details
   public dashboardInputShown = false;
@@ -333,7 +332,7 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
     switch (name) {
       case 'properties': {
         this.actionInputDefinition = widgetDetails.widget.inputBuilderDefinition;
-        this.actionValues = widgetDetails.configuredValues;
+        this.actionValues = widgetDetails.configuredValues || {};
 
         this.actionInputPopup.showPopup();
         this.widgetInstanceConfigured = instance;
@@ -367,7 +366,7 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
 
   // Input Details for Widget
   actionOkClicked(model: any) {
-    this.actionValues = model;
+    this.actionValues = model[0];
 
     this.widgetDetailsConfigured.configuredValues = model;
     // Copy in Dashboard values first

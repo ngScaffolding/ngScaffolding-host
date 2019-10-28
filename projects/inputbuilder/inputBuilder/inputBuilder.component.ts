@@ -89,8 +89,30 @@ export class InputBuilderComponent implements OnInit, OnChanges {
           this.fileContent = fileReader.result.toString();
           this.fileAttached.emit(this.fileContent);
         };
-      fileReader.readAsText(file);
+        fileReader.readAsText(file);
       }
+    }
+  }
+
+  private getDefaultValue(value: any) {
+    switch (value) {
+      case 'today':
+      case 'now':
+        return ZuluDateHelper.getGMTDate(new Date());
+        break;
+      case 'yesterday': {
+        const now = new Date();
+        return ZuluDateHelper.getGMTDate(new Date(now.setDate(now.getDate() - 1)));
+        break;
+      }
+      case 'tomorrow': {
+        const now = new Date();
+        return ZuluDateHelper.getGMTDate(new Date(now.setDate(now.getDate() + 1)));
+        break;
+      }
+      default:
+        return value;
+        break;
     }
   }
 
@@ -129,8 +151,8 @@ export class InputBuilderComponent implements OnInit, OnChanges {
           inputValue = this.parseValue(inputDetail, this.clonedInputModel[inputDetail.name]);
         } else if (inputDetail.value) {
           // If we have a value passed in the Input definition set the control value to this.
-          inputValue = inputDetail.value;
-          this.clonedInputModel[inputDetail.name] = inputDetail.value;
+          inputValue = this.getDefaultValue(inputDetail.value);
+          this.clonedInputModel[inputDetail.name] = inputValue;
         } else {
           // This ensures that the property is set if not passed in
           this.clonedInputModel[inputDetail.name] = null;
@@ -146,6 +168,8 @@ export class InputBuilderComponent implements OnInit, OnChanges {
         });
 
         formGroup[inputDetail.name] = formControl;
+
+        //Set default value
 
         if (inputDetail['datasourceItems'] && inputDetail['datasourceItems'].length > 0) {
           // Pre loaded datasourceItems
@@ -179,8 +203,7 @@ export class InputBuilderComponent implements OnInit, OnChanges {
 
   private manipulateValuesToObjects(formControl: FormControl, inputDetail: InputDetailReferenceValues, inputValue: any) {
     if (inputDetail.type === InputTypes.multiselect) {
-      const foundValues = this.dataSourceLookup[inputDetail.name]
-        .filter(ds => inputValue.includes(ds.value));
+      const foundValues = this.dataSourceLookup[inputDetail.name].filter(ds => inputValue.includes(ds.value));
       setTimeout(_ => {
         formControl.setValue(foundValues, {
           onlySelf: true,
@@ -278,7 +301,12 @@ export class InputBuilderComponent implements OnInit, OnChanges {
 
   private checkForDependencies(inputDetail: InputDetail, updatedValue: any) {
     this.inputBuilderDefinition.inputDetails.forEach(input => {
-      if (this.form && input.hasOwnProperty('referenceValueSeedDependency') && (<InputDetailReferenceValues>input).referenceValueSeedDependency && (<InputDetailReferenceValues>input).referenceValueSeedDependency === inputDetail.name) {
+      if (
+        this.form &&
+        input.hasOwnProperty('referenceValueSeedDependency') &&
+        (<InputDetailReferenceValues>input).referenceValueSeedDependency &&
+        (<InputDetailReferenceValues>input).referenceValueSeedDependency === inputDetail.name
+      ) {
         this.loadDataSource(input, updatedValue, (<InputDetailReferenceValues>input).referenceValueChildLevel).subscribe(data => {
           this.dataSourceLookup[input.name] = data.referenceValueItems;
 

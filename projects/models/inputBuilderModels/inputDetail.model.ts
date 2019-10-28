@@ -52,6 +52,8 @@ export class InputDetail {
 
   readonly?: boolean;
 
+  // default value
+  // date: today, tomorrow, yesterday
   value?: any;
 
   validateRequired?: string; // Providing a message here infer Required
