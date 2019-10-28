@@ -4,6 +4,7 @@ import { HostListener, Directive, ElementRef, Input, AfterViewInit } from '@angu
 export class FillHeightDirective implements AfterViewInit {
   @Input() footerElement = null;
   @Input() fixedHeight = 0;
+  @Input() relativeToParentPercent = 0;
 
   constructor(private el: ElementRef) {}
 
@@ -17,7 +18,12 @@ export class FillHeightDirective implements AfterViewInit {
   }
 
   private calculateAndSetElementHeight() {
-    if (this.fixedHeight > 0) {
+    if (this.relativeToParentPercent > 0) {
+      const parentHeight = this.el.nativeElement.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.offsetHeight;
+      if (parentHeight > 0) {
+        this.el.nativeElement.style.height = `${parentHeight * (this.relativeToParentPercent / 100)}px`;
+      }
+    } else if (this.fixedHeight > 0) {
       this.el.nativeElement.style.height = `${this.fixedHeight}px`;
     } else {
       this.el.nativeElement.style.overflow = 'auto';

@@ -72,6 +72,9 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
   showFilters = true;
   showToolPanel = false;
 
+  // setting Parent Height uses relative to parent sizing
+  parentHeight = 0;
+
   // Show spinner when loading
   dataLoading: boolean;
 
@@ -562,6 +565,10 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.itemDetails && changes.itemDetails.currentValue) {
       this.loadMenuItem();
+    }
+
+    if(changes.isWidget && changes.isWidget.currentValue) {
+      this.parentHeight = 90;
     }
 
     // We have some incomming updates to gridOptions
