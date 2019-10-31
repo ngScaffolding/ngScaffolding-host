@@ -27,14 +27,14 @@ export class EditableTitleComponent implements OnChanges {
     }
   }
 
-  // update Title with string replacement @@key@@ style
+  // update Title with string replacement @@key## style
   private applyObject(config: any) {
     let newTitle = this.title;
 
     if (config) {
       for (const key in config) {
         if (config.hasOwnProperty(key)) {
-          newTitle = newTitle.replace(`@@${key}@@`, config[key]);
+          newTitle = newTitle.replace(`@@${key}##`, config[key]);
         }
       }
       this.editTitle = newTitle;
