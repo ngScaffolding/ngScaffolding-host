@@ -2,50 +2,75 @@
   <p-header *ngIf="!itemDetails?.isDataIsland">
     <div class="ui-g">
       <div class="ui-g-8">
-        <span class="grid-title">{{itemDetails?.title | translate}}</span>
+        <span class="grid-title">{{ itemDetails?.title | translate }}</span>
       </div>
       <div class="ui-g-4">
         <app-grid-toolbar
           [collapsedToolbar]="isWidget"
-        (refreshClicked)="loadInitialData()" (filtersClicked)="showHideFilters()" (columnsClicked)="showHideColumns()"
-          (exportClicked)="exportData()" (saveViewClicked)="saveView()" (resetViewClicked)="resetView()" (shareViewClicked)="shareView()"
-          [hideFilters]='hideFiltersButton'
-          [hideLabels]='hideLabels'></app-grid-toolbar>
+          (refreshClicked)="loadInitialData()"
+          (filtersClicked)="showHideFilters()"
+          (columnsClicked)="showHideColumns()"
+          (exportClicked)="exportData()"
+          (saveViewClicked)="saveView()"
+          (resetViewClicked)="resetView()"
+          (shareViewClicked)="shareView()"
+          [hideFilters]="hideFiltersButton"
+          [hideLabels]="hideLabels"
+        ></app-grid-toolbar>
       </div>
     </div>
   </p-header>
 
   <div ngsFillHeight [relativeToParentPercent]="parentHeight" [fixedHeight]="fixedHeight">
-      <p-sidebar [(visible)]="dataLoading" position="top">
-        <div style="text-align: center">
-                    {{'Loading' | translate}}
-        <br/>
+    <p-sidebar [(visible)]="dataLoading" position="top">
+      <div style="text-align: center">
+        {{ 'Loading' | translate }}
+        <br />
         <p-progressSpinner></p-progressSpinner>
       </div>
-      </p-sidebar>
+    </p-sidebar>
+
+    <!-- <div>Filters:
+      <ngs-input-builder
+      (valuesUpdated)="onFiltersUpdated($event)"
+      [inputBuilderDefinition]="filters"
+      [inputModel]="filterValues"></ngs-input-builder>
+    </div> -->
 
     <filters-holder #filtersHolder [hidden]="!showFilters" [filterDefinition]="filters" [filterValues]="filterValues" (valuesUpdated)="onFiltersUpdated($event)"></filters-holder>
 
-      <ag-grid-angular [style.height]="showActionBar ? 'calc(100% - 52px)' :'100%'" style="width: 100%;" class="ag-theme-material" [rowData]="rowData" [columnDefs]="columnDefs"
-        [gridOptions]="gridOptions" (selectionChanged)='onSelectionChanged()' (gridReady)="onGridReady()">
-      </ag-grid-angular>
+    <ag-grid-angular
+      [style.height]="'calc(100% - ' + heightToReserve +'px)'"
+      style="width: 100%;"
+      class="ag-theme-material"
+      [rowData]="rowData"
+      [columnDefs]="columnDefs"
+      [gridOptions]="gridOptions"
+      (selectionChanged)="onSelectionChanged()"
+      (gridReady)="onGridReady()"
+    >
+    </ag-grid-angular>
 
-    <app-actions-holder #actionsHolder *ngIf="actions && actions.length > 0"
-      (actionClicked)="actionClicked($event, null)" [actions]="actions"></app-actions-holder>
+    <app-actions-holder #actionsHolder *ngIf="actions && actions.length > 0" (actionClicked)="actionClicked($event, null)" [actions]="actions"></app-actions-holder>
 
-    <ngs-input-builder-popup #actionInputPopup [inputBuilderDefinition]="actionInputDefinition" [inputModel]="actionValues" (okClicked)="actionOkClicked($event)"
-      (cancelCliecked)="actionCancelClicked()"></ngs-input-builder-popup>
+    <ngs-input-builder-popup
+      #actionInputPopup
+      [inputBuilderDefinition]="actionInputDefinition"
+      [inputModel]="actionValues"
+      (okClicked)="actionOkClicked($event)"
+      (cancelCliecked)="actionCancelClicked()"
+    ></ngs-input-builder-popup>
 
-      <p-dialog
-        [width]="dialogOptions.width"
-        [height]="dialogOptions.height"
-        [(visible)]="popupShown"
-        (onHide)="popupHidden()"
-        [closable]="dialogOptions.closable"
-        [maximizable]="dialogOptions.maximizable"
-        [contentStyle]="{'max-height': (dialogOptions.height - 80) + 'px' , 'overflow':'auto'}" >
-        <div id="popupContent"  #dialog></div>
-      </p-dialog>
-
+    <p-dialog
+      [width]="dialogOptions.width"
+      [height]="dialogOptions.height"
+      [(visible)]="popupShown"
+      (onHide)="popupHidden()"
+      [closable]="dialogOptions.closable"
+      [maximizable]="dialogOptions.maximizable"
+      [contentStyle]="{ 'max-height': dialogOptions.height - 80 + 'px', overflow: 'auto' }"
+    >
+      <div id="popupContent" #dialog></div>
+    </p-dialog>
   </div>
 </p-card>

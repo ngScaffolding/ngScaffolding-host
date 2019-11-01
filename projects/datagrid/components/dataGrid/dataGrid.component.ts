@@ -52,11 +52,16 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
 
   @Output() selectionChanged = new EventEmitter<object[]>();
 
-  filterValues: any;
+  filterValues: object = {};
   filters: InputBuilderDefinition;
 
   actions: Action[];
+
   showActionBar = false;
+  showFilters = true;
+  showToolPanel = false;
+  heightToReserve = 0;
+
   actionInputDefinition: InputBuilderDefinition;
   actionValues: any;
   actionFile: string;
@@ -68,9 +73,6 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
   rowCount: number;
   hideLabels = true;
   hideFiltersButton: boolean;
-
-  showFilters = true;
-  showToolPanel = false;
 
   // setting Parent Height uses relative to parent sizing
   parentHeight = 0;
@@ -169,6 +171,7 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
       },
 
       onGridReady: () => {
+        this.calculateHeights();
         if (this.gridSavedState) {
           this.gridOptions.columnApi.setColumnState(this.gridSavedState);
         }
@@ -193,6 +196,7 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
   // Toolbar Operations
   showHideFilters() {
     this.showFilters = !this.showFilters;
+    this.calculateHeights();
   }
 
   showHideColumns() {
@@ -212,12 +216,12 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
   public refreshData = () => {
     this.log.info('DataGrid: Refreshing Data');
     this.loadInitialData();
-  }
+  };
 
   @Input()
   public updateData = (newData: any) => {
     this.filterValues = newData;
-  }
+  };
 
   saveView() {
     const savedState = this.gridOptions.columnApi.getColumnState();
@@ -279,6 +283,17 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
       this.actionsHolder.selectedRowsCount = this.selectedRows.length;
     }
     this.selectionChanged.emit(this.selectedRows);
+  }
+
+  private calculateHeights() {
+    let height = 0;
+    if (this.showFilters) {
+      height += 62;
+    }
+    if (this.showActionBar) {
+      height += 52;
+    }
+    this.heightToReserve = height;
   }
 
   // Load First Data and if any criteria Changes
@@ -567,7 +582,7 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
       this.loadMenuItem();
     }
 
-    if(changes.isWidget && changes.isWidget.currentValue) {
+    if (changes.isWidget && changes.isWidget.currentValue) {
       this.parentHeight = 90;
     }
 
