@@ -13,6 +13,7 @@ import { AuthenticationStore } from './userAuthentication.store';
 
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { UserAuthenticationBase } from './UserAuthenticationBase';
+import { resetStores } from '@datorama/akita';
 
 @Injectable({ providedIn: 'root' })
 export class UserAuthenticationService implements UserAuthenticationBase {
@@ -121,6 +122,9 @@ export class UserAuthenticationService implements UserAuthenticationBase {
       // Remove token from Local Storage
       localStorage.removeItem(this.tokenStorageKey);
     }
+
+    // Clear Akita Stores
+    resetStores({ exclude: ['appSettings'] });
 
     this.authStore.update({ token: null, userDetails: null, authenticated: false });
   }

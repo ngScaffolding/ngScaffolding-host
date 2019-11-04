@@ -30,13 +30,6 @@
       </div>
     </p-sidebar>
 
-    <!-- <div>Filters:
-      <ngs-input-builder
-      (valuesUpdated)="onFiltersUpdated($event)"
-      [inputBuilderDefinition]="filters"
-      [inputModel]="filterValues"></ngs-input-builder>
-    </div> -->
-
     <filters-holder #filtersHolder [hidden]="!showFilters" [filterDefinition]="filters" [filterValues]="filterValues" (valuesUpdated)="onFiltersUpdated($event)"></filters-holder>
 
     <ag-grid-angular

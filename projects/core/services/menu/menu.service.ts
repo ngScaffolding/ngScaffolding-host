@@ -28,26 +28,38 @@ export class MenuService {
   private httpInFlight = false;
   private menuDownloaded = false;
 
-  constructor(private http: HttpClient, private menuStore: MenuStore, private menuQuery: MenuQuery, private appSettingsQuery: AppSettingsQuery, private authQuery: UserAuthenticationQuery, private log: LoggingService, public rolesService: RolesService) {
+  constructor(
+    private http: HttpClient,
+    private menuStore: MenuStore,
+    private menuQuery: MenuQuery,
+    private appSettingsQuery: AppSettingsQuery,
+    private authQuery: UserAuthenticationQuery,
+    private log: LoggingService,
+    public rolesService: RolesService
+  ) {
     // Wait for settings, then load from server
-    combineLatest([this.authQuery.authenticated$,
-       this.appSettingsQuery.selectEntity(AppSettings.apiHome),
-       this.appSettingsQuery.selectEntity(AppSettings.isMobile)]
-       ).subscribe(([authenticated, apiHome, isMobile]) => {
-      if (authenticated && apiHome && isMobile && !this.menuDownloaded) {
-        this.apiHome = apiHome.value;
-        if (!this.httpInFlight) {
-          this.downloadMenuItems(isMobile.value || false);
+    combineLatest([this.authQuery.authenticated$, this.appSettingsQuery.selectEntity(AppSettings.apiHome), this.appSettingsQuery.selectEntity(AppSettings.isMobile)]).subscribe(
+      ([authenticated, apiHome, isMobile]) => {
+        if (authenticated && apiHome && isMobile && !this.menuDownloaded) {
+          this.apiHome = apiHome.value;
+          if (!this.httpInFlight) {
+            this.downloadMenuItems(isMobile.value || false);
+          }
         }
       }
-    });
+    );
   }
 
   public addMenuItemsFromCode(menuItems: CoreMenuItem[], roles: string[] = null) {
     this.log.info(`Adding MenuItems ${JSON.stringify(menuItems)}`);
 
-    // Save for later use
-    this.addMenuItems(menuItems);
+    // Wait till user authorised
+    this.authQuery.authenticated$.subscribe(authorised => {
+      if (authorised) {
+        // Save for later use
+        this.addMenuItems(menuItems);
+      }
+    });
   }
 
   public delete(menuItem: CoreMenuItem): Observable<any> {
@@ -136,9 +148,13 @@ export class MenuService {
       userRoles = user.userDetails.roles;
     }
 
-    const removingMenus: number[] = [];
+    let removingMenus: number[] = [];
 
-    menuItems.forEach(menuItem => {
+    for (let menuIndex = 0; menuIndex < menuItems.length; menuIndex++) {
+      const menuItem = menuItems[menuIndex];
+
+    // }
+    // menuItems.forEach(menuItem => {
       let removingThis = false;
 
       // makes sure roles is array
@@ -157,13 +173,15 @@ export class MenuService {
         if (userRoles && checkingRoles.filter(allowedRole => userRoles.indexOf(allowedRole) !== -1).length === 0) {
           // No Authority. Remove
           removingThis = true;
-          removingMenus.push(menuItems.indexOf(menuItem));
+          removingMenus.push(menuIndex);
+          // menuItem.visible = false;
         }
       }
       if (!removingThis && menuItem.items) {
         this.removeUnauthorisedMenuItems(menuItem.items as CoreMenuItem[]);
       }
-    });
+    }
+
     removingMenus.forEach(removeMenu => {
       menuItems.splice(removeMenu, 1);
     });
