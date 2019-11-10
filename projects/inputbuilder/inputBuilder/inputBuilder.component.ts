@@ -158,6 +158,9 @@ export class InputBuilderComponent implements OnInit, OnChanges {
           this.clonedInputModel[inputDetail.name] = null;
         }
 
+        // Notify subscribers that value has been set
+        // this.fieldChanged(inputDetail, inputValue);
+
         const formControl = new FormControl(inputValue, this.mapValidators(inputDetail)); // Validators passed here too
 
         // Remember for dependecy check in a mo
@@ -276,9 +279,13 @@ export class InputBuilderComponent implements OnInit, OnChanges {
         returnedValue = [];
       }
     } else {
-      returnedValue = value.toString();
+      if (value) {
+        returnedValue = value.toString();
+      } else {
+        returnedValue = null;
+      }
 
-      if (value.hasOwnProperty('value')) {
+      if (value && value.hasOwnProperty('value')) {
         returnedValue = value.value;
         this.valueUpdated.emit([inputDetail.name, returnedValue]);
       } else {
@@ -301,12 +308,7 @@ export class InputBuilderComponent implements OnInit, OnChanges {
 
   private checkForDependencies(inputDetail: InputDetail, updatedValue: any) {
     this.inputBuilderDefinition.inputDetails.forEach(input => {
-      if (
-        this.form &&
-        input.hasOwnProperty('referenceValueSeedDependency') &&
-        (<InputDetailReferenceValues>input).referenceValueSeedDependency &&
-        (<InputDetailReferenceValues>input).referenceValueSeedDependency === inputDetail.name
-      ) {
+      if (this.form && input.hasOwnProperty('referenceValueSeedDependency') && (<InputDetailReferenceValues>input).referenceValueSeedDependency && (<InputDetailReferenceValues>input).referenceValueSeedDependency === inputDetail.name) {
         this.loadDataSource(input, updatedValue, (<InputDetailReferenceValues>input).referenceValueChildLevel).subscribe(data => {
           this.dataSourceLookup[input.name] = data.referenceValueItems;
 

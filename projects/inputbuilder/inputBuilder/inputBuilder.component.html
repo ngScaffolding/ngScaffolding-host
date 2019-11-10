@@ -71,6 +71,7 @@ class="ui-g" (ngSubmit)="onSubmit(form)"
             <!-- Simple DropDown -->
             <span *ngSwitchCase="'dropdown'">
                 <p-dropdown appendTo="body" class="dropdownInput" [readonly]="input.readonly"  [id]="input.name"
+                showClear="true"
                   [placeholder]="getLabel(input)"
                   [options]="dataSourceLookup[input.name]" [autoWidth]="false" [filter]="input.selectFilter" dataKey="value"
                     optionLabel="display" [formControlName]="input.name"></p-dropdown>
@@ -79,7 +80,8 @@ class="ui-g" (ngSubmit)="onSubmit(form)"
             <!-- DropDown Returns Object -->
             <span *ngSwitchCase="'dropdownobject'">
               <p-dropdown appendTo="body" class="dropdownInput" [readonly]="input.readonly"  [id]="input.name" [options]="dataSourceLookup[input.name]" [autoWidth]="false" [filter]="input.selectFilter"
-                [placeholder]="getLabel(input)"
+              showClear="true"
+              [placeholder]="getLabel(input)"
                 optionLabel="display" [formControlName]="input.name"></p-dropdown>
             </span>
 
