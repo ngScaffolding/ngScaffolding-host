@@ -96,36 +96,19 @@ export class DemoAppModule {
 
     menuService.addMenuItemsFromCode([
       {
-        label: 'Chart Sample',
-        icon: 'grid',
-            routerLink: 'charttest'
-      },
-      {
-        name: 'input.builder.simple',
-        label: 'Input Builder',
-        icon: 'brush',
-        routerLink: 'inputbuildersimple'
-      },
-      {
-        name: 'users.test',
-        label: 'Users Test',
-        icon: 'brush',
-        routerLink: 'users/userdetails'
-      },
-      {
-        label: 'DataGrid Samples',
+        label: 'Demo Samples',
         items: [
           {
             label: 'Data Grid Test',
             icon: 'grid',
             routerLink: 'datagridtest'
+          },
+          {
+            name: 'input.builder.simple',
+            label: 'Input Builder',
+            icon: 'brush',
+            routerLink: 'inputbuildersimple'
           }
-        ]
-      },
-      {
-        label: 'Input Builder (Simple)',
-        items: [
-
         ]
       }
     ]);

@@ -70,16 +70,17 @@ class="ui-g" (ngSubmit)="onSubmit(form)"
 
             <!-- Simple DropDown -->
             <span *ngSwitchCase="'dropdown'">
-                <label class="small-label" [for]="input.name">{{getLabel(input)}}</label>
-                <p-dropdown appendTo="body" class="dropdownInput" [readonly]="input.readonly"  [id]="input.name" [options]="dataSourceLookup[input.name]" [autoWidth]="false" [filter]="input.selectFilter" dataKey="value"
+                <p-dropdown appendTo="body" class="dropdownInput" [readonly]="input.readonly"  [id]="input.name"
+                  [placeholder]="getLabel(input)"
+                  [options]="dataSourceLookup[input.name]" [autoWidth]="false" [filter]="input.selectFilter" dataKey="value"
                     optionLabel="display" [formControlName]="input.name"></p-dropdown>
             </span>
 
             <!-- DropDown Returns Object -->
             <span *ngSwitchCase="'dropdownobject'">
-              <label class="small-label" [for]="input.name">{{getLabel(input)}}</label>
               <p-dropdown appendTo="body" class="dropdownInput" [readonly]="input.readonly"  [id]="input.name" [options]="dataSourceLookup[input.name]" [autoWidth]="false" [filter]="input.selectFilter"
-                  optionLabel="display" [formControlName]="input.name"></p-dropdown>
+                [placeholder]="getLabel(input)"
+                optionLabel="display" [formControlName]="input.name"></p-dropdown>
             </span>
 
             <!-- Chips -->

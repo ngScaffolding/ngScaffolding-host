@@ -1,14 +1,5 @@
 import { Component } from '@angular/core';
-import {
-  InputBuilderDefinition,
-  InputTypes,
-  OrientationValues,
-  InputDetailDropdown,
-  InputDetailToggleButton,
-  InputDetailTextArea,
-  InputDetailTextBox,
-  InputLocations
-} from 'ngscaffolding-models';
+import { InputBuilderDefinition, InputTypes, OrientationValues, InputDetailDropdown, InputDetailToggleButton, InputDetailTextArea, InputDetailTextBox, InputLocations } from 'ngscaffolding-models';
 
 @Component({
   templateUrl: 'inputBuilderSimple.component.html',
@@ -26,7 +17,16 @@ export class InputBuilderSimpleComponent {
         value: '',
         type: InputTypes.textbox,
         help: 'Help Me. Please help me Please Mister.'
-      }]
+      },
+      <InputDetailDropdown>{
+        label: 'Linked Car Manufacturers',
+        name: 'linkedSelectManufacturers',
+        type: InputTypes.dropdown,
+        referenceValueName: 'Cars',
+        validateRequired: 'Select A Manufacturer',
+        help: 'Basic Select Only'
+      }
+    ]
   };
 
   // Defn for split inputbuilders
@@ -38,7 +38,8 @@ export class InputBuilderSimpleComponent {
         placeholder: 'Left Placeholder',
         name: 'left',
         type: InputTypes.textbox
-      }]
+      }
+    ]
   };
 
   inputDefSplit2: InputBuilderDefinition = {
@@ -49,7 +50,8 @@ export class InputBuilderSimpleComponent {
         placeholder: 'Right Placeholder',
         name: 'right',
         type: InputTypes.textbox
-      }]
+      }
+    ]
   };
 
   inputSplitModel = {};
@@ -57,7 +59,6 @@ export class InputBuilderSimpleComponent {
   notifySplitChanged(val: any) {
     var x = 0;
   }
-
 
   inputDefinition1: InputBuilderDefinition = {
     orientation: OrientationValues.Horizontal,
@@ -81,7 +82,7 @@ export class InputBuilderSimpleComponent {
         help: 'Help Me. Please help me Please Mister.',
         validateRequired: 'Please say hello'
       },
-      <InputDetailDropdown> {
+      <InputDetailDropdown>{
         label: 'Linked Car Manufacturers',
         name: 'linkedSelectManufacturers',
         type: InputTypes.dropdown,
@@ -89,7 +90,7 @@ export class InputBuilderSimpleComponent {
         validateRequired: 'Select A Manufacturer',
         help: 'Basic Select Only'
       },
-       <InputDetailDropdown> {
+      <InputDetailDropdown>{
         label: 'Linked Models',
         name: 'linkedSelectModels',
         type: InputTypes.dropdown,
