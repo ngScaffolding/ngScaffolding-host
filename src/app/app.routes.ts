@@ -38,4 +38,4 @@ export const routes: Routes = [
 
 ];
 
-export const AppRoutes: ModuleWithProviders = RouterModule.forRoot(routes, { enableTracing: true, preloadingStrategy: PreloadAllModules });
+export const AppRoutes: ModuleWithProviders = RouterModule.forRoot(routes, { enableTracing: false, preloadingStrategy: PreloadAllModules });

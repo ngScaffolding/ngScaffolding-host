@@ -1,5 +1,5 @@
 import { MenuService } from './menu.service';
-import { UserAuthenticationBase } from '../userAuthorisation/UserAuthenticationBase';
+import { UserAuthenticationBase } from '../userAuthentication/UserAuthenticationBase';
 import { TestBed, inject } from '@angular/core/testing';
 import { RolesService } from '../rolesService/roles.service';
 

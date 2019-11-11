@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { NotificationService } from '../notification/notification.service';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class LoggingService {
   constructor(private notification: NotificationService) {}
@@ -30,10 +30,14 @@ export class LoggingService {
       console.warn(`Warning ${message}`);
     }
   }
-  public info(message: string, objectInfo: object = null): void {
 
+  public info(message: string, methodName = '', objectInfo: any = null): void {
+    if (!methodName) {
       // tslint:disable-next-line:no-console
       console.info(`Info : ${message}`, objectInfo);
-
+    } else {
+      // tslint:disable-next-line:no-console
+      console.info(`[${methodName}] : ${message}`, objectInfo);
+    }
   }
 }

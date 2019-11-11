@@ -16,6 +16,7 @@ import { MenuQuery } from './menu.query';
   providedIn: 'root'
 })
 export class MenuService {
+  private readonly methodName = 'MenuService';
   private masterListMenu: Array<CoreMenuItem> = [];
   private routes: Array<Route> = [];
 
@@ -26,6 +27,7 @@ export class MenuService {
   public routeSubject = new BehaviorSubject<Array<Route>>(this.routes);
 
   private httpInFlight = false;
+  private lockCount = 0;
   private menuDownloaded = false;
 
   constructor(
@@ -50,14 +52,31 @@ export class MenuService {
     );
   }
 
+  private addLock() {
+    this.lockCount++;
+    this.log.info(`MENU Service: Locks on Loading`, this.methodName, this.lockCount);
+    this.menuStore.setLoading(true);
+  }
+
+  private removeLock() {
+    this.lockCount--;
+    this.log.info(`MENU Service: Locks on Loading`, this.methodName, this.lockCount);
+
+    if (this.lockCount === 0) {
+      this.menuStore.setLoading(false);
+    }
+  }
+
   public addMenuItemsFromCode(menuItems: CoreMenuItem[], roles: string[] = null) {
-    this.log.info(`Adding MenuItems ${JSON.stringify(menuItems)}`);
+    this.addLock();
+    this.log.info('Adding MenuItems menuItems', this.methodName, menuItems);
 
     // Wait till user authorised
     this.authQuery.authenticated$.subscribe(authorised => {
       if (authorised) {
         // Save for later use
         this.addMenuItems(menuItems);
+        this.removeLock();
       }
     });
   }
@@ -141,20 +160,21 @@ export class MenuService {
     });
   }
 
-  private removeUnauthorisedMenuItems(menuItems: CoreMenuItem[]) {
+  private removeUnauthorisedMenuItems(menuItems: CoreMenuItem[]): CoreMenuItem[] {
     const user = this.authQuery.getValue();
     let userRoles: string[] = [];
     if (user && user.userDetails) {
       userRoles = user.userDetails.roles;
     }
 
-    let removingMenus: number[] = [];
+    const removingMenus: string[] = [];
+    let returnMenus: CoreMenuItem[] = JSON.parse(JSON.stringify(menuItems));
 
-    for (let menuIndex = 0; menuIndex < menuItems.length; menuIndex++) {
-      const menuItem = menuItems[menuIndex];
+    for (let menuIndex = 0; menuIndex < returnMenus.length; menuIndex++) {
+      const menuItem = returnMenus[menuIndex];
 
-    // }
-    // menuItems.forEach(menuItem => {
+      // }
+      // menuItems.forEach(menuItem => {
       let removingThis = false;
 
       // makes sure roles is array
@@ -173,23 +193,29 @@ export class MenuService {
         if (userRoles && checkingRoles.filter(allowedRole => userRoles.indexOf(allowedRole) !== -1).length === 0) {
           // No Authority. Remove
           removingThis = true;
-          removingMenus.push(menuIndex);
-          // menuItem.visible = false;
+          removingMenus.push(menuItem.name);
         }
       }
+
       if (!removingThis && menuItem.items) {
-        this.removeUnauthorisedMenuItems(menuItem.items as CoreMenuItem[]);
+        menuItem.items = this.removeUnauthorisedMenuItems(menuItem.items as CoreMenuItem[]);
       }
     }
 
-    removingMenus.forEach(removeMenu => {
-      menuItems.splice(removeMenu, 1);
-    });
+    // removingMenus.forEach(removeMenuName => {
+    //   const foundIndex = menuItems.findIndex(menu => menu.name === removeMenuName);
+    //   menuItems.splice(foundIndex, 1);
+    // });
+    if (removingMenus.length > 0) {
+      returnMenus = menuItems.filter(menu => removingMenus.findIndex(remove => remove === menu.name) === -1);
+    }
+
+    return returnMenus;
   }
 
   public downloadMenuItems(isMobile: boolean) {
     // Mark loading status
-    this.menuStore.setLoading(true);
+    this.addLock();
     this.httpInFlight = true;
 
     const newMenuItems: CoreMenuItem[] = [];
@@ -199,8 +225,8 @@ export class MenuService {
       .pipe(
         timeout(20000),
         finalize(() => {
-          this.menuStore.setLoading(false);
           this.httpInFlight = false;
+          this.removeLock();
         })
       )
       .subscribe(
@@ -235,7 +261,7 @@ export class MenuService {
     // });
 
     // Remove the unatuhorised
-    this.removeUnauthorisedMenuItems(this.menuItems);
+    this.menuItems = this.removeUnauthorisedMenuItems(this.menuItems);
 
     this.menuStore.update({ menuItems: this.menuItems });
   }
