@@ -19,7 +19,7 @@ export class SaveInputComponent implements OnChanges {
 
   @Output() saveMenu = new EventEmitter<SaveDetails>();
 
-  saveDetails: SaveDetails;
+  saveDetails: SaveDetails = {};
 
   inputDefinition: InputBuilderDefinition;
 
@@ -49,7 +49,9 @@ export class SaveInputComponent implements OnChanges {
         cancelButtonText: 'Cancel',
         inputDetails: [
           { name: 'label', type: InputTypes.textbox, label: 'Menu Label', validateRequired: 'Label is required' },
-          <InputDetailReferenceValues>{ name: 'parentName', type: InputTypes.dropdown, label: 'Parent Menu Id', validateRequired: 'Parent Menu is required' }
+          <InputDetailReferenceValues>{ name: 'parentName', type: InputTypes.dropdown, label: 'Parent Menu Id', validateRequired: 'Parent Menu is required',
+          datasourceItems:[{ display: '(None)', value: null }]
+         }
         ]
       };
     }
