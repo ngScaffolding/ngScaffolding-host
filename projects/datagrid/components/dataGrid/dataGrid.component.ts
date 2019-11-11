@@ -287,11 +287,13 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
 
   private calculateHeights() {
     let height = 0;
-    if (this.showFilters) {
-      height += 62;
-    }
-    if (this.showActionBar) {
-      height += 52;
+    if (!this.isWidget) {
+      if (this.showFilters) {
+        height += 62;
+      }
+      if (this.showActionBar) {
+        height += 52;
+      }
     }
     this.heightToReserve = height;
   }
