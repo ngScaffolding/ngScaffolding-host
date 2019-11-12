@@ -173,8 +173,6 @@ export class MenuService {
     for (let menuIndex = 0; menuIndex < returnMenus.length; menuIndex++) {
       const menuItem = returnMenus[menuIndex];
 
-      // }
-      // menuItems.forEach(menuItem => {
       let removingThis = false;
 
       // makes sure roles is array
@@ -202,10 +200,6 @@ export class MenuService {
       }
     }
 
-    // removingMenus.forEach(removeMenuName => {
-    //   const foundIndex = menuItems.findIndex(menu => menu.name === removeMenuName);
-    //   menuItems.splice(foundIndex, 1);
-    // });
     if (removingMenus.length > 0) {
       returnMenus = menuItems.filter(menu => removingMenus.findIndex(remove => remove === menu.name) === -1);
     }

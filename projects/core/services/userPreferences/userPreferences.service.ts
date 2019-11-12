@@ -64,7 +64,7 @@ export class UserPreferencesService {
 
   public deleteValue(name: string) {
     return new Observable<any>(observer => {
-      this.http.delete(`${this.appSettings.getValue(AppSettings.apiHome)}/api/v1/userpreferencevalue?name=${name}`).subscribe(
+      this.http.delete(`${this.appSettings.getValue(AppSettings.apiHome)}/api/v1/userpreferencevalue/${name}`).subscribe(
         () => {
           // Remove and tell the world
           this.userPrefsStore.remove(name);

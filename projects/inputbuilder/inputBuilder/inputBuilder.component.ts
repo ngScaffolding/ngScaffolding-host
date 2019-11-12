@@ -174,6 +174,7 @@ export class InputBuilderComponent implements OnInit, OnChanges {
 
         if (inputDetail['datasourceItems'] && inputDetail['datasourceItems'].length > 0) {
           // Pre loaded datasourceItems
+          this.dataSourceLookup[inputDetail.name] = inputDetail['datasourceItems'];
           this.manipulateValuesToObjects(formControl, inputDetail as InputDetailReferenceValues, inputValue);
         } else if (inputDetail.hasOwnProperty('referenceValueName') && (<InputDetailReferenceValues>inputDetail).referenceValueName) {
           // If Datasource, get the values
