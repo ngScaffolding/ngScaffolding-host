@@ -4,13 +4,11 @@ import { BreadcrumbService } from './breadcrumb.service';
 import { Subscription } from 'rxjs';
 import { MenuItem } from 'primeng/components/common/api';
 
-
 @Component({
     selector: 'app-breadcrumb',
     templateUrl: './app.breadcrumb.component.html'
 })
 export class AppBreadcrumbComponent implements OnDestroy {
-
     subscription: Subscription;
 
     items: MenuItem[];
