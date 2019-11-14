@@ -1,4 +1,4 @@
-export const enum MenuTypes{
+export const enum MenuTypes {
   Folder = 'folder',
   Dashboard = 'dashboard',
   Datagrid = 'datagrid'
@@ -6,7 +6,8 @@ export const enum MenuTypes{
 
 export interface CoreMenuItem {
 
-  name?: string;
+  // name is required for indexing
+  name: string;
   parent?: string;
   type?: string;
 

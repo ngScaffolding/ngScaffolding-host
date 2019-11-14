@@ -238,7 +238,12 @@ export class MenuService {
 
   public addMenuItems(newMenuItems: CoreMenuItem[]) {
     // Save to Master List
-    this.masterListMenu = [...this.masterListMenu, ...newMenuItems];
+    for (const newMenu of newMenuItems) {
+      if  (this.masterListMenu.findIndex(masterMenu => masterMenu.name === newMenu.name) === -1) {
+        this.masterListMenu.push(newMenu);
+      }
+    }
+    // this.masterListMenu = [...this.masterListMenu, ...newMenuItems];
 
     // Clone so we can amend
     this.menuItems = [...this.masterListMenu];
