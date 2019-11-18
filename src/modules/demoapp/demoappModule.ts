@@ -97,11 +97,13 @@ export class DemoAppModule {
     menuService.addMenuItemsFromCode([
       {
         label: 'Demo Samples',
+        name: 'demo.samples',
         items: [
           {
             label: 'Data Grid Test',
             icon: 'grid',
-            routerLink: 'datagridtest'
+            routerLink: 'datagridtest',
+            name: 'datagridtest'
           },
           {
             name: 'input.builder.simple',
