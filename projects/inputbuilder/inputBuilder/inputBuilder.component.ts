@@ -71,6 +71,11 @@ export class InputBuilderComponent implements OnInit, OnChanges {
     if (changes.inputModel && changes.inputModel.currentValue !== changes.inputModel.previousValue) {
       this.formBuilt = false;
     }
+
+    if (changes.inputBuilderDefinition && changes.inputBuilderDefinition.currentValue !== changes.inputBuilderDefinition.previousValue) {
+      this.formBuilt = false;
+    }
+
     this.buildForm();
   }
 

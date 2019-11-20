@@ -77,6 +77,7 @@ export class WidgetContainerComponent implements OnChanges {
     }
 
     if (
+      this.widgetDetails.widget &&
       this.widgetDetails.widget.inputBuilderDefinition &&
       this.widgetDetails.widget.inputBuilderDefinition.inputDetails &&
       this.widgetDetails.widget.inputBuilderDefinition.inputDetails.length > 0

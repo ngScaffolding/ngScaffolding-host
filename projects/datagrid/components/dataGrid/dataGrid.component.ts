@@ -395,7 +395,7 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
           pinned: column.pinned,
           suppressMenu: column.suppressMenu,
           filter: column.filter,
-          sortable: column.sortable,
+          sortable: column.sortable === undefined ? true : column.sortable,
           width: column.width,
           enableRowGroup: true,
 

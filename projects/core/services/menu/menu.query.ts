@@ -1,17 +1,23 @@
 import { Injectable } from '@angular/core';
 import { QueryEntity, QueryConfig, Order } from '@datorama/akita';
-import { CoreMenuItem } from 'ngscaffolding-models';
+import { CoreMenuItem, MenuTypes } from 'ngscaffolding-models';
 import { MenuStore, MenuState } from './menu.store';
+import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 @QueryConfig({
-  sortBy: 'order',
-  sortByOrder: Order.ASC // Order.DESC
+    sortBy: 'order',
+    sortByOrder: Order.ASC // Order.DESC
 })
 export class MenuQuery extends QueryEntity<MenuState, CoreMenuItem> {
-  constructor(protected store: MenuStore) {
-    super(store);
-  }
+    public folders$: Observable<CoreMenuItem[]>;
+
+    constructor(protected store: MenuStore) {
+        super(store);
+        this.folders$ = this.selectAll({
+            filterBy: [entity => entity.type === MenuTypes.Folder]
+        });
+    }
 }

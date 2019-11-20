@@ -87,7 +87,7 @@ export class InputDetailDateTime extends InputDetail {
 export class InputDetailReferenceValues extends InputDetail {
   referenceValueName?: string; // Used for select items
   referenceValueSeedName?: string; // set to name, when changed use this value in search
-  referenceValueChildLevel: number; // Where the Reference data contains children, which level down do we go
+  referenceValueChildLevel?: number; // Where the Reference data contains children, which level down do we go
   datasourceItems?: Array<ReferenceValueItem>; // Results of the datasource stored here for binding
   referenceValueSeedDependency?: string; // Name of control to use as seed for this DataSource... Used linked Dropdowns
 }
