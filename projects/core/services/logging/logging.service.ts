@@ -14,13 +14,14 @@ export class LoggingService {
       console.error(`Error ${err}`);
     }
 
-    if (showToast) {
-      this.notification.showMessage({
-        severity: 'error',
-        summary: 'Error',
-        detail: err.message
-      });
-    }
+    // TODO: Resume showing toast
+    // if (showToast) {
+    //   this.notification.showMessage({
+    //     severity: 'error',
+    //     summary: 'Error',
+    //     detail: err.message
+    //   });
+    // }
   }
 
   public warning(message: string, methodName = ''): void {

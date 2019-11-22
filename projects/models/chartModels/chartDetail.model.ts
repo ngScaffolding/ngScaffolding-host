@@ -17,7 +17,15 @@ export const enum DataShapes {
     // Peter|1|Blue
     // Paul |6|Yellow
     // = [{'Peter', 1, 'Blue'}, {'Paul', 6, 'Yellow'}]
-    RowToObject = 'RowToObject'
+    RowToObject = 'RowToObject',
+
+    // Afzal,Usman	Scheduled	9
+    // Afzal,Usman	Work Completed	37
+    // Ahktar, Asif	Scheduled	9
+    // Ahktar, Asif	Work Completed	1
+    // Lables = ['A','B']
+    // Column 0 = [1,2,3] Column 1 = [4,5,6]
+    GroupByOutput = 'GroupByOutput'
   }
 
 export interface ChartDetailModel {
@@ -27,7 +35,7 @@ export interface ChartDetailModel {
 
     // datasource to populate Series collection
     dataSourceName?: string;
-    
+
     // OR Get the xAxis labels from the data
     labelsInFirstValue?: boolean;
 

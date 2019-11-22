@@ -243,6 +243,11 @@ export class InputBuilderComponent implements OnInit, OnChanges {
       case InputTypes.switch: {
         return value.toString() === 'true' || value.toString() === 'True' || value.toString() === '1';
       }
+      case InputTypes.number:
+      case InputTypes.rating:
+      case InputTypes.spinner: {
+        return  Number(value);
+      }
       case InputTypes.date:
       case InputTypes.datetime:
       case InputTypes.time: {

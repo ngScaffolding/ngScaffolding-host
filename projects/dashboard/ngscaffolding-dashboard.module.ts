@@ -14,6 +14,7 @@ import { InputBuilderModule } from 'ngscaffolding-inputbuilder';
 
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { WidgetContainerComponent } from './components/widgetContainer/widgetContainer.component';
+import { ColourBoxComponent } from './components/colourBox/colourBox.component';
 
 import { GridsterModule } from 'angular-gridster2';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
@@ -31,29 +32,62 @@ import { createCustomElement } from '@angular/elements';
 
 // Services
 
-const appRoutes: Routes = [{ path: 'dashboard/:id', component: DashboardComponent, canActivate: [AuthoriseRoleGuard] }, { path: 'dashboard', component: DashboardComponent, canActivate: [AuthoriseRoleGuard] }];
+const appRoutes: Routes = [
+    { path: 'dashboard/:id', component: DashboardComponent, canActivate: [AuthoriseRoleGuard] },
+    { path: 'dashboard', component: DashboardComponent, canActivate: [AuthoriseRoleGuard] }
+];
 
 @NgModule({
-  imports: [ButtonModule, TooltipModule, ConfirmDialogModule, DialogModule, SidebarModule, CoreModule.forRoot(), CommonModule, FormsModule, InputBuilderModule, GridsterModule, CardModule, ProgressSpinnerModule, RouterModule.forChild(appRoutes), TranslateModule.forChild()],
-  declarations: [DashboardComponent, DashboardToolBarComponent, HtmlContainerComponent, GalleryComponent, SaveInputComponent, WidgetContainerComponent],
-  exports: [DashboardComponent, DashboardToolBarComponent, HtmlContainerComponent, WidgetContainerComponent, RouterModule],
-  providers: [],
-  entryComponents: [HtmlContainerComponent]
+    imports: [
+        ButtonModule,
+        TooltipModule,
+        ConfirmDialogModule,
+        DialogModule,
+        SidebarModule,
+        CoreModule.forRoot(),
+        CommonModule,
+        FormsModule,
+        InputBuilderModule,
+        GridsterModule,
+        CardModule,
+        ProgressSpinnerModule,
+        RouterModule.forChild(appRoutes),
+        TranslateModule.forChild()
+    ],
+    declarations: [
+        DashboardComponent,
+        DashboardToolBarComponent,
+        HtmlContainerComponent,
+        GalleryComponent,
+        SaveInputComponent,
+        WidgetContainerComponent,
+        ColourBoxComponent
+    ],
+    exports: [
+        DashboardComponent,
+        DashboardToolBarComponent,
+        HtmlContainerComponent,
+        WidgetContainerComponent,
+        RouterModule
+    ],
+    providers: [],
+    entryComponents: [HtmlContainerComponent, ColourBoxComponent]
 })
 export class DashboardModule {
-  static forRoot(): ModuleWithProviders {
-    return {
-      ngModule: DashboardModule
-    };
-  }
+    static forRoot(): ModuleWithProviders {
+        return {
+            ngModule: DashboardModule
+        };
+    }
 
-  constructor(injector: Injector, versions: VersionsService, componentLoaderService: ComponentLoaderService) {
-    versions.addVersion('ngscaffolding-dashboard', VERSION.version);
+    constructor(injector: Injector, versions: VersionsService, componentLoaderService: ComponentLoaderService) {
+        versions.addVersion('ngscaffolding-dashboard', VERSION.version);
 
-    // Register HTML Container
-    const el = createCustomElement(HtmlContainerComponent, { injector });
-    customElements.define('ngs-html-container', el);
+        // Register HTML Container
+        customElements.define('ngs-html-container', createCustomElement(HtmlContainerComponent, { injector }));
+        componentLoaderService.registerComponent('ngs-html-container');
 
-    componentLoaderService.registerComponent('ngs-html-container');
-  }
+        customElements.define('ngs-colour-box', createCustomElement(ColourBoxComponent, { injector }));
+        componentLoaderService.registerComponent('ngs-colour-box');
+    }
 }
