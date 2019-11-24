@@ -1,7 +1,7 @@
-import { WidgetDetails } from "./widgetDetails.model";
-import { InputBuilderDefinition } from "../inputBuilderModels";
+import { WidgetDetails } from './widgetDetails.model';
+import { InputBuilderDefinition } from '../inputBuilderModels';
 
-export interface DashboardModel{
+export interface DashboardModel {
     title: string;
 
     // Readonly means that the dash cannot change, includes order, size, inputdata
