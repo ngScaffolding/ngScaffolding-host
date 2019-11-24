@@ -19,6 +19,9 @@ export interface WidgetModelBase {
     // Do we show the Title of the Widget?
     showTitle?: boolean;
 
+    // Additional Class info
+    className?: string;
+
     // As WidgetTypes Enum Above
     type: WidgetTypes | string;
 

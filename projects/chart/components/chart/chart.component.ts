@@ -4,7 +4,7 @@ import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 
 import { ChartDataService } from '../../services/chartData.service';
 import { DataSourceService, LoggingService } from 'ngscaffolding-core';
-import { ChartDetailModel, IDashboardItem } from 'ngscaffolding-models';
+import { ChartDetailModel, IDashboardItem, DataShapes } from 'ngscaffolding-models';
 import * as Highcharts from 'highcharts';
 // Loading HighCharts More
 const HighchartsMore = require('highcharts/highcharts-more.src');
@@ -87,7 +87,12 @@ export class ChartComponent implements IDashboardItem, OnChanges {
                     this.itemDetails.chartOptions.series = [{}];
                   }
                   const shaped = chartDataService.shapeDataForSeries(this.itemDetails, results.jsonData);
-                  this.itemDetails.chartOptions.series[0].data = shaped.data;
+
+                  if (this.itemDetails.dataShape === DataShapes.GroupByOutput) {
+                    this.itemDetails.chartOptions.series = shaped.data;
+                  } else {
+                    this.itemDetails.chartOptions.series[0].data = shaped.data;
+                  }
                   if (shaped.xAxisLabels) {
                     if (!this.itemDetails.chartOptions.xAxis) {
                       this.itemDetails.chartOptions.xAxis = {};

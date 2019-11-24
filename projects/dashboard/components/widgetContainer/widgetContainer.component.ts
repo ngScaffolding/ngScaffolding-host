@@ -128,6 +128,7 @@ export class WidgetContainerComponent implements OnChanges {
       this.componentLoader.loadComponent(elementName).then(element => {
         newWidget = element;
         newWidget['itemDetails'] = itemDetails;
+        newWidget['widgetDetails'] = widgetDetails.widget;
         newWidget['isWidget'] = true;
         this.elementRef.nativeElement.querySelector('#widgetContent').appendChild(newWidget);
 
