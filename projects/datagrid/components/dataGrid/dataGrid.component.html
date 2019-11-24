@@ -44,7 +44,10 @@
     >
     </ag-grid-angular>
 
-    <app-actions-holder #actionsHolder *ngIf="actions && actions.length > 0" (actionClicked)="actionClicked($event, null)" [actions]="actions"></app-actions-holder>
+    <app-actions-holder #actionsHolder *ngIf="actions && actions.length > 0"
+       (actionClicked)="actionClicked($event, null)"
+       [actionsKey]="itemDetails.title"
+       [actions]="actions"></app-actions-holder>
 
     <ngs-input-builder-popup
       #actionInputPopup
