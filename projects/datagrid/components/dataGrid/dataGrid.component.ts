@@ -308,7 +308,7 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
       .getDataSource({
         forceRefresh: true,
         name: this.itemDetails.selectDataSourceName,
-        filterValues: this.filterValues,
+        filterValues: { ...this.baseContext, ...this.filterValues},
         seed: this.itemDetails.seedValue
       })
       .subscribe(
@@ -429,6 +429,7 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
     // check if we need confirmation
     if (action.confirmationMessage) {
       this.confirmationService.confirm({
+        key: this.itemDetails.title,
         message: action.confirmationMessage,
         header: 'Confirmation',
         accept: () => {
