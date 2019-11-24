@@ -9,6 +9,7 @@ import { ButtonColourPipe } from 'ngscaffolding-core';
 })
 export class ActionsHolderComponent implements OnInit {
   @Input() actions: Action[];
+  @Input() actionsKey: string;
   selectedRows: any[];
   selectedRowsCount = 0;
 
