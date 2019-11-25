@@ -21,6 +21,11 @@
             "main": "src/main.ts",
             "tsConfig": "src/tsconfig.app.json",
             "polyfills": "src/polyfills.ts",
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "custom/theme"
+              ]
+            },
             "assets": [
               "src/assets",
               "src/appConfig.json",
@@ -37,8 +42,7 @@
               "node_modules/primeicons/primeicons.css",
               "node_modules/ag-grid-community/dist/styles/ag-grid.css",
               "node_modules/ag-grid-community/dist/styles/ag-theme-material.css",
-              "src/styles.scss",
-              "custom/theme/theme.scss"
+              "src/styles.scss"
             ],
             "scripts": [
               "node_modules/@fullcalendar/core/main.js",
