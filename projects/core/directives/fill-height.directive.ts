@@ -32,7 +32,7 @@ export class FillHeightDirective implements AfterViewInit {
       const elementMarginBottom = this.el.nativeElement.style.marginBottom;
       const footerElementMargin = this.getfooterElementMargin();
 
-      this.el.nativeElement.style.height = `${windowHeight - footerElementMargin - elementOffsetTop - 36}px`;
+      this.el.nativeElement.style.height = `${windowHeight - footerElementMargin - elementOffsetTop - 16}px`;
     }
   }
 

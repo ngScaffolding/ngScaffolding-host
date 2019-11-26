@@ -317,7 +317,8 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
 
         this.menuService.saveMenuItem(dashboardModel, false);
         setTimeout(() => {
-            this.menuService.updateExistingMenuItem(clonedFullMenu);
+            // this.menuService.updateExistingMenuItem(clonedFullMenu);
+            this.menuService.addMenuItems([clonedFullMenu]);
             this.notificationService.showMessage({
                 severity: 'info',
                 summary: this.translate.instant(summary),
