@@ -1,1 +1,30 @@
 /* You can add global styles to this file, and also import other style files */
+// Full Height Flex Styles
+.flex-container {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: flex-end;
+    align-content: stretch;
+    align-items: baseline;
+}
+
+.flex-headerBar {
+    order: 0;
+    flex: 0 1 auto;
+    align-self: stretch;
+}
+
+.flex-fillContent {
+    display: block;
+    order: 1;
+    flex: 2 1 auto;
+    align-self: stretch;
+}
+
+.flex-footerBar {
+    order: 2;
+    flex: 0 1 auto;
+    align-self: stretch;
+}
+// Full Height Flex Styles

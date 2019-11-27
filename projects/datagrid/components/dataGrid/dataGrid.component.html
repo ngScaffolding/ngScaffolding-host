@@ -1,72 +1,82 @@
-<p-card id="gridContainer">
-  <p-header *ngIf="!itemDetails?.isDataIsland">
-    <div class="ui-g">
-      <div class="ui-g-8">
-        <span class="grid-title">{{ itemDetails?.title | translate }}</span>
-      </div>
-      <div class="ui-g-4">
-        <app-grid-toolbar
-          [collapsedToolbar]="isWidget"
-          (refreshClicked)="loadInitialData()"
-          (filtersClicked)="showHideFilters()"
-          (columnsClicked)="showHideColumns()"
-          (exportClicked)="exportData()"
-          (saveViewClicked)="saveView()"
-          (resetViewClicked)="resetView()"
-          (shareViewClicked)="shareView()"
-          [hideFilters]="hideFiltersButton"
-          [hideLabels]="hideLabels"
-        ></app-grid-toolbar>
-      </div>
+<div ngsFillHeight class="flex-container">
+    <div *ngIf="!itemDetails?.isDataIsland" class="flex-headerBar">
+        <div class="p-grid">
+            <div class="p-col">
+                <span class="grid-title">{{ itemDetails?.title | translate }}</span>
+            </div>
+            <div class="p-col">
+                <app-grid-toolbar
+                    [collapsedToolbar]="isWidget"
+                    (refreshClicked)="loadInitialData()"
+                    (filtersClicked)="showHideFilters()"
+                    (columnsClicked)="showHideColumns()"
+                    (exportClicked)="exportData()"
+                    (saveViewClicked)="saveView()"
+                    (resetViewClicked)="resetView()"
+                    (shareViewClicked)="shareView()"
+                    [hideFilters]="hideFiltersButton"
+                    [hideLabels]="hideLabels"
+                ></app-grid-toolbar>
+            </div>
+        </div>
     </div>
-  </p-header>
 
-  <div ngsFillHeight [relativeToParentPercent]="parentHeight" [fixedHeight]="fixedHeight">
-    <p-sidebar [(visible)]="dataLoading" position="top">
-      <div style="text-align: center">
+    <filters-holder
+        class="flex-headerBar"
+        #filtersHolder
+        [hidden]="!showFilters"
+        [filterDefinition]="filters"
+        [filterValues]="filterValues"
+        (valuesUpdated)="onFiltersUpdated($event)"
+    ></filters-holder>
+
+    <div class="flex-fillContent">
+        <ag-grid-angular
+            style="width: 100%; height: 100%;"
+            class="ag-theme-material"
+            [rowData]="rowData"
+            [columnDefs]="columnDefs"
+            [gridOptions]="gridOptions"
+            (selectionChanged)="onSelectionChanged()"
+            (gridReady)="onGridReady()"
+        >
+        </ag-grid-angular>
+    </div>
+
+    <app-actions-holder
+        class="flex-footerBar"
+        #actionsHolder
+        *ngIf="actions && actions.length > 0"
+        (actionClicked)="actionClicked($event, null)"
+        [actionsKey]="itemDetails.title"
+        [actions]="actions"
+    ></app-actions-holder>
+</div>
+
+<ngs-input-builder-popup
+    #actionInputPopup
+    [inputBuilderDefinition]="actionInputDefinition"
+    [inputModel]="actionValues"
+    (okClicked)="actionOkClicked($event)"
+    (cancelCliecked)="actionCancelClicked()"
+></ngs-input-builder-popup>
+
+<p-dialog
+    [width]="dialogOptions.width"
+    [height]="dialogOptions.height"
+    [(visible)]="popupShown"
+    (onHide)="popupHidden()"
+    [closable]="dialogOptions.closable"
+    [maximizable]="dialogOptions.maximizable"
+    [contentStyle]="{ 'max-height': dialogOptions.height - 80 + 'px', overflow: 'auto' }"
+>
+    <div id="popupContent" #dialog></div>
+</p-dialog>
+
+<p-sidebar [(visible)]="dataLoading" position="top">
+    <div style="text-align: center">
         {{ 'Loading' | translate }}
         <br />
         <p-progressSpinner></p-progressSpinner>
-      </div>
-    </p-sidebar>
-
-    <filters-holder #filtersHolder [hidden]="!showFilters" [filterDefinition]="filters" [filterValues]="filterValues" (valuesUpdated)="onFiltersUpdated($event)"></filters-holder>
-
-    <ag-grid-angular
-      [style.height]="'calc(100% - ' + heightToReserve +'px)'"
-      style="width: 100%;"
-      class="ag-theme-material"
-      [rowData]="rowData"
-      [columnDefs]="columnDefs"
-      [gridOptions]="gridOptions"
-      (selectionChanged)="onSelectionChanged()"
-      (gridReady)="onGridReady()"
-    >
-    </ag-grid-angular>
-
-    <app-actions-holder #actionsHolder *ngIf="actions && actions.length > 0"
-       (actionClicked)="actionClicked($event, null)"
-       [actionsKey]="itemDetails.title"
-       [actions]="actions"></app-actions-holder>
-
-    <ngs-input-builder-popup
-      #actionInputPopup
-      [inputBuilderDefinition]="actionInputDefinition"
-      [inputModel]="actionValues"
-      (okClicked)="actionOkClicked($event)"
-      (cancelCliecked)="actionCancelClicked()"
-    ></ngs-input-builder-popup>
-
-    <p-dialog
-      [width]="dialogOptions.width"
-      [height]="dialogOptions.height"
-      [(visible)]="popupShown"
-      (onHide)="popupHidden()"
-      [closable]="dialogOptions.closable"
-      [maximizable]="dialogOptions.maximizable"
-      [contentStyle]="{ 'max-height': dialogOptions.height - 80 + 'px', overflow: 'auto' }"
-    >
-      <div id="popupContent" #dialog></div>
-    </p-dialog>
-  </div>
-</p-card>
+    </div>
+</p-sidebar>
