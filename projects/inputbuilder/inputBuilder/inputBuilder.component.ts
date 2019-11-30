@@ -51,8 +51,7 @@ export class InputBuilderComponent implements OnInit, OnChanges {
       private ref: ChangeDetectorRef,
         public appSettings: AppSettingsService,
         public appSettingsQuery: AppSettingsQuery,
-        public refValuesService: ReferenceValuesService,
-        public dataSourceService: DataSourceService
+        public refValuesService: ReferenceValuesService
     ) {
         this.editorOptions = new JsonEditorOptions();
         this.editorOptions.modes = ['code', 'text', 'tree', 'view']; // set all allowed modes
