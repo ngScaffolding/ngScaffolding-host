@@ -121,7 +121,7 @@ export class InputBuilderComponent implements OnInit, OnChanges {
     searchAutoComplete($event, input: InputDetailReferenceValues) {
         this.loadDataSource(input, $event.query).subscribe(data => {
            this.dataSourceLookup[input.name] = data.referenceValueItems;
-           setInterval(() => { this.ref.detectChanges(); }, 50);
+           setTimeout(() => { this.ref.detectChanges(); }, 50);
         });
     }
 
