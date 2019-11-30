@@ -26,6 +26,8 @@ export class ReferenceValue extends BaseEntity {
     valueProperty?: string;
     itemOrderProperty?: string;
     subtitleProperty?: string;
+    subtitle2Property?: string;
+    subtitle3Property?: string;
     metaProperty?: string;
 }
 
@@ -34,6 +36,7 @@ export class ReferenceValueItem {
     value: string;
     subtitle?: string;
     subtitle2?: string;
+    subtitle3?: string;
     itemOrder?: number;
     meta?: any;
 
