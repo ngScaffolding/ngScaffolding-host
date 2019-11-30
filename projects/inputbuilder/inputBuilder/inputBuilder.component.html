@@ -4,6 +4,7 @@
 
 class="ui-g" (ngSubmit)="onSubmit(form)"
     [formGroup]="form">
+
     <div [className]="controlStyle" [class.noPadding]="inputBuilderDefinition.inputLocation === 'inline'"
       *ngFor="let input of inputBuilderDefinition.inputDetails">
 
@@ -79,11 +80,23 @@ class="ui-g" (ngSubmit)="onSubmit(form)"
 
             <!-- DropDown Returns Object -->
             <span *ngSwitchCase="'dropdownobject'">
-              <p-dropdown appendTo="body" class="dropdownInput" [readonly]="input.readonly"  [id]="input.name" [options]="dataSourceLookup[input.name]" [autoWidth]="false" [filter]="input.selectFilter"
+              <p-dropdown appendTo="body" class="dropdownInput" [readonly]="input.readonly"  [id]="input.name"
+              [options]="dataSourceLookup[input.name]" [autoWidth]="false" [filter]="input.selectFilter"
               showClear="true"
               [placeholder]="getLabel(input)"
                 optionLabel="display" [formControlName]="input.name"></p-dropdown>
             </span>
+
+            <!-- AutoComplete -->
+              <p-autoComplete *ngSwitchCase="'autocomplete'" appendTo="body"
+                dataKey="value"
+                field="display"
+                [dropdown]="true"
+                [formControlName]="input.name"
+                [suggestions]="dataSourceLookup[input.name]"
+                (completeMethod)="searchAutoComplete($event, input)"
+                [placeholder]="getLabel(input)"
+                ></p-autoComplete>
 
             <!-- Chips -->
             <span *ngSwitchCase="'chips'" class="md-inputfield">

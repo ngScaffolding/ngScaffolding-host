@@ -109,6 +109,9 @@ export class InputDetailSlider extends InputDetail {
   step?: number;
 }
 
+export class InputAutoCompete extends InputDetailReferenceValues {
+}
+
 export class FileAttach extends InputDetail {
   // Pattern to restrict the allowed file types such as "image/*".
   accept: string;
