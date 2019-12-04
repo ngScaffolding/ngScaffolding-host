@@ -102,6 +102,8 @@ export class NgScaffoldingComponent implements AfterViewInit {
             this.changeTheme(prefValue.value);
           }
         });
+      } else {
+        this.router.navigate(['login']);
       }
     });
 

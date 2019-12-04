@@ -6,7 +6,8 @@ import {
     OnInit,
     OnChanges,
     SimpleChanges,
-    ChangeDetectionStrategy
+    ChangeDetectionStrategy,
+    ChangeDetectorRef
 } from '@angular/core';
 import { Observable } from 'rxjs';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
@@ -15,7 +16,7 @@ import { InputBuilderDefinition, OrientationValues, ReferenceValue } from 'ngsca
 
 import { JsonEditorComponent, JsonEditorOptions } from 'ang-jsoneditor';
 
-import { AppSettingsService, AppSettingsQuery, ReferenceValuesService } from 'ngscaffolding-core';
+import { AppSettingsService, AppSettingsQuery, ReferenceValuesService, DataSourceService } from 'ngscaffolding-core';
 import { InputDetailReferenceValues } from 'ngscaffolding-models';
 
 @Component({
@@ -47,6 +48,7 @@ export class InputBuilderComponent implements OnInit, OnChanges {
     dataSourceLookup = {};
 
     constructor(
+      private ref: ChangeDetectorRef,
         public appSettings: AppSettingsService,
         public appSettingsQuery: AppSettingsQuery,
         public refValuesService: ReferenceValuesService
@@ -115,6 +117,13 @@ export class InputBuilderComponent implements OnInit, OnChanges {
         }
     }
 
+    searchAutoComplete($event, input: InputDetailReferenceValues) {
+        this.loadDataSource(input, $event.query).subscribe(data => {
+           this.dataSourceLookup[input.name] = data.referenceValueItems;
+           setTimeout(() => { this.ref.detectChanges(); }, 50);
+        });
+    }
+
     private getDefaultValue(value: any) {
         switch (value) {
             case 'today':
@@ -179,9 +188,6 @@ export class InputBuilderComponent implements OnInit, OnChanges {
                     this.clonedInputModel[inputDetail.name] = null;
                 }
 
-                // Notify subscribers that value has been set
-                // this.fieldChanged(inputDetail, inputValue);
-
                 const formControl = new FormControl(inputValue, this.mapValidators(inputDetail)); // Validators passed here too
 
                 // Remember for dependecy check in a mo
@@ -198,6 +204,7 @@ export class InputBuilderComponent implements OnInit, OnChanges {
                     this.dataSourceLookup[inputDetail.name] = inputDetail['datasourceItems'];
                     this.manipulateValuesToObjects(formControl, inputDetail as InputDetailReferenceValues, inputValue);
                 } else if (
+                    inputDetail.type !== InputTypes.autocomplete &&
                     inputDetail.hasOwnProperty('referenceValueName') &&
                     (<InputDetailReferenceValues>inputDetail).referenceValueName
                 ) {
@@ -228,9 +235,6 @@ export class InputBuilderComponent implements OnInit, OnChanges {
         }
 
         this.form = new FormGroup(formGroup);
-        this.form.valueChanges.subscribe(changes => {
-            this.formChanges(changes);
-        });
     }
 
     private manipulateValuesToObjects(
@@ -386,22 +390,6 @@ export class InputBuilderComponent implements OnInit, OnChanges {
             seed,
             childDepth
         );
-    }
-
-    private formChanges(changes: any) {
-        // // Flatten out Objects to value
-        // const returnValue = Object.assign({}, this.clonedInputModel);
-        // const localFlat = Object.assign({}, changes);
-        // for (const property in localFlat) {
-        //   if (localFlat[property] && localFlat[property].hasOwnProperty('value')) {
-        //     returnValue[property] = localFlat[property].value;
-        //   } else {
-        //     returnValue[property] = localFlat[property];
-        //   }
-        // }
-        // // Tell subscribers we have changes
-        // this.modelUpdated.emit(returnValue);
-        // this.clonedInputModel = returnValue;
     }
 
     private mapValidators(inputDetail: InputDetail) {

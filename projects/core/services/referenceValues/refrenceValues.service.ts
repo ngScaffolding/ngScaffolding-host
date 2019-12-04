@@ -40,9 +40,9 @@ export class ReferenceValuesService {
     });
   }
 
-  // Clear all Reference values with this name
+  // Clear all Reference values with this name as root of key
   clearReferenceValue(name: string) {
-    const list = this.refValuesQuery.getAll({ filterBy: entity => entity.name === name });
+    const list = this.refValuesQuery.getAll({ filterBy: entity => entity.name.startsWith(name) });
 
     for (const refValue of list) {
       this.refValuesStore.remove(refValue);

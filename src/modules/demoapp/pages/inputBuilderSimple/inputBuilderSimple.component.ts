@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { InputBuilderDefinition, InputTypes, OrientationValues, InputDetailDropdown, InputDetailToggleButton, InputDetailTextArea, InputDetailTextBox, InputLocations } from 'ngscaffolding-models';
+import { InputBuilderDefinition, InputTypes, OrientationValues, InputDetailDropdown, InputDetailToggleButton, InputDetailTextArea, InputDetailTextBox, InputLocations, InputDetailReferenceValues } from 'ngscaffolding-models';
 
 @Component({
   templateUrl: 'inputBuilderSimple.component.html',
@@ -60,6 +60,7 @@ export class InputBuilderSimpleComponent {
     var x = 0;
   }
 
+  // tslint:disable-next-line: member-ordering
   inputDefinition1: InputBuilderDefinition = {
     orientation: OrientationValues.Horizontal,
     columnCount: 3,
@@ -73,6 +74,13 @@ export class InputBuilderSimpleComponent {
     customButtonCallBack: () => alert('Call Back'),
 
     inputDetails: [
+      <InputDetailReferenceValues>{
+        label: 'Engineer',
+        name: 'engineer',
+        type: InputTypes.autocomplete,
+        referenceValueName: 'FieldForce.Persons.Reference',
+        validateRequired: 'Please say complete'
+      },
       <InputDetailTextBox>{
         label: 'Hello',
         name: 'hello',
@@ -150,7 +158,7 @@ export class InputBuilderSimpleComponent {
     ]
   };
 
-  inputModel1 = { hello: 'Sample', date: '', datetime: '', time: '', simpleSelectContinents: 'Europe' };
+  inputModel1 = { engineer:'', hello: 'Sample', date: '', datetime: '', time: '', simpleSelectContinents: 'Europe' };
 
   inputModel1Changed(model: any) {
     this.inputModel1 = model;
