@@ -73,6 +73,9 @@ export class Action {
   // Standard Url
   url?: string;
   target?: string;
+
+  // Notifcation Details - Action Data Posted to Notification
+  notificationDetailsName?: string;
 }
 
 export class DialogOptions {
