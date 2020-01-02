@@ -1,5 +1,5 @@
 import { BaseDataSource, DataSourceTypes } from './base.dataSource.model';
-import { ParameterDetailModel } from './parameterDetail.model';
+import { ParameterDetail } from './parameterDetail.model';
 
 export class MySqlDataSource {
   connection: string;
@@ -8,5 +8,5 @@ export class MySqlDataSource {
   testCommand?: string;
   isStoredProcedure?: boolean;
 
-  parameters?: ParameterDetailModel[];
+  parameters?: ParameterDetail[];
 }

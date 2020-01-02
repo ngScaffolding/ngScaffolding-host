@@ -1,5 +1,4 @@
-﻿import { ParameterDetailModel } from './parameterDetail.model';
-import { InputDetail } from '../inputBuilderModels';
+﻿import { InputDetail } from '../inputBuilderModels';
 import { RestApiDataSource } from './restApi.dataSource';
 import { SqlDataSource } from './sql.dataSource';
 import { DocumentDBDataSource } from './documentDB.dataSource';
