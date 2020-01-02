@@ -62,7 +62,6 @@ export class BaseDataSource {
   // Name Of DataSource to flush on completed
   flushReferenceValues?: string;
 
-  parameters?: ParameterDetailModel[];
   inputControls?: InputDetail[];
 
   itemDetails: RestApiDataSource | SqlDataSource | DocumentDBDataSource | MongoDBDataSource;
