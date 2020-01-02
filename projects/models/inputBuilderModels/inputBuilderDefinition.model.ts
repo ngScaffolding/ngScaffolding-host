@@ -40,5 +40,5 @@ export class InputBuilderDefinition {
   // Custom Button
   customButtonText?: string;
   customButtonIcon?: string;
-  customButtonCallBack?: { (): void };
+  customButtonCallBack?: (model: any) => void;
 }

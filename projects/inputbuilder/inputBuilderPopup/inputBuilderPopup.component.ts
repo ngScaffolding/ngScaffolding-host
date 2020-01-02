@@ -15,6 +15,7 @@ import { InputBuilderDefinition } from 'ngscaffolding-models';
 export class InputBuilderPopupComponent implements OnInit {
   @Input() inputBuilderDefinition: InputBuilderDefinition;
   @Input() inputModel: any;
+  @Input() setWidth: number;
 
   @Output() modelUpdated = new EventEmitter<any>();
   @Output() valueUpdated = new EventEmitter<[string, any]>();

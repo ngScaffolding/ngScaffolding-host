@@ -1,17 +1,17 @@
-<p-dialog [(visible)]="isShown" [contentStyle]="{'overflow':'visible'}">
-    <p-header>
-        {{ inputBuilderDefinition?.title }}
-    </p-header>
-  <div class="ui-fluid">
-    <div class="card ui-g-12">
-      <div class="ui-g-12">
-        <ngs-input-builder *ngIf="isShown" (modelUpdated)="notifyChanged($event)"
-          (okClicked)="onOkClicked($event)" (cancelClicked)="onCancelClicked()"
-          (modelUpdated)="onModelUpdated($event)"
-          (valueUpdated)="onValueUpdated()"
-          [inputBuilderDefinition]="inputBuilderDefinition"
-          [inputModel]="inputModel"></ngs-input-builder>
-      </div>
+<p-dialog [(visible)]="isShown" [contentStyle]="{'overflow':'visible'}" >
+  <p-header>
+      {{ inputBuilderDefinition?.title }}
+  </p-header>
+<div class="ui-fluid" [style.width.px]="setWidth">
+  <div class="card ui-g-12">
+    <div class="ui-g-12">
+      <ngs-input-builder *ngIf="isShown" (modelUpdated)="notifyChanged($event)"
+        (okClicked)="onOkClicked($event)" (cancelClicked)="onCancelClicked()"
+        (modelUpdated)="onModelUpdated($event)"
+        (valueUpdated)="onValueUpdated()"
+        [inputBuilderDefinition]="inputBuilderDefinition"
+        [inputModel]="inputModel"></ngs-input-builder>
     </div>
   </div>
+</div>
 </p-dialog>

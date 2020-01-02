@@ -79,14 +79,13 @@ export class InputBuilderComponent implements OnInit, OnChanges {
 
   onCustom() {
       if (this.inputBuilderDefinition.customButtonCallBack) {
-          this.inputBuilderDefinition.customButtonCallBack();
+          this.inputBuilderDefinition.customButtonCallBack(this.clonedInputModel);
       }
   }
 
   ngOnChanges(changes: SimpleChanges) {
       if (changes.inputModel && changes.inputModel.currentValue !== changes.inputModel.previousValue) {
           this.formBuilt = false;
-          this.decorateInputModel();
       }
 
       if (
@@ -103,10 +102,10 @@ export class InputBuilderComponent implements OnInit, OnChanges {
   // Add in standard Values
   const currentUser = this.authQuery.getValue().userDetails;
   const now = new Date();
-  this.inputModel['now'] = now;
-  this.inputModel['zuluDate'] = new Date(Date.UTC(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours(), now.getMinutes(), now.getSeconds()));
+  this.clonedInputModel['now'] = now;
+  this.clonedInputModel['zuluDate'] = new Date(Date.UTC(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours(), now.getMinutes(), now.getSeconds()));
 
-  this.inputModel['userId'] = currentUser.userId;
+  this.clonedInputModel['userId'] = currentUser.userId;
   }
 
   ngOnInit(): void {}
@@ -166,7 +165,8 @@ export class InputBuilderComponent implements OnInit, OnChanges {
       this.formBuilt = true;
 
       // Clone our inputModel
-      this.clonedInputModel = Object.assign({}, this.inputModel);
+      this.clonedInputModel = {... this.inputModel};
+      this.decorateInputModel();
 
       // Default to full width (changes if help found)
       this.containerClass = 'ui-g-12';
