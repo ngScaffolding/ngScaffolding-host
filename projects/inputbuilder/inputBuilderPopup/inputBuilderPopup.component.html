@@ -1,11 +1,12 @@
-<p-dialog [(visible)]="isShown" [contentStyle]="{'overflow':'visible'}" >
+<p-dialog [(visible)]="isShown" [contentStyle]="{'overflow':'visible'}"
+  [positionTop]="setTop" [positionLeft]="setLeft">
   <p-header>
       {{ inputBuilderDefinition?.title }}
   </p-header>
-<div class="ui-fluid" [style.width.px]="setWidth">
+<div class="ui-fluid" #popupContainer [style.width.px]="setWidth">
   <div class="card ui-g-12">
     <div class="ui-g-12">
-      <ngs-input-builder *ngIf="isShown" (modelUpdated)="notifyChanged($event)"
+      <ngs-input-builder  *ngIf="isShown" (modelUpdated)="notifyChanged($event)"
         (okClicked)="onOkClicked($event)" (cancelClicked)="onCancelClicked()"
         (modelUpdated)="onModelUpdated($event)"
         (valueUpdated)="onValueUpdated()"
