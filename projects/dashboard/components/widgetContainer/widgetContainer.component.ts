@@ -51,7 +51,7 @@ import { NgElement, WithProperties } from '@angular/elements';
 })
 export class WidgetContainerComponent implements OnChanges {
   @Input() widgetDetails: WidgetDetails;
-  @Input() IsReadOnly: boolean;
+  @Input() isReadOnly: boolean;
 
   @Output() widgetEvent = new EventEmitter<string>();
   @Output() widgetCreated = new EventEmitter<any>();
@@ -69,7 +69,7 @@ export class WidgetContainerComponent implements OnChanges {
   }
 
   public mouseEnter() {
-    if (this.IsReadOnly) {
+    if (this.isReadOnly) {
       this.showToolbar = false;
       this.allowClose = false;
       this.allowInputs = false;
@@ -85,8 +85,6 @@ export class WidgetContainerComponent implements OnChanges {
       this.allowInputs = true;
     }
 
-    this.allowClose = true;
-
     this.showToolbar = this.allowClose || this.allowInputs;
   }
 
@@ -99,6 +97,10 @@ export class WidgetContainerComponent implements OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
+    // if(changes.isReadOnly) {
+    //   this.allowClose = !changes.isReadOnly.currentValue;
+    // }
+
     if (changes['widgetDetails'].currentValue && changes['widgetDetails'].currentValue) {
       const widgetDetails = changes['widgetDetails'].currentValue as WidgetDetails;
 

@@ -49,7 +49,7 @@
         <gridster-item [item]="widget" *ngFor="let widget of dashboard.widgets" #loopGridster>
           <ngs-widget-container (widgetEvent)="onWidgetEvent($event, widget)"
             (widgetCreated)="componentCreated(widget, $event)"
-            [widgetDetails]="widget" [IsReadOnly]="dashboard.readOnly">
+            [widgetDetails]="widget" [isReadOnly]="dashboard.readOnly">
           </ngs-widget-container>
         </gridster-item>
       </gridster>
@@ -64,7 +64,9 @@
   (cancelCliecked)="dashInputCancelClicked()"></ngs-input-builder-popup>
 
 <!-- Input Details for Widget -->
-<ngs-input-builder-popup #actionInputPopup [inputBuilderDefinition]="actionInputDefinition"
+<ngs-input-builder-popup #actionInputPopup
+  [setWidth]="440"
+  [inputBuilderDefinition]="actionInputDefinition"
   [inputModel]="actionValues"
   (okClicked)="actionOkClicked($event)"
   (cancelCliecked)="actionCancelClicked()"></ngs-input-builder-popup>
