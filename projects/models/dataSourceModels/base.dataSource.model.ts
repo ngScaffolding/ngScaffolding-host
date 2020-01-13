@@ -1,4 +1,5 @@
-﻿import { InputDetail } from '../inputBuilderModels';
+import { ParameterDetail } from './parameterDetail.model';
+import { InputDetail } from '../inputBuilderModels';
 import { RestApiDataSource } from './restApi.dataSource';
 import { SqlDataSource } from './sql.dataSource';
 import { DocumentDBDataSource } from './documentDB.dataSource';
@@ -61,6 +62,7 @@ export class BaseDataSource {
   // Name Of DataSource to flush on completed
   flushReferenceValues?: string;
 
+  parameters?: ParameterDetail[];
   inputControls?: InputDetail[];
 
   itemDetails: RestApiDataSource | SqlDataSource | DocumentDBDataSource | MongoDBDataSource;

@@ -148,18 +148,19 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
               const userId = this.authQuery.getValue().userDetails.userId;
 
               // Readonly means no moving!
-              // if (this.dashboard.readOnly) {
-              //   this.options.draggable = {enabled: false};
-              //   this.options.resizable = {enabled: false};
-              // } else if (this.menuItem.name.startsWith(userId)) {
-              //   this.options.draggable = {enabled: true};
-              //   this.options.resizable = {enabled: true};
-              // } else {
-              //   this.options.draggable = {enabled: false};
-              //   this.options.resizable = {enabled: false};
-              // }
 
-              this.spinner.hideSpinner();
+              if (this.dashboard.readOnly) {
+                this.options.draggable = {enabled: false};
+                this.options.resizable = {enabled: false};
+              } else if (this.menuItem.name.startsWith(userId)) {
+                this.options.draggable = {enabled: true};
+                this.options.resizable = {enabled: true};
+              } else {
+                this.options.draggable = {enabled: false};
+                this.options.resizable = {enabled: false};
+              }
+
+            this.spinner.hideSpinner();
           }
       });
   }

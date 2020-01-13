@@ -49,7 +49,7 @@
         <gridster-item [item]="widget" *ngFor="let widget of dashboard.widgets" #loopGridster>
           <ngs-widget-container (widgetEvent)="onWidgetEvent($event, widget)"
             (widgetCreated)="componentCreated(widget, $event)"
-            [widgetDetails]="widget" [IsReadOnly]="dashboard.readOnly">
+            [widgetDetails]="widget" [isReadOnly]="dashboard.readOnly">
           </ngs-widget-container>
         </gridster-item>
       </gridster>
