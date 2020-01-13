@@ -1,4 +1,5 @@
-export enum ParameterTypes {
+export enum ParameterTypes{
+
   String = 'string',
   Number = 'number',
   Boolean = 'boolean',

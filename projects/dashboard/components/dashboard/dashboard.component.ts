@@ -148,6 +148,7 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
               const userId = this.authQuery.getValue().userDetails.userId;
 
               // Readonly means no moving!
+
               if (this.dashboard.readOnly) {
                 this.options.draggable = {enabled: false};
                 this.options.resizable = {enabled: false};
@@ -159,7 +160,7 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
                 this.options.resizable = {enabled: false};
               }
 
-              this.spinner.hideSpinner();
+            this.spinner.hideSpinner();
           }
       });
   }
