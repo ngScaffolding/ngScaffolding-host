@@ -32,7 +32,7 @@ export class TokenInterceptor implements HttpInterceptor {
     if (request.url.indexOf('loginUser') === -1) {
       request = request.clone({
         setHeaders: {
-          Authorization: `Bearer ${auth.getValue().token}`
+          Authorization: `Bearer ${this.authService.getToken()}`
         }
       });
     }

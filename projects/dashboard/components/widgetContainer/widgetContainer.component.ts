@@ -106,7 +106,7 @@ export class WidgetContainerComponent implements OnChanges {
 
       let newWidget: HTMLElement;
       let elementName = '';
-      let itemDetails = widgetDetails.widget.itemDetails;
+      const itemDetails = widgetDetails.widget.itemDetails;
 
       switch (widgetDetails.widget.type) {
         case WidgetTypes.GridView: {

@@ -66,10 +66,10 @@ import { AkitaNgDevtools } from '@datorama/akita-ngdevtools';
 import { environment } from '../environments/environment';
 import { ConfirmationService } from 'primeng/api';
 
-export function jwtOptionsFactory(authQuery: UserAuthenticationQuery) {
+export function jwtOptionsFactory(authService: UserAuthenticationService) {
   return {
     tokenGetter: () => {
-      return authQuery.getValue().token;
+      return authService.getToken();
     }
   };
 }

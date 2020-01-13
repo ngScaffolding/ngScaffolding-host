@@ -14,9 +14,11 @@ import { AuthenticationStore } from './userAuthentication.store';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { UserAuthenticationBase } from './UserAuthenticationBase';
 import { resetStores } from '@datorama/akita';
+import { UserAuthenticationQuery } from './userAuthentication.query';
 
 @Injectable({ providedIn: 'root' })
 export class UserAuthenticationService implements UserAuthenticationBase {
+
   private readonly tokenStorageKey = 'USER_TOKEN';
 
   private jwtHelper: JwtHelperService;
@@ -25,6 +27,7 @@ export class UserAuthenticationService implements UserAuthenticationBase {
     private logger: LoggingService,
     private http: HttpClient,
     private authStore: AuthenticationStore,
+    private authQuery: UserAuthenticationQuery,
     private appSettingsService: AppSettingsService
   ) {
     logger.info('UserAuthorisationService - Constructor');
@@ -32,6 +35,10 @@ export class UserAuthenticationService implements UserAuthenticationBase {
     this.jwtHelper = new JwtHelperService({});
 
     this.loadUserTokenFromStorage();
+  }
+
+  getToken(): string {
+    return this.authQuery.getValue().token;
   }
 
   private loadUserTokenFromStorage() {
