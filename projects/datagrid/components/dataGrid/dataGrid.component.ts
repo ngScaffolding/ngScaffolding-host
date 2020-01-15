@@ -329,7 +329,7 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
           }
         },
         () => {
-          alert('err');
+          this.dataLoading = false;
         }
       );
   }

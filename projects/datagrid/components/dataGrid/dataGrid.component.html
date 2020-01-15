@@ -1,3 +1,4 @@
+<p-progressSpinner class="loading-indicator" *ngIf="dataLoading"></p-progressSpinner>
 <div class="flex-container fullHeight">
     <div *ngIf="!itemDetails?.isDataIsland" class="flex-headerBar">
         <div class="p-grid">
@@ -72,11 +73,3 @@
 >
     <div id="popupContent" #dialog></div>
 </p-dialog>
-
-<p-sidebar [(visible)]="dataLoading" position="top">
-    <div style="text-align: center">
-        {{ 'Loading' | translate }}
-        <br />
-        <p-progressSpinner></p-progressSpinner>
-    </div>
-</p-sidebar>

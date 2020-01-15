@@ -1,30 +1,56 @@
 /* You can add global styles to this file, and also import other style files */
 // Full Height Flex Styles
 .flex-container {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    justify-content: flex-end;
-    align-content: stretch;
-    align-items: baseline;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: flex-end;
+  align-content: stretch;
+  align-items: baseline;
 }
 
 .flex-headerBar {
-    order: 0;
-    flex: 0 1 auto;
-    align-self: stretch;
+  order: 0;
+  flex: 0 1 auto;
+  align-self: stretch;
 }
 
 .flex-fillContent {
-    display: block;
-    order: 1;
-    flex: 2 1 auto;
-    align-self: stretch;
+  display: block;
+  order: 1;
+  flex: 2 1 auto;
+  align-self: stretch;
 }
 
 .flex-footerBar {
-    order: 2;
-    flex: 0 1 auto;
-    align-self: stretch;
+  order: 2;
+  flex: 0 1 auto;
+  align-self: stretch;
 }
 // Full Height Flex Styles
+
+//
+.loading-indicator {
+position: fixed;
+z-index: 999;
+height: 2em;
+width: 2em;
+overflow: show;
+margin: auto;
+top: 0;
+left: 0;
+bottom: 0;
+right: 0;
+}
+
+/* Transparent Overlay */
+.loading-indicator:before {
+content: '';
+display: block;
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background-color: rgba(0,0,0,0.12);
+}
