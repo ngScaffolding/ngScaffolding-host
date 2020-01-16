@@ -1,11 +1,8 @@
-import { BaseDataSource, DataSourceTypes } from './base.dataSource.model';
-
 export class DocumentDBDataSource {
+    connection: string;
 
-  connection: string;
+    databaseName: string;
+    collectionName: string;
 
-  databaseName: string;
-  collectionName: string;
-
-  sqlCommand: string;
+    sqlCommand: string;
 }

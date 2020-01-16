@@ -1,5 +1,5 @@
 export class DataSourceRequest {
-    name: string|string[];
+    name: string | string[];
     seed?: string;
     filterValues?: object;
     rowData?: object[];

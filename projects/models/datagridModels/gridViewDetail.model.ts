@@ -3,48 +3,48 @@ import { InputBuilderDefinition } from '../inputBuilderModels';
 import { Action } from '../coreModels';
 
 export class GridViewDetail {
-  title?: string;
+    title?: string;
 
-  disableCheckboxSelection?: boolean;
-  waitForInput?: boolean;
+    disableCheckboxSelection?: boolean;
+    waitForInput?: boolean;
 
-  pageSize?: number;
-  infiniteScroll?: boolean;
+    pageSize?: number;
+    infiniteScroll?: boolean;
 
-  // No save functions
-  readOnly?: boolean;
+    // No save functions
+    readOnly?: boolean;
 
-  // Remove unnecessary screen furniture
-  isDataIsland?: boolean;
+    // Remove unnecessary screen furniture
+    isDataIsland?: boolean;
 
-  // Toolbar settings
-  hideToolbar?: boolean;
+    // Toolbar settings
+    hideToolbar?: boolean;
 
-  detailUrl?: string;
-  detailTarget?: string;
+    detailUrl?: string;
+    detailTarget?: string;
 
-  serverPagination?: boolean;
-  serverSorting?: boolean;
-  serverGrouping?: boolean;
+    serverPagination?: boolean;
+    serverSorting?: boolean;
+    serverGrouping?: boolean;
 
-  defaultSort?: string;
+    defaultSort?: string;
 
-  columns: Array<ColumnModel>;
-  configuredColumns?: Array<ColumnModel>;
-  isActionColumnSplitButton?: boolean;
+    columns: Array<ColumnModel>;
+    configuredColumns?: Array<ColumnModel>;
+    isActionColumnSplitButton?: boolean;
 
-  filtersLocation?: string;
+    filtersLocation?: string;
 
-  filters?: InputBuilderDefinition;
+    filters?: InputBuilderDefinition;
 
-  // Value passed to datasources
-  seedValue?: string;
+    // Value passed to datasources
+    seedValue?: string;
 
-  // Get data from dataSource
-  selectDataSourceName?: string;
+    // Get data from dataSource
+    selectDataSourceName?: string;
 
-  // Or here is the data
-  dataValues?: any[];
+    // Or here is the data
+    dataValues?: any[];
 
-  actions?: Array<Action>;
+    actions?: Array<Action>;
 }

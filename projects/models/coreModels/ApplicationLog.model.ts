@@ -7,5 +7,3 @@ export interface ApplicationLog {
     userID: string;
     values: string;
 }
-
-

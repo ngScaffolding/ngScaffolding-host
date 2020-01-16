@@ -40,5 +40,5 @@ export interface WidgetModelBase {
     initialWidth?: number;
     initialHeight?: number;
 
-    itemDetails?: GridViewDetail | ChartDetailModel | HTMLContentModel | any
+    itemDetails?: GridViewDetail | ChartDetailModel | HTMLContentModel | any;
 }

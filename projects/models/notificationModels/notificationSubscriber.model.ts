@@ -1,5 +1,3 @@
 export class NotifcationSubscriber {
-  userId: string;
-  
-
+    userId: string;
 }
