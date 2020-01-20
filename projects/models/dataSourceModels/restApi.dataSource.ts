@@ -1,12 +1,9 @@
-﻿import { BaseDataSource, DataSourceTypes } from './base.dataSource.model';
-
-export interface NameValuePair {
+﻿export interface NameValuePair {
     name: string;
     value: any;
 }
 
 export class RestApiDataSource {
-
     serverName: string;
     url: string;
     verb?: string;

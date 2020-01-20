@@ -1,5 +1,4 @@
-﻿import { BaseDataSource, DataSourceTypes } from './base.dataSource.model';
-import { ParameterDetail, ParameterTypes } from './parameterDetail.model';
+﻿import { ParameterDetail } from './parameterDetail.model';
 
 export class SqlDataSource {
     connection: string;
