@@ -42,6 +42,7 @@ export enum AppSettings {
     showProfilePicture = 'showProfilePicture',
     showUserSetting = 'showUserSetting',
     menuType = 'menuType',
+    compactMode = 'compactMode',
 
     // Input Builder
     inputShowCalendarIcon = 'inputShowCalendarIcon',

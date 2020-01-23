@@ -71,6 +71,15 @@ export class NgScaffoldingComponent implements AfterViewInit {
       this.spinnerService.hideSpinner();
     });
 
+    // Apply App Settings Here
+    if (this.appSettingsQuery.hasEntity(AppSettings.menuType)) {
+      this.layoutMode = Number(this.appSettingsQuery.getEntity(AppSettings.menuType).value);
+    }
+
+    if (this.appSettingsQuery.hasEntity(AppSettings.compactMode)) {
+      this.layoutCompact = Boolean(this.appSettingsQuery.getEntity(AppSettings.compactMode).value);
+    }
+
     this.authQuery.authenticated$.subscribe(auth => {
       if (auth) {
         this.userPrefsQuery.selectEntity('MenuOrientation').subscribe(prefValue => {
