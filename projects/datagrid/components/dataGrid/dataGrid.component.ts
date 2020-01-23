@@ -410,6 +410,7 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
           }
 
           this.itemDetails.columns.forEach(column => {
+
               // const colDef: ColDef = {
               //     field: column.field,
               //     cellClass: <string>column.cellClass,

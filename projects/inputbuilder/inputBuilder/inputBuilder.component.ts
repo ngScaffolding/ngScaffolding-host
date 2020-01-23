@@ -16,7 +16,13 @@ import { InputBuilderDefinition, OrientationValues, ReferenceValue } from 'ngsca
 
 import { JsonEditorComponent, JsonEditorOptions } from 'ang-jsoneditor';
 
-import { AppSettingsService, AppSettingsQuery, ReferenceValuesService, DataSourceService, UserAuthenticationQuery } from 'ngscaffolding-core';
+import {
+  AppSettingsService,
+  AppSettingsQuery,
+  ReferenceValuesService,
+  DataSourceService,
+  UserAuthenticationQuery
+} from 'ngscaffolding-core';
 import { InputDetailReferenceValues } from 'ngscaffolding-models';
 
 @Component({
@@ -48,7 +54,7 @@ export class InputBuilderComponent implements OnInit, OnChanges {
   dataSourceLookup = {};
 
   constructor(
-    private ref: ChangeDetectorRef,
+      private ref: ChangeDetectorRef,
       public appSettings: AppSettingsService,
       public appSettingsQuery: AppSettingsQuery,
       private authQuery: UserAuthenticationQuery,
@@ -98,14 +104,23 @@ export class InputBuilderComponent implements OnInit, OnChanges {
       this.buildForm();
   }
 
-  private decorateInputModel(){
-  // Add in standard Values
-  const currentUser = this.authQuery.getValue().userDetails;
-  const now = new Date();
-  this.clonedInputModel['now'] = now;
-  this.clonedInputModel['zuluDate'] = new Date(Date.UTC(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours(), now.getMinutes(), now.getSeconds()));
+  private decorateInputModel() {
+      // Add in standard Values
+      const currentUser = this.authQuery.getValue().userDetails;
+      const now = new Date();
+      this.clonedInputModel['now'] = now;
+      this.clonedInputModel['zuluDate'] = new Date(
+          Date.UTC(
+              now.getFullYear(),
+              now.getMonth(),
+              now.getDate(),
+              now.getHours(),
+              now.getMinutes(),
+              now.getSeconds()
+          )
+      );
 
-  this.clonedInputModel['userId'] = currentUser.userId;
+      this.clonedInputModel['userId'] = currentUser.userId;
   }
 
   ngOnInit(): void {}
@@ -130,8 +145,10 @@ export class InputBuilderComponent implements OnInit, OnChanges {
 
   searchAutoComplete($event, input: InputDetailReferenceValues) {
       this.loadDataSource(input, $event.query).subscribe(data => {
-         this.dataSourceLookup[input.name] = data.referenceValueItems;
-         setTimeout(() => { this.ref.detectChanges(); }, 50);
+          this.dataSourceLookup[input.name] = data.referenceValueItems;
+          setTimeout(() => {
+              this.ref.detectChanges();
+          }, 50);
       });
   }
 
@@ -165,7 +182,7 @@ export class InputBuilderComponent implements OnInit, OnChanges {
       this.formBuilt = true;
 
       // Clone our inputModel
-      this.clonedInputModel = {... this.inputModel};
+      this.clonedInputModel = { ...this.inputModel };
       this.decorateInputModel();
 
       // Default to full width (changes if help found)
@@ -255,13 +272,15 @@ export class InputBuilderComponent implements OnInit, OnChanges {
       inputValue: any
   ) {
       if (inputDetail.type === InputTypes.multiselect) {
-          const foundValues = this.dataSourceLookup[inputDetail.name].filter(ds => inputValue.includes(ds.value));
-          setTimeout(_ => {
-              formControl.setValue(foundValues, {
-                  onlySelf: true,
-                  emitEvent: false
-              });
-          }, 100);
+          if (inputValue) {
+              const foundValues = this.dataSourceLookup[inputDetail.name].filter(ds => inputValue.includes(ds.value));
+              setTimeout(_ => {
+                  formControl.setValue(foundValues, {
+                      onlySelf: true,
+                      emitEvent: false
+                  });
+              }, 10);
+          }
       } else {
           // Now we have the values, find the ReferenceValue that matches the inputValue from above
           if (this.clonedInputModel[inputDetail.name] && this.dataSourceLookup[inputDetail.name]) {
