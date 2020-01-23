@@ -43,6 +43,7 @@
               "node_modules/primeflex/primeflex.css",
               "node_modules/ag-grid-community/dist/styles/ag-grid.css",
               "node_modules/ag-grid-community/dist/styles/ag-theme-material.css",
+              "node_modules/ag-grid-community/dist/styles/ag-theme-balham.css",
               "src/styles.scss"
             ],
             "scripts": [

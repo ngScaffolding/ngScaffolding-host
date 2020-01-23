@@ -29,9 +29,9 @@ export class GridViewDetail {
 
     defaultSort?: string;
 
-    columns: Array<ColumnModel>;
-    configuredColumns?: Array<ColumnModel>;
-    isActionColumnSplitButton?: boolean;
+    columns: Array<any>;
+    configuredColumns?: Array<any>;
+    isActionColumnSplitButton?: any;
 
     filtersLocation?: string;
 
