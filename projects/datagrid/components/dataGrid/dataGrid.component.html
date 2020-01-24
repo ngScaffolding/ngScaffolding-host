@@ -34,7 +34,7 @@
     <div class="flex-fillContent">
         <ag-grid-angular
             style="width: 100%; height: 100%;"
-            class="ag-theme-balham"
+            [className]="gridThemeName"
             [rowData]="rowData"
             [columnDefs]="columnDefs"
             [gridOptions]="gridOptions"

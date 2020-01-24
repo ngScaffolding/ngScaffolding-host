@@ -19,7 +19,8 @@ import {
   InputBuilderDefinition,
   DialogOptions,
   IDashboardItem,
-  ActionTypes
+  ActionTypes,
+  AppSettings
 } from 'ngscaffolding-models';
 
 import { Dialog } from 'primeng/dialog';
@@ -34,7 +35,9 @@ import {
   NgsDatePipe,
   NgsDateTimePipe,
   ComponentLoaderService,
-  ReferenceValuesService
+  ReferenceValuesService,
+  AppSettingsService,
+  AppSettingsQuery
 } from 'ngscaffolding-core';
 
 import { FiltersHolderComponent } from '../filtersHolder/filtersHolder.component';
@@ -64,11 +67,13 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
   @Input() itemDetails: GridViewDetail;
   @Input() fixedHeight: number;
   @Input() overrideGridOptions: object;
+  @Input() agGridTheme: string;
 
   // Base context, passed to Actions
   @Input() baseContext: object;
 
   @Output() selectionChanged = new EventEmitter<object[]>();
+  @Output() rowClicked = new EventEmitter<object>();
 
   filterValues: object = {};
   filters: InputBuilderDefinition;
@@ -91,6 +96,7 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
   rowCount: number;
   hideLabels = true;
   hideFiltersButton: boolean;
+  gridThemeName = 'ag-theme-material';
 
   // setting Parent Height uses relative to parent sizing
   parentHeight = 0;
@@ -114,6 +120,7 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
       private log: LoggingService,
       private ngsDatePipe: NgsDatePipe,
       private ngsDateTimePipe: NgsDateTimePipe,
+      private appSettings: AppSettingsQuery,
       private referenceService: ReferenceValuesService,
       private elementRef: ElementRef,
       private actionService: ActionService,
@@ -183,11 +190,13 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
               }
           },
 
-          // context used to call back from button Column
+          // context used to call back from button ColumnP
           context: {
               componentParent: this
           },
-
+          onRowClicked: row => {
+              this.rowClicked.emit(row.data);
+          },
           onGridReady: () => {
               this.calculateHeights();
               if (this.gridSavedState) {
@@ -410,7 +419,6 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
           }
 
           this.itemDetails.columns.forEach(column => {
-
               // const colDef: ColDef = {
               //     field: column.field,
               //     cellClass: <string>column.cellClass,
@@ -606,6 +614,9 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+      if (changes.agGridTheme && changes.agGridTheme.currentValue !== changes.agGridTheme.previousValue) {
+          this.gridThemeName = `ag-theme-${changes.agGridTheme.currentValue}`;
+      }
       if (changes.itemDetails && changes.itemDetails.currentValue) {
           this.loadMenuItem();
       }
@@ -632,7 +643,11 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
       }
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+      if (this.appSettings.hasEntity(AppSettings.agGridTheme)) {
+          this.gridThemeName = `ag-theme-${this.appSettings.getEntity(AppSettings.agGridTheme).value}`;
+      }
+  }
 
   ngOnDestroy() {
       if (this.broadcastSubscription) {

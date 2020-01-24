@@ -43,6 +43,7 @@ export enum AppSettings {
     showUserSetting = 'showUserSetting',
     menuType = 'menuType',
     compactMode = 'compactMode',
+    agGridTheme = 'agGridTheme',
 
     // Input Builder
     inputShowCalendarIcon = 'inputShowCalendarIcon',
