@@ -44,7 +44,7 @@ import { FiltersHolderComponent } from '../filtersHolder/filtersHolder.component
 import { InputBuilderPopupComponent } from 'ngscaffolding-inputbuilder';
 import { ActionsHolderComponent } from '../actionsHolder/actionsHolder.component';
 import { ButtonCellComponent } from '../../cellTemplates/buttonCell/buttonCell.component';
-import { Subscription } from 'rxjs';
+import { Subscription, isObservable } from 'rxjs';
 import { UserPreferencesQuery } from 'ngscaffolding-core';
 import { GridExtensionsService } from '../../services/gridExtensions/gridExtensions.service';
 import { ConfirmationService } from 'primeng/api';
@@ -242,7 +242,7 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
   @Input()
   public refreshData = () => {
       this.log.info('DataGrid: Refreshing Data');
-      this.loadInitialData();
+      this.loadData();
   };
 
   @Input()
@@ -300,7 +300,7 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
   onFiltersUpdated(filters) {
       this.filterValues = filters;
 
-      this.loadInitialData();
+      this.loadData();
   }
 
   onSelectionChanged() {
@@ -326,15 +326,22 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
   }
 
   // Load First Data and if any criteria Changes
-  public loadInitialData() {
+  public loadData() {
       this.rowData = [];
 
       this.dataLoading = true;
 
       if (this.itemDetails.dataValues) {
-          this.rowData = this.itemDetails.dataValues;
-          this.rowCount = this.itemDetails.dataValues.length;
-          this.dataLoading = false;
+          if (isObservable(this.itemDetails.dataValues)) {
+            this.itemDetails.dataValues.subscribe(results => {
+              this.rowData = results as any[];
+              this.dataLoading = false;
+            });
+          } else {
+              this.rowData = this.itemDetails.dataValues;
+              this.rowCount = this.itemDetails.dataValues.length;
+              this.dataLoading = false;
+          }
       } else if (this.itemDetails.selectDataSourceName) {
           this.dataSourceService
               .getDataSource({
@@ -452,7 +459,7 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
           this.showActionBar = this.actions && this.actions.filter(action => !action.columnButton).length > 0;
       }
 
-      this.loadInitialData();
+      this.loadData();
   }
 
   //
@@ -566,7 +573,7 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
                           this.actionInputPopup.isShown = false;
 
                           // Refresh Data
-                          this.loadInitialData();
+                          this.loadData();
                       } else {
                           if (action.errorMessage) {
                               this.confirmationService.confirm({

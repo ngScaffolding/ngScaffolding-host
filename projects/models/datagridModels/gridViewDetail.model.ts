@@ -44,7 +44,7 @@ export class GridViewDetail {
     selectDataSourceName?: string;
 
     // Or here is the data
-    dataValues?: any[];
+    dataValues?: any;
 
     actions?: Array<Action>;
 }
