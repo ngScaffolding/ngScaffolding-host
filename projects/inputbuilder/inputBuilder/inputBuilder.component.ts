@@ -16,6 +16,8 @@ import { InputBuilderDefinition, OrientationValues, ReferenceValue } from 'ngsca
 
 import { JsonEditorComponent, JsonEditorOptions } from 'ang-jsoneditor';
 
+import * as objectPath from 'object-path';
+
 import {
   AppSettingsService,
   AppSettingsQuery,
@@ -205,22 +207,22 @@ export class InputBuilderComponent implements OnInit, OnChanges {
           for (const inputDetail of this.inputBuilderDefinition.inputDetails) {
               // Get value from model and apply to new FormControl
               let inputValue: any = null;
-              if (this.clonedInputModel[inputDetail.name]) {
+              if (objectPath.get(this.clonedInputModel, inputDetail.name)) {
                   // If we have a passed value in the model, set the control value to this
-                  inputValue = this.parseValue(inputDetail, this.clonedInputModel[inputDetail.name]);
+                  inputValue = this.parseValue(inputDetail, objectPath.get(this.clonedInputModel, inputDetail.name));
               } else if (inputDetail.value) {
                   // If we have a value passed in the Input definition set the control value to this.
                   inputValue = this.getDefaultValue(inputDetail.value);
-                  this.clonedInputModel[inputDetail.name] = inputValue;
+                  objectPath.set(this.clonedInputModel, inputDetail.name, inputValue);
               } else {
                   // This ensures that the property is set if not passed in
-                  this.clonedInputModel[inputDetail.name] = null;
+                  objectPath.set(this.clonedInputModel, inputDetail.name, null);
               }
 
               const formControl = new FormControl(inputValue, this.mapValidators(inputDetail)); // Validators passed here too
 
               // Remember for dependecy check in a mo
-              localModel[inputDetail.name] = inputValue;
+              objectPath.set(localModel, inputDetail.name, inputValue);
 
               formControl.valueChanges.subscribe(changes => {
                   this.fieldChanged(inputDetail, changes);
