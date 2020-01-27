@@ -195,11 +195,10 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
                 componentParent: this
             },
             onRowClicked: row => {
-                // let name = objectPath.get(row.event, 'toElement');
-                // if (objectPath.get(row.event, 'toElement.offsetParent.localName') !== 'button') {
-                //     this.rowClicked.emit(row.data);
-                // }
-                this.rowClicked.emit(row.data);
+              const htmlName = row.event['toElement']['offsetParent']['localName'];
+              if (htmlName !== 'button') {
+                  this.rowClicked.emit(row.data);
+              }
             },
             onGridReady: () => {
                 this.calculateHeights();
