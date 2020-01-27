@@ -54,3 +54,9 @@ width: 100%;
 height: 100%;
 background-color: rgba(0,0,0,0.12);
 }
+
+// Fix width of multi selects
+.ui-multiselect {
+  width: 100%;
+  display: block;
+}
