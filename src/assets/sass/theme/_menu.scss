@@ -1,14 +1,27 @@
 body {
     .ui-breadcrumb {
-        padding: $inputHeaderPadding;
+        a {
+            color: #ffffff;
+        }
 
-        ul {
-            li {
-                a {
-                    color: $panelHeaderTextColor;
-                    font-size: $inputHeaderFontSize;
+        li:first-child {
+            a {
+                position: relative;
+                margin-top: 0;
+
+                span {
+                    font-size: $iconFontSize;
                 }
             }
+        }
+
+        .ui-breadcrumb-chevron {
+            margin: 0;
+            font-size: $iconFontSize;
+        }
+
+        li {
+            margin: 0;
         }
     }
 
@@ -25,28 +38,33 @@ body {
             .ui-menuitem-link {
                 display: inline-block;
                 text-align: left;
-                background-color: $stepsItemBgColor;
+                background-color: #ffffff;
                 overflow: hidden;
 
                 .ui-steps-number {
                     display: inline-block;
-                    background-color: $grayBgColor;
+                    background-color: #757575;
                     @include border-radius(50%);
-                    padding: .25em .75em;
-                    font-size: 1em;
-                    color: $stepsItemNumberColor;
+                    font-size: 16px;
+                    color: #ffffff;
+                    vertical-align: middle;
+                    text-align: center;
+                    width: 2em;
+                    height: 2em;
+                    padding: 0;
+                    line-height: 2em;
                 }
 
                 .ui-steps-title {
                     display: inline;
-                    margin-left: .625em;
-                    color: $stepsItemTextColor;
+                    margin-left: .714em;
+                    color: $textSecondaryColor;
                 }
             }
 
             &.ui-state-highlight {
                 .ui-steps-number {
-                    background-color: $accentColor;
+                    background-color: $primaryColor;
                 }
 
                 .ui-steps-title {
@@ -79,8 +97,9 @@ body {
     .ui-contextmenu .ui-menuitem-link,
     .ui-megamenu .ui-menuitem-link,
     .ui-slidemenu .ui-menuitem-link {
-        padding: .625em 1em;
+        padding: $menuitemPadding;
         color: $textColor;
+        min-height: 2.286em;
         @include border-radius(0);
 
         &:hover {
@@ -90,12 +109,19 @@ body {
         &:focus {
             @include hover-element();
         }
+
         .ui-menuitem-text {
-          vertical-align: middle;
+            vertical-align: middle;
         }
 
         .ui-menuitem-icon {
-            color: $menuitemIconColor;
+            font-size: 18px;
+            color: $textSecondaryColor;
+        }
+
+        .ui-submenu-icon {
+            right: .857em;
+            margin-right: -.5em;
         }
     }
 
@@ -105,23 +131,24 @@ body {
             padding: .5em 0;
 
             .ui-menuitem {
-              margin: 0;
+                margin: 0;
             }
         }
     }
 
     .ui-menu {
         min-width: 12.5em;
-        padding: .5em 0;
+        padding: $menuListPadding;
 
         .ui-menuitem {
-          margin: 0;
+            margin: 0;
+            @include border-radius(0);
 
-          .ui-menuitem-link {
-            .ui-menuitem-icon {
-              vertical-align: middle;
+            .ui-menuitem-link {
+                .ui-menuitem-icon {
+                    vertical-align: middle;
+                }
             }
-          }
         }
 
         &.ui-shadow, .ui-shadow {
@@ -130,9 +157,10 @@ body {
 
         .ui-submenu-header {
             border: 0 none;
-            margin: 0;
-            padding: .625em 1em;
             border-radius: 0;
+            margin: 0;
+            padding: $menuitemPadding;
+            font-weight: 400;
         }
     }
 
@@ -140,9 +168,18 @@ body {
         padding: 0;
 
         .ui-menubar-root-list {
-          &>.ui-menuitem>.ui-menuitem-link {
-            padding: .625em 1em;
-          }
+            &>.ui-menuitem>.ui-menuitem-link {
+                padding: $menuitemPadding;
+            }
+        }
+
+        .ui-submenu-list {
+            .ui-menuitem-link {
+                .ui-submenu-icon {
+                    right: .857em;
+                    margin-right: -.5em;
+                }
+            }
         }
 
         .ui-menuitem {
@@ -152,16 +189,16 @@ body {
                 }
 
                 .ui-submenu-icon {
-                  vertical-align: middle;
+                    vertical-align: middle;
                 }
             }
             &.ui-menuitem-active {
                 > .ui-menuitem-link {
-                  @include hover-element;
+                    @include hover-element;
 
-                  .ui-menuitem-icon {
-                    vertical-align: middle;
-                  }
+                    .ui-menuitem-icon {
+                        vertical-align: middle;
+                    }
                 }
             }
         }
@@ -173,13 +210,13 @@ body {
         .ui-menuitem {
 
             .ui-menuitem-link {
-              .ui-menuitem-icon {
-                vertical-align: middle;
-              }
+                .ui-menuitem-icon {
+                    vertical-align: middle;
+                }
             }
             &.ui-menuitem-active {
                 > .ui-menuitem-link {
-                  @include hover-element;
+                    @include hover-element;
                 }
             }
         }
@@ -192,14 +229,14 @@ body {
             margin: 0;
 
             .ui-menuitem-link {
-              .ui-menuitem-icon {
-                vertical-align: middle;
-              }
+                .ui-menuitem-icon {
+                    vertical-align: middle;
+                }
             }
 
             &.ui-menuitem-active {
                 > .ui-menuitem-link {
-                  @include hover-element;
+                    @include hover-element;
                 }
             }
         }
@@ -214,7 +251,7 @@ body {
             border: 0 none;
 
             &:hover {
-              background-color: darken($primaryColor, 10%);
+                background-color: darken($primaryColor, 10%);
             }
         }
     }
@@ -225,91 +262,28 @@ body {
         .ui-menuitem {
 
             .ui-menuitem-link {
-              .ui-menuitem-icon {
-                vertical-align: middle;
-              }
+                .ui-menuitem-icon {
+                    vertical-align: middle;
+                }
             }
             &.ui-menuitem-active {
-              > .ui-menuitem-link {
-                @include hover-element;
-              }
+                > .ui-menuitem-link {
+                    @include hover-element;
+                }
             }
-        }
-    }
-
-    .ui-tabmenu {
-         padding: 0;
-
-         .ui-tabmenu-nav {
-             padding: 0;
-             background-color: $tabsNavBgColor;
-             border: 0 none;
-             @include border-radius(0);
-
-             > .ui-tabmenuitem {
-               top: auto;
-               margin: 0 .25em 0 0;
-               padding: 0;
-               border-style: solid;
-               border-width: 0 0 2px 0;
-               @include transition(border-color .3s);
-
-               > a {
-                   padding: $headerPadding;
-
-                   &:focus {
-                       outline: 0 none;
-                   }
-
-                   .ui-menuitem-icon, .ui-menuitem-text {
-                       float: none;
-                       display: inline-block;
-                       vertical-align: middle;
-                   }
-
-                   .ui-menuitem-icon {
-                       font-weight: 1em;
-                       margin-right: .25em;
-                   }
-               }
-
-               &.ui-state-default {
-                   a {
-                       color: $textSecondaryColor;
-
-                       .ui-menuitem-icon {
-                           color: $textSecondaryColor;
-                       }
-                   }
-               }
-
-               &:not(.ui-state-active):hover {
-                   background-color: $tabsNavBgColor;
-               }
-
-               &.ui-state-active {
-                   background-color: $tabsNavBgColor;
-                   border-color: $accentColor;
-                   border-style: solid;
-
-                   a {
-                       color: $primaryColor;
-
-                       .ui-menuitem-icon {
-                           color: $primaryColor;
-                       }
-                   }
-               }
-           }
         }
     }
 
     .ui-megamenu {
         padding: 0;
 
+        .ui-megamenu-panel {
+            padding: .5em 0;
+        }
+
         .ui-megamenu-submenu-header {
-          border-radius: 0;
-          padding: .5em;
+            border-radius: 0;
+            padding: .25em;
         }
 
         .ui-submenu-list {
@@ -317,65 +291,142 @@ body {
             border: 0 none;
 
             .ui-menuitem {
-              margin: 0;
+                margin: 0;
             }
         }
 
         .ui-menuitem {
-          margin: 0;
+            margin: 0;
 
-          .ui-menuitem-link {
-            .ui-menuitem-icon {
-              vertical-align: middle;
+            .ui-menuitem-link {
+                .ui-menuitem-icon {
+                    vertical-align: middle;
+                }
+
+                .ui-submenu-icon {
+                    vertical-align: middle;
+                }
             }
 
-            .ui-submenu-icon {
-              vertical-align: middle;
+            &.ui-menuitem-active {
+                > .ui-menuitem-link {
+                    @include hover-element;
+                }
             }
-          }
+        }
+    }
+    .ui-megamenu-vertical {
+        .ui-megamenu-root-list {
+            .ui-menuitem {
+                .ui-menuitem-link {
+                    .ui-submenu-icon {
+                        right: .857em;
+                        margin-right: -.5em;
+                    }
+                }
 
-          &.ui-menuitem-active {
-            > .ui-menuitem-link {
-              @include hover-element;
             }
-          }
+        }
+    }
+
+    .ui-tabmenu {
+        padding: 0;
+
+        .ui-tabmenu-nav {
+            padding: 0;
+            background-color: #ffffff;
+            border: 0 none;
+            @include border-radius(0);
+
+            > .ui-tabmenuitem {
+                top: auto;
+                margin: 0 4px 0 0;
+                padding: 0;
+                border-style: solid;
+                border-width: 0 0 2px 0;
+                @include transition(border-color $transitionDuration);
+
+                > a {
+                    padding: $headerPadding;
+
+                    &:focus {
+                        outline: 0 none;
+                    }
+
+                    .ui-menuitem-icon, .ui-menuitem-text {
+                        float: none;
+                        display: inline-block;
+                        vertical-align: middle;
+                    }
+
+                    .ui-menuitem-icon {
+                        margin-right: .25em;
+                    }
+                }
+
+                &.ui-state-default {
+                    a {
+                        color: $textSecondaryColor;
+
+                        .pi {
+                            color: $textSecondaryColor;
+                        }
+                    }
+                }
+
+                &:not(.ui-state-active):hover {
+                    background-color: #ffffff;
+                }
+
+                &.ui-state-active {
+                    background-color: #ffffff;
+                    border-color: $accentColor;
+                    border-style: solid;
+
+                    a {
+                        color: $primaryColor;
+
+                        .pi {
+                            color: $primaryColor;
+                        }
+                    }
+                }
+            }
         }
     }
 
     .ui-panelmenu {
+
+        span {
+            vertical-align: middle;
+        }
         .ui-panelmenu-header {
-            background-color: $primaryColor;
-            margin-bottom: 1px;
+            background-color: $accordionHeaderBgColor;
+            margin-top: .25em;
 
             a {
-                padding: .625em 1em;
-                color: $panelHeaderTextColor;
-                font-size: $fontSize;
-                border-bottom: 1px solid $panelHeaderTextColor;
+                color: $accordionHeaderTextColor;
+                font-weight: $headerFontWeight;
             }
 
-            .pi {
-                color: $panelHeaderIconColor;
-                vertical-align: middle;
-            }
-
+            .ui-panelmenu-icon,
             .ui-menuitem-icon {
-                color: $panelHeaderIconColor;
-                vertical-align: middle;
-            }
-
-            .ui-menuitem-text {
-                vertical-align: middle;
+                font-size: $iconFontSize - 2;
             }
 
             &.ui-state-active {
                 background-color: $accentColor;
+                color: $accentTextColor;
                 @include border-radius-bottom(0);
-                margin-bottom: 0;
-                a, .ui-menuitem-icon {
+
+                a, .pi {
                     color: $accentTextColor;
                 }
             }
+        }
+
+        .ui-panelmenu-panel {
+            margin-bottom: 1px;
         }
 
         .ui-panelmenu-content {
@@ -386,17 +437,21 @@ body {
 
                 .ui-menuitem-link {
                     border: 0 none;
-                    padding: .625em 1em;;
+                    padding: $menuitemPadding;
                     width: 100%;
-                    min-height: 2.750em;
+                    min-height: 30px;
                     box-sizing: border-box;
                     color: $textColor;
-                    line-height: 1.5em;
                     @include border-radius(0);
                     position: relative;
 
                     &:hover {
                         @include hover-element();
+                    }
+
+                    .ui-panelmenu-icon,
+                    .ui-menuitem-icon {
+                        font-size: $iconFontSize - 2;
                     }
 
                     .ui-menuitem-text {
@@ -408,10 +463,6 @@ body {
                     .pi {
                         position: static;
                         display: inline-block;
-                        vertical-align: middle;
-                    }
-
-                    .ui-menuitem-icon {
                         vertical-align: middle;
                     }
                 }

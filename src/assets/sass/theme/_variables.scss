@@ -1,121 +1,70 @@
 @import "../variables";
-
-// General
 $iconFontSize:1.5em;
-$inlineSpacing:.5em;
+$primaryTextColor:#ffffff;
 
-// Common
-$headerFontSize:1em;
-$headerPadding:.625em 1em;
+$headerPadding:.714em 1em;
 $headerBgColor:$primaryColor;
 $headerTextColor:#ffffff;
 $headerIconColor:#ffffff;
-$contentFontSize:1em;
-$contentPadding:.625em 1em;
-$contentBgColor:#ffffff;
-$contentIconColor:#757575;
-$overlayBgColor:#58575c;
+$headerFontWeight:500;
+$headerFontSize:1em;
 
-// InputText
-$inputHeaderFontSize:1em;
-$inputHeaderPadding:.625em 1em;
-$inputFontSize:1em;
-$inputOptionFontSize:1em;
-$inputBgColor: transparent;
+$contentPadding:.857em 1em;
+$contentBorderColor:#bdbdbd;
+$contentBgColor:#ffffff;
+$contentFontSize:1em;
+$contentIconColor:#757575;
+
 $inputBorderColor:#bdbdbd;
-$inputBorderErrorColor:#e62a10;
+$inputInvalidBorderColor:#e62a10;
+$inputBgColor:transparent;
 $inputErrorTextColor:#e62a10;
+$inputHeaderPadding:.714em 1em;
+$inputBorderErrorColor:#e62a10;
 $inputFieldLabelTextColor:#999999;
 $inputFieldBoxBgColor:#f7f7f7;
 $inputFieldFillBgColor:#f7f7f7;
-$inputAutoFillBorderColor: #bdbdbd;
+$inputAutoFillBorderColor:#bdbdbd;
+$textboxBgColor:#f7f7f7;
 
-// Button
-$buttonFontSize:1em;
+//inputs with lists
+$inputListPadding: .5em 0;
+
+//groups
+$inputGroupBorderColor:#bdbdbd;
+$inputGroupBgColor:transparent;
+$inputGroupTextColor:$textSecondaryColor;
+$inputGroupIconColor:$textSecondaryColor;
+$inputGroupAddonMinWidth:2*$fontSize;
+$checkboxWidth:18px;
+$checkboxHeight:18px;
+$inputGroupPadding:2px 2px 1px 2px;
+$inputGroupIconFontSize: 1.5em;
+
+//panels
+$accordionHeaderBgColor:$primaryColor;
+$accordionHeaderTextColor:#ffffff;
+$accordionHeaderHoverBgColor:$primaryDarkColor;
+$accordionHeaderHoverTextColor:#ffffff;
+
+$panelContentLineHeight:1.5;
+
 $buttonTextColor:#ffffff;
 
-// Input lists
-$inputListItemBgColor:#ffffff;
-$inputListItemCheckboxBorderColor:#ffffff;
-$inputListItemFilterTextColor:#ffffff;
+$listItemPadding:.571em .857em;
 
-//input switch
-$inputSwitchOffHandleBgColor:#ffffff;
-
-//checkbox
+$radioButtonBorderColor:#757575;
 $checkboxBorderColor:#757575;
 
-//radiobutton
-$radioButtonBorderColor:#757575;
+$errorMessageFontSize:11px;
+$errorMessageIconFontSize:13px;
 
-//calendar
-$calendarNavIconColor:#ffffff;
-$calendarCellTextColor:#ffffff;
+//data
+$dataTableHeaderPadding:.857em;
+$dataTableCellPadding:.714em .857em;
+$dataTableRowBgColorEven:#f4f4f4;
+$paginatorPadding:.714em 1em;
 
-//messages, growl, toast
-$messageIconColor:#ffffff;
-$infoMessageBgColor:#2196F3;
-$infoMessageBorderColor:#2196F3;
-$infoMessageTextColor:#ffffff;
-
-$successMessageBgColor:#8BC34A;
-$successMessageBorderColor:#8BC34A;
-$successMessageTextColor:#ffffff;
-
-$warnMessageBgColor:#ffc107;
-$warnMessageBorderColor:#ffc107;
-$warnMessageTextColor:#ffffff;
-
-$errorMessageBgColor:#e62a10;
-$errorMessageBorderColor:#e62a10;
-$errorMessageTextColor:#ffffff;
-
-//editor
-$editorHeaderBgColor:#e8e8e8;
-
-//paginator
-$paginatorIconColor:#ffffff;
-
-//turbo table
-$dividerLightColor:#cacaca;
-$tableOddRowBgColor:#f4f4f4;
-$tableHeaderCellBgColor:#ffffff;
-$tableHeaderCellTextColor:$textColor;
-$tableContentLoadIconColor:#ffffff;
-$tableBodyRowBgColor:#ffffff;
-
-//datatable
-$datatableEvenRowBgColor:#f4f4f4;
-$datatableHeaderCellBgColor:#ffffff;
-$datatableHighlightTextColor:#ffffff;
-
-//dataview
-$dataviewHeaderBgColor:#ffffff;
-
-//schedule
-$scheduleEventBgColor:$primaryLightColor;
-$scheduleEventTextColor:#ffffff;
-
-//steps
-$stepsItemBgColor:#ffffff;
-$stepsItemNumberColor:#ffffff;
-$stepsItemTextColor:$textSecondaryColor;
-$menuitemIconColor:#757575;
-
-//tabview
-$tabsNavBgColor:#ffffff;
-
-//panel common
-$panelHeaderBgColor:$primaryColor;
-$panelHeaderBorderColor:$primaryColor;
-$panelHeaderTextColor:#ffffff;
-$panelHeaderIconColor:#ffffff;
-
-//dialog
-$dialogHeaderBgColor:#ffffff;
-$dialogHeaderTextColor:$textColor;
-$dialogFooterButtonBgColor:#ffffff;
-$dialogFooterButtonTextColor:$textColor;
-
-//tooltip
-$tooltipBgColor:#323232;
+//menus
+$menuitemPadding:.571em .857em;
+$menuListPadding: .5em 0;

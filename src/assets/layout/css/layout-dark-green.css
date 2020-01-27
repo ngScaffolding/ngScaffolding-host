@@ -138,6 +138,24 @@
     transform: translate3d(0, -20px, 0);
   }
 }
+@keyframes rippleOn {
+  0% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 0;
+    transform: scale(13, 13);
+  }
+}
+@keyframes rippleOff {
+  0% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 0;
+    transform: scale(13, 13);
+  }
+}
 @-webkit-keyframes spin {
   from {
     -webkit-transform: rotate(0deg);
@@ -269,6 +287,24 @@
   100% {
     opacity: 0;
     transform: scale(2.5);
+  }
+}
+@keyframes rippleOn {
+  0% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 0;
+    transform: scale(13, 13);
+  }
+}
+@keyframes rippleOff {
+  0% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 0;
+    transform: scale(13, 13);
   }
 }
 .splash-screen {
@@ -642,6 +678,7 @@
 }
 
 .login-body {
+  padding: 1px;
   background: url("../images/login/login.png") top left no-repeat #f7f7f7;
   background-size: 100% auto;
   height: auto;
@@ -2372,9 +2409,6 @@ body .layout-wrapper.layout-compact .layout-container .layout-breadcrumb ul li {
 body .layout-wrapper.layout-compact .ui-radiobutton .ui-radiobutton-box {
   width: 18px;
   height: 18px;
-}
-body .layout-wrapper.layout-compact .ui-datepicker tbody td a, body .layout-wrapper.layout-compact .ui-datepicker body .ui-datepicker tbody td span {
-  padding-top: 0.25em;
 }
 
 @media (min-width: 1025px) {
