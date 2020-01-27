@@ -1,7 +1,7 @@
 body {
     /* Messages */
     .ui-messages {
-        padding: $headerPadding;
+        padding: 1em;
 
         ul {
             display: inline-block;
@@ -9,40 +9,69 @@ body {
         }
 
         &.ui-messages-info {
-            background-color: $infoMessageBgColor;
-            border-color: $infoMessageBorderColor;
-            color: $infoMessageTextColor;
+            background-color: #2196F3;
+            border-color: #2196F3;
+            color: #ffffff;
+
+            .ui-messages-close:hover {
+                background-color: lighten(#2196F3,15%);
+            }
         }
 
         &.ui-messages-warn {
-            background-color: $warnMessageBgColor;
-            border-color: $warnMessageBorderColor;
-            color: $warnMessageTextColor;
+            background-color: #ffc107;
+            border-color: #ffc107;
+            color: #212121;
+
+            .ui-messages-close{
+                color: #212121;
+
+                &:hover {
+                    background-color: lighten(#ffc107,15%);
+                }
+            }
         }
 
         &.ui-messages-error {
-            background-color: $errorMessageBgColor;
-            border-color: $errorMessageBorderColor;
-            color: $errorMessageTextColor;
+            background-color: #e62a10;
+            border-color: #e62a10;
+            color: #ffffff;
+
+            .ui-messages-close:hover {
+                background-color: lighten(#e62a10,15%);
+            }
+        }
+
+        &.ui-messages-fatal {
+            background-color: #212121;
+            border-color: #212121;
+            color: #ffffff;
+
+            .ui-messages-close:hover {
+                background-color: lighten(#212121,15%);
+            }
         }
 
         &.ui-messages-success {
-            background-color: $successMessageBgColor;
-            border-color: $successMessageBorderColor;
-            color: $successMessageTextColor;
+            background-color: #8BC34A;
+            border-color: #8BC34A;
+            color: #ffffff;
+
+            .ui-messages-close:hover {
+                background-color: lighten(#8BC34A,15%);
+            }
         }
 
         .ui-messages-close {
             text-decoration: none;
-            color: $messageIconColor;
+            color: #fff;
             right: .25em;
         }
     }
 
     .ui-messages .ui-messages-icon {
         background: none;
-        color: $messageIconColor;
-        margin-top: -2px;
+        color: #fff;
 
         &.pi-info-circle {
             @include material-icon("info");
@@ -52,6 +81,7 @@ body {
         &.pi-exclamation-triangle {
             @include material-icon("warning");
             font-size: 1.75em;
+            color: #212121;
         }
 
         &.pi-times {
@@ -67,60 +97,71 @@ body {
 
     .ui-message {
 
-         &.ui-message-info {
-             background-color: $infoMessageBgColor;
-             border-color: $infoMessageBorderColor;
-             color: $infoMessageTextColor;
-         }
+        .ui-message-text {
+            margin-left: 5px;
+        }
 
-         &.ui-message-warn {
-             background-color: $warnMessageBgColor;
-             border-color: $warnMessageBorderColor;
-             color: $warnMessageTextColor;
-         }
+        &.ui-message-info {
+            background-color: #2196F3;
+            border-color: #2196F3;
+            color: #ffffff;
+        }
 
-         &.ui-message-error {
-             background-color: $errorMessageBgColor;
-             border-color: $errorMessageBorderColor;
-             color: $errorMessageTextColor;
-         }
+        &.ui-message-warn {
+            background-color: #ffc107;
+            border-color: #ffc107;
+            color: #212121;
+        }
 
-         &.ui-message-success {
-             background-color: $successMessageBgColor;
-             border-color: $successMessageBorderColor;
-             color: $successMessageTextColor;
-         }
+        &.ui-message-error {
+            background-color: #e62a10;
+            border-color: #e62a10;
+            color: #ffffff;
+        }
 
-         .ui-message-close {
-             text-decoration: none;
-             color: $messageIconColor;
-             right: .25em;
-         }
+        &.ui-message-fatal {
+            background-color: #212121;
+            border-color: #212121;
+            color: #ffffff;
+        }
+
+        &.ui-message-success {
+            background-color: #8BC34A;
+            border-color: #8BC34A;
+            color: #ffffff;
+        }
+
+        .ui-message-close {
+            text-decoration: none;
+            color: #fff;
+            right: .25em;
+        }
     }
 
     .ui-message .ui-message-icon {
         background: none;
-        color: $messageIconColor;
+        color: #fff;
         margin-top: -2px;
 
         &.pi-info-circle {
             @include material-icon("info");
-            font-size: 1.75em;
+            font-size: 1.286em;
         }
 
         &.pi-exclamation-triangle {
             @include material-icon("warning");
-            font-size: 1.75em;
+            font-size: 1.286em;
+            color: #212121;
         }
 
         &.pi-times {
             @include material-icon("error_outline");
-            font-size: 1.75em;
+            font-size: 1.286em;
         }
 
         &.pi-check {
             @include material-icon("check_circle");
-            font-size: 1.75em;
+            font-size: 1.286em;
         }
     }
 
@@ -131,19 +172,23 @@ body {
             opacity: 1;
 
             &.ui-growl-message-info {
-                background-color: $infoMessageBgColor;
+                background-color: #2196F3;
             }
 
             &.ui-growl-message-warn {
-                background-color: $warnMessageBgColor;
+                background-color: #ffc107;
             }
 
             &.ui-growl-message-error {
-                background-color: $errorMessageBgColor;
+                background-color: #e62a10;
+            }
+
+            &.ui-growl-message-fatal {
+                background-color: #212121;
             }
 
             &.ui-growl-message-success {
-                background-color: $successMessageBgColor;
+                background-color: #8BC34A;
             }
 
             &.ui-shadow {
@@ -154,8 +199,8 @@ body {
         .ui-growl-item {
             .ui-growl-image {
                 background: none;
-                color: $messageIconColor;
-                font-size: 1.75em;
+                color: #ffffff;
+                font-size: 36px;
 
                 &.pi-info-circle {
                     @include material-icon("info");
@@ -165,6 +210,7 @@ body {
                 &.pi-exclamation-triangle {
                     @include material-icon("warning");
                     font-size: 1.75em;
+                    color: #212121;
                 }
 
                 &.pi-times {
@@ -179,13 +225,13 @@ body {
             }
 
             .ui-growl-message {
-                color: $messageIconColor;
+                color: #ffffff;
             }
 
             .ui-growl-icon-close {
                 @include material-icon("close");
                 font-size: 24px;
-                color: $messageIconColor;
+                color: #ffffff;
             }
         }
     }
@@ -195,42 +241,62 @@ body {
             @include overlay-content-shadow();
 
             &.ui-toast-message-info {
-                background-color: $infoMessageBgColor;
+                background-color: #2196F3;
                 border: 0 none;
-                color: $infoMessageTextColor;
+                color: #ffffff;
 
-                .ui-toast-close-icon {
-                    color: $infoMessageTextColor;
+                .ui-toast-message-content {
+                    .ui-toast-close-icon {
+                        color: #ffffff;
+                        &:hover {
+                            background-color: lighten(#2196F3,15%);
+                        }
+                    }
                 }
             }
 
             &.ui-toast-message-success {
-                background-color: $successMessageBgColor;
+                background-color: #8BC34A;
                 border: 0 none;
-                color: $successMessageTextColor;
+                color: #ffffff;
 
-                .ui-toast-close-icon {
-                    color: $successMessageTextColor;
+                .ui-toast-message-content {
+                    .ui-toast-close-icon {
+                        color: #ffffff;
+                        &:hover {
+                            background-color: lighten(#8BC34A,15%);
+                        }
+                    }
                 }
             }
 
             &.ui-toast-message-warn {
-                background-color: $warnMessageBgColor;
+                background-color: #ffc107;
                 border: 0 none;
-                color: $warnMessageTextColor;
+                color: #212121;
 
-                .ui-toast-close-icon {
-                    color: $warnMessageTextColor;
+                .ui-toast-message-content {
+                    .ui-toast-close-icon {
+                        color: #212121;
+                        &:hover {
+                            background-color: lighten(#ffc107,15%);
+                        }
+                    }
                 }
             }
 
             &.ui-toast-message-error {
-                background-color: $errorMessageBgColor;
+                background-color: #e62a10;
                 border: 0 none;
-                color: $errorMessageTextColor;
+                color: #ffffff;
 
-                .ui-toast-close-icon {
-                    color: $errorMessageTextColor;
+                .ui-toast-message-content {
+                    .ui-toast-close-icon {
+                        color: #ffffff;
+                        &:hover {
+                            background-color: lighten(#e62a10,15%);
+                        }
+                    }
                 }
             }
         }
@@ -245,6 +311,7 @@ body {
         &.pi-exclamation-triangle {
             @include material-icon("warning");
             font-size: 1.75em;
+            color: #212121;
         }
 
         &.pi-times {

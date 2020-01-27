@@ -5,26 +5,25 @@ body {
         }
 
         .ui-dialog-titlebar {
-            background-color: $dialogHeaderBgColor;
-            color: $dialogHeaderTextColor;
+            background-color: #ffffff;
+            color: $textColor;
             padding: $headerPadding;
 
             .ui-dialog-title {
-                font-size: 1.25em;
-                letter-spacing: .005em;
-                margin-top: .25em;
-                line-height: 2em;
+                font-weight: 500;
+                font-size: 20px;
+                line-height: 32px;
+                margin: 0;
             }
 
             .ui-dialog-titlebar-icon {
-                border: 0 none;
                 padding: 0;
-                @include border-radius(50%);
-                @include transition(background-color .3s);
-                height: 1.5em;
-                width: 1.5em;
+                height: 1.65em;
+                width: 1.65em;
                 text-align: center;
-                margin-top: .5em;
+                margin-top: 0.5em;
+                @include border-radius(50%);
+                @include transition(background-color $transitionDuration);
 
                 &:hover, &:focus {
                     @include hover-element();
@@ -43,11 +42,6 @@ body {
                     @include icon_override('fullscreen_exit');
                 }
             }
-            .ui-dialog-titlebar-maximize {
-                span {
-                    margin-top: -2px;
-                }
-            }
         }
 
         .ui-dialog-content {
@@ -56,32 +50,37 @@ body {
 
         .ui-dialog-footer {
             text-align: right;
+            padding: $headerPadding;
             border: 0 none;
-            border-top: 1px solid $dividerColor;
 
             .ui-button {
-                background-color: $dialogFooterButtonBgColor;
-                color: $dialogFooterButtonTextColor;
-                @include no-shadow();
                 width: auto;
+                margin-right: .5em;
 
-                .ui-button-icon-left {
-                    color: $textSecondaryColor;
-                }
-
-                .ui-button-icon-right {
-                    color: $textSecondaryColor;
-                }
-
-
-                &:hover {
-                    @include hover-element();
+                &:last-child {
+                    margin-right: 0;
                 }
             }
         }
 
         .ui-confirm-dialog-severity {
             margin: 0px .75em;
+        }
+
+        p {
+            line-height: $panelContentLineHeight;
+        }
+    }
+
+    .ui-sidebar {
+        .ui-sidebar-close {
+            &:hover {
+                padding: 1px;
+            }
+        }
+
+        .ui-button {
+            width: auto;
         }
     }
 
@@ -99,16 +98,15 @@ body {
 
             .ui-lightbox-close {
                 @include border-radius(50%);
-                @include transition(background-color .3s);
+                @include transition(background-color $transitionDuration);
                 padding: 0;
                 margin: 0;
                 width: 1.5em;
                 height: 1.5em;
 
                 &:hover {
-                    background-color: $primaryLightColor;
-                    @include border-radius(50%);
-                    @include transition(background-color .3s);
+                    @include hover-element-primary();
+                    padding: 0;
                 }
             }
         }
@@ -118,9 +116,15 @@ body {
                 top: 40%;
 
                 .pi {
-                    @include transition(color .3s);
-                    font-size: 3em;
+                    @include transition(color $transitionDuration);
+                    font-size: 48px;
                     color: $primaryLightColor;
+                }
+
+                &:hover {
+                    .pi {
+                        color: #ffffff;
+                    }
                 }
             }
         }
@@ -154,7 +158,7 @@ body {
         .ui-overlaypanel-close {
             background-color: $accentColor;
             @include border-radius(50%);
-            @include transition(background-color .3s);
+            @include transition(background-color $transitionDuration);
             right: -16px;
             top: -16px;
             width: 2em;
@@ -178,31 +182,42 @@ body {
         @include opacity(.9);
 
         .ui-tooltip-text {
-            background-color: $tooltipBgColor;
+            background-color: #323232;
+            @include overlay-content-shadow();
         }
 
         &.ui-tooltip-top {
             .ui-tooltip-arrow {
-                border-top-color: $tooltipBgColor;
+                bottom: 1px;
+                border-top-color: #323232;
             }
         }
 
         &.ui-tooltip-bottom {
             .ui-tooltip-arrow {
-                border-bottom-color: $tooltipBgColor;
+                top: 1px;
+                border-bottom-color: #323232;
             }
         }
 
         &.ui-tooltip-left {
             .ui-tooltip-arrow {
-                border-left-color: $tooltipBgColor;
+                border-left-color: #323232;
             }
         }
 
         &.ui-tooltip-right {
             .ui-tooltip-arrow {
-                border-right-color: $tooltipBgColor;
+                left: 1px;
+                border-right-color: #323232;
             }
         }
+    }
+
+    .ui-state-error,
+    .ui-widget.ui-state-error,
+    .ui-widget-content .ui-state-error,
+    .ui-widget-header .ui-state-error {
+        border-color: #e62a10;
     }
 }
