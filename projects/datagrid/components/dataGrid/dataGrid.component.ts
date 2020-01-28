@@ -11,7 +11,7 @@ import {
     ElementRef
 } from '@angular/core';
 
-import { GridOptions, ColDef } from 'ag-grid-community';
+import { GridOptions, ColDef, GridApi, ColumnApi } from 'ag-grid-community';
 
 import {
     Action,
@@ -116,6 +116,9 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
 
     private gridSavedState: any;
 
+    private gridApi: GridApi;
+    private gridColumnApi: ColumnApi;
+
     constructor(
         private log: LoggingService,
         private ngsDatePipe: NgsDatePipe,
@@ -195,10 +198,10 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
                 componentParent: this
             },
             onRowClicked: row => {
-              const htmlName = row.event['toElement']['offsetParent']['localName'];
-              if (htmlName !== 'button') {
-                  this.rowClicked.emit(row.data);
-              }
+                const htmlName = row.event['toElement']['offsetParent']['localName'];
+                if (htmlName !== 'button') {
+                    this.rowClicked.emit(row.data);
+                }
             },
             onGridReady: () => {
                 this.calculateHeights();
@@ -298,6 +301,14 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
 
     onGridReady() {
         // params.api.sizeColumnsToFit();
+    }
+    onFirstDataRendered(params) {
+        this.gridColumnApi = params.columnApi;
+        this.gridApi = params.api;
+        if (this.itemDetails.autoSizeColumns) {
+            params.api.expandAll();
+            params.columnApi.autoSizeColumns();
+        }
     }
 
     onFiltersUpdated(filters) {

@@ -32,6 +32,7 @@ export class GridViewDetail {
     columns: Array<any>;
     configuredColumns?: Array<any>;
     isActionColumnSplitButton?: any;
+    autoSizeColumns?: boolean;
 
     filtersLocation?: string;
 
