@@ -29,6 +29,7 @@ import { GalleryComponent } from './components/gallery/gallery.component';
 import { HtmlContainerComponent } from './components/htmlContainer/htmlContainer.component';
 import { SaveInputComponent } from './components/saveInput/saveInput.component';
 import { createCustomElement } from '@angular/elements';
+import { WidgetFooterComponent } from './components/widgetFooter/widgetFooter.component';
 
 // Services
 
@@ -61,6 +62,7 @@ const appRoutes: Routes = [
         GalleryComponent,
         SaveInputComponent,
         WidgetContainerComponent,
+        WidgetFooterComponent,
         ColourBoxComponent
     ],
     exports: [
@@ -68,6 +70,7 @@ const appRoutes: Routes = [
         DashboardToolBarComponent,
         HtmlContainerComponent,
         WidgetContainerComponent,
+        WidgetFooterComponent,
         RouterModule
     ],
     providers: [],
