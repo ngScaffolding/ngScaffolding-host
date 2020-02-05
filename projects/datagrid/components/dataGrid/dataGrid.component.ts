@@ -27,7 +27,6 @@ import { Dialog } from 'primeng/dialog';
 import { MessageService } from 'primeng/components/common/messageservice';
 
 import {
-    ActionService,
     DataSourceService,
     LoggingService,
     BroadcastService,
@@ -50,6 +49,7 @@ import { GridExtensionsService } from '../../services/gridExtensions/gridExtensi
 import { ConfirmationService } from 'primeng/api';
 
 import * as Papa from 'papaparse';
+import { first } from 'rxjs/operators';
 
 @Component({
     selector: 'ngs-data-grid',
@@ -126,7 +126,6 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
         private appSettings: AppSettingsQuery,
         private referenceService: ReferenceValuesService,
         private elementRef: ElementRef,
-        private actionService: ActionService,
         private dataSourceService: DataSourceService,
         private componentLoader: ComponentLoaderService,
         private broadcast: BroadcastService,
@@ -559,36 +558,57 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
                         header: true
                     }).data;
                 }
-                this.actionService.callAction(action, this.actionValues, rowsToProcess, this.baseContext).subscribe(
-                    result => {
-                        if (result.success) {
-                            if (action.successMessage) {
-                                if (action.successToast) {
-                                    this.messageService.add({
-                                        severity: 'success',
-                                        summary: 'Success',
-                                        detail: action.successMessage
-                                    });
-                                    if (action.flushReferenceValues) {
-                                        // Remove cached version
-                                        this.referenceService.clearReferenceValue(action.flushReferenceValues);
+                // this.actionService.callAction(action, this.actionValues, rowsToProcess, this.baseContext).subscribe(
+                this.dataSourceService
+                    .getDataSource({
+                        name: action.dataSourceName,
+                        inputData: { ...this.baseContext, ...this.actionValues },
+                        rowData: rowsToProcess,
+                        forceRefresh: true
+                    })
+                    .pipe(first(result => !result.inflight))
+                    .subscribe(
+                        result => {
+                            if (!result.error) {
+                                if (action.successMessage) {
+                                    if (action.successToast) {
+                                        this.messageService.add({
+                                            severity: 'success',
+                                            summary: 'Success',
+                                            detail: action.successMessage
+                                        });
+                                        if (action.flushReferenceValues) {
+                                            // Remove cached version
+                                            this.referenceService.clearReferenceValue(action.flushReferenceValues);
+                                        }
+                                    } else {
+                                        this.confirmationService.confirm({
+                                            message: action.successMessage,
+                                            acceptLabel: 'OK',
+                                            icon: 'fa-check',
+                                            header: 'Success',
+                                            rejectVisible: false
+                                        });
                                     }
-                                } else {
+                                }
+                                // finally
+                                this.actionInputPopup.isShown = false;
+
+                                // Refresh Data
+                                this.loadData();
+                            } else {
+                                if (action.errorMessage) {
                                     this.confirmationService.confirm({
-                                        message: action.successMessage,
+                                        message: action.errorMessage,
+                                        icon: 'fa-close',
                                         acceptLabel: 'OK',
-                                        icon: 'fa-check',
-                                        header: 'Success',
+                                        header: 'Error',
                                         rejectVisible: false
                                     });
                                 }
                             }
-                            // finally
-                            this.actionInputPopup.isShown = false;
-
-                            // Refresh Data
-                            this.loadData();
-                        } else {
+                        },
+                        () => {
                             if (action.errorMessage) {
                                 this.confirmationService.confirm({
                                     message: action.errorMessage,
@@ -599,19 +619,7 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
                                 });
                             }
                         }
-                    },
-                    () => {
-                        if (action.errorMessage) {
-                            this.confirmationService.confirm({
-                                message: action.errorMessage,
-                                icon: 'fa-close',
-                                acceptLabel: 'OK',
-                                header: 'Error',
-                                rejectVisible: false
-                            });
-                        }
-                    }
-                );
+                    );
             }
         }
     }

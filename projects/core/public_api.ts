@@ -4,8 +4,6 @@
 
 export { CoreModule } from './ngscaffolding-core.module';
 
-export { ActionService } from './services/action/action.service';
-
 export { AppSettingsQuery } from './services/appSettings/appSettings.query';
 export { AppSettingsService } from './services/appSettings/appSettings.service';
 export { AppSettingsState, AppSettingsStore } from './services/appSettings/appSettings.store';
