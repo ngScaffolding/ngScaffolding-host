@@ -11,77 +11,91 @@ import { DataSourceQuery } from './dataSource.query';
 import {} from '@datorama/akita';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class DataSourceService {
-  private className = 'DataSourceService';
+    private className = 'DataSourceService';
 
-  constructor(
-    private http: HttpClient,
-    private dataSourceStore: DataSourceStore,
-    private dataSourceQuery: DataSourceQuery,
-    private appSettingsService: AppSettingsService,
-    private logger: LoggingService
-  ) {}
+    constructor(
+        private http: HttpClient,
+        private dataSourceStore: DataSourceStore,
+        private dataSourceQuery: DataSourceQuery,
+        private appSettingsService: AppSettingsService,
+        private logger: LoggingService
+    ) {}
 
-  decorateInput(inputDetails: object): object{
-    return null;
-  }
-
-  getDataSource(dataRequest: DataSourceRequest): Observable<DataResults> {
-    const key = this.getKey(dataRequest);
-
-    const currentRequest = this.dataSourceQuery.getEntity(key);
-
-    if (dataRequest.forceRefresh || currentRequest === undefined || currentRequest.expiresWhen < new Date()) {
-      const now = new Date();
-      const placeHolderResults: DataResults = {
-        inflight: true,
-        expiresWhen: new Date(now.getTime() + 300 * 10000)
-      };
-
-      // Save as marker that the request has been sent
-      this.dataSourceStore.upsert(key, placeHolderResults);
-
-      this.http
-        .post<DataResults>(`${this.appSettingsService.getValue(AppSettings.apiHome)}/api/v1/datasource`, dataRequest)
-        .pipe(timeout(30000))
-        .subscribe(
-          values => {
-            const expiryNow = new Date();
-
-            // If expires Seconds not provided set long expiry
-            const expiresSeconds = values.expiresSeconds > 0 ? values.expiresSeconds : 99999999;
-            const expiresWhen = new Date(expiryNow.getTime() + expiresSeconds * 10000);
-            const newResults: DataResults = {
-              inflight: false,
-              expiresWhen: expiresWhen,
-              rowCount: values.rowCount,
-              jsonData: values.jsonData,
-              results: values.results
-            };
-
-            // Update the Store to tell the world we have data
-            this.dataSourceStore.update(key, newResults);
-          },
-          err => {
-            // Update the Store to tell the world we failed in every way. Shame.
-            const errorResults: DataResults = {
-              inflight: false,
-              expiresWhen: new Date(),
-              error: err.message
-            };
-
-            this.dataSourceStore.update(key, errorResults);
-            this.logger.error(err, 'DataSource.Service.getDataSource', true);
-          }
-        );
+    decorateInput(inputDetails: object): object {
+        return null;
     }
 
-    return this.dataSourceQuery.selectEntity(key);
-  }
+    getDataSource(dataRequest: DataSourceRequest): Observable<DataResults> {
+        const key = this.getKey(dataRequest);
 
-  private getKey(dataRequest: DataSourceRequest) {
-    return `name:${dataRequest.name} seed:${dataRequest.seed} inputData:${JSON.stringify(dataRequest.inputData)} `;
-  }
+        const currentRequest = this.dataSourceQuery.getEntity(key);
+
+        if (dataRequest.forceRefresh || currentRequest === undefined || currentRequest.expiresWhen < new Date()) {
+            const now = new Date();
+            const placeHolderResults: DataResults = {
+                inflight: true,
+                expiresWhen: new Date(now.getTime() + 300 * 10000)
+            };
+
+            // Save as marker that the request has been sent
+            this.dataSourceStore.upsert(key, placeHolderResults);
+
+            const formData: FormData = new FormData();
+            formData.append('dataSourceRequest', JSON.stringify(dataRequest));
+
+            // Add Files if passed
+            if (dataRequest.fileNames) {
+                let fileCount = 0;
+                dataRequest.fileNames.forEach(file => {
+                    formData.append(`file-${fileCount++}`, file, file.name);
+                });
+            }
+
+            this.http
+                .post<DataResults>(
+                    `${this.appSettingsService.getValue(AppSettings.apiHome)}/api/v1/datasource`,
+                    formData
+                )
+                .pipe(timeout(30000))
+                .subscribe(
+                    values => {
+                        const expiryNow = new Date();
+
+                        // If expires Seconds not provided set long expiry
+                        const expiresSeconds = values.expiresSeconds > 0 ? values.expiresSeconds : 99999999;
+                        const expiresWhen = new Date(expiryNow.getTime() + expiresSeconds * 10000);
+                        const newResults: DataResults = {
+                            inflight: false,
+                            expiresWhen: expiresWhen,
+                            rowCount: values.rowCount,
+                            jsonData: values.jsonData,
+                            results: values.results
+                        };
+
+                        // Update the Store to tell the world we have data
+                        this.dataSourceStore.update(key, newResults);
+                    },
+                    err => {
+                        // Update the Store to tell the world we failed in every way. Shame.
+                        const errorResults: DataResults = {
+                            inflight: false,
+                            expiresWhen: new Date(),
+                            error: err.message
+                        };
+
+                        this.dataSourceStore.update(key, errorResults);
+                        this.logger.error(err, 'DataSource.Service.getDataSource', true);
+                    }
+                );
+        }
+
+        return this.dataSourceQuery.selectEntity(key);
+    }
+
+    private getKey(dataRequest: DataSourceRequest) {
+        return `name:${dataRequest.name} seed:${dataRequest.seed} inputData:${JSON.stringify(dataRequest.inputData)} `;
+    }
 }
