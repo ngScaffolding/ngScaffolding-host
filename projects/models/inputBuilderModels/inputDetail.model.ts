@@ -76,6 +76,9 @@ export class InputDetail {
     validateMaxLengthMessage?: string;
 }
 
+export class InputDetailFile extends InputDetail {
+}
+
 export class InputDetailTextBox extends InputDetail {
     mask?: string; // 999-999
 }

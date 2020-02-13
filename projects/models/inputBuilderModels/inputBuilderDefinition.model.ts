@@ -36,6 +36,9 @@ export class InputBuilderDefinition {
     // Where to display our input values in dashboard etc
     inputLocation?: InputLocations;
 
+    // Load the content of any files into the inputModel
+    loadFileContent?: boolean;
+
     // Custom Button
     customButtonText?: string;
     customButtonIcon?: string;
