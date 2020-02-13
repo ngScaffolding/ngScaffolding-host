@@ -11,7 +11,7 @@ import {
 } from '@angular/core';
 import { Observable } from 'rxjs';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { InputDetail, InputTypes, ReferenceValueItem, ZuluDateHelper, InputDetailDateTime } from 'ngscaffolding-models';
+import { InputDetail, InputTypes, ReferenceValueItem, ZuluDateHelper, InputDetailDateTime, AppSettings } from 'ngscaffolding-models';
 import { InputBuilderDefinition, OrientationValues, ReferenceValue } from 'ngscaffolding-models';
 
 import { JsonEditorComponent, JsonEditorOptions } from 'ang-jsoneditor';
@@ -54,6 +54,7 @@ export class InputBuilderComponent implements OnInit, OnChanges {
     editorOptions: JsonEditorOptions;
     formSubmitted = false;
     dataSourceLookup = {};
+    maxFileSize: number;
 
     constructor(
         private ref: ChangeDetectorRef,
@@ -125,7 +126,9 @@ export class InputBuilderComponent implements OnInit, OnChanges {
         this.clonedInputModel['userId'] = currentUser.userId;
     }
 
-    ngOnInit(): void {}
+    ngOnInit(): void {
+      this.maxFileSize = this.appSettingsQuery.getEntity(AppSettings.maximumFileSize).value;
+    }
 
     getContainerClass(inputDetail: InputDetail) {
         return inputDetail.help ? 'ui-g-11' : 'ui-g-12';
