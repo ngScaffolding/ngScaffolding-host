@@ -53,6 +53,7 @@ export enum AppSettings {
 
     // File Uploads
     maximumFileSize = 'maximumFileSize',
+    allowedFileTypes = 'allowedFileTypes',
 
     // moment Formats for dates
     dateTimeFormat = 'dateTimeFormat',

@@ -176,7 +176,7 @@ class="ui-g" (ngSubmit)="onSubmit(form)"
 
             <!-- File Attachment -->
             <span *ngSwitchCase="'fileattach'" class="md-inputfield">
-              <p-fileUpload customUpload="true" [accept]="input.accept" [maxFileSize]="input.maxFileSize || this.maxFileSize" chooseLabel="{{'Choose File' | translate}}" auto="true" (uploadHandler)="attachFiles($event, input)"></p-fileUpload>
+              <p-fileUpload customUpload="true" [accept]="input.accept || this.allowedFileTypes" [maxFileSize]="input.maxFileSize || this.maxFileSize" chooseLabel="{{'Choose File' | translate}}" auto="true" (uploadHandler)="attachFiles($event, input)"></p-fileUpload>
             </span>
 
             <!-- DEFUALT textbox -->

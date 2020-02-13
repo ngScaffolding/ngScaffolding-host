@@ -55,6 +55,7 @@ export class InputBuilderComponent implements OnInit, OnChanges {
     formSubmitted = false;
     dataSourceLookup = {};
     maxFileSize: number;
+    allowedFileTypes: string;
 
     constructor(
         private ref: ChangeDetectorRef,
@@ -128,6 +129,7 @@ export class InputBuilderComponent implements OnInit, OnChanges {
 
     ngOnInit(): void {
       this.maxFileSize = this.appSettingsQuery.getEntity(AppSettings.maximumFileSize).value;
+      this.allowedFileTypes = this.appSettingsQuery.getEntity(AppSettings.allowedFileTypes).value;
     }
 
     getContainerClass(inputDetail: InputDetail) {
