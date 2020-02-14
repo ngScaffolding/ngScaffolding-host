@@ -51,6 +51,10 @@ export enum AppSettings {
     inputDateFormat = 'inputDateFormat',
     inputDateForceUTC = 'inputDateForceUTC',
 
+    // File Uploads
+    maximumFileSize = 'maximumFileSize',
+    allowedFileTypes = 'allowedFileTypes',
+
     // moment Formats for dates
     dateTimeFormat = 'dateTimeFormat',
     dateFormat = 'dateFormat',
