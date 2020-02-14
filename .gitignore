@@ -54,3 +54,5 @@ testem.log
 Thumbs.db
 # Version files
 ./src/version.ts
+
+/src/app/modules/fieldforce
