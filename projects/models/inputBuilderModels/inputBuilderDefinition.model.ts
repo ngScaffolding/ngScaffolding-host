@@ -25,10 +25,12 @@ export class InputBuilderDefinition {
     // Text to show in OK Button. When empty button is hidden
     okButtonText?: string;
     okButtonIcon?: string;
+    okButtonCallBack?: (model: any) => void;
 
     // Text to show in Cancel Button. When empty button is hidden
     cancelButtonText?: string;
     cancelButtonIcon?: string;
+    cancelButtonCallBack?: (model: any) => void;
 
     // Array of input details to build in output
     inputDetails?: InputDetail[];

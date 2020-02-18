@@ -53,7 +53,7 @@ export enum AppSettings {
 
     // File Uploads
     maximumFileSize = 'maximumFileSize',
-    allowedFileTypes = 'allowedFileTypes',
+    allowedFileTypes = 'allowedFileTypes', '.doc|.xlsx|audio/*|video/*|image/*' // See: https://www.w3schools.com/tags/att_input_accept.asp
 
     // moment Formats for dates
     dateTimeFormat = 'dateTimeFormat',
