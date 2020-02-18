@@ -532,6 +532,9 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
 
                   newComponent.addEventListener('closed', () => {
                       this.popupShown = false;
+                      if(action.refresh){
+                        this.loadData();
+                      }
                   });
 
                   this.popupShown = true;
