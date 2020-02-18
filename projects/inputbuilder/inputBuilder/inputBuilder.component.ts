@@ -86,9 +86,11 @@ export class InputBuilderComponent implements OnInit, OnChanges {
   onSubmit(form: any) {
       this.formSubmitted = true;
       if (this.form.valid) {
+
           if (this.inputBuilderDefinition.okButtonCallBack) {
               this.inputBuilderDefinition.okButtonCallBack(this.clonedInputModel);
           }
+
           this.okClicked.emit([this.clonedInputModel, this.fileContent]);
       }
   }
@@ -142,6 +144,7 @@ export class InputBuilderComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
+
       this.maxFileSize = this.appSettingsQuery.getEntity(AppSettings.maximumFileSize).value;
       this.allowedFileTypes = this.appSettingsQuery.getEntity(AppSettings.allowedFileTypes).value;
   }
