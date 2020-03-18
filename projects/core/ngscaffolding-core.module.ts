@@ -9,6 +9,7 @@ import { VERSION } from './version';
 import { ButtonColourPipe } from './pipes/buttonColour.pipe';
 import { NgsDateTimePipe } from './pipes/ngsDateTime.pipe';
 import { NgsDatePipe } from './pipes/ngsDate.pipe';
+import { TruncateTextPipe } from './pipes/truncateText.pipe';
 
 // Directives
 import { FillHeightDirective } from './directives/fill-height.directive';
@@ -16,18 +17,35 @@ import { FillHeightDirective } from './directives/fill-height.directive';
 // Services
 import { VersionsService } from './services/versions/versions.service';
 
+// Components
+import { DialogWindowComponent } from './components/dialogWindow/dialogWindow.component';
+
 @NgModule({
-  imports: [CommonModule, FormsModule, HttpClientModule],
-  declarations: [FillHeightDirective, ButtonColourPipe, NgsDatePipe, NgsDateTimePipe],
-  exports: [ButtonColourPipe, NgsDatePipe, NgsDateTimePipe, FillHeightDirective]
+    imports: [CommonModule, FormsModule, HttpClientModule],
+    declarations: [
+        FillHeightDirective,
+        ButtonColourPipe,
+        NgsDatePipe,
+        NgsDateTimePipe,
+        TruncateTextPipe,
+        DialogWindowComponent
+    ],
+    exports: [
+        ButtonColourPipe,
+        NgsDatePipe,
+        NgsDateTimePipe,
+        TruncateTextPipe,
+        FillHeightDirective,
+        DialogWindowComponent
+    ]
 })
 export class CoreModule {
-  static forRoot(): ModuleWithProviders {
-    return {
-      ngModule: CoreModule
-    };
-  }
-  constructor(versions: VersionsService) {
-    versions.addVersion('ngscaffolding-core', VERSION.version);
-  }
+    static forRoot(): ModuleWithProviders {
+        return {
+            ngModule: CoreModule
+        };
+    }
+    constructor(versions: VersionsService) {
+        versions.addVersion('ngscaffolding-core', VERSION.version);
+    }
 }

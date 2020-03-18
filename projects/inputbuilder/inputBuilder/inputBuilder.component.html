@@ -126,6 +126,7 @@ class="ui-g" (ngSubmit)="onSubmit(form)"
                 <p-calendar
                   appendTo="body"
                   [disabled]="input.readonly"
+                  [showButtonBar]="appSettings.getBoolean('inputDateShowButtonBar') | async"
                   [showIcon]="appSettings.getBoolean('inputShowCalendarIcon') | async" [dateFormat]="appSettings.getString('inputDateFormat') | async"
                   showTime="true"
                   hourFormat="24"
@@ -139,6 +140,7 @@ class="ui-g" (ngSubmit)="onSubmit(form)"
               <p-calendar
                 appendTo="body"
                 [disabled]="input.readonly"
+                [showButtonBar]="appSettings.getBoolean('inputDateShowButtonBar') | async"
                 [showIcon]="appSettings.getBoolean('inputShowCalendarIcon') | async" [dateFormat]="appSettings.getString('inputDateFormat') | async"
                 showTime="true"
                 hourFormat="24"
@@ -151,6 +153,7 @@ class="ui-g" (ngSubmit)="onSubmit(form)"
             <span *ngSwitchCase="'date'" class="md-inputfield">
                 <p-calendar appendTo="body"
                 [disabled]="input.readonly"
+                [showButtonBar]="appSettings.getBoolean('inputDateShowButtonBar') | async"
                  [showIcon]="appSettings.getBoolean('inputShowCalendarIcon') | async" [dateFormat]="appSettings.getString('inputDateFormat') | async" [formControlName]="input.name"
                     [id]="input.name">
                 </p-calendar>
@@ -162,6 +165,7 @@ class="ui-g" (ngSubmit)="onSubmit(form)"
                 <p-calendar  appendTo="body"
                 [disabled]="input.readonly"
                 timeOnly="true" showTime="true"
+                [showButtonBar]="appSettings.getBoolean('inputDateShowButtonBar') | async"
                 hourFormat="24" [showIcon]="appSettings.getBoolean('inputShowCalendarIcon') | async" [formControlName]="input.name"
                     [id]="input.name">
                 </p-calendar>

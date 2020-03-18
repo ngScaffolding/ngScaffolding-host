@@ -49,7 +49,14 @@ export { UserServiceBase } from './services/userService/user.service.base';
 export { SoftwareVersion, VersionsService } from './services/versions/versions.service';
 
 export { FillHeightDirective } from './directives/fill-height.directive';
+
+// Pipes
 export { ButtonColourPipe } from './pipes/buttonColour.pipe';
 export { NgsDatePipe } from './pipes/ngsDate.pipe';
 export { NgsDateTimePipe } from './pipes/ngsDateTime.pipe';
+export { TruncateTextPipe } from './pipes/truncateText.pipe';
+
+// Guards
 export { AuthoriseRoleGuard } from './routeGuards/authoriseRoleGuard';
+
+export { DialogWindowComponent } from './components/dialogWindow/dialogWindow.component';

@@ -57,6 +57,7 @@
 
 <ngs-input-builder-popup
     #actionInputPopup
+    [setWidth]="actionInputDefinition?.width"
     [inputBuilderDefinition]="actionInputDefinition"
     [inputModel]="actionValues"
     (okClicked)="actionOkClicked($event)"
@@ -64,8 +65,8 @@
 ></ngs-input-builder-popup>
 
 <p-dialog
-    [width]="dialogOptions.width"
-    [height]="dialogOptions.height"
+[width]="dialogOptions.width"
+[height]="dialogOptions.height"
     [(visible)]="popupShown"
     (onHide)="popupHidden()"
     [closable]="dialogOptions.closable"

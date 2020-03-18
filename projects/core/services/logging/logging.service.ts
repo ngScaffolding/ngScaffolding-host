@@ -15,13 +15,13 @@ export class LoggingService {
     }
 
     // TODO: Resume showing toast
-    // if (showToast) {
-    //   this.notification.showMessage({
-    //     severity: 'error',
-    //     summary: 'Error',
-    //     detail: err.message
-    //   });
-    // }
+    if (showToast) {
+      this.notification.showMessage({
+        severity: 'error',
+        summary: 'Error',
+        detail: err.message
+      });
+    }
   }
 
   public warning(message: string, methodName = ''): void {

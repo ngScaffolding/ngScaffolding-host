@@ -1,6 +1,9 @@
 export class ZuluDateHelper {
     public static getZuluDate(inputDate: Date): Date {
-        return new Date(
+      if (!inputDate) {
+        return null;
+    }
+    return new Date(
             Date.UTC(
                 inputDate.getUTCFullYear(),
                 inputDate.getUTCMonth(),
@@ -13,6 +16,9 @@ export class ZuluDateHelper {
     }
 
     public static getGMTDate(inputDate: Date): Date {
+        if (!inputDate) {
+            return null;
+        }
         const _userOffset = inputDate.getTimezoneOffset() * 60 * 1000;
         return new Date(inputDate.getTime() - _userOffset);
     }

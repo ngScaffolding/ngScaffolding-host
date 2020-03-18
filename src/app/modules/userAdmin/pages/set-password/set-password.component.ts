@@ -18,11 +18,11 @@ import { TranslateService } from '@ngx-translate/core';
 import { first } from 'rxjs/operators';
 
 @Component({
-    selector: 'app-user-details',
-    templateUrl: 'userDetails.component.html',
-    styleUrls: ['userDetails.component.scss']
+    selector: 'app-user-set-password',
+    templateUrl: 'set-password.component.html',
+    styleUrls: ['set-password.component.scss']
 })
-export class UserDetailsComponent implements AfterViewInit, OnInit, OnChanges {
+export class SetPasswordComponent implements AfterViewInit, OnInit, OnChanges {
     userInputDefinition: InputBuilderDefinition = {
         orientation: OrientationValues.Horizontal,
         columnCount: 2,
@@ -37,60 +37,20 @@ export class UserDetailsComponent implements AfterViewInit, OnInit, OnChanges {
     @Input() idValue: string;
 
     private user: BasicUser;
-    private settingPassword = false;
-    private okButtonText: string;
-    private okButtonIcon: 'ui-icon-check';
-    private cancelButtonText: string;
-    private cancelButtonIcon: 'ui-icon-clear';
+
     constructor(
         private translateService: TranslateService,
         private dataSourceService: DataSourceService,
         private appSettingsQuery: AppSettingsQuery,
         private logger: LoggingService
-    ) {
-      this.okButtonText = translateService.instant('Save');
-        this.cancelButtonText = translateService.instant('Cancel');
-      }
+    ) {}
 
     cancelClicked(event: any) {
         var x = 0;
     }
-    okClicked(event: any) {
-        if (this.idValue === 'new') {
-            this.dataSourceService
-                .getDataSource({
-                    name: SystemDataSourceNames.USERS_CREATE,
-                    body: this.user,
-                    forceRefresh: true
-                })
-                .pipe(first(resp => !resp.inflight))
-                .subscribe(
-                    result => {
-                        var x = 0;
-                    },
-                    err => {
-                        var y = 0;
-                    }
-                );
-        } else {
-            this.dataSourceService
-                .getDataSource({
-                    name: SystemDataSourceNames.USERS_UPDATE,
-                    inputData: this.data,
-                    forceRefresh: true
-                })
-                .pipe(first(resp => !resp.inflight))
-                .subscribe(
-                    result => {},
-                    err => {}
-                );
-        }
-    }
-    valueUpdated(event: any) {
-        if (event[0] === 'password') {
-            this.settingPassword = true;
-        }
-    }
+
+    okClicked(event: any) {}
+    valueUpdated(event: any) {}
 
     ngOnInit(): void {
         const userIsEmail = this.appSettingsQuery.getEntity(AppSettings.authUserIdIsEmail);
@@ -179,26 +139,9 @@ export class UserDetailsComponent implements AfterViewInit, OnInit, OnChanges {
         }
     }
 
-    ngOnChanges(changes: SimpleChanges): void {
-        if (changes.idValue && changes.idValue.currentValue === 'new') {
-            this.data = new BasicUser();
-        }
-        if (changes.data && changes.data.currentValue) {
-        }
-        if (changes.showButtons) {
-            if (changes.showButtons.currentValue) {
-                this.okButtonText = this.translateService.instant('Save');
-                this.cancelButtonText = this.translateService.instant('Cancel');
-            } else {
-                this.okButtonText = null;
-                this.cancelButtonText = null;
-            }
-        }
-    }
+    ngOnChanges(changes: SimpleChanges): void {}
 
-    notifyChanged(event: any) {
-      this.user = event;
-    }
+    notifyChanged(event: any) {}
 
     ngAfterViewInit(): void {}
 }

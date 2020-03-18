@@ -50,6 +50,7 @@ export enum AppSettings {
     inputDateTimeFormat = 'inputDateTimeFormat',
     inputDateFormat = 'inputDateFormat',
     inputDateForceUTC = 'inputDateForceUTC',
+    inputDateShowButtonBar= 'inputDateShowButtonBar',
 
     // File Uploads
     maximumFileSize = 'maximumFileSize',

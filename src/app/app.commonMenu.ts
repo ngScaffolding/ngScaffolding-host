@@ -39,7 +39,22 @@ export function buildMenu(menuService: MenuService) {
                 dialogOptions: {
                   header: 'User Details',
                   width: 900,
-                  height: 800,
+                  height: 600,
+                  closable: true,
+                  maximizable: true
+                }
+              },
+              {
+                columnButton: true,
+                title: 'Password',
+                icon: 'ui-icon-lock',
+                colour: ButtonColours.warning,
+                type: 'angularComponent',
+                angularComponent: 'app-user-password',
+                dialogOptions: {
+                  header: 'User Details',
+                  width: 600,
+                  height: 400,
                   closable: true,
                   maximizable: true
                 }
@@ -54,7 +69,7 @@ export function buildMenu(menuService: MenuService) {
                 dialogOptions: {
                   header: 'New User Details',
                   width: 900,
-                  height: 800,
+                  height: 600,
                   closable: true,
                   maximizable: true
                 }
