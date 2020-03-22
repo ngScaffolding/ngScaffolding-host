@@ -264,6 +264,8 @@ export class MenuService {
         // Clone so we can amend
         this.menuItems = [...this.masterListMenu];
 
+        this.processMenuItems(this.menuItems);
+
         // Add to flat reference List
         this.addMenuItemsToReferenceList(newMenuItems);
 
@@ -275,6 +277,33 @@ export class MenuService {
         this.menuItems = this.removeUnauthorisedMenuItems(this.menuItems);
 
         this.menuStore.update({ menuItems: this.menuItems });
+    }
+
+    private processMenuItems(menuItems: CoreMenuItem[]) {
+        if (menuItems) {
+            menuItems.forEach(menuItem => {
+                if (!menuItem.routerLink) {
+                    // Need to create our routerLink
+                    switch (menuItem.type) {
+                        case MenuTypes.Dashboard: {
+                            menuItem.routerLink = `dashboard/${menuItem.name}`;
+                            break;
+                        }
+                        case MenuTypes.Datagrid: {
+                            menuItem.routerLink = `datagrid/${menuItem.name}`;
+                            break;
+                        }
+                        case MenuTypes.Folder: {
+                            // No router link here
+                            break;
+                        }
+                        default: {
+                            menuItem.routerLink = menuItem.name;
+                        }
+                    }
+                }
+            });
+        }
     }
 
     public addRoute(route: Route, roles: string[] = null) {

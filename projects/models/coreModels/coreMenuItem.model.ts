@@ -8,7 +8,7 @@ export interface CoreMenuItem {
     // name is required for indexing
     name: string;
     parent?: string;
-    type?: string;
+    type?: MenuTypes;
 
     roles?: string[];
     userIds?: string[];
