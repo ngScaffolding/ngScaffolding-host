@@ -264,7 +264,7 @@ export class MenuService {
         // Clone so we can amend
         this.menuItems = [...this.masterListMenu];
 
-        this.processMenuItems(this.menuItems);
+        this.calculateRouterLinks(this.menuItems);
 
         // Add to flat reference List
         this.addMenuItemsToReferenceList(newMenuItems);
@@ -279,7 +279,7 @@ export class MenuService {
         this.menuStore.update({ menuItems: this.menuItems });
     }
 
-    private processMenuItems(menuItems: CoreMenuItem[]) {
+    private calculateRouterLinks(menuItems: CoreMenuItem[]) {
         if (menuItems) {
             menuItems.forEach(menuItem => {
                 if (!menuItem.routerLink) {
