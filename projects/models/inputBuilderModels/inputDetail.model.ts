@@ -48,6 +48,7 @@ export class InputDetail {
     containerClass?: string; // Either full 12 cols or smaller if help present
     classes?: string;
     hidden?: boolean;
+    tabindex?: number;
 
     readonly?: boolean;
 
