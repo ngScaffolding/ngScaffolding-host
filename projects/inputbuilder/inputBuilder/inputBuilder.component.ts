@@ -143,8 +143,12 @@ export class InputBuilderComponent implements OnInit, OnChanges {
     }
 
     ngOnInit(): void {
-        this.maxFileSize = this.appSettingsQuery.getEntity(AppSettings.maximumFileSize).value;
-        this.allowedFileTypes = this.appSettingsQuery.getEntity(AppSettings.allowedFileTypes).value;
+        this.maxFileSize = this.appSettingsQuery.hasEntity(AppSettings.maximumFileSize)
+            ? this.appSettingsQuery.getEntity(AppSettings.maximumFileSize).value
+            : 999999;
+        this.allowedFileTypes = this.appSettingsQuery.hasEntity(AppSettings.allowedFileTypes)
+            ? this.appSettingsQuery.getEntity(AppSettings.allowedFileTypes).value
+            : '';
     }
 
     getContainerClass(inputDetail: InputDetail) {
