@@ -294,7 +294,14 @@ export class InputBuilderComponent implements OnInit, OnChanges {
             }
         }
 
-        this.form = new FormGroup(formGroup);
+        const formValidators = [];
+        if (this.inputBuilderDefinition.customValidators) {
+            this.inputBuilderDefinition.customValidators.forEach(validator => {
+                formValidators.push({});
+            });
+        }
+
+        this.form = new FormGroup(formGroup, formValidators);
     }
 
     private manipulateValuesToObjects(

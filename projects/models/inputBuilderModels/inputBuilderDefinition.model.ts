@@ -1,4 +1,5 @@
 import { InputDetail } from './inputDetail.model';
+import { CustomValidator } from './customValidator.model';
 export const enum OrientationValues {
     Vertical = 'vertical',
     Horizontal = 'horizontal'
@@ -48,4 +49,6 @@ export class InputBuilderDefinition {
 
     width?: string;
     height?: string;
+
+    customValidators?: CustomValidator[];
 }
