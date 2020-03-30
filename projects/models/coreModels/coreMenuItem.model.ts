@@ -12,6 +12,7 @@ export interface CoreMenuItem {
 
     roles?: string[];
     userIds?: string[];
+    ownerId?: string;
 
     isDesktop?: boolean;
     isMobile?: boolean;

@@ -24,7 +24,8 @@ import {
   WidgetDetails,
   InputBuilderDefinition,
   IDashboardItem,
-  InputLocations
+  InputLocations,
+  AppSettings
 } from 'ngscaffolding-models';
 
 import { DashboardModel } from 'ngscaffolding-models';
@@ -280,7 +281,7 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
       clonedMenu.routerLink = `dashboard/${clonedMenu.name}`;
 
       // Mark as NOT owned by current user
-      clonedMenu.userIds = null;
+      clonedMenu.ownerId = null;
 
       this.saveMenuItemToService(clonedMenu, 'Share', 'Dashboard Shared');
   }
@@ -288,6 +289,8 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
   private saveDashboard(saveDetails: SaveDetails) {
       // Create Clone of current Dashboard
       const clonedMenu: CoreMenuItem = { ...this.menuItem };
+
+      const userUniqueId = this.appSettingsQuery.getEntity(AppSettings.authUserUniqueField).value || 'userId';
 
       clonedMenu.menuDetails = { ...this.dashboard };
       clonedMenu.roles = [];
@@ -301,7 +304,7 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
           clonedMenu.routerLink = `dashboard/${clonedMenu.name}`;
 
           // Mark as owned by current user
-          clonedMenu.userIds = [this.authQuery.getValue().userDetails.userId];
+          clonedMenu.ownerId = this.authQuery.getValue().userDetails[userUniqueId];
       }
 
       this.saveMenuItemToService(clonedMenu, 'Save', 'Dashboard Saved');
