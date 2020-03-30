@@ -24,6 +24,7 @@ export enum AppSettings {
     authClientSecret = 'authClientSecret',
     authScope = 'authScope',
     authUserIdIsEmail = 'authUserIdIsEmail',
+    authUserUniqueField = 'authUserUniqueField',
     authTokenEndpoint = 'authTokenEndpoint',
     authPasswordMinLength = 'authPasswordMinLength',
     authPasswordUpperCase = 'authPasswordUpperCase',
