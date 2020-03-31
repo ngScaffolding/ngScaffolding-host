@@ -35,6 +35,7 @@ import {
   AuthoriseRoleGuard,
   UserAuthenticationBase,
   UserAuthenticationService,
+  OAuthService,
   UserAuthenticationQuery,
   CoreErrorHandlerService,
   VersionsService,
@@ -59,6 +60,8 @@ import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password
 import { AboutComponent } from './pages/about/about.component';
 import { UserSettingsComponent } from './pages/userSettings/userSettings.component';
 import { ProfilePageComponent } from './pages/profile/profilePage.component';
+import { AuthCallbackComponent } from './components/auth-callback/auth-callback.component';
+
 
 // Services
 import { TokenInterceptor } from './interceptors/token.interceptor';
@@ -123,7 +126,8 @@ export function jwtOptionsFactory(authService: UserAuthenticationService) {
     APP_COMPONENTS,
     RegisterComponent,
     ForgotPasswordComponent,
-    UserSettingsComponent
+    UserSettingsComponent,
+    AuthCallbackComponent,
   ],
   providers: [
     BreadcrumbService,
@@ -136,6 +140,7 @@ export function jwtOptionsFactory(authService: UserAuthenticationService) {
     // HTTP Token Interceptor
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
     AuthoriseRoleGuard,
+    // { provide: UserAuthenticationBase, useClass: OAuthService },
     { provide: UserAuthenticationBase, useClass: UserAuthenticationService },
     { provide: UserServiceBase, useClass: UserService},
 

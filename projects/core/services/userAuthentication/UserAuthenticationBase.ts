@@ -6,6 +6,12 @@ import { BasicUser } from 'ngscaffolding-models';
 export abstract class UserAuthenticationBase {
 
   abstract getToken(): string;
-  abstract logon(userName: string, password: string): Observable<BasicUser>;
+  abstract forceLogon();
+  abstract logon(userName: string, password: string);
   abstract logoff();
+
+  abstract async completeAuthentication();
+  abstract isAuthenticated(): boolean;
+  abstract authorizationHeaderValue();
+  abstract name(): string;
 }

@@ -112,7 +112,8 @@ export class NgScaffoldingComponent implements AfterViewInit {
           }
         });
       } else {
-        this.router.navigate(['login']);
+        // TODO: Login here
+         // this.router.navigate(['login']);
       }
     });
 

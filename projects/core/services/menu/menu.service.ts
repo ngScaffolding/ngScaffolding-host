@@ -101,9 +101,7 @@ export class MenuService {
                     const existingMenus = JSON.parse(JSON.stringify(this.menuQuery.getAll()));
                     let parentMenu: CoreMenuItem;
                     if (menuItem.parent) {
-                        parentMenu = existingMenus.find(
-                            menu => menu.name && menu.name.toLowerCase() === menuItem.parent.toLowerCase()
-                        );
+                        parentMenu = existingMenus.find(menu => menu.name && menu.name.toLowerCase() === menuItem.parent.toLowerCase());
                     }
 
                     const foundIndex = (parentMenu.items as CoreMenuItem[]).findIndex(
@@ -123,12 +121,8 @@ export class MenuService {
         });
     }
 
-    public saveMenuItem(menuItem: CoreMenuItem, updateMenuTree: boolean = true) {
-        this.http.post<CoreMenuItem>(this.apiHome + '/api/v1/menuitems', menuItem).subscribe(savedMenuItem => {
-            if (updateMenuTree) {
-                this.updateExistingMenuItem(savedMenuItem);
-            }
-        });
+    public saveMenuItem(menuItem: CoreMenuItem): Observable<any> {
+        return this.http.post<CoreMenuItem>(this.apiHome + '/api/v1/menuitems', menuItem);
     }
 
     public updateExistingMenuItem(menuItem: CoreMenuItem) {
@@ -151,9 +145,7 @@ export class MenuService {
             parentMenu.items = [];
         }
         if (existing) {
-            const foundIndex = (parentMenu.items as CoreMenuItem[]).findIndex(
-                childMenu => childMenu.name === menuItem.name
-            );
+            const foundIndex = (parentMenu.items as CoreMenuItem[]).findIndex(childMenu => childMenu.name === menuItem.name);
             parentMenu.items[foundIndex] = menuItem;
         } else {
             (parentMenu.items as CoreMenuItem[]).push(menuItem);
@@ -178,7 +170,7 @@ export class MenuService {
         const user = this.authQuery.getValue();
         let userRoles: string[] = [];
         if (user && user.userDetails) {
-            userRoles = user.userDetails.roles;
+            userRoles = user.userDetails.role;
         }
 
         const removingMenus: string[] = [];
@@ -202,10 +194,7 @@ export class MenuService {
 
             // Is this role protected
             if (checkingRoles && checkingRoles.length > 0) {
-                if (
-                    userRoles &&
-                    checkingRoles.filter(allowedRole => userRoles.indexOf(allowedRole) !== -1).length === 0
-                ) {
+                if (userRoles && checkingRoles.filter(allowedRole => userRoles.indexOf(allowedRole) !== -1).length === 0) {
                     // No Authority. Remove
                     removingThis = true;
                     removingMenus.push(menuItem.name);
@@ -301,6 +290,9 @@ export class MenuService {
                             menuItem.routerLink = menuItem.name;
                         }
                     }
+                }
+                if (menuItem.items) {
+                    this.calculateRouterLinks(menuItem.items as CoreMenuItem[]);
                 }
             });
         }

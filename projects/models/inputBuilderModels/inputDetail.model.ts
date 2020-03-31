@@ -25,6 +25,7 @@ export enum InputTypes {
     slider = 'slider',
     checkbox = 'checkbox',
     tricheckbox = 'tricheckbox',
+    tree = 'tree',
     selectbutton = 'selectbutton',
     togglebutton = 'togglebutton',
     radio = 'radio',

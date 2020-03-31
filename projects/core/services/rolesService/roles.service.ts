@@ -67,8 +67,8 @@ export class RolesService {
   // Checks if the current user is in this role.
   public isInRole(role: string): boolean {
     const currentUser = this.authQuery.getValue().userDetails;
-    if (currentUser && currentUser.roles) {
-      return currentUser.roles.indexOf(role) > -1;
+    if (currentUser && currentUser.role) {
+      return currentUser.role.indexOf(role) > -1;
     } else {
       return false;
     }
@@ -78,9 +78,9 @@ export class RolesService {
   public isInRoles(roles: string[]): boolean {
     let result = false;
     const currentUser = this.authQuery.getValue().userDetails;
-    if (currentUser && currentUser.roles) {
+    if (currentUser && currentUser.role) {
       roles.forEach(role => {
-        if (currentUser.roles.indexOf(role) > -1) {
+        if (currentUser.role.indexOf(role) > -1) {
           result = true;
         }
       });

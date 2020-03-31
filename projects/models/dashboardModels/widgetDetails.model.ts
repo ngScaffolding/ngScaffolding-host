@@ -2,7 +2,7 @@ import { WidgetModelBase } from './widget.model';
 
 export interface WidgetDetails {
     // Look up Widget Definition
-    widgetName: string;
+    widgetId: string;
 
     // Holds the configured input values. These are passed to the relevant dataSource
     configuredValues?: any;
