@@ -34,6 +34,7 @@ export { SpinnerService } from './services/spinnerService/spinner.service';
 export { UserAuthenticationBase } from './services/userAuthentication/UserAuthenticationBase';
 export { UserAuthenticationQuery } from './services/userAuthentication/userAuthentication.query';
 export { UserAuthenticationService } from './services/userAuthentication/userAuthentication.service';
+export { OAuthService } from './services/userAuthentication/userAuthentication.oauth.service';
 export { AuthenticationState, AuthenticationStore } from './services/userAuthentication/userAuthentication.store';
 
 export { UserPreferencesQuery } from './services/userPreferences/userPreferences.query';

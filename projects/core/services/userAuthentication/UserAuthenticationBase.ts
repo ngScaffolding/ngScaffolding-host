@@ -6,7 +6,7 @@ import { BasicUser } from 'ngscaffolding-models';
 export abstract class UserAuthenticationBase {
 
   abstract getToken(): string;
-  abstract forceLogon();
+  abstract forceLogon(returnUrl: string);
   abstract logon(userName: string, password: string);
   abstract logoff();
 

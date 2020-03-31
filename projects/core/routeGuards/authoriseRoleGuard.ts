@@ -23,10 +23,7 @@ export class AuthoriseRoleGuard implements CanActivate {
     }
 
     // No authority, bye bye.
-    // this.router.navigate(['login'], { queryParams: { returnUrl: state.url } });
-    this.authService.forceLogon();
+    this.authService.forceLogon(state.url);
     return false;
-
-    // return true;
   }
 }

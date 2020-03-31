@@ -15,6 +15,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { UserAuthenticationBase } from './UserAuthenticationBase';
 import { resetStores } from '@datorama/akita';
 import { UserAuthenticationQuery } from './userAuthentication.query';
+import { Router } from '@angular/router';
 
 @Injectable({ providedIn: 'root' })
 export class UserAuthenticationService implements UserAuthenticationBase {
@@ -28,7 +29,8 @@ export class UserAuthenticationService implements UserAuthenticationBase {
         private http: HttpClient,
         private authStore: AuthenticationStore,
         private authQuery: UserAuthenticationQuery,
-        private appSettingsService: AppSettingsService
+        private appSettingsService: AppSettingsService,
+        private router: Router
     ) {
         logger.info('UserAuthorisationService - Constructor');
         this.jwtHelper = new JwtHelperService({});
@@ -40,15 +42,16 @@ export class UserAuthenticationService implements UserAuthenticationBase {
         const token = this.getToken();
         const tokenDetails = this.jwtHelper.decodeToken(token);
 
-        return tokenDetails && !tokenDetails.isTokenExpired(token);
+        return tokenDetails && !this.jwtHelper.isTokenExpired(token);
     }
     authorizationHeaderValue() {}
     name(): string {
         return 'Hello World';
     }
 
-    forceLogon() {
+    forceLogon(returnUrl: string) {
       this.logoff();
+      this.router.navigate(['login'], { queryParams: { returnUrl: returnUrl } });
     }
 
     getToken(): string {

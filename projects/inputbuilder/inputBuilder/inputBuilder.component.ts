@@ -7,9 +7,11 @@ import {
     OnChanges,
     SimpleChanges,
     ChangeDetectionStrategy,
-    ChangeDetectorRef
+    ChangeDetectorRef,
+    ViewChildren,
+    QueryList
 } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of, forkJoin } from 'rxjs';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import {
     InputDetail,
@@ -33,6 +35,8 @@ import {
     UserAuthenticationQuery
 } from 'ngscaffolding-core';
 import { InputDetailReferenceValues } from 'ngscaffolding-models';
+import { Dropdown } from 'primeng/dropdown';
+import { tap, map, switchMap } from 'rxjs/operators';
 
 @Component({
     selector: 'ngs-input-builder',
@@ -41,6 +45,18 @@ import { InputDetailReferenceValues } from 'ngscaffolding-models';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class InputBuilderComponent implements OnInit, OnChanges {
+
+    constructor(
+        private ref: ChangeDetectorRef,
+        public appSettings: AppSettingsService,
+        public appSettingsQuery: AppSettingsQuery,
+        private authQuery: UserAuthenticationQuery,
+        public refValuesService: ReferenceValuesService
+    ) {
+        this.editorOptions = new JsonEditorOptions();
+        this.editorOptions.modes = ['code', 'text', 'tree', 'view']; // set all allowed modes
+    }
+
     @Input() inputBuilderDefinition: InputBuilderDefinition;
     @Input() inputModel: any;
 
@@ -50,6 +66,8 @@ export class InputBuilderComponent implements OnInit, OnChanges {
 
     @Output() okClicked = new EventEmitter<[object, string]>();
     @Output() cancelClicked = new EventEmitter<any>();
+
+    @ViewChildren('dropDown') dropDownChildren: QueryList<Dropdown>;
 
     private clonedInputModel: any;
     private fileContent: string;
@@ -64,16 +82,7 @@ export class InputBuilderComponent implements OnInit, OnChanges {
     maxFileSize: number;
     allowedFileTypes: string;
 
-    constructor(
-        private ref: ChangeDetectorRef,
-        public appSettings: AppSettingsService,
-        public appSettingsQuery: AppSettingsQuery,
-        private authQuery: UserAuthenticationQuery,
-        public refValuesService: ReferenceValuesService
-    ) {
-        this.editorOptions = new JsonEditorOptions();
-        this.editorOptions.modes = ['code', 'text', 'tree', 'view']; // set all allowed modes
-    }
+    public formRendered$: Observable<any>;
 
     public getLabel(input: InputDetail) {
         if (input.label) {
@@ -146,6 +155,7 @@ export class InputBuilderComponent implements OnInit, OnChanges {
         this.maxFileSize = this.appSettingsQuery.hasEntity(AppSettings.maximumFileSize)
             ? this.appSettingsQuery.getEntity(AppSettings.maximumFileSize).value
             : 999999;
+
         this.allowedFileTypes = this.appSettingsQuery.hasEntity(AppSettings.allowedFileTypes)
             ? this.appSettingsQuery.getEntity(AppSettings.allowedFileTypes).value
             : '';
@@ -230,6 +240,11 @@ export class InputBuilderComponent implements OnInit, OnChanges {
 
         const localModel = {};
 
+        const asyncGets: Array<Observable<ReferenceValue>> = [];
+
+        // Always have one to run
+        asyncGets.push(of(new ReferenceValue()));
+
         if (this.inputBuilderDefinition.inputDetails) {
             // tslint:disable-next-line: prefer-const
             for (const inputDetail of this.inputBuilderDefinition.inputDetails) {
@@ -281,14 +296,18 @@ export class InputBuilderComponent implements OnInit, OnChanges {
                             (<InputDetailReferenceValues>inputDetail).referenceValueSeedDependency
                         ];
                     }
-                    this.loadDataSource(inputDetail, seed).subscribe(data => {
-                        this.dataSourceLookup[inputDetail.name] = data.referenceValueItems;
-                        this.manipulateValuesToObjects(
-                            formControl,
-                            inputDetail as InputDetailReferenceValues,
-                            inputValue
-                        );
-                    });
+                    asyncGets.push(
+                        this.loadDataSource(inputDetail, seed).pipe(
+                            tap(data => {
+                                this.dataSourceLookup[inputDetail.name] = data.referenceValueItems;
+                                this.manipulateValuesToObjects(
+                                    formControl,
+                                    inputDetail as InputDetailReferenceValues,
+                                    inputValue
+                                );
+                            })
+                        )
+                    );
                 }
             }
 
@@ -297,6 +316,12 @@ export class InputBuilderComponent implements OnInit, OnChanges {
                 this.checkForDependencies(inputDetail, localModel[inputDetail.name]);
             }
         }
+
+        this.formRendered$ = forkJoin(asyncGets);
+        this.formRendered$.subscribe(results => {
+          console.log('Form rendering');
+          this.form = new FormGroup(formGroup);
+        });
 
         const formValidators = [];
         if (this.inputBuilderDefinition.customValidators) {

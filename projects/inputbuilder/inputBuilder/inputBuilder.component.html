@@ -1,17 +1,13 @@
-<form
-    novalidate
-    *ngIf="formBuilt && inputBuilderDefinition && inputBuilderDefinition.inputDetails"
-    [class.noPadding]="inputBuilderDefinition.inputLocation === 'inline'"
-    [class.form-group]="inputBuilderDefinition.inputLocation !== 'inline'"
-    class="ui-g"
-    (ngSubmit)="onSubmit(form)"
-    [formGroup]="form"
->
-    <div
-        [className]="controlStyle"
-        [class.noPadding]="inputBuilderDefinition.inputLocation === 'inline'"
-        *ngFor="let input of inputBuilderDefinition.inputDetails"
-    >
+<form novalidate *ngIf="(formRendered$ | async) && formBuilt && inputBuilderDefinition && inputBuilderDefinition.inputDetails"
+[class.noPadding]="inputBuilderDefinition.inputLocation === 'inline'"
+[class.form-group]="inputBuilderDefinition.inputLocation !== 'inline'"
+
+class="ui-g" (ngSubmit)="onSubmit(form)"
+    [formGroup]="form">
+
+    <div [className]="controlStyle" [class.noPadding]="inputBuilderDefinition.inputLocation === 'inline'"
+      *ngFor="let input of inputBuilderDefinition.inputDetails">
+
         <div [ngSwitch]="input.type" [className]="getContainerClass(input)">
             <!-- null === Blank -->
             <span *ngSwitchCase="'null'" class="md-inputfield"> </span>
@@ -133,7 +129,7 @@
             </span>
 
             <!-- Simple DropDown -->
-            <span *ngSwitchCase="'dropdown'">
+            <span class="ui-float-label" *ngSwitchCase="'dropdown'">
                 <p-dropdown
                     [tabindex]="input.tabindex"
                     appendTo="body"
