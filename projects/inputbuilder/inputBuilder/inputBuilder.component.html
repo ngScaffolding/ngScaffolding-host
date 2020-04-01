@@ -131,19 +131,21 @@ class="ui-g" (ngSubmit)="onSubmit(form)"
             <!-- Simple DropDown -->
             <span class="ui-float-label" *ngSwitchCase="'dropdown'">
                 <p-dropdown
+                    [style]="{ width: '100%' }"
                     [tabindex]="input.tabindex"
                     appendTo="body"
                     class="dropdownInput"
                     [id]="input.name"
                     showClear="true"
-                    [placeholder]="getLabel(input)"
                     [options]="dataSourceLookup[input.name]"
                     [autoWidth]="false"
                     [filter]="input.selectFilter"
                     dataKey="value"
                     optionLabel="display"
                     [formControlName]="input.name"
+                    #dropDown
                 ></p-dropdown>
+                <label [for]="input.name">{{getLabel(input)}}</label>
             </span>
 
             <!-- DropDown Returns Object -->
@@ -157,10 +159,11 @@ class="ui-g" (ngSubmit)="onSubmit(form)"
                     [filter]="input.selectFilter"
                     showClear="true"
                     [tabindex]="input.tabindex"
-                    [placeholder]="getLabel(input)"
                     optionLabel="display"
                     [formControlName]="input.name"
+                    #dropDown
                 ></p-dropdown>
+                <label [for]="input.name">{{getLabel(input)}}</label>
             </span>
 
             <!-- AutoComplete -->
