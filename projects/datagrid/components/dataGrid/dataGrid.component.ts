@@ -398,10 +398,16 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
                 this.hideFiltersButton = true;
             }
 
+            // Switch off RowSelection
+            this.gridOptions.suppressRowClickSelection = false;
+
+            let weWantCheckboxes = false;
+            if(this.itemDetails.disableCheckboxSelection !== undefined){
+              weWantCheckboxes = !this.itemDetails.disableCheckboxSelection;
+            }
+
             // Do We need a Checkbox
-            if (!this.itemDetails.disableCheckboxSelection) {
-                // Switch off RowSelection
-                this.gridOptions.suppressRowClickSelection = true;
+            if (weWantCheckboxes || (this.itemDetails.actions && this.itemDetails.actions.some(action => action.selectionRequired))) {
 
                 // Add the selection column
                 this.columnDefs.push({
