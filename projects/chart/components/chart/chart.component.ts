@@ -82,34 +82,32 @@ export class ChartComponent implements IDashboardItem, OnChanges {
                     })
                     .subscribe(
                         results => {
-                            if (!results.inflight) {
-                                if (results.error) {
-                                    this.loadingError = true;
-                                    this.loadingData = false;
-                                } else {
-                                    const chartDataService = new ChartDataService();
-                                    if (!this.itemDetails.chartOptions.series || this.itemDetails.chartOptions.series.length === 0) {
-                                        // Set to empty array if theres nothing there
-                                        this.itemDetails.chartOptions.series = [{}];
-                                    }
-                                    const shaped = chartDataService.shapeDataForSeries(this.itemDetails, results.jsonData);
-
-                                    if (this.itemDetails.dataShape === DataShapes.GroupByOutput) {
-                                        this.itemDetails.chartOptions.series = shaped.data;
-                                    } else {
-                                        this.itemDetails.chartOptions.series[0].data = shaped.data;
-                                    }
-                                    if (shaped.xAxisLabels) {
-                                        if (!this.itemDetails.chartOptions.xAxis) {
-                                            this.itemDetails.chartOptions.xAxis = {};
-                                        }
-                                        this.itemDetails.chartOptions.xAxis.categories = shaped.xAxisLabels;
-                                    }
-                                    this.buildHighChartOptions = this.itemDetails.chartOptions;
+                            if (results.error) {
+                                this.loadingError = true;
+                                this.loadingData = false;
+                            } else {
+                                const chartDataService = new ChartDataService();
+                                if (!this.itemDetails.chartOptions.series || this.itemDetails.chartOptions.series.length === 0) {
+                                    // Set to empty array if theres nothing there
+                                    this.itemDetails.chartOptions.series = [{}];
                                 }
+                                const shaped = chartDataService.shapeDataForSeries(this.itemDetails, results.jsonData);
 
-                                this.loadingComplete();
+                                if (this.itemDetails.dataShape === DataShapes.GroupByOutput) {
+                                    this.itemDetails.chartOptions.series = shaped.data;
+                                } else {
+                                    this.itemDetails.chartOptions.series[0].data = shaped.data;
+                                }
+                                if (shaped.xAxisLabels) {
+                                    if (!this.itemDetails.chartOptions.xAxis) {
+                                        this.itemDetails.chartOptions.xAxis = {};
+                                    }
+                                    this.itemDetails.chartOptions.xAxis.categories = shaped.xAxisLabels;
+                                }
+                                this.buildHighChartOptions = this.itemDetails.chartOptions;
                             }
+
+                            this.loadingComplete();
                         },
                         err => {
                             this.loadingError = true;

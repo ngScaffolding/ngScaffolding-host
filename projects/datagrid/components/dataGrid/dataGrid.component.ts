@@ -1,15 +1,4 @@
-import {
-    Component,
-    Input,
-    Output,
-    EventEmitter,
-    OnInit,
-    OnDestroy,
-    ViewChild,
-    OnChanges,
-    SimpleChanges,
-    ElementRef
-} from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, OnDestroy, ViewChild, OnChanges, SimpleChanges, ElementRef } from '@angular/core';
 
 import { GridOptions, ColDef, GridApi, ColumnApi } from 'ag-grid-community';
 
@@ -366,20 +355,18 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
                 })
                 .subscribe(
                     results => {
-                        if (!results.inflight) {
-                            if (results.jsonData) {
-                                if (typeof results.jsonData === 'string') {
-                                    this.rowData = JSON.parse(results.jsonData);
-                                } else {
-                                    this.rowData = results.jsonData;
-                                }
-
-                                if (results.rowCount) {
-                                    this.rowCount = results.rowCount;
-                                }
+                        if (results.jsonData) {
+                            if (typeof results.jsonData === 'string') {
+                                this.rowData = JSON.parse(results.jsonData);
+                            } else {
+                                this.rowData = results.jsonData;
                             }
-                            this.dataLoading = false;
+
+                            if (results.rowCount) {
+                                this.rowCount = results.rowCount;
+                            }
                         }
+                        this.dataLoading = false;
                     },
                     () => {
                         this.dataLoading = false;
@@ -402,13 +389,12 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
             this.gridOptions.suppressRowClickSelection = false;
 
             let weWantCheckboxes = false;
-            if(this.itemDetails.disableCheckboxSelection !== undefined){
-              weWantCheckboxes = !this.itemDetails.disableCheckboxSelection;
+            if (this.itemDetails.disableCheckboxSelection !== undefined) {
+                weWantCheckboxes = !this.itemDetails.disableCheckboxSelection;
             }
 
             // Do We need a Checkbox
             if (weWantCheckboxes || (this.itemDetails.actions && this.itemDetails.actions.some(action => action.selectionRequired))) {
-
                 // Add the selection column
                 this.columnDefs.push({
                     width: 70,
@@ -483,7 +469,7 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
         if (action.inputBuilderDefinition && action.inputBuilderDefinition.inputDetails.length > 0) {
             this.clickedAction = action;
             this.actionInputDefinition = action.inputBuilderDefinition;
-            this.getDialogSizing(action.inputBuilderDefinition.width,action.inputBuilderDefinition.height);
+            this.getDialogSizing(action.inputBuilderDefinition.width, action.inputBuilderDefinition.height);
 
             if (row) {
                 this.actionValues = row;
@@ -567,7 +553,6 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
                         rowData: rowsToProcess,
                         forceRefresh: true
                     })
-                    .pipe(first(result => !result.inflight))
                     .subscribe(
                         result => {
                             if (!result.error) {

@@ -47,7 +47,7 @@ export class ColourBoxComponent implements IDashboardItem, OnChanges {
                 forceRefresh: forceRefresh
             })
             .subscribe(results => {
-                if (!results.inflight && !results.error) {
+                if (!results.error) {
                     const data = results.jsonData[0];
 
                     this.displayValue = data.value;

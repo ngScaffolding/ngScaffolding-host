@@ -63,7 +63,6 @@ export class UserDetailsComponent implements AfterViewInit, OnInit, OnChanges {
                     body: this.user,
                     forceRefresh: true
                 })
-                .pipe(first(resp => !resp.inflight))
                 .subscribe(
                     result => {
                         var x = 0;
@@ -79,7 +78,6 @@ export class UserDetailsComponent implements AfterViewInit, OnInit, OnChanges {
                     inputData: this.data,
                     forceRefresh: true
                 })
-                .pipe(first(resp => !resp.inflight))
                 .subscribe(
                     result => {},
                     err => {}

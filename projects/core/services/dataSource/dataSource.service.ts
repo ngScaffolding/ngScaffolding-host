@@ -1,4 +1,4 @@
-import { Observable, forkJoin, throwError } from 'rxjs';
+import { Observable, forkJoin, throwError, of } from 'rxjs';
 import { timeout } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -15,6 +15,7 @@ import {} from '@datorama/akita';
 })
 export class DataSourceService {
     private className = 'DataSourceService';
+    private inflightRequests = new Map<string, Observable<DataResults>>();
 
     constructor(
         private http: HttpClient,
@@ -31,34 +32,42 @@ export class DataSourceService {
     getDataSource(dataRequest: DataSourceRequest): Observable<DataResults> {
         const key = this.getKey(dataRequest);
 
-        const currentRequest = this.dataSourceQuery.getEntity(key);
+        if (dataRequest.forceRefresh) {
+            this.dataSourceStore.remove(key);
+        }
 
-        if (dataRequest.forceRefresh || currentRequest === undefined || currentRequest.expiresWhen < new Date()) {
-            const now = new Date();
-            const placeHolderResults: DataResults = {
-                inflight: true,
-                expiresWhen: new Date(now.getTime() + 300 * 10000)
-            };
-
-            // Save as marker that the request has been sent
-            this.dataSourceStore.upsert(key, placeHolderResults);
-
-            const formData: FormData = new FormData();
-            formData.append('dataSourceRequest', JSON.stringify(dataRequest));
-
-            // Add Files if passed
-            if (dataRequest.fileNames) {
-                let fileCount = 0;
-                dataRequest.fileNames.forEach(file => {
-                    formData.append(`file-${fileCount++}`, file, file.name);
-                });
+        const currentCacheValue = this.dataSourceQuery.getEntity(key);
+        if (currentCacheValue) {
+            if (currentCacheValue.expiresWhen > new Date()) {
+                // Return good cached value
+                return of(currentCacheValue);
+            } else {
+                // Expired - Bad cache
+                this.dataSourceStore.remove(key);
             }
+        }
 
-            this.http
-                .post<DataResults>(
-                    `${this.appSettingsService.getValue(AppSettings.apiHome)}/api/v1/datasource`,
-                    formData
-                )
+        if (this.inflightRequests.has(key)) {
+            return this.inflightRequests.get(key);
+        }
+
+        // Make HTTP Request
+        const formData: FormData = new FormData();
+        formData.append('dataSourceRequest', JSON.stringify(dataRequest));
+
+        // Add Files if passed
+        if (dataRequest.fileNames) {
+            let fileCount = 0;
+            dataRequest.fileNames.forEach(file => {
+                formData.append(`file-${fileCount++}`, file, file.name);
+            });
+        }
+
+        this.inflightRequests.set(
+            key,
+            new Observable<DataResults>((observer)=>{
+              this.http
+                .post<DataResults>(`${this.appSettingsService.getValue(AppSettings.apiHome)}/api/v1/datasource`, formData)
                 .pipe(timeout(30000))
                 .subscribe(
                     values => {
@@ -68,7 +77,6 @@ export class DataSourceService {
                         const expiresSeconds = values.expiresSeconds > 0 ? values.expiresSeconds : 99999999;
                         const expiresWhen = new Date(expiryNow.getTime() + expiresSeconds * 10000);
                         const newResults: DataResults = {
-                            inflight: false,
                             expiresWhen: expiresWhen,
                             rowCount: values.rowCount,
                             jsonData: values.jsonData,
@@ -77,22 +85,29 @@ export class DataSourceService {
 
                         // Update the Store to tell the world we have data
                         this.dataSourceStore.update(key, newResults);
+                        this.inflightRequests.delete(key);
+                        observer.next(newResults);
+                        observer.complete();
                     },
                     err => {
                         // Update the Store to tell the world we failed in every way. Shame.
                         const errorResults: DataResults = {
-                            inflight: false,
                             expiresWhen: new Date(),
                             error: err.message
                         };
 
                         this.dataSourceStore.update(key, errorResults);
-                        this.logger.error(err, 'DataSource.Service.getDataSource', true);
-                    }
-                );
-        }
+                        this.inflightRequests.delete(key);
 
-        return this.dataSourceQuery.selectEntity(key);
+                        this.logger.error(err, 'DataSource.Service.getDataSource', false);
+                        observer.error(err);
+                    }
+                )
+            })
+
+        );
+
+        return this.inflightRequests.get(key);
     }
 
     private getKey(dataRequest: DataSourceRequest) {
