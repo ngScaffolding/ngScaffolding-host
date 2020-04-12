@@ -1,6 +1,6 @@
 import { TestBed, inject } from '@angular/core/testing';
 import { BroadcastService, BroadcastTypes } from 'ngscaffolding-core';
-import { MessageService } from 'primeng/components/common/messageservice';
+import { MessageService } from 'primeng/api';
 import { NotificationReceiverService } from './notificationReceiver.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 

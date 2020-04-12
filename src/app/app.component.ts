@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, ElementRef, Renderer, ViewChild, OnDestroy, OnInit, NgZone } from '@angular/core';
+import { Component, AfterViewInit, ElementRef, ViewChild, OnDestroy, OnInit, NgZone } from '@angular/core';
 
 // ngScaffolding
 import { Router } from '@angular/router';
@@ -75,7 +75,6 @@ export class AppComponent extends NgScaffoldingComponent implements AfterViewIni
 
   constructor(
     public router: Router,
-    public renderer: Renderer,
     public zone: NgZone,
     public logger: LoggingService,
     public authQuery: UserAuthenticationQuery,

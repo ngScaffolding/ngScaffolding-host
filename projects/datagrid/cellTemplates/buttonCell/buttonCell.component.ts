@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { ICellRendererAngularComp } from 'ag-grid-angular';
 import { Action } from 'ngscaffolding-models';
-import { MenuItem } from 'primeng/components/common/menuitem';
 import { BroadcastService } from 'ngscaffolding-core';
 
 export interface ActionClickedData {

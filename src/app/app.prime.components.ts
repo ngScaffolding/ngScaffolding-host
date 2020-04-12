@@ -4,6 +4,7 @@ import { BlockUIModule } from 'primeng/blockui';
 // import { BreadcrumbModule } from 'primeng/primeng';
 import { ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
+import { CardModule } from 'primeng/card';
 // import { CarouselModule } from 'primeng/primeng';
 // import { ColorPickerModule } from 'primeng/primeng';
 // import { ChartModule } from 'primeng/primeng';
@@ -11,7 +12,7 @@ import { CheckboxModule } from 'primeng/checkbox';
 // import { ChipsModule } from 'primeng/primeng';
 // import { CodeHighlighterModule } from 'primeng/primeng';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { SharedModule } from 'primeng/shared';
+// import { SharedModule } from 'primeng/shared';
 // import { ContextMenuModule } from 'primeng/primeng';
 // import { DataGridModule } from 'primeng/primeng';
 // import { DataListModule } from 'primeng/primeng';
@@ -25,7 +26,6 @@ import { FieldsetModule } from 'primeng/fieldset';
 import { FileUploadModule } from 'primeng/fileupload';
 // import { GalleriaModule } from 'primeng/primeng';
 // import { GMapModule } from 'primeng/primeng';
-import { GrowlModule } from 'primeng/growl';
 import { InputMaskModule } from 'primeng/inputmask';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { InputTextModule } from 'primeng/inputtext';
@@ -63,11 +63,13 @@ import { StepsModule } from 'primeng/steps';
 // import { TabViewModule } from 'primeng/primeng';
 // import { TerminalModule } from 'primeng/primeng';
 import { TieredMenuModule } from 'primeng/tieredmenu';
+import {ToastModule} from 'primeng/toast';
 import { ToggleButtonModule } from 'primeng/togglebutton';
 // import { ToolbarModule } from 'primeng/primeng';
 import { TooltipModule } from 'primeng/tooltip';
 // import { TreeModule } from 'primeng/primeng';
 // import { TreeTableModule } from 'primeng/primeng';
+
 
 export const PRIME_COMPONENTS: any[] = [
   // AccordionModule,
@@ -76,6 +78,7 @@ export const PRIME_COMPONENTS: any[] = [
   // BreadcrumbModule,
   ButtonModule,
   CalendarModule,
+  CardModule,
   // CarouselModule,
   // ColorPickerModule,
   // ChartModule,
@@ -83,7 +86,7 @@ export const PRIME_COMPONENTS: any[] = [
   // ChipsModule,
   // CodeHighlighterModule,
   ConfirmDialogModule,
-  SharedModule,
+  // SharedModule,
   // ContextMenuModule,
   // DataGridModule,
   // DataListModule,
@@ -97,7 +100,6 @@ export const PRIME_COMPONENTS: any[] = [
   // FileUploadModule,
   // GalleriaModule,
   // GMapModule,
-  GrowlModule,
   InputMaskModule,
   InputSwitchModule,
   InputTextModule,
@@ -135,6 +137,7 @@ export const PRIME_COMPONENTS: any[] = [
   // TabViewModule,
   // TerminalModule,
   TieredMenuModule,
+  ToastModule,
   ToggleButtonModule,
   // ToolbarModule,
   TooltipModule

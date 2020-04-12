@@ -13,7 +13,7 @@ import { FiltersHolderComponent } from './components/filtersHolder/filtersHolder
 import { ActionsHolderComponent } from './components/actionsHolder/actionsHolder.component';
 import { ToolBarComponent } from './components/toolBar/toolBar.component';
 
-import { AgGridModule } from 'ag-grid-angular/main';
+import { AgGridModule } from 'ag-grid-angular';
 
 import { ButtonCellComponent } from './cellTemplates/buttonCell/buttonCell.component';
 import { ActionsPipe } from './pipes/actionsPipe/actions.pipe';
@@ -30,7 +30,7 @@ import { TooltipModule } from 'primeng/tooltip';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
-import { SplitButtonModule } from 'primeng/components/splitbutton/splitbutton';
+import { SplitButtonModule } from 'primeng/splitbutton';
 import { SidebarModule } from 'primeng/sidebar';
 
 const appRoutes: Routes = [

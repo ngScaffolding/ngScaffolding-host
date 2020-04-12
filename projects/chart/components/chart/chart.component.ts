@@ -6,14 +6,16 @@ import { ChartDataService } from '../../services/chartData.service';
 import { DataSourceService, LoggingService } from 'ngscaffolding-core';
 import { ChartDetailModel, IDashboardItem, DataShapes } from 'ngscaffolding-models';
 import * as Highcharts from 'highcharts';
-// Loading HighCharts More
-const HighchartsMore = require('highcharts/highcharts-more.src');
-HighchartsMore(Highcharts);
+// // Loading HighCharts More
+// const HighchartsMore = require('highcharts/highcharts-more.src');
+// HighchartsMore(Highcharts);
 
+import HC_more from 'highcharts/highcharts-more';
+HC_more(Highcharts);
 // Load Gauge
 import * as HC_solid_gauge from 'highcharts/modules/solid-gauge.src';
 import { HighchartsChartComponent } from 'highcharts-angular';
-HC_solid_gauge(Highcharts);
+// HC_solid_gauge(Highcharts);
 
 @Component({
     selector: 'ngs-chart',
@@ -82,32 +84,34 @@ export class ChartComponent implements IDashboardItem, OnChanges {
                     })
                     .subscribe(
                         results => {
-                            if (results.error) {
-                                this.loadingError = true;
-                                this.loadingData = false;
-                            } else {
-                                const chartDataService = new ChartDataService();
-                                if (!this.itemDetails.chartOptions.series || this.itemDetails.chartOptions.series.length === 0) {
-                                    // Set to empty array if theres nothing there
-                                    this.itemDetails.chartOptions.series = [{}];
-                                }
-                                const shaped = chartDataService.shapeDataForSeries(this.itemDetails, results.jsonData);
-
-                                if (this.itemDetails.dataShape === DataShapes.GroupByOutput) {
-                                    this.itemDetails.chartOptions.series = shaped.data;
+                            if (!results.inflight) {
+                                if (results.error) {
+                                    this.loadingError = true;
+                                    this.loadingData = false;
                                 } else {
-                                    this.itemDetails.chartOptions.series[0].data = shaped.data;
-                                }
-                                if (shaped.xAxisLabels) {
-                                    if (!this.itemDetails.chartOptions.xAxis) {
-                                        this.itemDetails.chartOptions.xAxis = {};
+                                    const chartDataService = new ChartDataService();
+                                    if (!this.itemDetails.chartOptions.series || this.itemDetails.chartOptions.series.length === 0) {
+                                        // Set to empty array if theres nothing there
+                                        this.itemDetails.chartOptions.series = [{}];
                                     }
-                                    this.itemDetails.chartOptions.xAxis.categories = shaped.xAxisLabels;
-                                }
-                                this.buildHighChartOptions = this.itemDetails.chartOptions;
-                            }
+                                    const shaped = chartDataService.shapeDataForSeries(this.itemDetails, results.jsonData);
 
-                            this.loadingComplete();
+                                    if (this.itemDetails.dataShape === DataShapes.GroupByOutput) {
+                                        this.itemDetails.chartOptions.series = shaped.data;
+                                    } else {
+                                        this.itemDetails.chartOptions.series[0].data = shaped.data;
+                                    }
+                                    if (shaped.xAxisLabels) {
+                                        if (!this.itemDetails.chartOptions.xAxis) {
+                                            this.itemDetails.chartOptions.xAxis = {};
+                                        }
+                                        this.itemDetails.chartOptions.xAxis.categories = shaped.xAxisLabels;
+                                    }
+                                    this.buildHighChartOptions = this.itemDetails.chartOptions;
+                                }
+
+                                this.loadingComplete();
+                            }
                         },
                         err => {
                             this.loadingError = true;

@@ -35,13 +35,12 @@ body {
         }
     }
 
-    .ui-widget-header:not(.ui-dataview-header) {
+    .ui-widget-header:not(.ui-dataview-header) and .ui-widget-header:not(.ui-paginator) {
         .ui-inputtext {
             background-image: linear-gradient(to bottom, #ffffff, #ffffff), linear-gradient(to bottom, desaturate(lighten($primaryColor,25%), 25%), desaturate(lighten($primaryColor,25%), 25%));
             padding-bottom: 2px;
         }
     }
-
 
     .md-inputfield {
         display: block;
@@ -661,8 +660,8 @@ body {
 
             &:before {
                 position: absolute;
-                left: 8px;
-                top: 8px;
+                left: 5px;
+                top: 5px;
                 content: "";
                 background-color: $primaryLightColor;
                 height: 4px;
@@ -1053,6 +1052,7 @@ body {
         .ui-multiselect-item {
             padding: 0.571em 1em;
             margin: 0;
+            color: $textColor;
             @include border-radius(0);
             @include rippleitem();
 

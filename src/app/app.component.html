@@ -32,7 +32,7 @@
 
 
             <p-messages *ngIf="showFullMessages$ | async"></p-messages>
-            <p-growl *ngIf="showToastMessages$ | async"></p-growl>
+            <p-toast *ngIf="showToastMessages$ | async"></p-toast>
 
             <div class="layout-content">
                 <router-outlet></router-outlet>

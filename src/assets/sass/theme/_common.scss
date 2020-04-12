@@ -72,35 +72,7 @@ body {
     }
 
     .ui-widget-overlay {
-        background-color: #58575c;
-        opacity: .8;
-    }
-
-    .material-icons {
-        font-family: 'Material Icons';
-        font-weight: normal;
-        font-style: normal;
-        font-size: $iconFontSize;
-        display: inline-block;
-        width: 1em;
-        height: 1em;
-        line-height: 1;
-        text-transform: none;
-        letter-spacing: normal;
-        word-wrap: normal;
-        white-space: nowrap;
-        direction: ltr;
-
-        /* Support for all WebKit browsers. */
-        -webkit-font-smoothing: antialiased;
-        /* Support for Safari and Chrome. */
-        text-rendering: optimizeLegibility;
-
-        /* Support for Firefox. */
-        -moz-osx-font-smoothing: grayscale;
-
-        /* Support for IE. */
-        font-feature-settings: 'liga';
+        background-color: rgb(88,87,92, 0.8);
     }
 
     a {

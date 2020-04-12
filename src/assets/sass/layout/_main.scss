@@ -8,6 +8,7 @@ body {
     line-height: $lineHeight;
     color: $textColor;
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     padding: 0;
     margin: 0;
     background-color: $bodyBgColor;
@@ -59,8 +60,10 @@ body {
         }
 
         .topbar-right {
-            padding: 15px;
+            padding: 15px 15px 15px 0;
             position: relative;
+            width: calc(100% - 250px);
+            float: right;
 
             #menu-button {
                 color: $accentTextColor;
@@ -148,7 +151,7 @@ body {
     }
 
     .layout-menu {
-        overflow: visible;
+        overflow: auto;
         position: fixed;
         width: 250px;
         z-index: 99;
@@ -157,28 +160,6 @@ body {
         background-color: $layoutMenuBgColor;
         @include shadow(3px 0 6px rgba(0,0,0,0.3));
         @include transition(margin-left $transitionDuration);
-
-        .ui-scrollpanel {
-            background: transparent;
-            border-radius: 0;
-            border: none;
-            .ui-scrollpanel-bar {
-                background-color: $layoutMenuScrollbarBgColor;
-                @include opacity(.3);
-            }
-            .ui-scrollpanel-hidden {
-                display: block;
-                visibility: hidden;
-            }
-
-            .ui-scrollpanel-content {
-                overflow-x: hidden;
-            }
-
-            .layout-menu {
-                padding-bottom: 120px;
-            }
-        }
 
         .profile {
             box-sizing: border-box;
@@ -247,15 +228,6 @@ body {
 
             .profile-menu {
                 border-bottom: 1px solid $profileMenuDarkBorderBottomColor;
-            }
-
-            .ui-scrollpanel {
-              .ui-scrollpanel-wrapper {
-                .ui-scrollpanel-content {
-                  border-radius: 0;
-                  border: none;
-                }
-              }
             }
 
             ul.ultima-menu {
@@ -667,6 +639,7 @@ body {
         right: -240px;
         width: 240px;
         z-index: 100;
+        overflow: auto;
         background-color: $rightPanelBgColor;
         @include box-sizing(border-box);
         @include transition(right $transitionDuration);
@@ -682,20 +655,6 @@ body {
             padding: 14px;
             padding-bottom: 120px;
         }
-
-        .ui-scrollpanel  {
-            border-radius: 0;
-            border: none;
-            .ui-scrollpanel-hidden {
-                display: block;
-                visibility: hidden;
-            }
-            .layout-rightpanel-wrapper{
-                width: 258px;
-                padding-right: 18px;
-            }
-        }
-
     }
 }
 
@@ -845,18 +804,6 @@ body {
                 height: auto;
                 background-color: $primaryDarkColor;
                 @include shadow(0 2px 5px 0 rgba(0,0,0,0.26));
-
-                .ui-scrollpanel {
-                    overflow: visible;
-                    border: none;
-                    .ui-scrollpanel-wrapper {
-                        overflow: visible;
-                        .ui-scrollpanel-content {
-                            overflow: visible;
-                            padding: 0;
-                        }
-                    }
-                }
 
                 ul.ultima-menu {
                     width: 100%;
@@ -1084,7 +1031,7 @@ body {
                 top: 0;
 
                 .profile {
-                    width: calc(100% - 18px);
+                    width: 100%;
                     height: 74px;
                     padding-top: 15px;
 
@@ -1100,25 +1047,9 @@ body {
                     }
                 }
 
-                .ui-scrollpanel {
-                    border: none;
-                    border-radius: 0;
-                    .ui-scrollpanel-wrapper {
-                        overflow: visible;
-                        .ui-scrollpanel-content {
-                            overflow: visible;
-                            padding: 0;
-                        }
-                    }
-
-                    .ui-scrollpanel-bar {
-                        display: none;
-                    }
-                }
-
                 .ultima-menu {
                     padding: 0;
-                    width: calc(100% - 18px);
+                    width: 100%;
 
                     > li {
                         position: relative;

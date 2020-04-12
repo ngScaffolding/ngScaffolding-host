@@ -1,4 +1,4 @@
-import { NgModule, APP_INITIALIZER, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
@@ -28,7 +28,7 @@ import { AppTopBarComponent } from './components/appTopbar/app.topbar.component'
 
 import { PRIME_COMPONENTS } from './app.prime.components';
 import { APP_COMPONENTS } from './app.component.list';
-import { MessageService } from 'primeng/components/common/messageservice';
+import { MessageService } from 'primeng/api';
 
 import {
   CoreModule,

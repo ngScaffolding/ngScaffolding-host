@@ -39,6 +39,11 @@
     &.pi-sort {@include icon-override("sort");}
     &.pi-sort-up {@include icon-override("keyboard_arrow_up");}
     &.pi-sort-down {@include icon-override("keyboard_arrow_down");}
+    &.pi-spinner {@include icon-override("autorenew");}
+    &.pi-spin {
+        -webkit-animation: 2s linear infinite spin;
+        animation: 2s linear infinite spin;
+    }
 }
 
 .#{$iconPrefix}-carat-2-n-s {@include icon-override("sort");}

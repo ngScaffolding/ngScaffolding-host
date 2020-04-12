@@ -1,4 +1,15 @@
-import { Component, Input, Output, EventEmitter, OnInit, OnDestroy, ViewChild, OnChanges, SimpleChanges, ElementRef } from '@angular/core';
+import {
+    Component,
+    Input,
+    Output,
+    EventEmitter,
+    OnInit,
+    OnDestroy,
+    ViewChild,
+    OnChanges,
+    SimpleChanges,
+    ElementRef
+} from '@angular/core';
 
 import { GridOptions, ColDef, GridApi, ColumnApi } from 'ag-grid-community';
 
@@ -13,7 +24,7 @@ import {
 } from 'ngscaffolding-models';
 
 import { Dialog } from 'primeng/dialog';
-import { MessageService } from 'primeng/components/common/messageservice';
+import { MessageService } from 'primeng/api';
 
 import {
     DataSourceService,
@@ -522,7 +533,8 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
                         this.elementRef.nativeElement.querySelector('#popupContent').appendChild(newComponent);
 
                         // Center Popup here
-                        this.dialog.center();
+                        // TODO: Check centering dialog
+                        //this.dialog.ce();
                     });
                 });
 
@@ -553,6 +565,7 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
                         rowData: rowsToProcess,
                         forceRefresh: true
                     })
+                    .pipe(first(result => !result.inflight))
                     .subscribe(
                         result => {
                             if (!result.error) {

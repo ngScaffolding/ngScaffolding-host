@@ -4,7 +4,7 @@ $duration: 1.4s;
 .splash-screen {
     width: 100%;
     min-height: 100%;
-    background-color: #3F51B5;
+    background-color: $primaryColor;
     position: absolute;
 }
 
@@ -31,7 +31,7 @@ $duration: 1.4s;
   stroke-dashoffset: 0;
   transform-origin: center;
   animation:
-    dash $duration ease-in-out infinite, 
+    dash $duration ease-in-out infinite,
     colors ($duration*4) ease-in-out infinite;
 }
 

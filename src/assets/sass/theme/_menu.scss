@@ -106,10 +106,6 @@ body {
             @include hover-element();
         }
 
-        &:focus {
-            @include hover-element();
-        }
-
         .ui-menuitem-text {
             vertical-align: middle;
         }
