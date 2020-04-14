@@ -1,15 +1,4 @@
-import {
-    Component,
-    Input,
-    Output,
-    EventEmitter,
-    OnInit,
-    OnDestroy,
-    ViewChild,
-    OnChanges,
-    SimpleChanges,
-    ElementRef
-} from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, OnDestroy, ViewChild, OnChanges, SimpleChanges, ElementRef } from '@angular/core';
 
 import { GridOptions, ColDef, GridApi, ColumnApi } from 'ag-grid-community';
 
@@ -107,7 +96,7 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
     // Dialog Settings
     popupShown = false;
     dialogOptions: DialogOptions = {};
-    dialogStyle: string;
+    dialogStyle: object;
 
     private gridviewPrefPrefix = 'GridViewPrefs_';
 
@@ -501,9 +490,9 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
     public popupHidden() {}
 
     private getDialogSizing(width: any, height: any) {
-        this.dialogStyle = '';
+        this.dialogStyle = {};
         if (width && height) {
-            this.dialogStyle = `{width: ${width}; height: ${height}}`;
+            this.dialogStyle = { width: width + 'px', height: height + 'px' };
         }
     }
 
@@ -531,10 +520,6 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
                     // Give the dialog time to open
                     window.setTimeout(() => {
                         this.elementRef.nativeElement.querySelector('#popupContent').appendChild(newComponent);
-
-                        // Center Popup here
-                        // TODO: Check centering dialog
-                        //this.dialog.ce();
                     });
                 });
 

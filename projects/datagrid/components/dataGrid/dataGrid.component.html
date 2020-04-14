@@ -65,8 +65,7 @@
 ></ngs-input-builder-popup>
 
 <p-dialog
-    [style.width.px]="dialogOptions.width"
-    [style.height.px]="dialogOptions.height"
+    [style]="dialogStyle"
     [(visible)]="popupShown"
     (onHide)="popupHidden()"
     [closable]="dialogOptions.closable"
