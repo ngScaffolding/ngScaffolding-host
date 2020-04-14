@@ -50,7 +50,7 @@ export class Action {
   idField?: string;
   idValue?: string;
   entityType?: string;
-  additionalProperties?: string;
+  additionalProperties?: object;
   inputBuilderDefinition?: InputBuilderDefinition;
   refresh?: boolean;
 
