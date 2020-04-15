@@ -288,16 +288,30 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
     shareView() {}
     // Toolbar Operations
 
-    onGridReady() {
-        // params.api.sizeColumnsToFit();
+    onGridReady(params) {
     }
-    onFirstDataRendered(params) {
+
+    onRowDataChanged(params) {
         this.gridColumnApi = params.columnApi;
         this.gridApi = params.api;
-        if (this.itemDetails.autoSizeColumns) {
-            params.api.expandAll();
-            params.columnApi.autoSizeColumns();
+        if (!this.itemDetails.bypassAutoSizeColumns) {
+            this.autoSizeAll(false);
         }
+    }
+    onFirstDataRendered(params) {
+      this.gridColumnApi = params.columnApi;
+        this.gridApi = params.api;
+        if (!this.itemDetails.bypassAutoSizeColumns) {
+            this.autoSizeAll(false);
+        }
+    }
+
+    autoSizeAll(skipHeader = false) {
+        const allColumnIds = [];
+        this.gridColumnApi.getAllColumns().forEach(function(column) {
+            allColumnIds.push(column['colId']);
+        });
+        this.gridColumnApi.autoSizeColumns(allColumnIds, skipHeader);
     }
 
     onFiltersUpdated(filters) {
@@ -417,6 +431,7 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
             if (this.itemDetails.actions && this.itemDetails.actions.filter(action => action.columnButton).length > 0) {
                 this.columnDefs.push({
                     headerName: 'Actions',
+                    id: 'actionButtons',
                     suppressMenu: true,
                     filter: false,
                     sortable: false,

@@ -39,7 +39,8 @@
             [columnDefs]="columnDefs"
             [gridOptions]="gridOptions"
             (selectionChanged)="onSelectionChanged()"
-            (gridReady)="onGridReady()"
+            (gridReady)="onGridReady($event)"
+            (rowDataChanged)="onRowDataChanged($event)"
             (firstDataRendered)="onFirstDataRendered($event)"
         >
         </ag-grid-angular>
