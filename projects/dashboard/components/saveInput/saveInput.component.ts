@@ -91,8 +91,8 @@ export class SaveInputComponent implements OnChanges, OnInit {
         // Load Roles for sharing diag
         combineLatest([this.rolesQuery.selectAll(), this.rolesQuery.selectLoading()]).subscribe(
             ([roles, rolesLoading]) => {
-                if (roles && !rolesLoading) {
-                    const rolesItem = this.inputDefinition.inputDetails[2] as InputDetailReferenceValues;
+                if (roles && !rolesLoading && this.inputDefinition && this.inputDefinition.inputDetails && this.inputDefinition.inputDetails.length > 2) {
+                    const rolesItem = this.inputDefinition?.inputDetails[2] as InputDetailReferenceValues;
                     if (rolesItem) {
                         rolesItem.datasourceItems = [{ display: '(None)', value: null }];
                         roles.forEach(loopRole => {
