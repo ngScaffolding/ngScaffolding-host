@@ -359,7 +359,7 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
     }
 
     private itemChange(item, itemComponent) {
-        window.dispatchEvent(new Event('resize'));
+        // window.dispatchEvent(new Event('resize'));
     }
 
     public itemResize(item: GridsterItem, itemComponent: GridsterItemComponentInterface): void {

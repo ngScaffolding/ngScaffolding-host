@@ -8,9 +8,9 @@
 </div>
 
 <highcharts-chart
-  *ngIf="!loadingError"
+  *ngIf="!loadingError && buildHighChartOptions"
   [Highcharts]="Highcharts"
-  [options]="highChartsOptions"
+  [options]="buildHighChartOptions"
   (chartInstance)="logChartInstance($event)"
   [(update)]="updateChartFlag"
   style="width: 100%; height: 100%; display: block;">
