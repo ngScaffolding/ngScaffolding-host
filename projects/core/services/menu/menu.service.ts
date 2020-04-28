@@ -98,7 +98,7 @@ export class MenuService {
                     this.menuStore.remove(menuItem.name);
 
                     // Remove from Tree
-                    const existingMenus = JSON.parse(JSON.stringify(this.menuQuery.getAll()));
+                    const existingMenus = JSON.parse(JSON.stringify(this.menuQuery.getValue())).menuItems;
                     let parentMenu: CoreMenuItem;
                     if (menuItem.parent) {
                         parentMenu = existingMenus.find(menu => menu.name && menu.name.toLowerCase() === menuItem.parent.toLowerCase());
@@ -244,14 +244,15 @@ export class MenuService {
 
     public addMenuItems(newMenuItems: CoreMenuItem[]) {
         // Save to Master List
-        for (const newMenu of newMenuItems) {
-            if (this.masterListMenu.findIndex(masterMenu => masterMenu.name === newMenu.name) === -1) {
-                this.masterListMenu.push(newMenu);
-            }
-        }
+        // for (const newMenu of newMenuItems) {
+        //     if (this.masterListMenu.findIndex(masterMenu => masterMenu.name === newMenu.name) === -1) {
+        //         this.masterListMenu.push(newMenu);
+        //     }
+        // }
 
         // Clone so we can amend
-        this.menuItems = [...this.masterListMenu];
+        const fetchedMenuItems = this.menuQuery.getValue().menuItems || [];
+        this.menuItems = JSON.parse(JSON.stringify(fetchedMenuItems));
 
         this.calculateRouterLinks(this.menuItems);
 
@@ -259,7 +260,7 @@ export class MenuService {
         this.addMenuItemsToReferenceList(newMenuItems);
 
         newMenuItems.forEach(loopMenuItem => {
-            this.addNewMenuItemToEntities(newMenuItems, loopMenuItem);
+            this.addNewMenuItemToEntities(this.menuItems, loopMenuItem);
         });
 
         // Remove the unatuhorised

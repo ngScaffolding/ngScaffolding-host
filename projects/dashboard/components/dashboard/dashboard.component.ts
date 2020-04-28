@@ -146,10 +146,6 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
                     this.options.resizable = { enabled: false };
                 }
 
-                // TODO: remove
-                this.options.draggable = { enabled: true };
-                this.options.resizable = { enabled: true };
-
                 this.spinner.hideSpinner();
             }
         });
@@ -246,14 +242,14 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
             accept: () => {
                 this.menuService.delete(this.menuItem).subscribe(() => {
                     setTimeout(() => {
+                        this.router.navigateByUrl('/');
+
                         this.notificationService.showMessage({
                             severity: 'info',
                             summary: 'Delete',
                             detail: this.translate.instant('Dashboard Deleted')
                         });
                     }, 1000);
-
-                    this.router.navigateByUrl('/');
                 });
             }
         });
@@ -284,7 +280,7 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
             ? this.appSettingsQuery.getEntity(AppSettings.authUserUniqueField).value
             : 'userId';
 
-        clonedMenu.menuDetails = { ...this.dashboard };
+        clonedMenu.menuDetails = { ...this.dashboard, readOnly: false };
         clonedMenu.roles = [];
 
         if (saveDetails) {
@@ -323,7 +319,6 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
             .pipe(timeout(30000))
             .subscribe(
                 savedMenuItem => {
-                    this.menuService.updateExistingMenuItem(savedMenuItem);
                     this.menuService.addMenuItems([clonedFullMenu]);
                     this.notificationService.showMessage({
                         severity: 'info',
@@ -349,7 +344,7 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
 
         if (widgetModel) {
             const widgetDetails: WidgetDetails = {
-                widgetId: name,
+                name: name,
                 cols: widgetModel.initialWidth > 0 ? widgetModel.initialWidth : 2,
                 rows: widgetModel.initialHeight > 0 ? widgetModel.initialHeight : 1,
                 widget: widgetModel
