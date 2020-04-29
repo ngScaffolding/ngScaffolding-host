@@ -243,18 +243,11 @@ export class MenuService {
     }
 
     public addMenuItems(newMenuItems: CoreMenuItem[]) {
-        // Save to Master List
-        // for (const newMenu of newMenuItems) {
-        //     if (this.masterListMenu.findIndex(masterMenu => masterMenu.name === newMenu.name) === -1) {
-        //         this.masterListMenu.push(newMenu);
-        //     }
-        // }
-
         // Clone so we can amend
         const fetchedMenuItems = this.menuQuery.getValue().menuItems || [];
         this.menuItems = JSON.parse(JSON.stringify(fetchedMenuItems));
 
-        this.calculateRouterLinks(this.menuItems);
+        this.calculateRouterLinks(newMenuItems);
 
         // Add to flat reference List
         this.addMenuItemsToReferenceList(newMenuItems);
