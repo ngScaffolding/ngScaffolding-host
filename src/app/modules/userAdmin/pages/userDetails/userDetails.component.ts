@@ -13,7 +13,14 @@ import {
     SystemDataSourceNames,
     BasicUser
 } from 'ngscaffolding-models';
-import { UserService, LoggingService, AppSettingsQuery, DataSourceService } from 'ngscaffolding-core';
+import {
+    UserService,
+    LoggingService,
+    AppSettingsQuery,
+    DataSourceService,
+    DialogWindowComponent,
+    NotificationService
+} from 'ngscaffolding-core';
 import { TranslateService } from '@ngx-translate/core';
 import { first } from 'rxjs/operators';
 
@@ -22,7 +29,7 @@ import { first } from 'rxjs/operators';
     templateUrl: 'userDetails.component.html',
     styleUrls: ['userDetails.component.scss']
 })
-export class UserDetailsComponent implements AfterViewInit, OnInit, OnChanges {
+export class UserDetailsComponent extends DialogWindowComponent implements AfterViewInit, OnInit, OnChanges {
     userInputDefinition: InputBuilderDefinition = {
         orientation: OrientationValues.Horizontal,
         columnCount: 2,
@@ -44,23 +51,22 @@ export class UserDetailsComponent implements AfterViewInit, OnInit, OnChanges {
     private cancelButtonIcon: 'ui-icon-clear';
     constructor(
         private translateService: TranslateService,
+        private notificationService: NotificationService,
         private dataSourceService: DataSourceService,
         private appSettingsQuery: AppSettingsQuery,
         private logger: LoggingService
     ) {
+        super();
         this.okButtonText = translateService.instant('Save');
         this.cancelButtonText = translateService.instant('Cancel');
     }
 
     cancelClicked(event: any) {
-        var x = 0;
+        super.cancel(false);
     }
     okClicked(event: any) {
+        this.user.userId = this.user.modelUserId;
         if (this.idValue === 'new') {
-            // Everybody get user
-            if (!this.user.role.includes('user')) {
-                this.user.role.push('user');
-            }
             this.dataSourceService
                 .getDataSource({
                     name: SystemDataSourceNames.USERS_CREATE,
@@ -69,10 +75,21 @@ export class UserDetailsComponent implements AfterViewInit, OnInit, OnChanges {
                 })
                 .subscribe(
                     result => {
-                        var x = 0;
+                        this.notificationService.showMessage({
+                            severity: 'success',
+                            summary: 'User',
+                            detail: 'User Saved',
+                            life: 5000
+                        });
+                        super.cancel(null);
                     },
                     err => {
-                        var y = 0;
+                        this.notificationService.showMessage({
+                            severity: 'error',
+                            summary: 'User',
+                            detail: 'User Was not saved',
+                            sticky: true
+                        });
                     }
                 );
         } else {
@@ -83,8 +100,23 @@ export class UserDetailsComponent implements AfterViewInit, OnInit, OnChanges {
                     forceRefresh: true
                 })
                 .subscribe(
-                    result => {},
-                    err => {}
+                    result => {
+                        this.notificationService.showMessage({
+                            severity: 'success',
+                            summary: 'User',
+                            detail: 'User Saved',
+                            life: 5000
+                        });
+                        super.cancel(null);
+                    },
+                    err => {
+                        this.notificationService.showMessage({
+                            severity: 'error',
+                            summary: 'User',
+                            detail: 'User Was not saved',
+                            sticky: true
+                        });
+                    }
                 );
         }
     }
@@ -101,7 +133,7 @@ export class UserDetailsComponent implements AfterViewInit, OnInit, OnChanges {
             this.userInputDefinition.inputDetails = [
                 <InputDetailTextBox>{
                     label: 'User ID',
-                    name: 'userId',
+                    name: 'modelUserId',
                     value: '',
                     type: InputTypes.textbox,
                     validateRequired: 'User ID is required'
@@ -132,7 +164,7 @@ export class UserDetailsComponent implements AfterViewInit, OnInit, OnChanges {
                 },
                 <InputDetailReferenceValues>{
                     label: 'User Roles',
-                    name: 'roles',
+                    name: 'role',
                     type: 'multiselect',
                     referenceValueName: SystemDataSourceNames.ROLES_SELECT
                 }
@@ -141,7 +173,7 @@ export class UserDetailsComponent implements AfterViewInit, OnInit, OnChanges {
             this.userInputDefinition.inputDetails = [
                 <InputDetailTextBox>{
                     label: 'User ID',
-                    name: 'userId',
+                    name: 'modelUserId',
                     value: '',
                     type: InputTypes.textbox,
                     validateEmail: 'Email Please',
@@ -173,7 +205,7 @@ export class UserDetailsComponent implements AfterViewInit, OnInit, OnChanges {
                 },
                 <InputDetailReferenceValues>{
                     label: 'User Roles',
-                    name: 'roles',
+                    name: 'role',
                     type: 'multiselect',
                     referenceValueName: SystemDataSourceNames.ROLES_SELECT
                 }
@@ -186,6 +218,7 @@ export class UserDetailsComponent implements AfterViewInit, OnInit, OnChanges {
             this.data = new BasicUser();
         }
         if (changes.data && changes.data.currentValue) {
+          this.data.modelUserId = this.data.userId;
         }
         if (changes.showButtons) {
             if (changes.showButtons.currentValue) {
