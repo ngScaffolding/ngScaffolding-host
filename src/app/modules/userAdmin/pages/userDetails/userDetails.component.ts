@@ -48,15 +48,19 @@ export class UserDetailsComponent implements AfterViewInit, OnInit, OnChanges {
         private appSettingsQuery: AppSettingsQuery,
         private logger: LoggingService
     ) {
-      this.okButtonText = translateService.instant('Save');
+        this.okButtonText = translateService.instant('Save');
         this.cancelButtonText = translateService.instant('Cancel');
-      }
+    }
 
     cancelClicked(event: any) {
         var x = 0;
     }
     okClicked(event: any) {
         if (this.idValue === 'new') {
+            // Everybody get user
+            if (!this.user.role.includes('user')) {
+                this.user.role.push('user');
+            }
             this.dataSourceService
                 .getDataSource({
                     name: SystemDataSourceNames.USERS_CREATE,
@@ -195,7 +199,7 @@ export class UserDetailsComponent implements AfterViewInit, OnInit, OnChanges {
     }
 
     notifyChanged(event: any) {
-      this.user = event;
+        this.user = event;
     }
 
     ngAfterViewInit(): void {}
