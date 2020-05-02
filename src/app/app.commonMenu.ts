@@ -1,8 +1,7 @@
-import { MenuTypes, GridViewDetail, SystemDataSourceNames, ColumnModel, ButtonColours } from 'ngscaffolding-models';
+import { MenuTypes, GridViewDetail, SystemDataSourceNames, ColumnModel, ButtonColours, ActionTypes } from 'ngscaffolding-models';
 import { MenuService } from 'ngscaffolding-core';
 
 export function buildMenu(menuService: MenuService) {
-
   // User Admin Functions
   menuService.addMenuItemsFromCode([
     {
@@ -48,7 +47,7 @@ export function buildMenu(menuService: MenuService) {
                 columnButton: true,
                 title: 'Password',
                 icon: 'ui-icon-lock',
-                colour: ButtonColours.warning,
+                                colour: ButtonColours.secondary,
                 type: 'angularComponent',
                 angularComponent: 'app-user-password',
                 dialogOptions: {
@@ -60,6 +59,16 @@ export function buildMenu(menuService: MenuService) {
                 }
               },
               {
+                                columnButton: true,
+                                title: 'Delete',
+                                icon: 'ui-icon-lock',
+                                colour: ButtonColours.warning,
+                                type: ActionTypes.dataSource,
+                                confirmationMessage: 'Confirm Delete',
+                                dataSourceName: SystemDataSourceNames.USERS_DELETE,
+                                refresh: true
+                            },
+                            {
                 title: 'Add User',
                 icon: 'ui-icon-add',
                 colour: ButtonColours.success,

@@ -13,7 +13,7 @@ import {
     SystemDataSourceNames,
     BasicUser
 } from 'ngscaffolding-models';
-import { UserService, LoggingService, AppSettingsQuery, DataSourceService } from 'ngscaffolding-core';
+import { UserService, LoggingService, AppSettingsQuery, DataSourceService, DialogWindowComponent } from 'ngscaffolding-core';
 import { TranslateService } from '@ngx-translate/core';
 import { first } from 'rxjs/operators';
 
@@ -22,7 +22,7 @@ import { first } from 'rxjs/operators';
     templateUrl: 'set-password.component.html',
     styleUrls: ['set-password.component.scss']
 })
-export class SetPasswordComponent implements AfterViewInit, OnInit, OnChanges {
+export class SetPasswordComponent extends DialogWindowComponent implements AfterViewInit, OnInit, OnChanges {
     userInputDefinition: InputBuilderDefinition = {
         orientation: OrientationValues.Horizontal,
         columnCount: 2,
@@ -43,10 +43,12 @@ export class SetPasswordComponent implements AfterViewInit, OnInit, OnChanges {
         private dataSourceService: DataSourceService,
         private appSettingsQuery: AppSettingsQuery,
         private logger: LoggingService
-    ) {}
+    ) {
+      super();
+    }
 
     cancelClicked(event: any) {
-        var x = 0;
+      super.cancel(false);
     }
 
     okClicked(event: any) {}
