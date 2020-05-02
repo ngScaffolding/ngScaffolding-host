@@ -67,10 +67,6 @@ export class UserDetailsComponent extends DialogWindowComponent implements After
     okClicked(event: any) {
         this.user.userId = this.user.modelUserId;
         if (this.idValue === 'new') {
-            // Everybody get user
-            if (!this.user.role.includes('user')) {
-                this.user.role.push('user');
-            }
             this.dataSourceService
                 .getDataSource({
                     name: SystemDataSourceNames.USERS_CREATE,
