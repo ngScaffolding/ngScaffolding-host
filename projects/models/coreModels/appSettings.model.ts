@@ -83,5 +83,8 @@ export enum AppSettings {
     // Mobile settings
     isMobile = 'isMobile',
     mobileTitle = 'mobileTitle',
-    mobileCacheNames = 'mobileCacheNames'
+    mobileCacheNames = 'mobileCacheNames',
+    mobileDefaultTimeout = 'mobileDefaultTimeout',
+    mobileDefaultRetries = 'mobileDefaultRetries'
+
 }

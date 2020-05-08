@@ -22,25 +22,11 @@ import { DialogWindowComponent } from './components/dialogWindow/dialogWindow.co
 
 @NgModule({
     imports: [CommonModule, FormsModule, HttpClientModule],
-    declarations: [
-        FillHeightDirective,
-        ButtonColourPipe,
-        NgsDatePipe,
-        NgsDateTimePipe,
-        TruncateTextPipe,
-        DialogWindowComponent
-    ],
-    exports: [
-        ButtonColourPipe,
-        NgsDatePipe,
-        NgsDateTimePipe,
-        TruncateTextPipe,
-        FillHeightDirective,
-        DialogWindowComponent
-    ]
+    declarations: [FillHeightDirective, ButtonColourPipe, NgsDatePipe, NgsDateTimePipe, TruncateTextPipe, DialogWindowComponent],
+    exports: [ButtonColourPipe, NgsDatePipe, NgsDateTimePipe, TruncateTextPipe, FillHeightDirective, DialogWindowComponent]
 })
 export class CoreModule {
-    static forRoot(): ModuleWithProviders {
+    static forRoot(): ModuleWithProviders<CoreModule> {
         return {
             ngModule: CoreModule
         };

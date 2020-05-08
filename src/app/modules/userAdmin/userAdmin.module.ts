@@ -17,7 +17,7 @@ import { TranslateModule } from '@ngx-translate/core';
     declarations: [UserListComponent, UserDetailsComponent, SetPasswordComponent],
     imports: [CommonModule, InputBuilderModule, UserAdminRoutingModule,
       TranslateModule.forChild()],
-    entryComponents: [UserDetailsComponent]
+    entryComponents: [UserDetailsComponent, SetPasswordComponent]
 })
 export class UserAdminModule {
     constructor(
@@ -33,5 +33,10 @@ export class UserAdminModule {
         customElements.define('app-user-details', el);
 
         componentLoaderService.registerComponent('app-user-details');
+
+        const elPwd = createCustomElement(SetPasswordComponent, { injector });
+        customElements.define('app-user-set-password', elPwd);
+
+        componentLoaderService.registerComponent('app-user-set-password');
     }
 }

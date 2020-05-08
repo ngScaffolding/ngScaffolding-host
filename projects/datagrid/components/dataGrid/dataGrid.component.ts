@@ -288,8 +288,7 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
     shareView() {}
     // Toolbar Operations
 
-    onGridReady(params) {
-    }
+    onGridReady(params) {}
 
     onRowDataChanged(params) {
         this.gridColumnApi = params.columnApi;
@@ -574,21 +573,12 @@ export class DataGridComponent implements IDashboardItem, OnInit, OnDestroy, OnC
                                     this.referenceService.clearReferenceValue(action.flushReferenceValues);
                                 }
                                 if (action.successMessage) {
-                                    if (action.successToast) {
                                         this.messageService.add({
                                             severity: 'success',
                                             summary: 'Success',
-                                            detail: action.successMessage
+                                        detail: action.successMessage,
+                                        life: 5000
                                         });
-                                    } else {
-                                        this.confirmationService.confirm({
-                                            message: action.successMessage,
-                                            acceptLabel: 'OK',
-                                            icon: 'fa-check',
-                                            header: 'Success',
-                                            rejectVisible: false
-                                        });
-                                    }
                                 }
                                 // finally
                                 this.actionInputPopup.isShown = false;

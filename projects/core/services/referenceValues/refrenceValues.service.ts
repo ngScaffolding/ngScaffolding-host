@@ -7,6 +7,7 @@ import { ReferenceValue, AppSettings } from 'ngscaffolding-models';
 import { LoggingService } from '../logging/logging.service';
 import { ReferenceValuesQuery } from './referenceValues.query';
 import { ReferenceValuesStore } from './referenceValues.store';
+import { isArray } from 'util';
 
 @Injectable({
   providedIn: 'root'
@@ -41,11 +42,20 @@ export class ReferenceValuesService {
   }
 
   // Clear all Reference values with this name as root of key
-  clearReferenceValue(name: string) {
-    const list = this.refValuesQuery.getAll({ filterBy: entity => entity.name.startsWith(name) });
+    clearReferenceValue(clearNames: string | Array<string>) {
+        let namesArray: Array<string>;
+        if (isArray(clearNames)) {
+            namesArray = clearNames;
+        } else {
+            namesArray = [clearNames];
+        }
+
+        for (const loopName of namesArray) {
+            const list = this.refValuesQuery.getAll({ filterBy: entity => entity.name.startsWith(loopName) });
 
     for (const refValue of list) {
-      this.refValuesStore.remove(refValue);
+                this.refValuesStore.remove(refValue.compositeKey);
+            }
     }
   }
 
@@ -68,7 +78,6 @@ export class ReferenceValuesService {
   //
   getReferenceValue(name: string, seed = '', childDepth = 0): Observable<ReferenceValue> {
     if (this.refValuesQuery.hasEntity(this.getKey(name, seed))) {
-
       const cacheValue = this.refValuesQuery.getEntity(this.getKey(name, seed));
       if (this.isExpired(cacheValue)) {
         // Expired cache value. Go get a new one
@@ -109,7 +118,9 @@ export class ReferenceValuesService {
       const wrapper = new Observable<ReferenceValue>(observer => {
         // Call HTTP Here
         this.logger.info(`Reference Values From HTTP ${name}::${seed}`);
-        const httpRequest = this.http.get<ReferenceValue>(`${this.appSettingsService.getValue(AppSettings.apiHome)}/api/v1/referencevalues?name=${name}&seed=${seed}`);
+                const httpRequest = this.http.get<ReferenceValue>(
+                    `${this.appSettingsService.getValue(AppSettings.apiHome)}/api/v1/referencevalues?name=${name}&seed=${seed}`
+                );
         httpRequest.subscribe(
           value => {
             value.compositeKey = this.getKey(name, seed);

@@ -54,6 +54,21 @@ export class UserService implements UserServiceBase  {
         });
     });
   }
+
+  setPassword(changePasswordModel: ChangePasswordModel) {
+    return new Observable<null>(observer => {
+      this.http.post(`${this.appSettingsService.getValue(AppSettings.apiAuth)}/api/v1/users/setPassword`, changePasswordModel)
+        .pipe(timeout(30000))
+        .subscribe(response => {
+          observer.next(null);
+          observer.complete();
+        },
+        err => {
+          observer.error(err);
+        });
+    });
+  }
+
   resetPassword(userId: any) {
     return new Observable<null>(observer => {
       this.http.get(`${this.appSettingsService.getValue(AppSettings.apiAuth)}/api/v1/users/resetPassword/${userId}`);

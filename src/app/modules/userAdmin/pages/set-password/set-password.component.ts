@@ -11,9 +11,17 @@ import {
     InputDetail,
     InputDetailReferenceValues,
     SystemDataSourceNames,
-    BasicUser
+    BasicUser,
+    ChangePasswordModel
 } from 'ngscaffolding-models';
-import { UserService, LoggingService, AppSettingsQuery, DataSourceService, DialogWindowComponent } from 'ngscaffolding-core';
+import {
+    UserService,
+    LoggingService,
+    AppSettingsQuery,
+    DataSourceService,
+    DialogWindowComponent,
+    NotificationService
+} from 'ngscaffolding-core';
 import { TranslateService } from '@ngx-translate/core';
 import { first } from 'rxjs/operators';
 
@@ -22,128 +30,75 @@ import { first } from 'rxjs/operators';
     templateUrl: 'set-password.component.html',
     styleUrls: ['set-password.component.scss']
 })
-export class SetPasswordComponent extends DialogWindowComponent implements AfterViewInit, OnInit, OnChanges {
+export class SetPasswordComponent extends DialogWindowComponent implements OnChanges {
     userInputDefinition: InputBuilderDefinition = {
         orientation: OrientationValues.Horizontal,
         columnCount: 2,
         okButtonText: 'Save',
         okButtonIcon: 'ui-icon-check',
         cancelButtonText: 'Cancel',
-        cancelButtonIcon: 'ui-icon-clear'
+        cancelButtonIcon: 'ui-icon-clear',
+        inputDetails: [
+            {
+                label: 'New Password',
+                name: 'newPassword',
+                type: InputTypes.password
+            }
+        ]
     };
 
     @Input() showButtons = false;
-    @Input() data: Partial<BasicUser>;
+    @Input() data: any;
     @Input() idValue: string;
 
     private user: BasicUser;
+    passwordModel: ChangePasswordModel;
 
     constructor(
+        private userService: UserService,
         private translateService: TranslateService,
-        private dataSourceService: DataSourceService,
+        private notificationService: NotificationService,
         private appSettingsQuery: AppSettingsQuery,
         private logger: LoggingService
     ) {
-      super();
+        super();
     }
 
     cancelClicked(event: any) {
-      super.cancel(false);
+        super.cancel(false);
     }
 
-    okClicked(event: any) {}
-    valueUpdated(event: any) {}
+    okClicked(event: any) {
+        this.userService.setPassword(this.passwordModel).subscribe(
+            result => {
+                this.notificationService.showMessage({
+                    severity: 'success',
+                    summary: 'User',
+                    detail: 'Password Set',
+                    life: 5000
+                });
+                super.cancel(null);
+            },
+            err => {
+                this.notificationService.showMessage({
+                    severity: 'error',
+                    summary: 'User',
+                    detail: 'Password Was not set',
+                    sticky: true
+                });
+            }
+        );
+    }
 
-    ngOnInit(): void {
-        const userIsEmail = this.appSettingsQuery.getEntity(AppSettings.authUserIdIsEmail);
-
-        if (!userIsEmail) {
-            this.userInputDefinition.inputDetails = [
-                <InputDetailTextBox>{
-                    label: 'User ID',
-                    name: 'userId',
-                    value: '',
-                    type: InputTypes.textbox,
-                    validateRequired: 'User ID is required'
-                },
-                <InputDetailTextBox>{
-                    label: 'EMail Address',
-                    name: 'email',
-                    validateEmail: 'Email is not correct format',
-                    type: InputTypes.textbox
-                },
-                <InputDetailTextBox>{
-                    label: 'First Name',
-                    name: 'firstName',
-                    type: InputTypes.textbox
-                },
-                <InputDetailTextBox>{
-                    label: 'Last Name',
-                    name: 'lastName',
-                    type: InputTypes.textbox
-                },
-                <InputDetailTextBox>{
-                    label: 'Password',
-                    name: 'password',
-                    type: InputTypes.password
-                },
-                <InputDetail>{
-                    type: InputTypes.null
-                },
-                <InputDetailReferenceValues>{
-                    label: 'User Roles',
-                    name: 'roles',
-                    type: 'multiselect',
-                    referenceValueName: SystemDataSourceNames.ROLES_SELECT
-                }
-            ];
-        } else {
-            this.userInputDefinition.inputDetails = [
-                <InputDetailTextBox>{
-                    label: 'User ID',
-                    name: 'userId',
-                    value: '',
-                    type: InputTypes.textbox,
-                    validateEmail: 'Email Please',
-                    validateRequired: 'User ID is required'
-                },
-                <InputDetailDropdown>{
-                    label: 'EMail Address',
-                    name: 'email',
-                    validateEmail: 'Email is not correct format',
-                    type: InputTypes.textbox
-                },
-                <InputDetailTextBox>{
-                    label: 'First Name',
-                    name: 'firstName',
-                    type: InputTypes.textbox
-                },
-                <InputDetailTextBox>{
-                    label: 'Last Name',
-                    name: 'lastName',
-                    type: InputTypes.textbox
-                },
-                <InputDetailTextBox>{
-                    label: 'Password',
-                    name: 'password',
-                    type: InputTypes.password
-                },
-                <InputDetail>{
-                    type: InputTypes.null
-                },
-                <InputDetailReferenceValues>{
-                    label: 'User Roles',
-                    name: 'roles',
-                    type: 'multiselect',
-                    referenceValueName: SystemDataSourceNames.ROLES_SELECT
-                }
-            ];
+    ngOnChanges(changes: SimpleChanges): void {
+        if (changes.data && changes.data.currentValue) {
+            this.passwordModel = { userId: this.data.userId };
         }
     }
 
-    ngOnChanges(changes: SimpleChanges): void {}
-
-    notifyChanged(event: any) {}
+    notifyChanged(event: any) {
+        this.passwordModel.newPassword = event.newPassword;
+    }
 
     ngAfterViewInit(): void {}
 }

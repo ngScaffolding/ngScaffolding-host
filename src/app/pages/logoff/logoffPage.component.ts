@@ -4,7 +4,8 @@ import { Router } from '@angular/router';
 import { UserAuthenticationBase, LoggingService } from 'ngscaffolding-core';
 
 @Component({
-  templateUrl: 'logoffPage.component.html'
+  templateUrl: 'logoffPage.component.html',
+  styleUrls: ['./logoffPage.component.scss']
 })
 export class LogoffPageComponent implements OnInit {
   constructor(

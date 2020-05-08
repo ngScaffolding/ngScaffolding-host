@@ -151,6 +151,7 @@ class="ui-g" (ngSubmit)="onSubmit(form)"
             <span *ngSwitchCase="'dropdownobject'">
                 <p-dropdown
                     appendTo="body"
+                    [style]="{ width: '100%' }"
                     class="dropdownInput"
                     [id]="input.name"
                     [options]="dataSourceLookup[input.name]"
@@ -167,6 +168,7 @@ class="ui-g" (ngSubmit)="onSubmit(form)"
             <!-- AutoComplete -->
             <p-autoComplete
                 *ngSwitchCase="'autocomplete'"
+                [style]="{ width: '100%' }"
                 appendTo="body"
                 dataKey="value"
                 [tabindex]="input.tabindex"

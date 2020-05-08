@@ -1,6 +1,6 @@
 <div class="ui-g ui-fluid">
     <div class="ui-g-12 ui-md-6 ui-md-offset-3 card card-w-title">
-        <h1>User Login</h1>
+        <p class="login-title">{{'User Login' | translate}}</p>
         <div class="form-group ui-g-12">
             <form name="form" (ngSubmit)="loginForm.form.valid && login()" #loginForm="ngForm" novalidate>
                 <div class="ui-g-12">
@@ -14,14 +14,14 @@
                 <div class="ui-g-12">
                     <span class="md-inputfield">
                         <input type="password" pPassword [feedback]="false" name="password" [(ngModel)]="inputModel.password" #password="ngModel" required>
-                        <label>Password</label>
+                        <label>{{'Password' | translate}}</label>
                         <div *ngIf="loginForm.submitted && !password.valid" class="ui-message ui-messages-error ui-corner-all">Password is required</div>
                     </span>
                 </div>
 
                 <div class="ui-g-12"></div>
                 <div *ngIf="appSettings.getBoolean('authShowRememberMe') | async" class="ui-g-12">
-                        <p-checkbox name="rememberMe" binary="true" label="Remember Me?" (onChange)="rememberChanged($event)" [(ngModel)]="rememberMe"></p-checkbox>
+                        <p-checkbox name="rememberMe" binary="true" label="{{'Remember Me?' | translate}}" (onChange)="rememberChanged($event)" [(ngModel)]="rememberMe"></p-checkbox>
                 </div>
 
                 <div class="ui-g-12"></div>
@@ -32,10 +32,10 @@
                 <div class="ui-g-12"></div>
                 <div class="ui-g-12">
                     <div class="ui-g-6 ui-sm-12">
-                        <button pButton class="ui-button-info" type="button" *ngIf="appSettings.getBoolean('authShowRegister') | async" label="Register"></button>
+                        <button pButton class="ui-button-info" type="button" *ngIf="appSettings.getBoolean('authShowRegister') | async" label="{{'Register' | translate}}"></button>
                     </div>
                     <div class="ui-g-6 ui-sm-12">
-                        <button pButton class="ui-button-success" type="submit" [disabled]="!loginForm.form.valid" label="Logon"></button>
+                        <button pButton class="ui-button-success" type="submit" [disabled]="!loginForm.form.valid" label="{{'Logon' | translate}}"></button>
                     </div>
                 </div>
             </form>

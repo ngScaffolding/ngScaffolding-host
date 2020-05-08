@@ -4,9 +4,11 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { AppSettings } from 'ngscaffolding-models';
 import { Observable } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
-  templateUrl: 'loginPage.component.html'
+  templateUrl: 'loginPage.component.html',
+  styleUrls: ['./loginPage.component.scss']
 })
 export class LoginPageComponent implements OnInit {
   private readonly rememberMeCookie = 'authRememberMe';
@@ -28,6 +30,7 @@ export class LoginPageComponent implements OnInit {
     public appSettings: AppSettingsService,
     public appSettingsQuery: AppSettingsQuery,
     public authQuery: UserAuthenticationQuery,
+    public translate: TranslateService,
     private spinner: SpinnerService,
     private logger: LoggingService,
     private notificationService: NotificationService,

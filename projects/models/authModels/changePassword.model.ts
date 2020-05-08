@@ -1,6 +1,6 @@
 export interface ChangePasswordModel {
-    userId: any,
-    currentPassword: string,
-    newPassword: string,
-    passwordReminder?: string
+    userId?: any;
+    currentPassword?: string;
+    newPassword?: string;
+    passwordReminder?: string;
 }
