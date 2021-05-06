@@ -45,7 +45,7 @@
     "core-js": "^2.6.11",
     "dateformat": "^3.0.3",
     "file-saver": "^2.0.2",
-    "highcharts": "^8.0.4",
+    "highcharts": "^9.0.0",
     "highcharts-angular": "^2.4.0",
     "intl": "1.2.5",
     "json-query": "^2.2.2",
